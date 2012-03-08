@@ -2,29 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>gedcomx-parent</artifactId>
+  <artifactId>gedcomx-rs-parent</artifactId>
   <groupId>org.gedcomx</groupId>
-  <name>GEDCOM X - Parent Project</name>
+  <name>GEDCOM X Resource Definitions - Parent Project</name>
   <version>0.13.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <enunciate.version>1.25</enunciate.version>
+    <gedcomx.core.version>0.12.0.BUILD-SNAPSHOT</gedcomx.core.version>
     <root.basedir>${project.basedir}</root.basedir>
     <year>${inceptionYear}</year>
   </properties>
 
   <modules>
-    <module>gedcomx-rt-support</module>
-    <module>gedcomx-test-support</module>
-    <module>enunciate-gedcomx-support</module>
-
-    <module>gedcomx-common</module>
-    <module>gedcomx-metadata</module>
-    <module>gedcomx-record</module>
-    <module>gedcomx-conclusion</module>
-
     <module>gedcomx-discovery</module>
     <module>gedcomx-atom</module>
     <module>gedcomx-conclusion-rs</module>
@@ -55,9 +47,9 @@
   </dependencies>
 
   <scm>
-    <connection>scm:git:git@github.com:FamilySearch/gedcomx.git</connection>
-    <developerConnection>scm:git:git@github.com:FamilySearch/gedcomx.git</developerConnection>
-    <url>https://github.com/FamilySearch/gedcomx</url>
+    <connection>scm:git:git@github.com:FamilySearch/gedcomx-rs.git</connection>
+    <developerConnection>scm:git:git@github.com:FamilySearch/gedcomx-rs.git</developerConnection>
+    <url>https://github.com/FamilySearch/gedcomx-rs</url>
   </scm>
 
   <build>
@@ -168,7 +160,11 @@
             <dependency>
               <groupId>org.gedcomx</groupId>
               <artifactId>enunciate-gedcomx-support</artifactId>
+<<<<<<< HEAD
               <version>0.13.0-SNAPSHOT</version>
+=======
+              <version>${gedcomx.core.version}</version>
+>>>>>>> isolating the gedcomx-rs modules into their own project
             </dependency>
           </dependencies>
         </plugin>
