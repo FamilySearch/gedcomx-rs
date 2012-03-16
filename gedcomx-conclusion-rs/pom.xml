@@ -67,8 +67,6 @@
       <groupId>org.gedcomx</groupId>
       <artifactId>gedcomx-metadata</artifactId>
       <version>${gedcomx.core.version}</version>
-
-      <scope>test</scope>
     </dependency>
 
     <dependency>
