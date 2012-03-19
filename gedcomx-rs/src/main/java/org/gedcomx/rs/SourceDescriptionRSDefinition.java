@@ -45,8 +45,7 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
   @HEAD
   @StatusCodes({
       @ResponseCode( code = 200, condition = "Upon a successful read."),
-      @ResponseCode ( code = 404, condition = "If the requested source description is not found."),
-      @ResponseCode ( code = 410, condition = "If the requested source description has been deleted.")
+      @ResponseCode ( code = 404, condition = "If the requested source description is not found.")
   })
   Response head();
 
@@ -58,8 +57,7 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
   @GET
   @StatusCodes({
       @ResponseCode ( code = 200, condition = "Upon a successful read."),
-      @ResponseCode ( code = 404, condition = "If the requested source description is not found."),
-      @ResponseCode ( code = 410, condition = "If the requested source description has been deleted.")
+      @ResponseCode ( code = 404, condition = "If the requested source description is not found.")
   })
   Response get();
 
