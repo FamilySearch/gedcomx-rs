@@ -19,7 +19,7 @@
   <modules>
     <module>gedcomx-discovery</module>
     <module>gedcomx-atom</module>
-    <module>gedcomx-conclusion-rs</module>
+    <module>gedcomx-rs</module>
   </modules>
 
   <dependencies>

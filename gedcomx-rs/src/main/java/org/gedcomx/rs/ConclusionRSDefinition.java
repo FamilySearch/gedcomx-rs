@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.gedcomx.conclusion.rs.definition;
+package org.gedcomx.rs;
 
 import org.gedcomx.conclusion.*;
 import org.gedcomx.rt.rs.*;
@@ -38,7 +38,7 @@ import javax.ws.rs.core.Response;
 })
 public interface ConclusionRSDefinition extends CommonRSParameters {
 
-  public static final String REL = CommonRSParameters.GEDCOMX_LINK_REL_PREFIX + "conclusions";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "conclusions";
 
   /**
    * Read a conclusion.
