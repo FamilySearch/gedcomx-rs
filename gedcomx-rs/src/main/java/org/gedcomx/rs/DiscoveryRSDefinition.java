@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.gedcomx.conclusion.rs.definition;
+package org.gedcomx.rs;
 
 import org.gedcomx.rt.rs.*;
 import org.gedcomx.xrd.XRD;
@@ -67,7 +67,7 @@ import javax.ws.rs.core.Response;
 })
 public interface DiscoveryRSDefinition extends CommonRSParameters {
 
-  String REL = CommonRSParameters.GEDCOMX_LINK_REL_PREFIX + "discovery";
+  String REL = GEDCOMX_LINK_REL_PREFIX + "discovery";
 
   /**
    * Read the host metadata.

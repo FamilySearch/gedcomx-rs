@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.gedcomx.conclusion.rs.definition;
+package org.gedcomx.rs;
 
 import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.ResourceRelationship;
 import org.gedcomx.rt.rs.ResourceRelationships;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
-
-import javax.ws.rs.HeaderParam;
 
 /**
  * The common resource service definition supplies a set of common parameters and error codes applicable to GEDCOM X resources.

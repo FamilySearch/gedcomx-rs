@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.gedcomx.conclusion.rs.definition;
+package org.gedcomx.rs;
 
 import org.gedcomx.common.ResourceSet;
+import org.gedcomx.conclusion.Conclusion;
 import org.gedcomx.conclusion.ConclusionModel;
-import org.gedcomx.conclusion.Person;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -26,32 +26,29 @@ import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 /**
- * The persons resource service is used to manage a collection of persons.
+ * The conclusions resource service is used to manage a collection of conclusions.
  *
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "Persons",
+  name = "Conclusions",
   namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
   resourceElement = ResourceSet.class,
-  subresources = PersonRSDefinition.class
+  subresources = ConclusionRSDefinition.class
 )
-public interface PersonsRSDefinition extends CommonRSParameters {
+public interface ConclusionsRSDefinition extends CommonRSParameters {
 
-  public static final String REL = CommonRSParameters.GEDCOMX_LINK_REL_PREFIX + "persons";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "conclusions";
 
   /**
-   * Create a person.
+   * Create a conclusion.
    *
-   *
-   *
-   * @param person The person to be created.
+   * @param conclusion The conclusion to be created.
    * @return The appropriate response.
    */
   @POST
   @StatusCodes({
-    @ResponseCode ( code = 201, condition = "The creation of the person was successful. Expect a location header specifying the link to the created person.")
+    @ResponseCode ( code = 201, condition = "The creation of the conclusion was successful. Expect a location header specifying the link to the created conclusion.")
   })
-  Response post(Person person);
-
+  Response post(Conclusion conclusion);
 }

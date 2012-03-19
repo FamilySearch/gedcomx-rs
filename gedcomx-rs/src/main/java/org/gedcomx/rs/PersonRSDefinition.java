@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.gedcomx.conclusion.rs.definition;
+package org.gedcomx.rs;
 
 import org.gedcomx.conclusion.ConclusionModel;
 import org.gedcomx.conclusion.Person;
@@ -43,7 +43,7 @@ import javax.ws.rs.core.Response;
 })
 public interface PersonRSDefinition extends CommonRSParameters {
 
-  public static final String REL = CommonRSParameters.GEDCOMX_LINK_REL_PREFIX + "person";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "person";
 
   /**
    * Read a person header attributes.

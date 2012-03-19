@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.gedcomx.conclusion.rs.definition;
+package org.gedcomx.rs;
 
 import org.gedcomx.atom.Entry;
 import org.gedcomx.conclusion.ConclusionModel;
@@ -26,12 +26,12 @@ import org.gedcomx.rt.rs.ResourceRelationships;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * The search entry resource defines a specific entry for a set of search results.
+ * The person match resource defines a specific match for a person.
  *
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "SearchEntry",
+  name = "PersonMatch",
   namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
   resourceElement = Entry.class,
   subresources = { PersonSummaryRSDefinition.class },
@@ -43,9 +43,9 @@ import javax.xml.bind.annotation.XmlElement;
   }
 )
 @ResourceRelationships ( {
-  @ResourceRelationship( identifier = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The link to the summary of the person that is identified as a candidate for this search result." ),
-  @ResourceRelationship( identifier = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person that is identified as a candidate for this search result." )
+  @ResourceRelationship( identifier = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The link to the summary of the person that is identified as a match candidate." ),
+  @ResourceRelationship( identifier = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person that is identified as a match candidate." )
 })
-public interface SearchEntryRSDefinition {
+public interface PersonMatchRSDefinition {
 
 }
