@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlElement;
  */
 @ResourceDefinition (
   name = "SearchEntry",
-  namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+  projectId = RSModel.RS_PROJECT_ID,
+  namespace = RSModel.RS_V1_NAMESPACE,
   resourceElement = Entry.class,
   subresources = { PersonSummaryRSDefinition.class },
   subresourceElements = {

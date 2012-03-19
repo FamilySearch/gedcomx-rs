@@ -30,8 +30,9 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Conclusion",
+  projectId = RSModel.RS_PROJECT_ID,
   resourceElement = { Name.class, Gender.class, Fact.class },
-  namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE
+  namespace = RSModel.RS_V1_NAMESPACE
 )
 @ResourceRelationships ({
   @ResourceRelationship ( identifier = "self", definedBy = ConclusionRSDefinition.class, description = "The conclusion itself." )

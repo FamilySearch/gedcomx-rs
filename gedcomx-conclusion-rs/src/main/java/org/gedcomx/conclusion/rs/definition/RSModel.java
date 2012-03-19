@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.gedcomx.xrd;
+package org.gedcomx.conclusion.rs.definition;
 
 import org.gedcomx.rt.Model;
 import org.gedcomx.rt.Models;
 
 import javax.xml.bind.annotation.XmlTransient;
-import java.lang.String;
 
 /**
  * @author Ryan Heaton
@@ -27,21 +26,22 @@ import java.lang.String;
 @XmlTransient
 @Models ( {
   @Model (
-    id = "xrd",
-    namespace = XRDModel.XRD_V1_NAMESPACE,
-    projectId = "gedcomx-rs",
-    label = "XRD Model",
-    description = "The XRD model is use to describe the model for resource discovery using XRD.",
-    version = "v1",
-    xmlMediaType = XRDModel.XRD_V1_XML_MEDIA_TYPE,
-    jsonMediaType = XRDModel.XRD_V1_JSON_MEDIA_TYPE
+    id = "rs",
+    namespace = RSModel.RS_V1_NAMESPACE,
+    projectId = RSModel.RS_PROJECT_ID,
+    label = "RS Model",
+    description = "The RS model supplied the types and elements needed to provide core GEDCOM X Resource Definitions.",
+    version = "2005",
+    xmlMediaType = RSModel.RS_V1_XML_MEDIA_TYPE,
+    jsonMediaType = RSModel.RS_V1_JSON_MEDIA_TYPE
   )
 } )
-public class XRDModel {
+public class RSModel {
 
-  private XRDModel() {}
+  private RSModel() {}
 
-  public static final java.lang.String XRD_V1_NAMESPACE = "http://docs.oasis-open.org/ns/xri/xrd-1.0";
-  public static final java.lang.String XRD_V1_XML_MEDIA_TYPE = "application/xrd+xml";
-  public static final String XRD_V1_JSON_MEDIA_TYPE = "application/xrd+json";
+  public static final String RS_PROJECT_ID = "gedcomx-rs";
+  public static final String RS_V1_NAMESPACE = "http://rs.gedcomx.org/v1";
+  public static final String RS_V1_XML_MEDIA_TYPE = "application/x-gedcomx-rs-v1+xml";
+  public static final String RS_V1_JSON_MEDIA_TYPE = "application/x-gedcomx-rs-v1+json";
 }

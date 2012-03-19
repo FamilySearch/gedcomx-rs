@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
   @Model (
     id = "opensearch",
     namespace = OpenSearchModel.OPENSEARCH_NAMESPACE,
+    projectId = "gedcomx-rs",
     label = "OpenSearch Model",
     description = "The opensearch model defines elements and types used for searches.",
     version = "1.1",
@@ -36,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
   ),
   @Model (
     id = "relevance",
+    projectId = "gedcomx-rs",
     namespace = OpenSearchModel.OPENSEARCH_RELEVANCE_NAMESPACE,
     label = "OpenSearch Relevance Model",
     description = "The opensearch relevance model defines elements and types used for indicating the relevance of a search.",

@@ -47,7 +47,8 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "PersonSummary",
   resourceElement = Person.class,
-  namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+  projectId = RSModel.RS_PROJECT_ID,
+  namespace = RSModel.RS_V1_NAMESPACE,
   subresources = { ConclusionRSDefinition.class, ConclusionsRSDefinition.class }
 )
 @ResourceRelationships({

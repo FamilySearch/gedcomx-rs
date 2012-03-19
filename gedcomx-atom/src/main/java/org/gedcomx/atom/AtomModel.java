@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
   @Model (
     id = "atom",
     namespace = AtomModel.ATOM_NAMESPACE,
+    projectId = "gedcomx-rs",
     label = "Atom Model",
     description = "The Atom model supplied the types and elements defined by the Atom syndication format.",
     version = "2005",

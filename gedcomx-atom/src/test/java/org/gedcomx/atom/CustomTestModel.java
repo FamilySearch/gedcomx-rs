@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
   @Model (
     id = "custom",
     namespace = "urn:custom",
+    projectId = "gedcomx-rs",
     label = "Custom Test Model",
     description = "Just a model for testing purposes.",
     version = "1",

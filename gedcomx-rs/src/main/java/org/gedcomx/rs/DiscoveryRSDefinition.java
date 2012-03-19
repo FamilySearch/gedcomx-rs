@@ -56,6 +56,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition(
     name = "Discovery",
+    projectId = RSModel.RS_PROJECT_ID,
     resourceElement = XRD.class,
     namespace = XRDModel.XRD_V1_NAMESPACE
 )

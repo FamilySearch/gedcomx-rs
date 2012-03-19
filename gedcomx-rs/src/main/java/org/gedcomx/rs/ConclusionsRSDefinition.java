@@ -17,7 +17,6 @@ package org.gedcomx.rs;
 
 import org.gedcomx.common.ResourceSet;
 import org.gedcomx.conclusion.Conclusion;
-import org.gedcomx.conclusion.ConclusionModel;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -32,7 +31,8 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Conclusions",
-  namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+  projectId = RSModel.RS_PROJECT_ID,
+  namespace = RSModel.RS_V1_NAMESPACE,
   resourceElement = ResourceSet.class,
   subresources = ConclusionRSDefinition.class
 )
