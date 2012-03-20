@@ -40,8 +40,6 @@ public interface SourceReferencesRSDefinition extends CommonRSParameters {
   /**
    * Create a source reference.
    *
-   *
-   *
    * @param sourceReference The source reference to be created.
    * @return The appropriate response.
    */

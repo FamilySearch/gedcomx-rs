@@ -17,6 +17,7 @@ package org.gedcomx.rs;
 
 import org.gedcomx.common.ResourceReference;
 import org.gedcomx.conclusion.ConclusionModel;
+import org.gedcomx.conclusion.SourceReference;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -31,8 +32,8 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition(
     name = "SourceReference",
     namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
-    projectId = RSModel.RS_PROJECT_ID
-    //, resourceElement = ResourceReference.class
+    projectId = RSModel.RS_PROJECT_ID,
+    resourceElement = SourceReference.class
 )
 public interface SourceReferenceRSDefinition extends CommonRSParameters {
 
