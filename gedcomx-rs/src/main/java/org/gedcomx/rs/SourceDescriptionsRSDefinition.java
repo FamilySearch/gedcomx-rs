@@ -29,6 +29,7 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition(
     name = "SourceDescriptions",
     namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+    projectId = RSModel.RS_PROJECT_ID,
     resourceElement = ResourceSet.class,
     subresources = { SourceDescriptionRSDefinition.class }
 )

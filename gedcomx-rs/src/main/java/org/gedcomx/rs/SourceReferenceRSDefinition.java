@@ -30,7 +30,8 @@ import javax.ws.rs.core.Response;
 
 @ResourceDefinition(
     name = "SourceReference",
-    namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE
+    namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+    projectId = RSModel.RS_PROJECT_ID
     //, resourceElement = ResourceReference.class
 )
 public interface SourceReferenceRSDefinition extends CommonRSParameters {
