@@ -15,7 +15,6 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.ResourceReference;
 import org.gedcomx.conclusion.ConclusionModel;
 import org.gedcomx.conclusion.SourceReference;
 import org.gedcomx.rt.rs.ResourceDefinition;
@@ -75,7 +74,7 @@ public interface SourceReferenceRSDefinition extends CommonRSParameters {
   @StatusCodes({
       @ResponseCode ( code = 204, condition = "The update was successful.")
   })
-  Response put(ResourceReference sourceReference);
+  Response put(SourceReference sourceReference);
 
   /**
    * Delete a source reference.

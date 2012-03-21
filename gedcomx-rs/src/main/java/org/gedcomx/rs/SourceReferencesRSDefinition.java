@@ -15,9 +15,9 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.ResourceReference;
 import org.gedcomx.common.ResourceSet;
 import org.gedcomx.conclusion.ConclusionModel;
+import org.gedcomx.conclusion.SourceReference;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -47,6 +47,6 @@ public interface SourceReferencesRSDefinition extends CommonRSParameters {
   @StatusCodes({
       @ResponseCode( code = 201, condition = "The creation of the source reference was successful. Expect a location header specifying the link to the created source reference.")
   })
-  Response post(ResourceReference sourceReference);
+  Response post(SourceReference sourceReference);
 
 }
