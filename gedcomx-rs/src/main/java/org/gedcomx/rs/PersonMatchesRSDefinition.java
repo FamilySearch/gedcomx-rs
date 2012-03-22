@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "PersonMatches",
+  name = "Person Matches",
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,
   resourceElement = Feed.class,

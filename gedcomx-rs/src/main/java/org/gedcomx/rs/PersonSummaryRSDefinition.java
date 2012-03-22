@@ -45,7 +45,7 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "PersonSummary",
+  name = "Person Summary",
   resourceElement = Person.class,
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,

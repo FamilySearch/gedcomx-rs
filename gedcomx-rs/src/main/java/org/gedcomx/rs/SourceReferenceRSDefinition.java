@@ -29,7 +29,7 @@ import javax.ws.rs.core.Response;
 
 
 @ResourceDefinition(
-    name = "SourceReference",
+    name = "Source Reference",
     namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
     projectId = RSModel.RS_PROJECT_ID,
     resourceElement = SourceReference.class
