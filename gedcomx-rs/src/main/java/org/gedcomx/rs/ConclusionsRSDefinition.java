@@ -48,7 +48,8 @@ public interface ConclusionsRSDefinition extends CommonRSParameters {
    */
   @POST
   @StatusCodes({
-    @ResponseCode ( code = 201, condition = "The creation of the conclusion was successful. Expect a location header specifying the link to the created conclusion.")
+    @ResponseCode ( code = 201, condition = "The creation of the conclusion was successful. Expect a location header specifying the link to the created conclusion."),
+    @ResponseCode ( code = 410, condition = "If the specified person has been deleted.")
   })
   Response post(Conclusion conclusion);
 }

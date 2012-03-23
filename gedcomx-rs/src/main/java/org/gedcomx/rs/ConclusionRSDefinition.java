@@ -49,7 +49,8 @@ public interface ConclusionRSDefinition extends CommonRSParameters {
   @GET
   @StatusCodes({
     @ResponseCode ( code = 200, condition = "Upon a successful read."),
-    @ResponseCode ( code = 404, condition = "If the requested conclusion is not found.")
+    @ResponseCode ( code = 404, condition = "If the requested conclusion is not found."),
+    @ResponseCode ( code = 410, condition = "If the specified person has been deleted.")
   })
   Response get();
 
@@ -62,7 +63,8 @@ public interface ConclusionRSDefinition extends CommonRSParameters {
   @PUT
   @StatusCodes({
     @ResponseCode ( code = 204, condition = "The update was successful."),
-    @ResponseCode ( code = 404, condition = "If the requested conclusion is not found.")
+    @ResponseCode ( code = 404, condition = "If the requested conclusion is not found."),
+    @ResponseCode ( code = 410, condition = "If the specified person has been deleted.")
   })
   Response put(Conclusion conclusion);
 
@@ -72,7 +74,9 @@ public interface ConclusionRSDefinition extends CommonRSParameters {
    */
   @DELETE
   @StatusCodes({
-    @ResponseCode ( code = 204, condition = "The delete was successful.")
+    @ResponseCode ( code = 204, condition = "The delete was successful."),
+    @ResponseCode ( code = 404, condition = "If the requested conclusion is not found."),
+    @ResponseCode ( code = 410, condition = "If the specified person has been deleted.")
   })
   Response delete();
 }
