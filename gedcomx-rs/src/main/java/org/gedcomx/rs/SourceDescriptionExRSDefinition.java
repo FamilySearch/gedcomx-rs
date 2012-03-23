@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
 )
 public interface SourceDescriptionExRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/description";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/description/ex";
 
   /**
    * Read the header attributes for an extended source description (a source description with extended information about the description contributor).
