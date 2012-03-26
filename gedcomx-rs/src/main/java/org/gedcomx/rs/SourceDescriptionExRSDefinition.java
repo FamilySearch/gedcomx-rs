@@ -26,6 +26,9 @@ import javax.ws.rs.HEAD;
 import javax.ws.rs.core.Response;
 
 
+/**
+ * The extended source description resource service is used to retrieve a source description with extended information about the source description contributor(s).
+ */
 @ResourceDefinition(
     name = "Source Description (Extended)",
     namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
@@ -38,7 +41,8 @@ public interface SourceDescriptionExRSDefinition extends CommonRSParameters {
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/description/ex";
 
   /**
-   * Read the header attributes for an extended source description (a source description with extended information about the description contributor).
+   * Read the header attributes for an extended source description --
+   * a source description with extended information about the description contributor(s).
    *
    * @return The header attributes for the extended source description.
    */
@@ -50,7 +54,8 @@ public interface SourceDescriptionExRSDefinition extends CommonRSParameters {
   Response head();
 
   /**
-   * Read an extended source description (a source description with extended information about the description contributor).
+   * Read an extended source description -- a source description with
+   * extended information about the description contributor(s).
    *
    * @return The extended source description.
    */

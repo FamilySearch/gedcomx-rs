@@ -28,6 +28,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 
 
+/**
+ * The source description resource service is used to manage a source description.
+ */
 @ResourceDefinition(
     name = "Source Description",
     namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
@@ -39,7 +42,7 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/description";
 
   /**
-   * Read a source description header attributes.
+   * Read a source description's header attributes.
    *
    * @return The header attributes for the source description.
    */
@@ -70,7 +73,8 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
    */
   @PUT
   @StatusCodes({
-      @ResponseCode ( code = 204, condition = "The update was successful.")
+      @ResponseCode ( code = 204, condition = "The update was successful."),
+      @ResponseCode ( code = 404, condition = "If the requested source description is not found.")
   })
   Response put(DublinCoreDescription sourceDescription);
 
@@ -81,7 +85,8 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
    */
   @DELETE
   @StatusCodes({
-      @ResponseCode ( code = 204, condition = "The delete was successful.")
+      @ResponseCode ( code = 204, condition = "The delete was successful."),
+      @ResponseCode ( code = 404, condition = "If the requested source description is not found.")
   })
   Response delete();
 

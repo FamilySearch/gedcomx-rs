@@ -26,6 +26,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 
+/**
+ * The source descriptions resource service is used to manage a collection of source descriptions.
+ */
 @ResourceDefinition(
     name = "Source Descriptions",
     namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
@@ -40,14 +43,13 @@ public interface SourceDescriptionsRSDefinition extends CommonRSParameters {
   /**
    * Create a source description.
    *
-   *
-   *
    * @param sourceDescription The source description to be created.
    * @return The appropriate response.
    */
   @POST
   @StatusCodes({
-      @ResponseCode( code = 201, condition = "The creation of the source description was successful. Expect a location header specifying the link to the created source description.")
+      @ResponseCode( code = 201, condition = "The creation of the source description was successful. Expect a location header specifying the link to the created source description."),
+      @ResponseCode( code = 400, condition = "If the request was unable to be understood by the application.")
   })
   Response post(DublinCoreDescription sourceDescription);
 

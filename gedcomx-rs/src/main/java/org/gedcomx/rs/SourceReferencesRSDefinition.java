@@ -26,6 +26,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 
+/**
+ * The source references resource service is used to manage a collection of source references.
+ */
 @ResourceDefinition(
     name = "Source References",
     namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
@@ -45,7 +48,8 @@ public interface SourceReferencesRSDefinition extends CommonRSParameters {
    */
   @POST
   @StatusCodes({
-      @ResponseCode( code = 201, condition = "The creation of the source reference was successful. Expect a location header specifying the link to the created source reference.")
+      @ResponseCode( code = 201, condition = "The creation of the source reference was successful. Expect a location header specifying the link to the created source reference."),
+      @ResponseCode( code = 400, condition = "If the request was unable to be understood by the application.")
   })
   Response post(SourceReference sourceReference);
 
