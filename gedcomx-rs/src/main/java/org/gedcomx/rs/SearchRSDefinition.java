@@ -143,7 +143,7 @@ import javax.ws.rs.core.Response;
   resourceElement = Feed.class,
   subresources = { SearchEntryRSDefinition.class }
 )
-@ResourceRelationships ( {
+@ResourceLinks ( {
 })
 public interface SearchRSDefinition extends CommonRSParameters {
 

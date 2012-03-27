@@ -60,11 +60,11 @@ import javax.ws.rs.core.Response;
     resourceElement = XRD.class,
     namespace = XRDModel.XRD_V1_NAMESPACE
 )
-@ResourceRelationships({
-  @ResourceRelationship (identifier = PersonsRSDefinition.REL, definedBy = DiscoveryRSDefinition.class, description = "The persons resource for this application."),
-  @ResourceRelationship (identifier = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for the currently logged in user." ),
-  @ResourceRelationship (identifier = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The person summary for the currently logged in user." ),
-  @ResourceRelationship (identifier = SearchRSDefinition.REL, definedBy = SearchRSDefinition.class, description = "The search resource for this application (linked via URI template).", template = true )
+@ResourceLinks({
+  @ResourceLink (rel = PersonsRSDefinition.REL, definedBy = DiscoveryRSDefinition.class, description = "The persons resource for this application."),
+  @ResourceLink (rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for the currently logged in user." ),
+  @ResourceLink (rel = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The person summary for the currently logged in user." ),
+  @ResourceLink (rel = SearchRSDefinition.REL, definedBy = SearchRSDefinition.class, description = "The search resource for this application (linked via URI template).", template = true )
 })
 public interface DiscoveryRSDefinition extends CommonRSParameters {
 

@@ -34,8 +34,8 @@ import javax.ws.rs.core.Response;
   resourceElement = { Name.class, Gender.class, Fact.class },
   namespace = RSModel.RS_V1_NAMESPACE
 )
-@ResourceRelationships ({
-  @ResourceRelationship ( identifier = "self", definedBy = ConclusionRSDefinition.class, description = "The conclusion itself." )
+@ResourceLinks ({
+  @ResourceLink ( rel = "self", definedBy = ConclusionRSDefinition.class, description = "The conclusion itself." )
 })
 public interface ConclusionRSDefinition extends CommonRSParameters {
 

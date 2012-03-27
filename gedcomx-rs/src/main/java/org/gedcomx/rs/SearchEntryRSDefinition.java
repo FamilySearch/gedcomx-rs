@@ -20,8 +20,8 @@ import org.gedcomx.conclusion.ConclusionModel;
 import org.gedcomx.conclusion.Person;
 import org.gedcomx.conclusion.Relationship;
 import org.gedcomx.rt.rs.ResourceDefinition;
-import org.gedcomx.rt.rs.ResourceRelationship;
-import org.gedcomx.rt.rs.ResourceRelationships;
+import org.gedcomx.rt.rs.ResourceLink;
+import org.gedcomx.rt.rs.ResourceLinks;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -43,9 +43,9 @@ import javax.xml.bind.annotation.XmlElement;
     @XmlElement (type = Relationship.class, name = "relationship", namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE)
   }
 )
-@ResourceRelationships ( {
-  @ResourceRelationship( identifier = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The link to the summary of the person that is identified as a candidate for this search result." ),
-  @ResourceRelationship( identifier = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person that is identified as a candidate for this search result." )
+@ResourceLinks ( {
+  @ResourceLink( rel = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The link to the summary of the person that is identified as a candidate for this search result." ),
+  @ResourceLink( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person that is identified as a candidate for this search result." )
 })
 public interface SearchEntryRSDefinition {
 

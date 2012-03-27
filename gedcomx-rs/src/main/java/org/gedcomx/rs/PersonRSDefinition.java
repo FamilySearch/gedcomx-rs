@@ -37,10 +37,10 @@ import javax.ws.rs.core.Response;
   namespace = RSModel.RS_V1_NAMESPACE,
   subresources = { ConclusionRSDefinition.class, ConclusionsRSDefinition.class }
 )
-@ResourceRelationships({
-  @ResourceRelationship ( identifier = "self", definedBy = PersonRSDefinition.class, description = "The person itself." ),
-  @ResourceRelationship ( identifier = PersonMatchesRSDefinition.REL, definedBy = PersonMatchesRSDefinition.class, description = "The matches for the person." ),
-  @ResourceRelationship ( identifier = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The summary for the person.")
+@ResourceLinks({
+  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "The person itself." ),
+  @ResourceLink ( rel = PersonMatchesRSDefinition.REL, definedBy = PersonMatchesRSDefinition.class, description = "The matches for the person." ),
+  @ResourceLink ( rel = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The summary for the person.")
 })
 public interface PersonRSDefinition extends CommonRSParameters {
 

@@ -34,9 +34,9 @@ import javax.ws.rs.core.Response;
   resourceElement = Feed.class,
   subresources = { PersonMatchRSDefinition.class }
 )
-@ResourceRelationships ( {
-  @ResourceRelationship( identifier = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person for which matches are being identified." ),
-  @ResourceRelationship( identifier = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The link to the summary of the person that is identified as a match candidate." )
+@ResourceLinks ( {
+  @ResourceLink( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person for which matches are being identified." ),
+  @ResourceLink( rel = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The link to the summary of the person that is identified as a match candidate." )
 })
 public interface PersonMatchesRSDefinition extends CommonRSParameters {
 

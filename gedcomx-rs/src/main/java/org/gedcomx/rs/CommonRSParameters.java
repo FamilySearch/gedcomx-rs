@@ -16,8 +16,8 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.rt.CommonModels;
-import org.gedcomx.rt.rs.ResourceRelationship;
-import org.gedcomx.rt.rs.ResourceRelationships;
+import org.gedcomx.rt.rs.ResourceLink;
+import org.gedcomx.rt.rs.ResourceLinks;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
 
@@ -33,8 +33,8 @@ import org.gedcomx.rt.rs.StatusCodes;
   @ResponseCode ( code = 405, condition = "If the method is not supported."),
   @ResponseCode ( code = 501, condition = "If the resource is not supported by the implementation.")
 } )
-@ResourceRelationships ({
-  @ResourceRelationship ( identifier = DiscoveryRSDefinition.REL, definedBy = DiscoveryRSDefinition.class, description = "The discovery resource for this application.")
+@ResourceLinks ({
+  @ResourceLink ( rel = DiscoveryRSDefinition.REL, definedBy = DiscoveryRSDefinition.class, description = "The discovery resource for this application.")
 } )
 public interface CommonRSParameters {
 

@@ -51,9 +51,9 @@ import javax.ws.rs.core.Response;
   namespace = RSModel.RS_V1_NAMESPACE,
   subresources = { ConclusionRSDefinition.class, ConclusionsRSDefinition.class }
 )
-@ResourceRelationships({
-  @ResourceRelationship ( identifier = "self", definedBy = PersonSummaryRSDefinition.class, description = "The person summary itself." ),
-  @ResourceRelationship ( identifier = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for which this is a summary." )
+@ResourceLinks({
+  @ResourceLink ( rel = "self", definedBy = PersonSummaryRSDefinition.class, description = "The person summary itself." ),
+  @ResourceLink ( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for which this is a summary." )
 })
 public interface PersonSummaryRSDefinition extends CommonRSParameters {
 
