@@ -38,8 +38,6 @@ import javax.xml.bind.annotation.XmlElement;
   subresources = { PersonSummaryRSDefinition.class },
   subresourceElements = {
     @XmlElement (type = Person.class, name = "person", namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE),
-    @XmlElement (type = Person.class, name = "parent", namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE),
-    @XmlElement (type = Person.class, name = "spouse", namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE),
     @XmlElement (type = Relationship.class, name = "relationship", namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE)
   }
 )
