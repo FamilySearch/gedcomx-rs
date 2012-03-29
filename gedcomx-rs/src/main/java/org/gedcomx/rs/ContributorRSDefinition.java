@@ -1,5 +1,5 @@
 /**
- * Copyright 2012 Intellectual Reserve, Inc.
+ * Copyright 2011 Intellectual Reserve, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,11 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.conclusion.Contributor;
 import org.gedcomx.metadata.foaf.Person;
 import org.gedcomx.rt.rs.*;
 
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HEAD;
-import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 
 /**
@@ -35,7 +32,7 @@ import javax.ws.rs.core.Response;
   namespace = RSModel.RS_V1_NAMESPACE
 )
 @ResourceLinks ( {
-                   @ResourceLink ( rel = "self", definedBy = ContributorRSDefinition.class, description = "The contributor itself." ),
+                   @ResourceLink ( rel = "self", definedBy = ContributorRSDefinition.class, description = "The contributor itself." )
                  } )
 public interface ContributorRSDefinition extends CommonRSParameters {
 
@@ -49,7 +46,7 @@ public interface ContributorRSDefinition extends CommonRSParameters {
   @HEAD
   @StatusCodes ( {
                    @ResponseCode ( code = 200, condition = "Upon a successful read." ),
-                   @ResponseCode ( code = 404, condition = "If the requested contributor is not found." ),
+                   @ResponseCode ( code = 404, condition = "If the requested contributor is not found." )
                  } )
   Response head();
 
@@ -61,7 +58,7 @@ public interface ContributorRSDefinition extends CommonRSParameters {
   @GET
   @StatusCodes ( {
                    @ResponseCode ( code = 200, condition = "Upon a successful read." ),
-                   @ResponseCode ( code = 404, condition = "If the requested contributor is not found." ),
+                   @ResponseCode ( code = 404, condition = "If the requested contributor is not found." )
                  } )
   Response get();
 }
