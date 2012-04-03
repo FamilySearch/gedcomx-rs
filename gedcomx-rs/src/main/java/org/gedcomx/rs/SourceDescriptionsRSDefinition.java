@@ -17,7 +17,7 @@ package org.gedcomx.rs;
 
 import org.gedcomx.common.ResourceSet;
 import org.gedcomx.conclusion.ConclusionModel;
-import org.gedcomx.metadata.dc.DublinCoreDescription;
+import org.gedcomx.metadata.rdf.Description;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -51,6 +51,6 @@ public interface SourceDescriptionsRSDefinition extends CommonRSParameters {
       @ResponseCode( code = 201, condition = "The creation of the source description was successful. Expect a location header specifying the link to the created source description."),
       @ResponseCode( code = 400, condition = "If the request was unable to be understood by the application.")
   })
-  Response post(DublinCoreDescription sourceDescription);
+  Response post(Description sourceDescription);
 
 }

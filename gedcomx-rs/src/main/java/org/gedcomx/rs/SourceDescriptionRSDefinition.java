@@ -16,7 +16,7 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.conclusion.ConclusionModel;
-import org.gedcomx.metadata.dc.DublinCoreDescription;
+import org.gedcomx.metadata.rdf.Description;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
     name = "Source Description",
     namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
     projectId = RSModel.RS_PROJECT_ID,
-    resourceElement = DublinCoreDescription.class
+    resourceElement = Description.class
 )
 public interface SourceDescriptionRSDefinition extends CommonRSParameters {
 
@@ -76,7 +76,7 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
       @ResponseCode ( code = 204, condition = "The update was successful."),
       @ResponseCode ( code = 404, condition = "If the requested source description is not found.")
   })
-  Response put(DublinCoreDescription sourceDescription);
+  Response put(Description sourceDescription);
 
   /**
    * Delete a source description.
