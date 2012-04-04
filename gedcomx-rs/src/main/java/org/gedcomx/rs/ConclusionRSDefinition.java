@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 Intellectual Reserve, Inc.
+ * Copyright 2011-2012 Intellectual Reserve, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,10 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.conclusion.*;
+import org.gedcomx.conclusion.Conclusion;
+import org.gedcomx.conclusion.Fact;
+import org.gedcomx.conclusion.Gender;
+import org.gedcomx.conclusion.Name;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
