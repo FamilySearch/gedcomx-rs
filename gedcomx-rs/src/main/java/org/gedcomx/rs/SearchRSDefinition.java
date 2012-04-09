@@ -158,7 +158,7 @@ public interface SearchRSDefinition extends CommonRSParameters {
     @ResponseCode ( code = 200, condition = "Upon a successful read."),
     @ResponseCode ( code = 204, condition = "Upon a successful query with no results."),
     @ResponseCode ( code = 400, condition = "If the query to be processed was unable to be understood by the application."),
-    @ResponseCode ( code = 413, condition = "If the application declines to process the query because it would have resulted in too many results.")
+    @ResponseCode ( code = 400, condition = "If the application declines to process the query because it would have resulted in too many results.")
   })
   @Warnings({
     @ResponseCode( code = 299, condition = "If part or all of the query is unable to be processed.")
