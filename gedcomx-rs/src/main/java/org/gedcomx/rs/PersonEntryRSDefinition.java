@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "SearchEntry",
+  name = "Person Entry",
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,
   resourceElement = Entry.class,
@@ -42,9 +42,9 @@ import javax.xml.bind.annotation.XmlElement;
   }
 )
 @ResourceLinks ( {
-  @ResourceLink( rel = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The link to the summary of the person that is identified as a candidate for this search result." ),
-  @ResourceLink( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person that is identified as a candidate for this search result." )
+  @ResourceLink( rel = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The link to the person summary that is identified as a candidate in this search/match result." ),
+  @ResourceLink( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person that is identified as a candidate in this search/result result." )
 })
-public interface SearchEntryRSDefinition {
+public interface PersonEntryRSDefinition {
 
 }

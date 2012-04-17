@@ -140,13 +140,13 @@ import javax.ws.rs.core.Response;
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,
   resourceElement = Feed.class,
-  subresources = { SearchEntryRSDefinition.class }
+  subresources = { PersonEntryRSDefinition.class }
 )
 @ResourceLinks ( {
 })
 public interface SearchRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "search";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "entry";
 
   /**
    * Read the results of a search.
