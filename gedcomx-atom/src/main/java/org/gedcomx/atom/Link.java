@@ -18,6 +18,7 @@ package org.gedcomx.atom;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.URI;
+import org.gedcomx.opensearch.OpenSearchModel;
 import org.gedcomx.rt.JsonElementWrapper;
 import org.gedcomx.rt.XmlTypeIdResolver;
 
@@ -43,6 +44,7 @@ public class Link {
 
   private String rel;
   private URI href;
+  private String template;
   private String type;
   private String hreflang;
   private String title;
@@ -93,6 +95,25 @@ public class Link {
    */
   public void setHref(URI href) {
     this.href = href;
+  }
+
+  /**
+   * The opensearch URI template (used in links to search resources).
+   *
+   * @return The opensearch URI template (used in links to search resources).
+   */
+  @XmlAttribute ( namespace = OpenSearchModel.OPENSEARCH_NAMESPACE )
+  public String getTemplate() {
+    return template;
+  }
+
+  /**
+   * The opensearch URI template (used in links to search resources).
+   *
+   * @param template The opensearch URI template (used in links to search resources).
+   */
+  public void setTemplate(String template) {
+    this.template = template;
   }
 
   /**
