@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,
   resourceElement = Feed.class,
-  subresources = { PersonMatchRSDefinition.class }
+  subresources = { PersonEntryRSDefinition.class }
 )
 @ResourceLinks ( {
   @ResourceLink( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person for which matches are being identified." ),
