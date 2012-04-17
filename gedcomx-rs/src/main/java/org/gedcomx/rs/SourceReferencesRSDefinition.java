@@ -22,6 +22,7 @@ import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
@@ -39,6 +40,18 @@ import javax.ws.rs.core.Response;
 public interface SourceReferencesRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/references";
+
+  /**
+   * Read the references to sources.
+   *
+   * @return The list of source references.
+   */
+  @GET
+  @StatusCodes({
+    @ResponseCode ( code = 200, condition = "Upon a successful read."),
+    @ResponseCode ( code = 404, condition = "If the requested resource is not found.")
+  })
+  Response get();
 
   /**
    * Create a source reference.
