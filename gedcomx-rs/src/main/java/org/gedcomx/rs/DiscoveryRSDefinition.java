@@ -15,9 +15,8 @@
  */
 package org.gedcomx.rs;
 
+import org.gedcomx.atom.Feed;
 import org.gedcomx.rt.rs.*;
-import org.gedcomx.xrd.XRD;
-import org.gedcomx.xrd.XRDModel;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
@@ -33,16 +32,14 @@ import javax.ws.rs.core.Response;
  *
  * <p>The discovery resource references the following specs and standards:</p>
  *
- * <h4>Extensible Resource Descriptor (XRD) Version 1.0</h4>
+ * <h4>The Atom Syndication Format</h4>
  *
- * <p>The <a href="http://docs.oasis-open.org/xri/xrd/v1.0/xrd-1.0.html">XRD 1.0 Specification</a> defines a simple generic format for describing resources.
- * Resource descriptor documents provide machine-readable information about resources (resource metadata) for the purpose of promoting interoperability. They
- * also assist in interacting with unknown resources that support known interfaces.</p>
+ * <p>The <a href="http://www.ietf.org/rfc/rfc4287">Atom Specification</a> defines a simple generic format for xxx.</p>
  *
  * <h4>Well Known Uniform Resource Identifiers (URI)</h4>
  *
  * <p><a href="http://tools.ietf.org/html/rfc5785">RFC5785</a> defines a path prefix for "well-known locations", "/.well-known/", in selected Uniform Resource
- * Identifier (URI) schemes. For more details see <a href="http://tools.ietf.org/html/rfc5785">the spec</a>.
+ * Identifier (URI) schemes. For more details see <a href="http://tools.ietf.org/html/rfc5785">the spec</a>.<p>
  *
  * <h4>Web Host Metadata</h4>
  *
@@ -57,8 +54,8 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition(
     name = "Discovery",
     projectId = RSModel.RS_PROJECT_ID,
-    resourceElement = XRD.class,
-    namespace = XRDModel.XRD_V1_NAMESPACE
+    resourceElement = Feed.class,
+    namespace = RSModel.RS_V1_NAMESPACE
 )
 @ResourceLinks({
   @ResourceLink (rel = PersonsRSDefinition.REL, definedBy = DiscoveryRSDefinition.class, description = "The persons resource for this application."),
@@ -79,6 +76,6 @@ public interface DiscoveryRSDefinition extends CommonRSParameters {
   @StatusCodes({
     @ResponseCode(code = 200, condition = "Upon a successful read.")
   })
-  Response readHostMetadata();
+  Response get();
 
 }

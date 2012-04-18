@@ -21,9 +21,11 @@ public class LinkTest {
     Link link = new Link();
     link.setHref(URI.create("urn:link"));
     link.setRel("rel");
+    link.setTemplate("template");
     link = processThroughXml(link);
     assertEquals(URI.create("urn:link"), link.getHref());
     assertEquals("rel", link.getRel());
+    assertEquals("template", link.getTemplate());
   }
 
   /**
@@ -33,9 +35,10 @@ public class LinkTest {
     Link link = new Link();
     link.setHref(URI.create("urn:link"));
     link.setRel("rel");
+    link.setTemplate("template");
     link = processThroughJson(link);
     assertEquals(URI.create("urn:link"), link.getHref());
     assertEquals("rel", link.getRel());
+    assertEquals("template", link.getTemplate());
   }
-
 }
