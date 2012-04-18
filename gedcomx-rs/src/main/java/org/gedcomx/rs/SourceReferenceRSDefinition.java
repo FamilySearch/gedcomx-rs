@@ -42,18 +42,6 @@ public interface SourceReferenceRSDefinition extends CommonRSParameters {
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/reference";
 
   /**
-   * Read a source reference's header attributes.
-   *
-   * @return The header attributes for the source reference.
-   */
-  @HEAD
-  @StatusCodes({
-      @ResponseCode( code = 200, condition = "Upon a successful read."),
-      @ResponseCode ( code = 404, condition = "If the requested source reference is not found.")
-  })
-  Response head();
-
-  /**
    * Read a source reference.
    *
    * @return The source reference.
