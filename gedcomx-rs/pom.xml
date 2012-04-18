@@ -47,12 +47,6 @@
 
     <dependency>
       <groupId>org.gedcomx</groupId>
-      <artifactId>gedcomx-discovery</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.gedcomx</groupId>
       <artifactId>gedcomx-atom</artifactId>
       <version>${project.version}</version>
     </dependency>

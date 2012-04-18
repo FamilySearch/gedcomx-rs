@@ -17,7 +17,6 @@
   </properties>
 
   <modules>
-    <module>gedcomx-discovery</module>
     <module>gedcomx-atom</module>
     <module>gedcomx-rs</module>
   </modules>
