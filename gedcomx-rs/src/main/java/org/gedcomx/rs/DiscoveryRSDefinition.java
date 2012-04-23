@@ -22,31 +22,25 @@ import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
 /**
- * <p>The discovery resource is used to discover application (or "host") -level metadata. It is the process where machines negotiate how to interact with each other.
- * Discovery not only implies "tell me how to talk to you" but also "tell me what you can talk about". Discovery is an inherently application-level concept, so
- * it's usefulness is limited to the definition of a Web service API.</p>
+ * <p>The discovery resource is the starting point for a Web service API. The discovery resource is the index of all available resources in the application.</p>
  *
- * <p>The discovery resource should describe all the root-level links that are needed for a client to use the system. These links should include links to the various resources
- * that the system supports and links to the authentication and authorization policies that the system applies. The discovery resource is also used to allow
- * applications to assert conformance to individual GEDCOM X application profiles.</p>
+ * <p>As a consumer of the API, you should be using _links_ to figure out __at runtime__ where all the resources are. You shouldn't be hard-coding endpoint
+ * URLs, nor should you ever have to plug in identifiers into a a URL template to access resources. The only thing your client should need is the URL to the
+ * discovery resource.</p>
  *
- * <p>The discovery resource references the following specs and standards:</p>
+ * <p>The links provided by the discovery resource should include:</p>
  *
- * <h4>The Atom Syndication Format</h4>
+ * <ul>
+ *   <li>Links to the authentication mechanism that the system supports.</li>
+ *   <li>Links to the root-level resources of the system.</li>
+ *   <li>Links that describe the policies for using the application.</li>
+ *   <li>Links that assert conformance to the various application profiles supported by the system.</li>
+ * </ul>
  *
- * <p>The <a href="http://www.ietf.org/rfc/rfc4287">Atom Specification</a> defines a simple generic format for xxx.</p>
+ * <p>The discovery resource uses an <a href="http://www.ietf.org/rfc/rfc4287">Atom Feed</a> to supply all its links.</p>
  *
- * <h4>Well Known Uniform Resource Identifiers (URI)</h4>
- *
- * <p><a href="http://tools.ietf.org/html/rfc5785">RFC5785</a> defines a path prefix for "well-known locations", "/.well-known/", in selected Uniform Resource
- * Identifier (URI) schemes. For more details see <a href="http://tools.ietf.org/html/rfc5785">the spec</a>.<p>
- *
- * <h4>Web Host Metadata</h4>
- *
- * <p>The <a href="http://tools.ietf.org/html/draft-hammer-hostmeta">Web Host Metadata Specification</a> defines a lightweight metadata document format for describing
- * hosts (thus the name "host-meta"), intended for use by web-based protocols. This document also registers the well-known URI suffix "host-meta" in the
- * Well-Known URI Registry established by <a href="http://tools.ietf.org/html/rfc5785">RFC5785</a>. For more information see
- * <a href="http://tools.ietf.org/html/draft-hammer-hostmeta">the spec</a>.</p>
+ * <p>It is recommended that the discovery resource be mounted at the <tt>/.well-known/app-meta</tt> endpoint. For more information on "well-known" URIs, see
+ * <a href="http://tools.ietf.org/html/rfc5785">RFC5785</a>.</p>
  *
  * @author Mike Gardiner
  * @author Ryan Heaton
