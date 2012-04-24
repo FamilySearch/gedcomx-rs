@@ -48,8 +48,9 @@ public interface SourceReferencesRSDefinition extends CommonRSParameters {
    */
   @GET
   @StatusCodes({
-    @ResponseCode ( code = 200, condition = "Upon a successful read."),
-    @ResponseCode ( code = 404, condition = "If the requested resource is not found.")
+    @ResponseCode( code = 200, condition = "Upon a successful read."),
+    @ResponseCode( code = 204, condition = "Upon a successful query with no results."),
+    @ResponseCode( code = 404, condition = "The specified person has been moved, deleted, or otherwise not found.")
   })
   Response get();
 
@@ -61,8 +62,9 @@ public interface SourceReferencesRSDefinition extends CommonRSParameters {
    */
   @POST
   @StatusCodes({
-      @ResponseCode( code = 201, condition = "The creation of the source reference was successful. Expect a location header specifying the link to the created source reference."),
-      @ResponseCode( code = 400, condition = "If the request was unable to be understood by the application.")
+    @ResponseCode( code = 201, condition = "The creation of the source reference was successful. Expect a location header specifying the link to the created source reference."),
+    @ResponseCode( code = 400, condition = "If the request was unable to be understood by the application."),
+    @ResponseCode( code = 404, condition = "The specified person has been moved, deleted, or otherwise not found.")
   })
   Response post(SourceReference sourceReference);
 
