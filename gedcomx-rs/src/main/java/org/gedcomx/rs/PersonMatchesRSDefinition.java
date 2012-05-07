@@ -50,7 +50,7 @@ public interface PersonMatchesRSDefinition extends CommonRSParameters {
   @StatusCodes({
     @ResponseCode ( code = 200, condition = "Upon a successful read."),
     @ResponseCode ( code = 301, condition = "If the person has been merged."),
-    @ResponseCode ( code = 404, condition = "If the person was not found.)"),
+    @ResponseCode ( code = 404, condition = "If the person was not found."),
     @ResponseCode ( code = 410, condition = "If the person has been deleted.")
   })
   Response get();
