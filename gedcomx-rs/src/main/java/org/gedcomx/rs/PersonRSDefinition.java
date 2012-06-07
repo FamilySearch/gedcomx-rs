@@ -38,7 +38,6 @@ import javax.ws.rs.core.Response;
 )
 @ResourceLinks({
   @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "The person itself." ),
-  @ResourceLink ( rel = PersonMatchesRSDefinition.REL, definedBy = PersonMatchesRSDefinition.class, description = "The matches for the person." ),
   @ResourceLink ( rel = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The summary for the person.")
 })
 public interface PersonRSDefinition extends CommonRSParameters {
