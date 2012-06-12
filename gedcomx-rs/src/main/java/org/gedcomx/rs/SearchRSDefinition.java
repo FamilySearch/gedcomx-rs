@@ -34,102 +34,103 @@ import javax.ws.rs.core.Response;
  *     <th>description</th>
  *   </tr>
  *   <tr>
- *     <td>startIndex</td>
- *     <td>The index of the first search result desired by the search client. See
- *     <a href="http://www.opensearch.org/Specifications/OpenSearch/1.1#The_.22startIndex.22_parameter">OpenSearch parameters: startIndex</a>.</td>
+ *     <td>start</td>
+ *     <td>The index of the first search result desired by the search client.</td>
  *   </tr>
  *   <tr>
  *     <td>count</td>
- *     <td>The number of search results per page desired by the search client. See
- *     <a href="http://www.opensearch.org/Specifications/OpenSearch/1.1#The_.22count.22_parameter">OpenSearch parameters: count</a>.</td>
+ *     <td>The number of search results per page desired by the search client.</td>
  *   </tr>
  *   <tr>
- *     <td>resourceType</td>
- *     <td>The type of the resources to search for. Valid values include "<tt>person</tt>" to search for conclusion persons and "<tt>person-matches</tt>" to
- *     search for matches of a person.</td>
- *   </tr>
- *   <tr>
- *     <td>name</td>
- *     <td>The full name (given + family) of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>givenName</td>
- *     <td>The given name of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>familyName</td>
- *     <td>The family name of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>gender</td>
- *     <td>The gender of the person being searched. Valid values are "<tt>male</tt>" and "<tt>female</tt>".</td>
- *   </tr>
- *   <tr>
- *     <td>birthDate</td>
- *     <td>The birth date of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>birthPlace</td>
- *     <td>The birth place of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>deathDate</td>
- *     <td>The death date of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>deathPlace</td>
- *     <td>The death place of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>marriageDate</td>
- *     <td>The marriage date of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>marriagePlace</td>
- *     <td>The marriage place of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td colspan="2">
- *       <h4>Relation Search Parameters</h4>
- *       <p>The following set of standard parameters is defined as the substitution of <tt>{relation}</tt> with all of the 
- *       values "<tt>father</tt>", "<tt>mother</tt>", "<tt>spouse</tt>", and "<tt>parent</tt>".</p>
+ *     <td>q</td>
+ *     <td><p>The query parameter describing the search criteria. A parameter name and value is separated by a colon ':' and each name value pair is separated
+ *     by a white space '&nbsp;'.</p>
+ *     For example:<br/>
+ *     <h4>q=giveName:John surname:Smith" gender:male birthDate:"30 June 1900"</h4><br/>
+ *     <p>Notice the white space in the birthDate value.  If white space is needed in the value then the value must be wrapped in double quotes. By default
+ *     values are exact. For non-exact matches append a tilde '~' at the end of the value such as givenName:Bob~.</p>
+ *       <table>
+ *         <tr>
+ *           <th>name</td>
+ *           <th>description</td>
+ *         </tr>
+ *         <tr>
+ *           <td>givenName:</td>
+ *           <td>The given name of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>surname:</td>
+ *           <td>The family name of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>gender:</td>
+ *           <td>The gender of the person being searched. Valid values are "<tt>male</tt>" and "<tt>female</tt>".</td>
+ *         </tr>
+ *         <tr>
+ *           <td>birthDate:</td>
+ *           <td>The birth date of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>birthPlace:</td>
+ *           <td>The birth place of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>deathDate:</td>
+ *           <td>The death date of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>deathPlace:</td>
+ *           <td>The death place of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>marriageDate:</td>
+ *           <td>The marriage date of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>marriagePlace:</td>
+ *           <td>The marriage place of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td colspan="2">
+ *             <h4>Relation Search Parameters</h4>
+ *             <p>The following set of standard parameters is defined as the substitution of <tt>{relation}</tt> with all of the
+ *             values "<tt>father</tt>", "<tt>mother</tt>", "<tt>spouse</tt>", and "<tt>parent</tt>".</p>
+ *           </td>
+ *         </tr>
+ *         <tr>
+ *           <td>{relation}GivenName:</td>
+ *           <td>The given name of the {relation} of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>{relation}Surname:</td>
+ *           <td>The family name of the {relation} of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>{relation}BirthDate:</td>
+ *           <td>The birth date of the {relation} of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>{relation}BirthPlace:</td>
+ *           <td>The birth place of the {relation} of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>{relation}DeathDate:</td>
+ *           <td>The death date of the {relation} of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>{relation}DeathPlace:</td>
+ *           <td>The death place of the {relation} of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>{relation}MarriageDate</td>
+ *           <td>The marriage date of the {relation} of the person being searched.</td>
+ *         </tr>
+ *         <tr>
+ *           <td>{relation}MarriagePlace:</td>
+ *           <td>The marriage place of the {relation} of the person being searched.</td>
+ *         </tr>
+ *       </table>
  *     </td>
- *   </tr>
- *   <tr>
- *     <td>{relation}Name</td>
- *     <td>The full name (given + family) of the {relation} of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>{relation}GivenName</td>
- *     <td>The given name of the {relation} of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>{relation}FamilyName</td>
- *     <td>The family name of the {relation} of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>{relation}BirthDate</td>
- *     <td>The birth date of the {relation} of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>{relation}BirthPlace</td>
- *     <td>The birth place of the {relation} of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>{relation}DeathDate</td>
- *     <td>The death date of the {relation} of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>{relation}DeathPlace</td>
- *     <td>The death place of the {relation} of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>{relation}MarriageDate</td>
- *     <td>The marriage date of the {relation} of the person being searched.</td>
- *   </tr>
- *   <tr>
- *     <td>{relation}MarriagePlace</td>
- *     <td>The marriage place of the {relation} of the person being searched.</td>
  *   </tr>
  * </table>
  *
