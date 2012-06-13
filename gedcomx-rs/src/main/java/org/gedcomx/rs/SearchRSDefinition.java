@@ -147,7 +147,7 @@ import javax.ws.rs.core.Response;
 })
 public interface SearchRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "entry";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "search";
 
   /**
    * Read the results of a search.
