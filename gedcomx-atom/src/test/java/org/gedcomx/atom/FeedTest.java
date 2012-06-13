@@ -5,14 +5,14 @@ import org.gedcomx.opensearch.Query;
 import org.testng.annotations.Test;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static org.gedcomx.rt.SerializationUtil.processThroughJson;
 import static org.gedcomx.rt.SerializationUtil.processThroughXml;
 import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.fail;
+import static org.testng.AssertJUnit.assertNotNull;
+
 
 /**
  * @author Ryan Heaton
@@ -33,74 +33,64 @@ public class FeedTest {
   }
 
   private Feed createFeed() {
-    Feed feed = new Feed();
-    feed.setAuthors(new ArrayList<Person>());
-    Person author = new Person();
-    author.setEmail("author@author.com");
-    author.setName("Author");
-    author.setUri(URI.create("urn:author"));
-    author.setBase(URI.create("urn:base"));
-    author.setLang("en");
-    feed.getAuthors().add(author);
-
-    feed.setContributors(new ArrayList<Person>());
-    Person contributor = new Person();
-    contributor.setEmail("contributor@contributor.com");
-    contributor.setName("Contributor");
-    contributor.setUri(URI.create("urn:contributor"));
-    feed.getContributors().add(contributor);
-    
-    feed.setEntries(new ArrayList<Entry>());
     Entry entry = new Entry();
     entry.setAuthors(new ArrayList<Person>());
-    Person author2 = new Person();
-    author2.setEmail("author2@author.com");
-    entry.getAuthors().add(author2);
+    entry.getAuthors().add(new Person());
+    entry.getAuthors().get(0).setEmail("author2@author.com");
     entry.setCategories(new ArrayList<Category>());
-    Category category = new Category();
-    category.setLabel("label");
-    category.setScheme(URI.create("urn:scheme"));
-    category.setTerm("term");
-    entry.getCategories().add(category);
+    entry.getCategories().add(new Category());
+    entry.getCategories().get(0).setLabel("label");
+    entry.getCategories().get(0).setScheme(URI.create("urn:scheme"));
+    entry.getCategories().get(0).setTerm("term");
     entry.setContent(new Content());
     entry.getContent().setBase(URI.create("urn:base"));
     entry.getContent().setLang("fr");
-    entry.getContent().setType(AtomContentType.text);
-    entry.getContent().setValue("text content");
+    entry.getContent().setType("application/x-gedcom-conclusion-v1+xml");
+    entry.getContent().addExtensionElement(new CustomEntity());
+    entry.getContent().findExtensionOfType(CustomEntity.class).setId("contententityid");
     entry.setContributors(new ArrayList<Person>());
     entry.getContributors().add(new Person());
     entry.getContributors().get(0).setEmail("contributor2@contributor.com");
     entry.setId(URI.create("urn:id"));
     entry.setLinks(new ArrayList<Link>());
-    Link link = new Link();
-    link.setHref(URI.create("urn:href"));
-    link.setTitle("link title");
-    link.setHreflang("en");
-    link.setLength("1234");
-    link.setRel("self");
-    link.setType("text/plain");
-    entry.getLinks().add(link);
+    entry.getLinks().add(new Link());
+    entry.getLinks().get(0).setHref(URI.create("urn:href"));
+    entry.getLinks().get(0).setTitle("link title");
+    entry.getLinks().get(0).setHreflang("en");
+    entry.getLinks().get(0).setLength("1234");
+    entry.getLinks().get(0).setRel("self");
+    entry.getLinks().get(0).setType("text/plain");
     entry.setPublished(new Date(1234567L));
     entry.setRights("none");
     entry.setScore(0.6F);
     entry.setTitle("entry title");
     entry.setUpdated(new Date(1234568L));
+    entry.addExtensionElement(new CustomEntity());
+    entry.findExtensionOfType(CustomEntity.class).setId("entityid");
+    entry.findExtensionOfType(CustomEntity.class).addExtensionElement(new CustomEntity());
+    entry.findExtensionOfType(CustomEntity.class).findExtensionOfType(CustomEntity.class).setId("subentityid");
 
-    CustomEntity customEntity = new CustomEntity();
-    customEntity.setId("entityid");
-    CustomEntity subentity = new CustomEntity();
-    subentity.setId("subentityid");
-    customEntity.addExtensionElement(new ObjectFactory().createCustomEntitySubelement(subentity));
-    entry.addExtensionElement(customEntity);
+    Feed feed = new Feed();
+    feed.setAuthors(new ArrayList<Person>());
+    feed.getAuthors().add(new Person());
+    feed.getAuthors().get(0).setEmail("author@author.com");
+    feed.getAuthors().get(0).setName("Author");
+    feed.getAuthors().get(0).setUri(URI.create("urn:author"));
+    feed.getAuthors().get(0).setBase(URI.create("urn:base"));
+    feed.getAuthors().get(0).setLang("en");
+    feed.setContributors(new ArrayList<Person>());
+    feed.getContributors().add(new Person());
+    feed.getContributors().get(0).setEmail("contributor@contributor.com");
+    feed.getContributors().get(0).setName("Contributor");
+    feed.getContributors().get(0).setUri(URI.create("urn:contributor"));
+    feed.setEntries(new ArrayList<Entry>());
     feed.getEntries().add(entry);
-    
     feed.setGenerator(new Generator());
     feed.getGenerator().setBase(URI.create("urn:base"));
     feed.getGenerator().setLang("de");
     feed.getGenerator().setUri(URI.create("urn:generator"));
     feed.getGenerator().setValue("generator value");
     feed.getGenerator().setVersion("1.2");
-    
     feed.setIcon(URI.create("urn:icon"));
     feed.setId(URI.create("urn:feedid"));
     feed.setItemsPerPage(2);
@@ -118,7 +108,6 @@ public class FeedTest {
     feed.getQuery().setStartPage("page1");
     feed.getQuery().setTitle("query title");
     feed.getQuery().setTotalResults(6);
-
     feed.setRights("feed rights");
     feed.setSubtitle("subtitle");
     feed.setTitle("feed title");
@@ -156,8 +145,10 @@ public class FeedTest {
 
     assertEquals(URI.create("urn:base"), entry.getContent().getBase());
     assertEquals("fr", entry.getContent().getLang());
-    assertEquals(AtomContentType.text, entry.getContent().getType());
-    assertEquals("text content", entry.getContent().getValue());
+    assertEquals("application/x-gedcom-conclusion-v1+xml", entry.getContent().getType());
+    assertNotNull(entry.getContent().getExtensionElements());
+    assertEquals(entry.getContent().getExtensionElements().size(), 1);
+    assertEquals("contententityid", ((CustomEntity)entry.getContent().getExtensionElements().get(0)).getId());
 
     assertEquals(1, entry.getContributors().size());
     assertEquals("contributor2@contributor.com", entry.getContributors().get(0).getEmail());
@@ -180,18 +171,8 @@ public class FeedTest {
     CustomEntity customEntity = entry.findExtensionOfType(CustomEntity.class);
     assertEquals("entityid", customEntity.getId());
     assertEquals(1, customEntity.getExtensionElements().size());
-    Object ext = customEntity.getExtensionElements().get(0);
-    CustomEntity subentity = null;
-    if (ext instanceof CustomEntity) {
-      subentity = (CustomEntity) ext;
-    }
-    else if (ext instanceof JAXBElement) {
-      subentity = (CustomEntity) ((JAXBElement) ext).getValue();
-    }
-    else {
-      fail("Extension element should be an instance of CustomEntity or JAXBElement<CustomEntity>");
-    }
-    assertEquals("subentityid", subentity.getId());
+    assertNotNull(customEntity.findExtensionOfType(CustomEntity.class));
+    assertEquals("subentityid", customEntity.findExtensionOfType(CustomEntity.class).getId());
 
     assertEquals(URI.create("urn:base"), feed.getGenerator().getBase());
     assertEquals("de", feed.getGenerator().getLang());

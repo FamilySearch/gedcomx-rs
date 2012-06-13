@@ -17,71 +17,22 @@ package org.gedcomx.atom;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
-import org.gedcomx.common.URI;
 import org.gedcomx.rt.XmlTypeIdResolver;
 
-import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
+
 
 /**
  * @author Ryan Heaton
  */
 @XmlType ( name = "Content" )
-@JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
+@JsonTypeInfo ( use = JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
 @JsonTypeIdResolver (XmlTypeIdResolver.class)
 @SuppressWarnings("gedcomx:no_id")
-public class Content {
+public class Content extends ExtensibleElement {
 
-  private String lang;
-  private URI base;
-  private AtomContentType type;
-  private String value;
-
-  /**
-   * The language.
-   *
-   * @return The language.
-   * @see <a href="http://tools.ietf.org/html/rfc4287#section-2">The atom spec, section 2.</a>
-   */
-  @XmlAttribute ( namespace = XMLConstants.XML_NS_URI )
-  public String getLang() {
-    return lang;
-  }
-
-  /**
-   * The language.
-   *
-   * @param lang The language.
-   * @see <a href="http://tools.ietf.org/html/rfc4287#section-2">The atom spec, section 2.</a>
-   */
-  public void setLang(String lang) {
-    this.lang = lang;
-  }
-
-  /**
-   * The base.
-   *
-   * @return The base.
-   * @see <a href="http://tools.ietf.org/html/rfc4287#section-2">The atom spec, section 2.</a>
-   */
-  @XmlAttribute
-  @XmlSchemaType (name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI)
-  public URI getBase() {
-    return base;
-  }
-
-  /**
-   * The base.
-   *
-   * @param base The base.
-   * @see <a href="http://tools.ietf.org/html/rfc4287#section-2">The atom spec, section 2.</a>
-   */
-  public void setBase(URI base) {
-    this.base = base;
-  }
+  private String type;
 
   /**
    * The type of the content.
@@ -89,7 +40,7 @@ public class Content {
    * @return The type of the content.
    */
   @XmlAttribute
-  public AtomContentType getType() {
+  public String getType() {
     return type;
   }
 
@@ -98,26 +49,7 @@ public class Content {
    *
    * @param type The type of the content.
    */
-  public void setType(AtomContentType type) {
+  public void setType(String type) {
     this.type = type;
-  }
-
-  /**
-   * The value of the content.
-   *
-   * @return The value of the content.
-   */
-  @XmlValue
-  public String getValue() {
-    return value;
-  }
-
-  /**
-   * The value of the content.
-   *
-   * @param value The value of the content.
-   */
-  public void setValue(String value) {
-    this.value = value;
   }
 }
