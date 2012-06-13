@@ -20,7 +20,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.URI;
-import org.gedcomx.opensearch.OpenSearchModel;
+import org.gedcomx.opensearch.SearchModel;
 import org.gedcomx.rt.JsonElementWrapper;
 import org.gedcomx.rt.XmlTypeIdResolver;
 
@@ -166,7 +166,7 @@ public class Entry extends ExtensibleElement {
    * @return The relevance score, if this entry represents a search result. The value must contain a decimal representation of a real number between 0 and 1, inclusive.
    * @see <a href="http://www.opensearch.org/Specifications/OpenSearch/Extensions/Relevance/1.0">OpenSearch Relevance Extension</a>
    */
-  @XmlElement(namespace = OpenSearchModel.OPENSEARCH_RELEVANCE_NAMESPACE )
+  @XmlElement(namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
   public Float getScore() {
     return score;
   }

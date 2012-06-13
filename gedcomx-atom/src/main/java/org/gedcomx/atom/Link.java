@@ -18,7 +18,7 @@ package org.gedcomx.atom;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.URI;
-import org.gedcomx.opensearch.OpenSearchModel;
+import org.gedcomx.opensearch.SearchModel;
 import org.gedcomx.rt.JsonElementWrapper;
 import org.gedcomx.rt.XmlTypeIdResolver;
 
@@ -102,7 +102,7 @@ public class Link {
    *
    * @return The opensearch URI template (used in links to search resources).
    */
-  @XmlAttribute ( namespace = OpenSearchModel.OPENSEARCH_NAMESPACE )
+  @XmlAttribute ( namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
   public String getTemplate() {
     return template;
   }

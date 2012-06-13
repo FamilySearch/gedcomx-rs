@@ -26,31 +26,17 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlTransient
 @Models ( {
   @Model (
-    id = "opensearch",
-    namespace = OpenSearchModel.OPENSEARCH_NAMESPACE,
+    id = "gxs",
     projectId = "gedcomx-rs",
-    label = "OpenSearch Model",
-    description = "The opensearch model defines elements and types used for searches.",
-    version = "1.1",
-    xmlMediaType = OpenSearchModel.OPENSEARCH_XML_MEDIA_TYPE,
-    jsonMediaType = OpenSearchModel.OPENSEARCH_GEDCOMX_JSON_MEDIA_TYPE
-  ),
-  @Model (
-    id = "relevance",
-    projectId = "gedcomx-rs",
-    namespace = OpenSearchModel.OPENSEARCH_RELEVANCE_NAMESPACE,
+    namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE,
     label = "OpenSearch Relevance Model",
     description = "The opensearch relevance model defines elements and types used for indicating the relevance of a search.",
     version = "1.0"
   )
 } )
-public class OpenSearchModel {
+public class SearchModel {
 
-  private OpenSearchModel() {}
+  private SearchModel() {}
 
-  public static final String OPENSEARCH_NAMESPACE = "http://a9.com/-/spec/opensearch/1.1/";
-  public static final String OPENSEARCH_XML_MEDIA_TYPE = "application/opensearchdescription+xml";
-  public static final String OPENSEARCH_GEDCOMX_JSON_MEDIA_TYPE = "application/x-gedcomx-opensearchdescription+json";
-
-  public static final String OPENSEARCH_RELEVANCE_NAMESPACE = "http://a9.com/-/opensearch/extensions/relevance/1.0/";
+  public static final String GEDCOMX_SEARCH_NAMESPACE = "http://gedcomx.org/search/v1/";
 }

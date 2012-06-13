@@ -20,8 +20,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.URI;
-import org.gedcomx.opensearch.OpenSearchModel;
-import org.gedcomx.opensearch.Query;
+import org.gedcomx.opensearch.SearchModel;
 import org.gedcomx.rt.XmlTypeIdResolver;
 
 import javax.xml.XMLConstants;
@@ -40,7 +39,7 @@ import java.util.List;
  * @see <a href="http://tools.ietf.org/html/rfc4287#section-4">The atom spec, section 4.</a>
  */
 @XmlRootElement
-@XmlType( name = "Feed", propOrder = {"authors", "contributors", "generator", "icon", "id", "totalResults", "startIndex", "itemsPerPage", "query", "links", "logo", "rights", "subtitle", "title", "updated", "entries"} )
+@XmlType( name = "Feed", propOrder = {"authors", "contributors", "generator", "icon", "id", "results", "index", "links", "logo", "rights", "subtitle", "title", "updated", "entries"} )
 @JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
 @JsonTypeIdResolver (XmlTypeIdResolver.class)
 @SuppressWarnings("gedcomx:no_id")
@@ -51,10 +50,8 @@ public class Feed extends ExtensibleElement {
   private Generator generator;
   private URI icon;
   private URI id;
-  private Integer totalResults;
-  private Integer startIndex;
-  private Integer itemsPerPage;
-  private Query query;
+  private Integer results;
+  private Integer index;
   private List<Link> links;
   private URI logo;
   private String rights;
@@ -168,18 +165,18 @@ public class Feed extends ExtensibleElement {
    *
    * @return The number of search results available for the current search, if this feed is supplying search results.
    */
-  @XmlElement (namespace = OpenSearchModel.OPENSEARCH_NAMESPACE )
-  public Integer getTotalResults() {
-    return totalResults;
+  @XmlElement (namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
+  public Integer getResults() {
+    return results;
   }
 
   /**
    * The number of search results available for the current search, if this feed is supplying search results.
    *
-   * @param totalResults The number of search results available for the current search, if this feed is supplying search results.
+   * @param results The number of search results available for the current search, if this feed is supplying search results.
    */
-  public void setTotalResults(Integer totalResults) {
-    this.totalResults = totalResults;
+  public void setResults(Integer results) {
+    this.results = results;
   }
 
   /**
@@ -187,56 +184,18 @@ public class Feed extends ExtensibleElement {
    *
    * @return The index of the first search result in the current set of search results, if this feed is supplying search results.
    */
-  @XmlElement (namespace = OpenSearchModel.OPENSEARCH_NAMESPACE )
-  public Integer getStartIndex() {
-    return startIndex;
+  @XmlElement (namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
+  public Integer getIndex() {
+    return index;
   }
 
   /**
    * The index of the first search result in the current set of search results, if this feed is supplying search results.
    *
-   * @param startIndex The index of the first search result in the current set of search results, if this feed is supplying search results.
+   * @param index The index of the first search result in the current set of search results, if this feed is supplying search results.
    */
-  public void setStartIndex(Integer startIndex) {
-    this.startIndex = startIndex;
-  }
-
-  /**
-   * The number of search results returned per page, if this feed is supplying search results.
-   *
-   * @return The number of search results returned per page, if this feed is supplying search results.
-   */
-  @XmlElement (namespace = OpenSearchModel.OPENSEARCH_NAMESPACE )
-  public Integer getItemsPerPage() {
-    return itemsPerPage;
-  }
-
-  /**
-   * The number of search results returned per page, if this feed is supplying search results.
-   *
-   * @param itemsPerPage The number of search results returned per page, if this feed is supplying search results.
-   */
-  public void setItemsPerPage(Integer itemsPerPage) {
-    this.itemsPerPage = itemsPerPage;
-  }
-
-  /**
-   * Search query that was performed by the search client, if this feed is supplying search results.
-   *
-   * @return Search query that was performed by the search client, if this feed is supplying search results.
-   */
-  @XmlElement (name = "Query", namespace = OpenSearchModel.OPENSEARCH_NAMESPACE )
-  public Query getQuery() {
-    return query;
-  }
-
-  /**
-   * Search query that was performed by the search client, if this feed is supplying search results.
-   *
-   * @param query Search query that was performed by the search client, if this feed is supplying search results.
-   */
-  public void setQuery(Query query) {
-    this.query = query;
+  public void setIndex(Integer index) {
+    this.index = index;
   }
 
   /**

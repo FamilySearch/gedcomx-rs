@@ -18,7 +18,7 @@
  * The opensearch model defines elements and types used for searches.
  */
 @XmlSchema (
-  namespace = OpenSearchModel.OPENSEARCH_NAMESPACE,
+  namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE,
   elementFormDefault = XmlNsForm.QUALIFIED
 )
 @XmlAccessorOrder ( XmlAccessOrder.ALPHABETICAL )

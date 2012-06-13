@@ -1,7 +1,6 @@
 package org.gedcomx.atom;
 
 import org.gedcomx.common.URI;
-import org.gedcomx.opensearch.Query;
 import org.testng.annotations.Test;
 
 import javax.xml.bind.JAXBContext;
@@ -93,25 +92,13 @@ public class FeedTest {
     feed.getGenerator().setVersion("1.2");
     feed.setIcon(URI.create("urn:icon"));
     feed.setId(URI.create("urn:feedid"));
-    feed.setItemsPerPage(2);
     feed.setLinks(new ArrayList<Link>());
     feed.getLinks().add(new Link("self", URI.create("urn:feed")));
     feed.setLogo(URI.create("urn:logo"));
-    feed.setQuery(new Query());
-    feed.getQuery().setCount(4);
-    feed.getQuery().setInputEncoding("utf-8");
-    feed.getQuery().setLanguage("es");
-    feed.getQuery().setOutputEncoding("ascii");
-    feed.getQuery().setRole("role");
-    feed.getQuery().setSearchTerms("terms");
-    feed.getQuery().setStartIndex(5);
-    feed.getQuery().setStartPage("page1");
-    feed.getQuery().setTitle("query title");
-    feed.getQuery().setTotalResults(6);
     feed.setRights("feed rights");
     feed.setSubtitle("subtitle");
     feed.setTitle("feed title");
-    feed.setTotalResults(7);
+    feed.setResults(7);
     feed.setUpdated(new Date(54321L));
     
     return feed;
@@ -182,26 +169,15 @@ public class FeedTest {
 
     assertEquals(URI.create("urn:icon"), feed.getIcon());
     assertEquals(URI.create("urn:feedid"), feed.getId());
-    assertEquals(2, feed.getItemsPerPage().intValue());
     assertEquals(1, feed.getLinks().size());
     assertEquals("self", feed.getLinks().get(0).getRel());
     assertEquals(URI.create("urn:feed"), feed.getLinks().get(0).getHref());
     assertEquals(URI.create("urn:logo"), feed.getLogo());
-    assertEquals(4, feed.getQuery().getCount().intValue());
-    assertEquals("utf-8", feed.getQuery().getInputEncoding());
-    assertEquals("es", feed.getQuery().getLanguage());
-    assertEquals("ascii", feed.getQuery().getOutputEncoding());
-    assertEquals("role", feed.getQuery().getRole());
-    assertEquals("terms", feed.getQuery().getSearchTerms());
-    assertEquals(5, feed.getQuery().getStartIndex().intValue());
-    assertEquals("page1", feed.getQuery().getStartPage());
-    assertEquals("query title", feed.getQuery().getTitle());
-    assertEquals(6, feed.getQuery().getTotalResults().intValue());
 
     assertEquals("feed rights", feed.getRights());
     assertEquals("subtitle", feed.getSubtitle());
     assertEquals("feed title", feed.getTitle());
-    assertEquals(7, feed.getTotalResults().intValue());
+    assertEquals(7, feed.getResults().intValue());
     assertEquals(new Date(54321L), feed.getUpdated());
   }
 
