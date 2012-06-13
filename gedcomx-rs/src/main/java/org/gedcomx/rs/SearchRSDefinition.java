@@ -122,7 +122,7 @@ import javax.ws.rs.core.Response;
  *           <td>The death place of the {relation} of the person being searched.</td>
  *         </tr>
  *         <tr>
- *           <td>{relation}MarriageDate</td>
+ *           <td>{relation}MarriageDate:</td>
  *           <td>The marriage date of the {relation} of the person being searched.</td>
  *         </tr>
  *         <tr>
