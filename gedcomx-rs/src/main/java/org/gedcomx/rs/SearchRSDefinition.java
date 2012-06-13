@@ -46,7 +46,7 @@ import javax.ws.rs.core.Response;
  *     <td><p>The query parameter describing the search criteria. A parameter name and value is separated by a colon ':' and each name value pair is separated
  *     by a white space '&nbsp;'.</p>
  *     For example:<br/>
- *     <h4>q=giveName:John surname:Smith" gender:male birthDate:"30 June 1900"</h4><br/>
+ *     <h4>q=giveName:John surname:Smith gender:male birthDate:"30 June 1900"</h4><br/>
  *     <p>Notice the white space in the birthDate value.  If white space is needed in the value then the value must be wrapped in double quotes. By default
  *     values are exact. For non-exact matches append a tilde '~' at the end of the value such as givenName:Bob~.</p>
  *       <table class="param-table">
