@@ -1,6 +1,7 @@
 package org.gedcomx.atom;
 
 import org.gedcomx.common.URI;
+import org.gedcomx.search.ResultConfidence;
 import org.testng.annotations.Test;
 
 import javax.xml.bind.JAXBContext;
@@ -62,6 +63,7 @@ public class FeedTest {
     entry.setPublished(new Date(1234567L));
     entry.setRights("none");
     entry.setScore(0.6F);
+    entry.setConfidence(ResultConfidence.four);
     entry.setTitle("entry title");
     entry.setUpdated(new Date(1234568L));
     entry.addExtensionElement(new CustomEntity());
@@ -152,6 +154,7 @@ public class FeedTest {
     assertEquals(new Date(1234567L), entry.getPublished());
     assertEquals("none", entry.getRights());
     assertEquals(0.6F, entry.getScore());
+    assertEquals(ResultConfidence.four, entry.getConfidence());
     assertEquals("entry title", entry.getTitle());
     assertEquals(new Date(1234568L), entry.getUpdated());
     assertEquals(1, entry.getExtensionElements().size());

@@ -20,7 +20,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.URI;
-import org.gedcomx.opensearch.SearchModel;
+import org.gedcomx.search.SearchModel;
 import org.gedcomx.rt.XmlTypeIdResolver;
 
 import javax.xml.XMLConstants;

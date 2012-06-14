@@ -22,7 +22,7 @@
   elementFormDefault = XmlNsForm.QUALIFIED
 )
 @XmlAccessorOrder ( XmlAccessOrder.ALPHABETICAL )
-package org.gedcomx.opensearch;
+package org.gedcomx.search;
 
 //todo: opensearch description resource?
 

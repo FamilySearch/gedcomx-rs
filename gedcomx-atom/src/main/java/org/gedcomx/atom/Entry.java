@@ -20,7 +20,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.URI;
-import org.gedcomx.opensearch.SearchModel;
+import org.gedcomx.search.ResultConfidence;
+import org.gedcomx.search.SearchModel;
 import org.gedcomx.rt.JsonElementWrapper;
 import org.gedcomx.rt.XmlTypeIdResolver;
 
@@ -51,6 +52,7 @@ public class Entry extends ExtensibleElement {
   private List<Person> contributors;
   private URI id;
   private Float score;
+  private ResultConfidence confidence;
   private List<Link> links;
   private Date published;
   private String rights;
@@ -161,10 +163,9 @@ public class Entry extends ExtensibleElement {
   }
 
   /**
-   * The relevance score, if this entry represents a search result. The value must contain a decimal representation of a real number between 0 and 1, inclusive.
+   * The relevance score, if this entry represents a search result. The value of this score is implementation-specific.
    *
-   * @return The relevance score, if this entry represents a search result. The value must contain a decimal representation of a real number between 0 and 1, inclusive.
-   * @see <a href="http://www.opensearch.org/Specifications/OpenSearch/Extensions/Relevance/1.0">OpenSearch Relevance Extension</a>
+   * @return The relevance score.
    */
   @XmlElement(namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
   public Float getScore() {
@@ -172,12 +173,31 @@ public class Entry extends ExtensibleElement {
   }
 
   /**
-   * The relevance score, if this entry represents a search result. The value must contain a decimal representation of a real number between 0 and 1, inclusive.
+   * The relevance score, if this entry represents a search result. The value of this score is implementation-specific.
    *
-   * @param score The relevance score, if this entry represents a search result. The value must contain a decimal representation of a real number between 0 and 1, inclusive.
+   * @param score The relevance score.
    */
   public void setScore(Float score) {
     this.score = score;
+  }
+
+  /**
+   * The confidence of the result, if this entry represents a search result.
+   *
+   * @return The confidence of the result, if this entry represents a search result.
+   */
+  @XmlElement(namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
+  public ResultConfidence getConfidence() {
+    return confidence;
+  }
+
+  /**
+   * The confidence of the result, if this entry represents a search result.
+   *
+   * @param confidence The confidence of the result, if this entry represents a search result.
+   */
+  public void setConfidence(ResultConfidence confidence) {
+    this.confidence = confidence;
   }
 
   /**
