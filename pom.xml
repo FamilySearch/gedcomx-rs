@@ -11,7 +11,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <enunciate.version>1.25</enunciate.version>
-    <gedcomx.core.version>0.18.0-SNAPSHOT</gedcomx.core.version>
+    <gedcomx.core.version>0.17.0</gedcomx.core.version>
     <root.basedir>${project.basedir}</root.basedir>
     <year>${inceptionYear}</year>
   </properties>
