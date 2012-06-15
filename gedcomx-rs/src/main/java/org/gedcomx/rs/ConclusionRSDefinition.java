@@ -42,7 +42,7 @@ import javax.ws.rs.core.Response;
 })
 public interface ConclusionRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "conclusions";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "conclusion";
 
   /**
    * Read a conclusion.
