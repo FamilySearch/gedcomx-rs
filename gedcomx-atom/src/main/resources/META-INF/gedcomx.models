@@ -1,2 +1,2 @@
 org.gedcomx.atom.AtomModel
-org.gedcomx.opensearch.OpenSearchModel
+org.gedcomx.search.SearchModel
