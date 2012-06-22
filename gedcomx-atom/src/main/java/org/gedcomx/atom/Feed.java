@@ -21,7 +21,6 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.URI;
 import org.gedcomx.search.SearchModel;
-import org.gedcomx.rt.XmlTypeIdResolver;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlElement;
@@ -40,8 +39,6 @@ import java.util.List;
  */
 @XmlRootElement
 @XmlType( name = "Feed", propOrder = {"authors", "contributors", "generator", "icon", "id", "results", "index", "links", "logo", "rights", "subtitle", "title", "updated", "entries"} )
-@JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
-@JsonTypeIdResolver (XmlTypeIdResolver.class)
 @SuppressWarnings("gedcomx:no_id")
 public class Feed extends ExtensibleElement {
   

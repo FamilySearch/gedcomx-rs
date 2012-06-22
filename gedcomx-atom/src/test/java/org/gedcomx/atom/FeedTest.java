@@ -1,6 +1,7 @@
 package org.gedcomx.atom;
 
 import org.gedcomx.common.URI;
+import org.gedcomx.rt.json.GedcomNamespaceManager;
 import org.gedcomx.search.ResultConfidence;
 import org.testng.annotations.Test;
 
@@ -28,6 +29,7 @@ public class FeedTest {
 
   public void testFeedJson() throws Exception {
     Feed feed = createFeed();
+    GedcomNamespaceManager.registerKnownJsonType(CustomEntity.class);
     feed = processThroughJson(feed);
     assertFeed(feed);
   }

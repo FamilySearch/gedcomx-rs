@@ -17,13 +17,10 @@ package org.gedcomx.atom;
 
 import org.codehaus.enunciate.json.JsonName;
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonTypeInfo;
-import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.URI;
+import org.gedcomx.rt.json.JsonElementWrapper;
 import org.gedcomx.search.ResultConfidence;
 import org.gedcomx.search.SearchModel;
-import org.gedcomx.rt.JsonElementWrapper;
-import org.gedcomx.rt.XmlTypeIdResolver;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlElement;
@@ -41,8 +38,6 @@ import java.util.List;
 @XmlRootElement
 @XmlType ( name = "Entry" )
 @JsonElementWrapper (name = "entries")
-@JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
-@JsonTypeIdResolver (XmlTypeIdResolver.class)
 @SuppressWarnings("gedcomx:no_id")
 public class Entry extends ExtensibleElement {
   

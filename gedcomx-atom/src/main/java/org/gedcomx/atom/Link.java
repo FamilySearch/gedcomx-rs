@@ -15,18 +15,14 @@
  */
 package org.gedcomx.atom;
 
-import org.codehaus.jackson.annotate.JsonTypeInfo;
-import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.gedcomx.common.URI;
+import org.gedcomx.rt.json.HasUniqueJsonKey;
+import org.gedcomx.rt.json.JsonElementWrapper;
 import org.gedcomx.search.SearchModel;
-import org.gedcomx.rt.JsonElementWrapper;
-import org.gedcomx.rt.XmlTypeIdResolver;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 /**
  * A reference to a Web resource.
@@ -37,10 +33,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @XmlType ( name = "Link" )
 @JsonElementWrapper ( name = "links" )
-@JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
-@JsonTypeIdResolver (XmlTypeIdResolver.class)
 @SuppressWarnings("gedcomx:no_id")
-public class Link {
+public class Link implements HasUniqueJsonKey {
 
   private String rel;
   private URI href;
@@ -64,6 +58,8 @@ public class Link {
    * @return The link relationship.
    */
   @XmlAttribute
+  @JsonIgnore
+  @org.codehaus.enunciate.json.JsonIgnore
   public String getRel() {
     return rel;
   }
@@ -73,8 +69,32 @@ public class Link {
    *
    * @param rel The link relationship.
    */
+  @JsonIgnore
   public void setRel(String rel) {
     this.rel = rel;
+  }
+
+  /**
+   * The json key that is used define this link in a map.
+   *
+   * @return The json key that is used define this link in a map.
+   */
+  @XmlTransient
+  @JsonIgnore
+  @Override
+  public String getJsonKey() {
+    return getRel();
+  }
+
+  /**
+   * The json key that is used define this link in a map.
+   *
+   * @param jsonKey The json key that is used define this link in a map.
+   */
+  @Override
+  @JsonIgnore
+  public void setJsonKey(String jsonKey) {
+    setRel(jsonKey);
   }
 
   /**
