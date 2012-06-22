@@ -26,11 +26,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlTransient
 @Models ( {
   @Model (
-    id = "gxs",
+    id = "gxq",
     projectId = "gedcomx-rs",
     namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE,
-    label = "OpenSearch Relevance Model",
-    description = "The opensearch relevance model defines elements and types used for indicating the relevance of a search.",
+    label = "Search Model",
+    description = "The search model defines elements and types used for providing metadata about the results of a search.",
     version = "1.0"
   )
 } )
