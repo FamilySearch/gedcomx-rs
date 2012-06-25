@@ -1,7 +1,7 @@
 package org.gedcomx.atom;
 
 import org.gedcomx.common.URI;
-import org.gedcomx.rt.json.GedcomNamespaceManager;
+import org.gedcomx.rt.GedcomNamespaceManager;
 import org.gedcomx.search.ResultConfidence;
 import org.testng.annotations.Test;
 
