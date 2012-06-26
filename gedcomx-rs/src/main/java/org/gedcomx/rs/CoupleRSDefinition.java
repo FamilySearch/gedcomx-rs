@@ -78,7 +78,7 @@ public interface CoupleRSDefinition extends CommonRSParameters {
   @StatusCodes({
     @ResponseCode ( code = 204, condition = "The update was successful."),
     @ResponseCode ( code = 404, condition = "If the requested couple is not found."),
-    @ResponseCode ( code = 410, condition = "If the requested person has been deleted.")
+    @ResponseCode ( code = 410, condition = "If the requested couple has been deleted.")
 })
   Response put(Relationship relationship);
 
@@ -90,7 +90,7 @@ public interface CoupleRSDefinition extends CommonRSParameters {
   @StatusCodes({
     @ResponseCode ( code = 204, condition = "The delete was successful."),
     @ResponseCode ( code = 404, condition = "If the requested couple is not found."),
-    @ResponseCode ( code = 410, condition = "If the requested person has been deleted.")
+    @ResponseCode ( code = 410, condition = "If the requested couple has been deleted.")
 })
   Response delete();
 }
