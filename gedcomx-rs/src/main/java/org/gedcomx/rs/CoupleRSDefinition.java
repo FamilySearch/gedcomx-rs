@@ -48,7 +48,6 @@ public interface CoupleRSDefinition extends CommonRSParameters {
   @HEAD
   @StatusCodes({
     @ResponseCode ( code = 200, condition = "Upon a successful read."),
-    @ResponseCode ( code = 301, condition = "If the requested couple has been merged to another couple."),
     @ResponseCode ( code = 404, condition = "If the requested couple is not found."),
     @ResponseCode ( code = 410, condition = "If the requested couple has been deleted.")
   })
@@ -62,7 +61,6 @@ public interface CoupleRSDefinition extends CommonRSParameters {
   @GET
   @StatusCodes({
     @ResponseCode ( code = 200, condition = "Upon a successful read."),
-    @ResponseCode ( code = 301, condition = "If the requested couple has been merged into another couple."),
     @ResponseCode ( code = 404, condition = "If the requested couple is not found."),
     @ResponseCode ( code = 410, condition = "If the requested couple has been deleted.")
   })
