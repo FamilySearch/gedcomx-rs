@@ -16,17 +16,13 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.atom.Entry;
-import org.gedcomx.conclusion.ConclusionModel;
-import org.gedcomx.conclusion.Person;
-import org.gedcomx.conclusion.Relationship;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResourceLink;
 import org.gedcomx.rt.rs.ResourceLinks;
 
-import javax.xml.bind.annotation.XmlElement;
-
 /**
- * The search entry resource defines a specific entry for a set of search results.
+ * The person entry resource defines a specific entry for a set of search results. The content
+ * of the entry uses the person and relationship element(s) to describe the hit.
  *
  * @author Ryan Heaton
  */
@@ -35,14 +31,9 @@ import javax.xml.bind.annotation.XmlElement;
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,
   resourceElement = Entry.class,
-  subresources = { PersonSummaryRSDefinition.class },
-  subresourceElements = {
-    @XmlElement (type = Person.class, name = "person", namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE),
-    @XmlElement (type = Relationship.class, name = "relationship", namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE)
-  }
+  subresources = { PersonRSDefinition.class }
 )
 @ResourceLinks ( {
-  @ResourceLink( rel = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The link to the person summary that is identified as a candidate in this search/match result." ),
   @ResourceLink( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person that is identified as a candidate in this search/result result." )
 })
 public interface PersonEntryRSDefinition {

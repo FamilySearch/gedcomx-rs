@@ -54,7 +54,6 @@ import javax.ws.rs.core.Response;
 @ResourceLinks({
   @ResourceLink (rel = PersonsRSDefinition.REL, definedBy = DiscoveryRSDefinition.class, description = "The persons resource for this application."),
   @ResourceLink (rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for the currently logged in user." ),
-  @ResourceLink (rel = PersonSummaryRSDefinition.REL, definedBy = PersonSummaryRSDefinition.class, description = "The person summary for the currently logged in user." ),
   @ResourceLink (rel = SourceDescriptionsRSDefinition.REL, definedBy = SourceDescriptionsRSDefinition.class, description = "The source descriptions resource for this application." ),
   @ResourceLink (rel = SearchRSDefinition.REL, definedBy = SearchRSDefinition.class, description = "The search resource for this application (linked via URI template).", template = true )
 })
