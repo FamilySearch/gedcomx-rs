@@ -53,8 +53,8 @@
 
     <dependency>
       <groupId>org.gedcomx</groupId>
-      <artifactId>gedcomx-rt-support</artifactId>
-      <version>${gedcomx.core.version}</version>
+      <artifactId>gedcomx-rs-rt-support</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>

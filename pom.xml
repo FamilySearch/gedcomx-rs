@@ -17,6 +17,8 @@
   </properties>
 
   <modules>
+    <module>gedcomx-rs-rt-support</module>
+    <module>enunciate-gedcomx-rs-support</module>
     <module>gedcomx-atom</module>
     <module>gedcomx-rs</module>
   </modules>
@@ -158,8 +160,8 @@
           <dependencies>
             <dependency>
               <groupId>org.gedcomx</groupId>
-              <artifactId>enunciate-gedcomx-support</artifactId>
-              <version>${gedcomx.core.version}</version>
+              <artifactId>enunciate-gedcomx-rs-support</artifactId>
+              <version>${project.version}</version>
             </dependency>
           </dependencies>
         </plugin>
