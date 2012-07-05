@@ -42,11 +42,37 @@ public class ResourceBinding {
       return comparison;
     }
   });
+  private final org.gedcomx.rt.rs.ResourceBinding metadata;
 
-  public ResourceBinding(String path, ResourceDefinitionDeclaration definition) {
+  public ResourceBinding(String path, ResourceDefinitionDeclaration definition, org.gedcomx.rt.rs.ResourceBinding metadata) {
     this.path = path;
     this.definition = definition;
+    this.metadata = metadata;
     this.definition.getBindings().add(this);
+  }
+  
+  public String getName() {
+    String name = this.metadata == null ? "##default" : this.metadata.name();
+    if ("##default".equals(name)) {
+      name = this.definition.getName();
+    }
+    return name;
+  }
+
+  public String getNamespace() {
+    String namespace = this.metadata == null ? "##default" : this.metadata.namespace();
+    if ("##default".equals(namespace)) {
+      namespace = this.definition.getNamespace();
+    }
+    return namespace;
+  }
+
+  public String getProjectId() {
+    String pid = this.metadata == null ? "##default" : this.metadata.projectId();
+    if ("##default".equals(pid)) {
+      pid = this.definition.getProjectId();
+    }
+    return pid;
   }
 
   public String getPath() {

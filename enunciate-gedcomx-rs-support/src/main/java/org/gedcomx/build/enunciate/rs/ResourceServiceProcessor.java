@@ -31,6 +31,7 @@ import org.codehaus.enunciate.contract.jaxb.TypeDefinition;
 import org.codehaus.enunciate.contract.jaxrs.Resource;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.RootResource;
+import org.codehaus.enunciate.contract.jaxrs.SubResource;
 import org.codehaus.enunciate.contract.validation.ValidationResult;
 import org.codehaus.enunciate.util.ResourceMethodPathComparator;
 import org.gedcomx.rt.json.JsonElementWrapper;
@@ -234,6 +235,7 @@ public class ResourceServiceProcessor {
     }
 
     TreeMap<String, ResourceBinding> bindingsByPath = new TreeMap<String, ResourceBinding>(new ResourceMethodPathComparator());
+    HashMap<String, ResourceBinding> bindingsByName = new HashMap<String, ResourceBinding>();
     for (RootResource rootResource : model.getRootResources()) {
       List<ResourceMethod> resourceMethods = rootResource.getResourceMethods(true);
       for (ResourceMethod resourceMethod : resourceMethods) {
@@ -247,8 +249,19 @@ public class ResourceServiceProcessor {
           String path = resourceMethod.getFullpath();
           ResourceBinding binding = bindingsByPath.get(path);
           if (binding == null) {
-            binding = new ResourceBinding(path, rsd);
+            org.gedcomx.rt.rs.ResourceBinding metadata = declaringResource instanceof SubResource ? ((SubResource) declaringResource).getLocator().getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class) : null;
+            if (metadata == null) {
+              metadata = declaringResource.getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
+            }
+
+            binding = new ResourceBinding(path, rsd, metadata);
             bindingsByPath.put(path, binding);
+
+            ResourceBinding conflict = bindingsByName.put(binding.getName(), binding);
+            if (conflict != null) {
+              Declaration conflictLocation = declaringResource instanceof SubResource ? ((SubResource) declaringResource).getLocator() : declaringResource;
+              result.addError(conflictLocation, String.format("The name \"%s\" for the binding at %s conflicts with the binding at %s. Please apply the %s annotation to disambiguate.", binding.getName(), binding.getPath(), conflict.getPath(), org.gedcomx.rt.rs.ResourceBinding.class.getName()));
+            }
           }
           else {
             String fqn = binding.getDefinition().getQualifiedName();
