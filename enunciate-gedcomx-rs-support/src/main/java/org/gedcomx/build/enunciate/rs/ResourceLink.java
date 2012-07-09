@@ -18,6 +18,7 @@ package org.gedcomx.build.enunciate.rs;
 import com.sun.mirror.type.DeclaredType;
 import com.sun.mirror.type.MirroredTypeException;
 import com.sun.mirror.type.TypeMirror;
+import org.gedcomx.rt.rs.ResourceBinding;
 import org.gedcomx.rt.rs.ResourceDefinition;
 
 import javax.xml.namespace.QName;
@@ -48,7 +49,25 @@ public final class ResourceLink {
         def = ((DeclaredType) typeMirror).getDeclaration().getAnnotation(ResourceDefinition.class);
       }
     }
-    this.resource = new QName(def.namespace(), def.name());
+    if (def != null) {
+      this.resource = new QName(def.namespace(), def.name());
+    }
+    else {
+      ResourceBinding binding = null;
+      try {
+        binding = meta.definedBy().getAnnotation(ResourceBinding.class);
+      }
+      catch (MirroredTypeException e) {
+        TypeMirror typeMirror = e.getTypeMirror();
+        if (typeMirror instanceof DeclaredType && ((DeclaredType) typeMirror).getDeclaration() != null) {
+          binding = ((DeclaredType) typeMirror).getDeclaration().getAnnotation(ResourceBinding.class);
+        }
+      }
+      if (binding != null)
+        this.resource = new QName(binding.namespace(), binding.name());
+      else
+        this.resource = null;
+    }
   }
 
   public String getRel() {
