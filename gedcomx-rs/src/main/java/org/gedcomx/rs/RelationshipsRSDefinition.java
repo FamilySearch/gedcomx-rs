@@ -15,39 +15,38 @@
  */
 package org.gedcomx.rs;
 
+import org.gedcomx.common.ResourceSet;
 import org.gedcomx.conclusion.Relationship;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
 
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 /**
- * The conclusion resource service is used to manage a conclusion.
- *
- * @author Ryan Heaton
+ * The relationships resource service is used to manage a collection of relationships.
  */
 @ResourceDefinition (
-  name = "Relationship Identifiers",
+  name = "Relationships",
   projectId = RSModel.RS_PROJECT_ID,
-  resourceElement = { Relationship.class },
-  namespace = RSModel.RS_V1_NAMESPACE
+  namespace = RSModel.RS_V1_NAMESPACE,
+  resourceElement = ResourceSet.class,
+  subresources = RelationshipRSDefinition.class
 )
-public interface RelationshipIdentifiersRSDefinition extends CommonRSParameters {
+public interface RelationshipsRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "relationship/ids";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "relationships";
 
   /**
-   * Update a conclusion.
+   * Create a relationship.
    *
-   * @param conclusion The conclusion to be used for the update.
-   *
+   * @param relationship The relationship to be created.
+   * @return The appropriate response.
    */
-  @PUT
+  @POST
   @StatusCodes({
-    @ResponseCode ( code = 204, condition = "The update was successful."),
-    @ResponseCode ( code = 404, condition = "If the requested resource is not found.")
+    @ResponseCode ( code = 201, condition = "The creation of the relationship was successful. Expect a location header specifying the link to the created relationship.")
   })
-  Response put(Relationship relationship);
+  Response post(Relationship relationship);
 }

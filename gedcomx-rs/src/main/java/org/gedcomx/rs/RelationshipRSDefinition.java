@@ -25,70 +25,70 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 
 /**
- * The couple resource service is used to manage a couple.
+ * The relationship resource service is used to manage a relationship.
  */
 @ResourceDefinition (
-  name = "Couple",
+  name = "Relationship",
   resourceElement = Relationship.class,
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE
 )
 @ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = CoupleRSDefinition.class, description = "The couple itself." )
+  @ResourceLink ( rel = "self", definedBy = RelationshipRSDefinition.class, description = "The relationship itself." )
 })
-public interface CoupleRSDefinition extends CommonRSParameters {
+public interface RelationshipRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "couple";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "relationship";
 
   /**
-   * Read a couple header attributes.
+   * Read a relationship header attributes.
    *
-   * @return The header attributes for the couple.
+   * @return The header attributes for the relationship.
    */
   @HEAD
   @StatusCodes({
     @ResponseCode ( code = 200, condition = "Upon a successful read."),
-    @ResponseCode ( code = 404, condition = "If the requested couple is not found."),
-    @ResponseCode ( code = 410, condition = "If the requested couple has been deleted.")
+    @ResponseCode ( code = 404, condition = "If the requested relationship is not found."),
+    @ResponseCode ( code = 410, condition = "If the requested relationship has been deleted.")
   })
   Response head();
 
   /**
-   * Read a couple.
+   * Read a relationship.
    *
-   * @return The couple.
+   * @return The relationship.
    */
   @GET
   @StatusCodes({
     @ResponseCode ( code = 200, condition = "Upon a successful read."),
-    @ResponseCode ( code = 404, condition = "If the requested couple is not found."),
-    @ResponseCode ( code = 410, condition = "If the requested couple has been deleted.")
+    @ResponseCode ( code = 404, condition = "If the requested relationship is not found."),
+    @ResponseCode ( code = 410, condition = "If the requested relationship has been deleted.")
   })
   Response get();
 
   /**
-   * Update a couple.
+   * Update a relationship.
    *
-   * @param relationship The couple relationship to be used for the update.
+   * @param relationship The relationship to be used for the update.
    *
    */
   @PUT
   @StatusCodes({
     @ResponseCode ( code = 204, condition = "The update was successful."),
-    @ResponseCode ( code = 404, condition = "If the requested couple is not found."),
-    @ResponseCode ( code = 410, condition = "If the requested couple has been deleted.")
+    @ResponseCode ( code = 404, condition = "If the requested relationship is not found."),
+    @ResponseCode ( code = 410, condition = "If the requested relationship has been deleted.")
 })
   Response put(Relationship relationship);
 
   /**
-   * Delete a couple.
+   * Delete a relationship.
    *
    */
   @DELETE
   @StatusCodes({
     @ResponseCode ( code = 204, condition = "The delete was successful."),
-    @ResponseCode ( code = 404, condition = "If the requested couple is not found."),
-    @ResponseCode ( code = 410, condition = "If the requested couple has been deleted.")
+    @ResponseCode ( code = 404, condition = "If the requested relationship is not found."),
+    @ResponseCode ( code = 410, condition = "If the requested relationship has been deleted.")
 })
   Response delete();
 }
