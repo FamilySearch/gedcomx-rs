@@ -26,7 +26,7 @@ import java.util.*;
 public class ResourceBinding {
 
   private final String path;
-  private final ResourceDefinitionDeclaration definition;
+  ResourceDefinitionDeclaration definition;
   private String docValue;
   private final List<ResourceMethod> methods = new ArrayList<ResourceMethod>();
   private final Set<ResponseCode> statusCodes = new HashSet<ResponseCode>();
@@ -48,7 +48,6 @@ public class ResourceBinding {
     this.path = path;
     this.definition = definition;
     this.metadata = metadata;
-    this.definition.getBindings().add(this);
   }
   
   public String getName() {
@@ -110,7 +109,7 @@ public class ResourceBinding {
   public void setDocValue(String docValue) {
     this.docValue = docValue;
   }
-  
+
   public Set<String> getProduces() {
     TreeSet<String> produces = new TreeSet<String>();
     for (ResourceMethod method : getMethods()) {
@@ -125,5 +124,9 @@ public class ResourceBinding {
       produces.addAll(method.getConsumesMime());
     }
     return produces;
+  }
+
+  void replaceDefinition(ResourceDefinitionDeclaration rsd) {
+    this.definition = rsd;
   }
 }

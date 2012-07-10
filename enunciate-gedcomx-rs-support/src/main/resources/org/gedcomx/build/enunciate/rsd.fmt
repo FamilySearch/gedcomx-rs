@@ -62,14 +62,14 @@
 
       <table>
         <tr>
-          <th>Identifier</th>
-          <th>Resource</th>
+          <th>Rel</th>
+          <th>Resolves To</th>
           <th>Description</th>
         </tr>
         [#list rsd.links as link]
           <tr>
             <td>${link.rel}</td>
-            <td>[#if link.definedBy??]<a href="${(baseProjectUris[link.definedBy.projectId])!""}${link.definedBy.name}_resource.html">${link.definedBy.name}</a>[#else](unknown)[/#if]</td>
+            <td>[#if link.resolvesTo??]<a href="${(baseProjectUris[link.resolvesTo.projectId])!""}${link.resolvesTo.name}_resource.html">${link.resolvesTo.name}</a>[#else](unknown)[/#if]</td>
             <td>${link.description}</td>
           </tr>
         [/#list]

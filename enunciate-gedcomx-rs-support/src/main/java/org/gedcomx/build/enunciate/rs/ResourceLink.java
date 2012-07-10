@@ -18,7 +18,6 @@ package org.gedcomx.build.enunciate.rs;
 import com.sun.mirror.type.DeclaredType;
 import com.sun.mirror.type.MirroredTypeException;
 import com.sun.mirror.type.TypeMirror;
-import org.gedcomx.rt.rs.ResourceBinding;
 import org.gedcomx.rt.rs.ResourceDefinition;
 
 import javax.xml.namespace.QName;
@@ -39,34 +38,38 @@ public final class ResourceLink {
     this.description = meta.description();
     this.template = meta.template();
     this.processor = processor;
-    ResourceDefinition def = null;
+
+    org.gedcomx.rt.rs.ResourceBinding binding = null;
     try {
-      def = meta.definedBy().getAnnotation(ResourceDefinition.class);
+      binding = meta.definedBy().getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
     }
     catch (MirroredTypeException e) {
       TypeMirror typeMirror = e.getTypeMirror();
       if (typeMirror instanceof DeclaredType && ((DeclaredType) typeMirror).getDeclaration() != null) {
-        def = ((DeclaredType) typeMirror).getDeclaration().getAnnotation(ResourceDefinition.class);
+        binding = ((DeclaredType) typeMirror).getDeclaration().getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
       }
     }
-    if (def != null) {
-      this.resource = new QName(def.namespace(), def.name());
+
+    if (binding != null) {
+      this.resource = new QName(binding.namespace(), binding.name());
     }
     else {
-      ResourceBinding binding = null;
+      ResourceDefinition def = null;
       try {
-        binding = meta.definedBy().getAnnotation(ResourceBinding.class);
+        def = meta.definedBy().getAnnotation(ResourceDefinition.class);
       }
       catch (MirroredTypeException e) {
         TypeMirror typeMirror = e.getTypeMirror();
         if (typeMirror instanceof DeclaredType && ((DeclaredType) typeMirror).getDeclaration() != null) {
-          binding = ((DeclaredType) typeMirror).getDeclaration().getAnnotation(ResourceBinding.class);
+          def = ((DeclaredType) typeMirror).getDeclaration().getAnnotation(ResourceDefinition.class);
         }
       }
-      if (binding != null)
-        this.resource = new QName(binding.namespace(), binding.name());
-      else
+      if (def != null) {
+        this.resource = new QName(def.namespace(), def.name());
+      }
+      else {
         this.resource = null;
+      }
     }
   }
 
@@ -78,7 +81,7 @@ public final class ResourceLink {
     return description;
   }
 
-  public ResourceDefinitionDeclaration getDefinedBy() {
+  public ResourceDefinitionDeclaration getResolvesTo() {
     return this.processor.findResourceDefinition(this.resource);
   }
 

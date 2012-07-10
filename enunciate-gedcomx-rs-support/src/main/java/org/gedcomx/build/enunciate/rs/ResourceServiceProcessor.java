@@ -249,6 +249,7 @@ public class ResourceServiceProcessor {
           String path = resourceMethod.getFullpath();
           ResourceBinding binding = bindingsByPath.get(path);
           if (binding == null) {
+            Declaration bindingDeclaration = declaringResource instanceof SubResource ? ((SubResource) declaringResource).getLocator() : declaringResource;
             org.gedcomx.rt.rs.ResourceBinding metadata = declaringResource instanceof SubResource ? ((SubResource) declaringResource).getLocator().getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class) : null;
             if (metadata == null) {
               metadata = declaringResource.getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
@@ -257,10 +258,22 @@ public class ResourceServiceProcessor {
             binding = new ResourceBinding(path, rsd, metadata);
             bindingsByPath.put(path, binding);
 
+            if (!this.resourceDefinitions.containsKey(new QName(binding.getNamespace(), binding.getName()))) {
+              //if there is no rsd for the binding, we need to create it:
+              rsd = new ResourceDefinitionDeclaration(rsd, binding);
+              this.resourceDefinitions.put(new QName(rsd.getNamespace(), rsd.getName()), rsd);
+            }
+
             ResourceBinding conflict = bindingsByName.put(binding.getName(), binding);
             if (conflict != null) {
-              Declaration conflictLocation = declaringResource instanceof SubResource ? ((SubResource) declaringResource).getLocator() : declaringResource;
-              result.addError(conflictLocation, String.format("The name \"%s\" for the binding at %s conflicts with the binding at %s. Please apply the %s annotation to disambiguate.", binding.getName(), binding.getPath(), conflict.getPath(), org.gedcomx.rt.rs.ResourceBinding.class.getName()));
+              result.addError(bindingDeclaration, String.format("The name \"%s\" for the binding at %s conflicts with the binding at %s. Please apply the %s annotation to disambiguate.", binding.getName(), binding.getPath(), conflict.getPath(), org.gedcomx.rt.rs.ResourceBinding.class.getName()));
+            }
+
+            if (rsd.getBinding() != null && !rsd.getBinding().getPath().equals(binding.getPath())) {
+              result.addError(bindingDeclaration, String.format("The resource \"%s\" is already bound by the binding at %s. Please apply the %s annotation to imply a new resource.", rsd.getName(), rsd.getBinding().getPath(), org.gedcomx.rt.rs.ResourceBinding.class.getName()));
+            }
+            else {
+              rsd.setBinding(binding);
             }
           }
           else {

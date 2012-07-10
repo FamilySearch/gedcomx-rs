@@ -43,8 +43,8 @@ public class ResourceDefinitionDeclaration extends Resource {
   private final List<ElementDeclaration> resourceElements;
   private final Set<QName> subresources;
   private final Map<QName, TypeDefinition> subresourceElements;
-  private final Set<ResourceBinding> bindings;
   private final String projectId;
+  private ResourceBinding binding;
 
   public ResourceDefinitionDeclaration(TypeDeclaration delegate, List<ElementDeclaration> resourceElements, Set<QName> subresources, Map<QName, TypeDefinition> subresourceElements, ResourceServiceProcessor processor) {
     super(delegate);
@@ -64,13 +64,28 @@ public class ResourceDefinitionDeclaration extends Resource {
       resourceMethod.putMetaData("warnings", processor.extractWarnings(resourceMethod));
     }
     this.subresourceElements = Collections.unmodifiableMap(subresourceElements);
-    this.bindings = new TreeSet<ResourceBinding>(new Comparator<ResourceBinding>() {
-      @Override
-      public int compare(ResourceBinding o1, ResourceBinding o2) {
-        return o1.getPath().compareTo(o2.getPath());
-      }
-    });
     this.projectId = rsdInfo.projectId();
+  }
+
+  public ResourceDefinitionDeclaration(ResourceDefinitionDeclaration parent, ResourceBinding binding) {
+    super((TypeDeclaration) parent.delegate);
+
+    this.processor = parent.processor;
+    this.resourceElements = parent.resourceElements;
+    this.subresources = parent.subresources;
+    this.statusCodes = parent.statusCodes;
+    this.warnings = parent.warnings;
+    this.links = parent.links;
+    this.subresourceElements = parent.subresourceElements;
+
+    this.name = binding.getName();
+    this.namespace = binding.getNamespace();
+    this.projectId = binding.getProjectId();
+    for (ResourceMethod resourceMethod : getResourceMethods()) {
+      resourceMethod.putMetaData("statusCodes", processor.extractStatusCodes(resourceMethod));
+      resourceMethod.putMetaData("warnings", processor.extractWarnings(resourceMethod));
+    }
+    binding.replaceDefinition(this);
   }
 
   @Override
@@ -140,10 +155,14 @@ public class ResourceDefinitionDeclaration extends Resource {
     return links;
   }
 
-  public Set<ResourceBinding> getBindings() {
-    return bindings;
+  public ResourceBinding getBinding() {
+    return binding;
   }
-  
+
+  public void setBinding(ResourceBinding binding) {
+    this.binding = binding;
+  }
+
   public Map<ResourceLink, ResourceDefinitionDeclaration> getIncomingLinks() {
     LinkedHashMap<ResourceLink, ResourceDefinitionDeclaration> linksIn = new LinkedHashMap<ResourceLink, ResourceDefinitionDeclaration>();
     QName thisQName = new QName(getNamespace(), getName());
