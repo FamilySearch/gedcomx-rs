@@ -15,12 +15,16 @@
  */
 package org.gedcomx.build.enunciate.rs;
 
-import com.sun.mirror.type.DeclaredType;
-import com.sun.mirror.type.MirroredTypeException;
-import com.sun.mirror.type.TypeMirror;
-import org.gedcomx.rt.rs.ResourceDefinition;
+import com.sun.mirror.declaration.ClassDeclaration;
+import com.sun.mirror.declaration.TypeDeclaration;
+import com.sun.mirror.type.*;
+import net.sf.jelly.apt.Context;
+import org.gedcomx.rt.rs.*;
+import org.gedcomx.rt.rs.ResourceBinding;
 
 import javax.xml.namespace.QName;
+import java.lang.annotation.Annotation;
+import java.util.Collection;
 
 /**
  * @author Ryan Heaton
@@ -39,38 +43,62 @@ public final class ResourceLink {
     this.template = meta.template();
     this.processor = processor;
 
-    org.gedcomx.rt.rs.ResourceBinding binding = null;
+    TypeDeclaration definedBy = null;
+
     try {
-      binding = meta.definedBy().getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
+      Class<?> clazz = meta.definedBy();
+      definedBy = Context.getCurrentEnvironment().getTypeDeclaration(clazz.getName());
     }
     catch (MirroredTypeException e) {
       TypeMirror typeMirror = e.getTypeMirror();
       if (typeMirror instanceof DeclaredType && ((DeclaredType) typeMirror).getDeclaration() != null) {
-        binding = ((DeclaredType) typeMirror).getDeclaration().getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
+        definedBy = ((DeclaredType) typeMirror).getDeclaration();
       }
     }
 
-    if (binding != null) {
-      this.resource = new QName(binding.namespace(), binding.name());
-    }
-    else {
-      ResourceDefinition def = null;
-      try {
-        def = meta.definedBy().getAnnotation(ResourceDefinition.class);
+    this.resource = findResourceDefinition(definedBy);
+  }
+
+  private QName findResourceDefinition(TypeDeclaration definedBy) {
+    ResourceBinding binding = findFirst(definedBy, ResourceBinding.class);
+    ResourceDefinition definition = findFirst(definedBy, ResourceDefinition.class);
+    if (binding != null && definition != null) {
+      String namespace = binding.namespace();
+      String name = binding.name();
+      if ("##default".equals(namespace)) {
+        namespace = definition.namespace();
       }
-      catch (MirroredTypeException e) {
-        TypeMirror typeMirror = e.getTypeMirror();
-        if (typeMirror instanceof DeclaredType && ((DeclaredType) typeMirror).getDeclaration() != null) {
-          def = ((DeclaredType) typeMirror).getDeclaration().getAnnotation(ResourceDefinition.class);
+      if ("##default".equals(name)) {
+        name = definition.name();
+      }
+
+      return new QName(namespace, name);
+    }
+    else if (definition != null) {
+      return new QName(definition.namespace(), definition.name());
+    }
+    return null;
+  }
+
+  private <M extends Annotation> M findFirst(TypeDeclaration definedBy, Class<M> a) {
+    M annotation = definedBy.getAnnotation(a);
+    if (annotation == null) {
+      Collection<InterfaceType> ifaces = definedBy.getSuperinterfaces();
+      for (InterfaceType iface : ifaces) {
+        annotation = findFirst(iface.getDeclaration(), a);
+        if (annotation != null) {
+          return annotation;
         }
       }
-      if (def != null) {
-        this.resource = new QName(def.namespace(), def.name());
-      }
-      else {
-        this.resource = null;
+
+      if (definedBy instanceof ClassDeclaration) {
+        ClassType superclass = ((ClassDeclaration) definedBy).getSuperclass();
+        if (superclass != null) {
+          annotation = findFirst(superclass.getDeclaration(), a);
+        }
       }
     }
+    return annotation;
   }
 
   public String getRel() {
