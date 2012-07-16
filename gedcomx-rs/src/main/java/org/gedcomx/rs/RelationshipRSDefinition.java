@@ -31,7 +31,8 @@ import javax.ws.rs.core.Response;
   name = "Relationship",
   resourceElement = Relationship.class,
   projectId = RSModel.RS_PROJECT_ID,
-  namespace = RSModel.RS_V1_NAMESPACE
+  namespace = RSModel.RS_V1_NAMESPACE,
+  subresources = { ConclusionRSDefinition.class, ConclusionsRSDefinition.class }
 )
 @ResourceLinks ({
   @ResourceLink ( rel = "self", definedBy = RelationshipRSDefinition.class, description = "The relationship itself." )
