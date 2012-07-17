@@ -35,7 +35,8 @@ import javax.ws.rs.core.Response;
   subresources = { ConclusionRSDefinition.class, ConclusionsRSDefinition.class }
 )
 @ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = RelationshipRSDefinition.class, description = "The relationship itself." )
+  @ResourceLink ( rel = "self", definedBy = RelationshipRSDefinition.class, description = "The relationship itself." ),
+  @ResourceLink ( rel = ConclusionsRSDefinition.REL, definedBy = ConclusionsRSDefinition.class, description = "The set of conclusions for the relationship." )
 })
 public interface RelationshipRSDefinition extends CommonRSParameters {
 

@@ -16,29 +16,35 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.common.ResourceSet;
-import org.gedcomx.rt.rs.ResourceDefinition;
-import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StatusCodes;
+import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
 /**
- * The PersonSpouseRelationship resource service is used to manage a relationship between a person and their spouse.
+ * The person relationships resource manages a set of relationships for a specific person.
  */
 @ResourceDefinition (
-  name = "Spouse Relationships",
+  name = "Person Relationships",
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,
   resourceElement = ResourceSet.class,
-  subresources = { RelationshipRSDefinition.class, RelationshipsRSDefinition.class }
+  subresources = { RelationshipRSDefinition.class }
 )
-public interface PersonSpouseRelationshipsRSDefinition extends CommonRSParameters {
+@ResourceLinks ({
+  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This relationship set." ),
+  @ResourceLink ( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for which this is a set of relationships." )
+})
+public interface PersonRelationshipsRSDefinition extends CommonRSParameters {
+
+  public static final String SPOUSE_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "relationships/spouse";
+  public static final String PARENT_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "relationships/parent";
+  public static final String CHILD_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "relationships/child";
 
   /**
-   * Read a spouse relationship.
+   * Read the set of relationships for a specific person.
    *
-   * @return The spouse relationship.
+   * @return The set of relationships.
    */
   @GET
   @StatusCodes({

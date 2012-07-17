@@ -52,8 +52,11 @@ import javax.ws.rs.core.Response;
     namespace = RSModel.RS_V1_NAMESPACE
 )
 @ResourceLinks({
-  @ResourceLink (rel = PersonsRSDefinition.REL, definedBy = DiscoveryRSDefinition.class, description = "The persons resource for this application."),
+  @ResourceLink (rel = "self", definedBy = DiscoveryRSDefinition.class, description = "Link to this discovery resource."),
+  @ResourceLink (rel = PersonsRSDefinition.REL, definedBy = PersonsRSDefinition.class, description = "The set of persons for this application."),
   @ResourceLink (rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for the currently logged in user." ),
+  @ResourceLink (rel = RelationshipsRSDefinition.COUPLE_RELATIONSHIPS_REL, definedBy = RelationshipsRSDefinition.class, description = "The set of couple relationships for this application." ),
+  @ResourceLink (rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, definedBy = RelationshipsRSDefinition.class, description = "The set of parent-child relationships for this application." ),
   @ResourceLink (rel = SourceDescriptionsRSDefinition.REL, definedBy = SourceDescriptionsRSDefinition.class, description = "The source descriptions resource for this application." ),
   @ResourceLink (rel = SearchRSDefinition.REL, definedBy = SearchRSDefinition.class, description = "The search resource for this application (linked via URI template).", template = true )
 })

@@ -324,7 +324,13 @@ public class ResourceServiceProcessor {
   }
 
   public Set<ResourceLink> extractLinks(TypeDeclaration delegate) {
-    Set<ResourceLink> rels = new HashSet<ResourceLink>();
+    Set<ResourceLink> rels = new TreeSet<ResourceLink>(new Comparator<ResourceLink>() {
+      @Override
+      public int compare(ResourceLink o1, ResourceLink o2) {
+        return o1.rel.compareTo(o2.rel);
+      }
+    });
+
     org.gedcomx.rt.rs.ResourceLink[] resourceLinkInfo = {};
     ResourceLinks resourceLinks = delegate.getAnnotation(ResourceLinks.class);
     if (resourceLinks != null) {

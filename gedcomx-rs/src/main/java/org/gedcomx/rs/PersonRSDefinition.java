@@ -37,7 +37,12 @@ import javax.ws.rs.core.Response;
   subresources = { ConclusionRSDefinition.class, ConclusionsRSDefinition.class }
 )
 @ResourceLinks({
-  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "The person itself." )
+  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "The person itself." ),
+  @ResourceLink ( rel = PersonSourceReferencesRSDefinition.REL, definedBy = PersonSourceReferencesRSDefinition.class, description = "The source references for the person." ),
+  @ResourceLink ( rel = ConclusionsRSDefinition.REL, definedBy = ConclusionsRSDefinition.class, description = "The set of conclusions for the person." ),
+  @ResourceLink ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the spouses of the person." ),
+  @ResourceLink ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the children of the person." ),
+  @ResourceLink ( rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the parents of the person." )
 })
 public interface PersonRSDefinition extends CommonRSParameters {
 

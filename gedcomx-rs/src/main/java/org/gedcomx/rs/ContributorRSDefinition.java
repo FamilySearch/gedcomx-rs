@@ -31,9 +31,9 @@ import javax.ws.rs.core.Response;
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE
 )
-@ResourceLinks ( {
-                   @ResourceLink ( rel = "self", definedBy = ContributorRSDefinition.class, description = "The contributor itself." )
-                 } )
+@ResourceLinks ({
+  @ResourceLink( rel = "self", definedBy = ContributorRSDefinition.class, description = "Link to this contributor." )
+})
 public interface ContributorRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "contributor";

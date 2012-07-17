@@ -144,6 +144,7 @@ import javax.ws.rs.core.Response;
   subresources = { PersonEntryRSDefinition.class }
 )
 @ResourceLinks ( {
+  @ResourceLink ( rel = "self", definedBy = RelationshipRSDefinition.class, description = "A link to this search result set." )
 })
 public interface SearchRSDefinition extends CommonRSParameters {
 

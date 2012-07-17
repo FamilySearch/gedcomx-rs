@@ -38,7 +38,7 @@ import javax.ws.rs.core.Response;
   namespace = RSModel.RS_V1_NAMESPACE
 )
 @ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = ConclusionRSDefinition.class, description = "The conclusion itself." )
+  @ResourceLink ( rel = "self", definedBy = ConclusionRSDefinition.class, description = "Link to this conclusion." )
 })
 public interface ConclusionRSDefinition extends CommonRSParameters {
 

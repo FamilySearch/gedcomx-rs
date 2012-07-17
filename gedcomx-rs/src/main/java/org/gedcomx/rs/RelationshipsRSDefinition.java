@@ -36,7 +36,8 @@ import javax.ws.rs.core.Response;
 )
 public interface RelationshipsRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "relationships";
+  public static final String COUPLE_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "relationships/couple";
+  public static final String PARENT_CHILD_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "relationships/parent-child";
 
   /**
    * Create a relationship.

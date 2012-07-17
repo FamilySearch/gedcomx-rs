@@ -18,9 +18,7 @@ package org.gedcomx.rs;
 import org.gedcomx.conclusion.ConclusionModel;
 import org.gedcomx.conclusion.Person;
 import org.gedcomx.conclusion.SourceReference;
-import org.gedcomx.rt.rs.ResourceDefinition;
-import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StatusCodes;
+import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -37,6 +35,10 @@ import javax.ws.rs.core.Response;
     resourceElement = Person.class,
     subresources = { SourceReferenceRSDefinition.class }
 )
+@ResourceLinks ({
+  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." ),
+  @ResourceLink ( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for which this is a set of source references." )
+})
 public interface PersonSourceReferencesRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/references";

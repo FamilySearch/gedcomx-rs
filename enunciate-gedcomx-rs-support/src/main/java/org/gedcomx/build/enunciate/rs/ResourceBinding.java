@@ -31,7 +31,12 @@ public class ResourceBinding {
   private final List<ResourceMethod> methods = new ArrayList<ResourceMethod>();
   private final Set<ResponseCode> statusCodes = new HashSet<ResponseCode>();
   private final Set<ResponseCode> warnings = new HashSet<ResponseCode>();
-  private final Set<ResourceLink> links = new HashSet<ResourceLink>();
+  private final Set<ResourceLink> links = new TreeSet<ResourceLink>(new Comparator<ResourceLink>() {
+    @Override
+    public int compare(ResourceLink o1, ResourceLink o2) {
+      return o1.rel.compareTo(o2.rel);
+    }
+  });
   private final Set<ResourceParameter> resourceParameters = new TreeSet<ResourceParameter>(new Comparator<ResourceParameter>() {
     @Override
     public int compare(ResourceParameter param1, ResourceParameter param2) {
@@ -92,6 +97,19 @@ public class ResourceBinding {
 
   public Set<ResourceLink> getLinks() {
     return links;
+  }
+
+  public Set<ResourceLink> getAllLinks() {
+    TreeSet<ResourceLink> allLinks = new TreeSet<ResourceLink>(new Comparator<ResourceLink>() {
+      @Override
+      public int compare(ResourceLink o1, ResourceLink o2) {
+        return o1.rel.compareTo(o2.rel);
+      }
+    });
+
+    allLinks.addAll(this.links);
+    allLinks.addAll(this.definition.getLinks());
+    return allLinks;
   }
 
   public List<ResourceMethod> getMethods() {
