@@ -17,9 +17,7 @@ package org.gedcomx.rs;
 
 import org.gedcomx.conclusion.ConclusionModel;
 import org.gedcomx.conclusion.SourceReference;
-import org.gedcomx.rt.rs.ResourceDefinition;
-import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StatusCodes;
+import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -36,6 +34,9 @@ import javax.ws.rs.core.Response;
     projectId = RSModel.RS_PROJECT_ID,
     resourceElement = SourceReference.class
 )
+@ResourceLinks ({
+  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." )
+})
 public interface SourceReferenceRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/reference";
