@@ -17,7 +17,7 @@ package org.gedcomx.rs;
 
 import org.gedcomx.common.ResourceSet;
 import org.gedcomx.conclusion.ConclusionModel;
-import org.gedcomx.metadata.rdf.Description;
+import org.gedcomx.metadata.source.SourceDescription;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -29,12 +29,12 @@ import javax.ws.rs.core.Response;
 /**
  * The source descriptions resource service is used to manage a collection of source descriptions.
  */
-@ResourceDefinition(
-    name = "Source Descriptions",
-    namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
-    projectId = RSModel.RS_PROJECT_ID,
-    resourceElement = ResourceSet.class,
-    subresources = { SourceDescriptionRSDefinition.class }
+@ResourceDefinition (
+  name = "Source Descriptions",
+  namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+  projectId = RSModel.RS_PROJECT_ID,
+  resourceElement = ResourceSet.class,
+  subresources = {SourceDescriptionRSDefinition.class}
 )
 public interface SourceDescriptionsRSDefinition extends CommonRSParameters {
 
@@ -47,10 +47,10 @@ public interface SourceDescriptionsRSDefinition extends CommonRSParameters {
    * @return The appropriate response.
    */
   @POST
-  @StatusCodes({
-      @ResponseCode( code = 201, condition = "The creation of the source description was successful. Expect a location header specifying the link to the created source description."),
-      @ResponseCode( code = 400, condition = "If the request was unable to be understood by the application.")
-  })
-  Response post(Description sourceDescription);
+  @StatusCodes ( {
+                   @ResponseCode ( code = 201, condition = "The creation of the source description was successful. Expect a location header specifying the link to the created source description." ),
+                   @ResponseCode ( code = 400, condition = "If the request was unable to be understood by the application." )
+                 } )
+  Response post(SourceDescription sourceDescription);
 
 }

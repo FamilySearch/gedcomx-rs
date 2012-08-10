@@ -17,7 +17,7 @@ package org.gedcomx.rs;
 
 import org.gedcomx.conclusion.ConclusionModel;
 import org.gedcomx.conclusion.Relationship;
-import org.gedcomx.conclusion.SourceReference;
+import org.gedcomx.metadata.source.SourceReference;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -28,17 +28,17 @@ import javax.ws.rs.core.Response;
 /**
  * The source references resource service is used to manage a collection of source references.
  */
-@ResourceDefinition(
-    name = "Relationship Source References",
-    namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
-    projectId = RSModel.RS_PROJECT_ID,
-    resourceElement = Relationship.class,
-    subresources = { SourceReferenceRSDefinition.class }
+@ResourceDefinition (
+  name = "Relationship Source References",
+  namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+  projectId = RSModel.RS_PROJECT_ID,
+  resourceElement = Relationship.class,
+  subresources = {SourceReferenceRSDefinition.class}
 )
-@ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." ),
-  @ResourceLink ( rel = RelationshipRSDefinition.REL, definedBy = RelationshipRSDefinition.class, description = "The relationship for which this is a set of source references." )
-})
+@ResourceLinks ( {
+                   @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." ),
+                   @ResourceLink ( rel = RelationshipRSDefinition.REL, definedBy = RelationshipRSDefinition.class, description = "The relationship for which this is a set of source references." )
+                 } )
 public interface RelationshipSourceReferencesRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/references";
@@ -49,11 +49,11 @@ public interface RelationshipSourceReferencesRSDefinition extends CommonRSParame
    * @return The list of source references.
    */
   @GET
-  @StatusCodes({
-    @ResponseCode( code = 200, condition = "Upon a successful read."),
-    @ResponseCode( code = 204, condition = "Upon a successful query with no results."),
-    @ResponseCode( code = 404, condition = "The specified person has been moved, deleted, or otherwise not found.")
-  })
+  @StatusCodes ( {
+                   @ResponseCode ( code = 200, condition = "Upon a successful read." ),
+                   @ResponseCode ( code = 204, condition = "Upon a successful query with no results." ),
+                   @ResponseCode ( code = 404, condition = "The specified relationship has been moved, deleted, or otherwise not found." )
+                 } )
   Response get();
 
   /**
@@ -63,11 +63,11 @@ public interface RelationshipSourceReferencesRSDefinition extends CommonRSParame
    * @return The appropriate response.
    */
   @POST
-  @StatusCodes({
-    @ResponseCode( code = 201, condition = "The creation of the source reference was successful. Expect a location header specifying the link to the created source reference."),
-    @ResponseCode( code = 400, condition = "If the request was unable to be understood by the application."),
-    @ResponseCode( code = 404, condition = "The specified person has been moved, deleted, or otherwise not found.")
-  })
+  @StatusCodes ( {
+                   @ResponseCode ( code = 201, condition = "The creation of the source reference was successful. Expect a location header specifying the link to the created source reference." ),
+                   @ResponseCode ( code = 400, condition = "If the request was unable to be understood by the application." ),
+                   @ResponseCode ( code = 404, condition = "The specified relationship has been moved, deleted, or otherwise not found." )
+                 } )
   Response post(SourceReference sourceReference);
 
 }

@@ -16,7 +16,7 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.conclusion.ConclusionModel;
-import org.gedcomx.conclusion.SourceReference;
+import org.gedcomx.metadata.source.SourceReference;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
@@ -28,15 +28,15 @@ import javax.ws.rs.core.Response;
 /**
  * The source reference resource service is used to manage a source reference.
  */
-@ResourceDefinition(
-    name = "Source Reference",
-    namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
-    projectId = RSModel.RS_PROJECT_ID,
-    resourceElement = SourceReference.class
+@ResourceDefinition (
+  name = "Source Reference",
+  namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+  projectId = RSModel.RS_PROJECT_ID,
+  resourceElement = SourceReference.class
 )
-@ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." )
-})
+@ResourceLinks ( {
+                   @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." )
+                 } )
 public interface SourceReferenceRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/reference";
@@ -47,10 +47,10 @@ public interface SourceReferenceRSDefinition extends CommonRSParameters {
    * @return The source reference.
    */
   @GET
-  @StatusCodes({
-      @ResponseCode ( code = 200, condition = "Upon a successful read."),
-      @ResponseCode ( code = 404, condition = "If the requested source reference is not found.")
-  })
+  @StatusCodes ( {
+                   @ResponseCode ( code = 200, condition = "Upon a successful read." ),
+                   @ResponseCode ( code = 404, condition = "If the requested source reference is not found." )
+                 } )
   Response get();
 
   /**
@@ -60,10 +60,10 @@ public interface SourceReferenceRSDefinition extends CommonRSParameters {
    * @return The appropriate response.
    */
   @PUT
-  @StatusCodes({
-      @ResponseCode ( code = 204, condition = "The update was successful."),
-      @ResponseCode ( code = 404, condition = "If the requested source reference is not found.")
-  })
+  @StatusCodes ( {
+                   @ResponseCode ( code = 204, condition = "The update was successful." ),
+                   @ResponseCode ( code = 404, condition = "If the requested source reference is not found." )
+                 } )
   Response put(SourceReference sourceReference);
 
   /**
@@ -72,10 +72,10 @@ public interface SourceReferenceRSDefinition extends CommonRSParameters {
    * @return The appropriate response.
    */
   @DELETE
-  @StatusCodes({
-      @ResponseCode ( code = 204, condition = "The delete was successful."),
-      @ResponseCode ( code = 404, condition = "If the requested source reference is not found.")
-  })
+  @StatusCodes ( {
+                   @ResponseCode ( code = 204, condition = "The delete was successful." ),
+                   @ResponseCode ( code = 404, condition = "If the requested source reference is not found." )
+                 } )
   Response delete();
 
 }
