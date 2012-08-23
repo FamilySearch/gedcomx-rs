@@ -17,7 +17,7 @@ package org.gedcomx.rs;
 
 import org.gedcomx.common.Note;
 import org.gedcomx.common.ResourceSet;
-import org.gedcomx.conclusion.ConclusionModel;
+import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -32,7 +32,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition(
     name = "Notes",
-    namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+    namespace = CommonModels.GEDCOMX_NAMESPACE,
     projectId = RSModel.RS_PROJECT_ID,
     resourceElement = ResourceSet.class,
     subresources = { NoteRSDefinition.class }

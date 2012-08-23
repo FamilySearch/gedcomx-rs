@@ -41,12 +41,6 @@
   <dependencies>
     <dependency>
       <groupId>org.gedcomx</groupId>
-      <artifactId>gedcomx-conclusion</artifactId>
-      <version>${gedcomx.core.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.gedcomx</groupId>
       <artifactId>gedcomx-atom</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -55,12 +49,6 @@
       <groupId>org.gedcomx</groupId>
       <artifactId>gedcomx-rs-rt-support</artifactId>
       <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.gedcomx</groupId>
-      <artifactId>gedcomx-metadata</artifactId>
-      <version>${gedcomx.core.version}</version>
     </dependency>
 
     <dependency>

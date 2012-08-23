@@ -15,9 +15,9 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.conclusion.ConclusionModel;
 import org.gedcomx.conclusion.Person;
-import org.gedcomx.metadata.source.SourceReference;
+import org.gedcomx.rt.CommonModels;
+import org.gedcomx.source.SourceReference;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -30,7 +30,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Person Source References",
-  namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+  namespace = CommonModels.GEDCOMX_NAMESPACE,
   projectId = RSModel.RS_PROJECT_ID,
   resourceElement = Person.class,
   subresources = {SourceReferenceRSDefinition.class}

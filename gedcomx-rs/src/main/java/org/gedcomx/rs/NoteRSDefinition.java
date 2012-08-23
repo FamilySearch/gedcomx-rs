@@ -16,7 +16,7 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.common.Note;
-import org.gedcomx.conclusion.ConclusionModel;
+import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
@@ -30,7 +30,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition(
     name = "Note",
-    namespace = ConclusionModel.GEDCOMX_CONCLUSION_V1_NAMESPACE,
+    namespace = CommonModels.GEDCOMX_NAMESPACE,
     projectId = RSModel.RS_PROJECT_ID,
     resourceElement = Note.class
 )

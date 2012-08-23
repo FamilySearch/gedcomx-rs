@@ -45,7 +45,7 @@ import java.util.*;
  */
 public abstract class GenerateResourceExampleHttpMethod implements TemplateMethodModelEx {
   
-  static final QName RESOURCE_BUNDLE_TYPE_QNAME = new QName( CommonModels.RDF_NAMESPACE, "RDF" );
+  static final QName RESOURCE_SET_TYPE_QNAME = new QName( CommonModels.GEDCOMX_NAMESPACE, "ResourceSet" );
 
   final EnunciateFreemarkerModel model;
 
@@ -121,7 +121,7 @@ public abstract class GenerateResourceExampleHttpMethod implements TemplateMetho
       if (def != null && isInstanceOf(typeDef, SupportsExtensionElements.class.getName())) {
         for (ResourceDefinitionDeclaration subresource : def.getSubresources()) {
           for (ElementDeclaration el : subresource.getResourceElements()) {
-            if (def.getSubresourceElements().isEmpty() && RESOURCE_BUNDLE_TYPE_QNAME.equals(typeDef.getQname())) {
+            if (def.getSubresourceElements().isEmpty() && RESOURCE_SET_TYPE_QNAME.equals(typeDef.getQname())) {
               //special case for resource bundles: resource elements of subresources are automatically included as subresource definitions.
               JsonElementWrapper elementWrapper = el.getAnnotation(JsonElementWrapper.class);
               String jsonName = elementWrapper != null ? (elementWrapper.namespace() + elementWrapper.name()) : (el.getNamespace() + el.getName());

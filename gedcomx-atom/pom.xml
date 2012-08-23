@@ -42,12 +42,7 @@
   <dependencies>
     <dependency>
       <groupId>org.gedcomx</groupId>
-      <artifactId>gedcomx-common</artifactId>
-      <version>${gedcomx.core.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.gedcomx</groupId>
-      <artifactId>gedcomx-conclusion</artifactId>
+      <artifactId>gedcomx-model</artifactId>
       <version>${gedcomx.core.version}</version>
     </dependency>
 

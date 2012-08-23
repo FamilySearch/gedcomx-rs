@@ -15,7 +15,7 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.metadata.foaf.Person;
+import org.gedcomx.contributor.Agent;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Contributor",
-  resourceElement = Person.class,
+  resourceElement = Agent.class,
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE
 )
