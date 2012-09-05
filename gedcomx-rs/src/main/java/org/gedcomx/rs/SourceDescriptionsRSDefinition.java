@@ -22,6 +22,7 @@ import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
@@ -41,9 +42,22 @@ public interface SourceDescriptionsRSDefinition extends CommonRSParameters {
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/descriptions";
 
   /**
-   * Create a source description.
+   * Get all of this user's source descriptions.
    *
-   * @param sourceDescription The source description to be created.
+   * @return The user's Source Box (Folders).
+   */
+  @GET
+  @StatusCodes ( {
+                   @ResponseCode ( code = 200, condition = "Upon a successful read." ),
+                   @ResponseCode ( code = 400, condition = "If the request was unable to be understood by the application." ),
+                   @ResponseCode ( code = 404, condition = "If the requested page or folder is not found." )
+                 } )
+  Response get();
+
+  /**
+   * Add a source description to the user's source descriptions.
+   *
+   * @param sourceDescription The source description to be added.
    * @return The appropriate response.
    */
   @POST
