@@ -24,9 +24,9 @@ import javax.ws.rs.core.Response;
 /**
  * <p>The discovery resource is the starting point for a Web service API. The discovery resource is the index of all available resources in the application.</p>
  *
- * <p>As a consumer of the API, you should be using _links_ to figure out __at runtime__ where all the resources are. You shouldn't be hard-coding endpoint
- * URLs, nor should you ever have to plug in identifiers into a a URL template to access resources. The only thing your client should need is the URL to the
- * discovery resource.</p>
+ * <p>The discover resource allows a consumer of the API to use _links_ to figure out __at runtime__ where all the resources are. Consumers shouldn't be
+ * required to hard-code endpoint URLs, nor to plug in identifiers into a a URL template to access resources. The only thing consumers of the API should
+ * need is the URL to the discovery resource.</p>
  *
  * <p>The links provided by the discovery resource should include:</p>
  *
@@ -55,6 +55,7 @@ import javax.ws.rs.core.Response;
   @ResourceLink (rel = "self", definedBy = DiscoveryRSDefinition.class, description = "Link to this discovery resource."),
   @ResourceLink (rel = PersonsRSDefinition.REL, definedBy = PersonsRSDefinition.class, description = "The set of persons for this application."),
   @ResourceLink (rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for the currently logged in user." ),
+  @ResourceLink (rel = ContributorRSDefinition.REL, definedBy = ContributorRSDefinition.class, description = "The current contributor." ),
   @ResourceLink (rel = RelationshipsRSDefinition.COUPLE_RELATIONSHIPS_REL, definedBy = RelationshipsRSDefinition.class, description = "The set of couple relationships for this application." ),
   @ResourceLink (rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, definedBy = RelationshipsRSDefinition.class, description = "The set of parent-child relationships for this application." ),
   @ResourceLink (rel = SourceDescriptionsRSDefinition.REL, definedBy = SourceDescriptionsRSDefinition.class, description = "The source descriptions resource for this application." ),

@@ -79,6 +79,9 @@ public abstract class GenerateResourceExampleHttpMethod implements TemplateMetho
     ElementDeclaration element = null;
     if (def != null) {
       List<ElementDeclaration> elements = def.getResourceElements();
+      if (resourceMethod.getMetaData().get("boundBy") instanceof ResourceBinding) {
+        elements = ((ResourceBinding) resourceMethod.getMetaData().get("boundBy")).getResourceElements();
+      }
       if (elements.size() > 0) {
         element = elements.get(0);
       }

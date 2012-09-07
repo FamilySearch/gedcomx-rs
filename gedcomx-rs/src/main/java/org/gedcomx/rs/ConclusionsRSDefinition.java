@@ -21,11 +21,13 @@ import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 /**
- * The conclusions resource service is used to manage a collection of conclusions.
+ * The conclusions resource defines the set of conclusions on an entity (e.g. person, relationship).
+ * Some implementations may bind the conclusions resource and the person (or relationship) resource together.
  *
  * @author Ryan Heaton
  */
@@ -39,6 +41,19 @@ import javax.ws.rs.core.Response;
 public interface ConclusionsRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "conclusions";
+
+  /**
+   * Read the conclusions of an entity.
+   *
+   * @return The conclusions.
+   */
+  @GET
+  @StatusCodes ({
+    @ResponseCode ( code = 200, condition = "Upon a successful read."),
+    @ResponseCode( code = 204, condition = "Upon a successful query with no results."),
+    @ResponseCode( code = 404, condition = "The specified entity has been moved, deleted, or otherwise not found.")
+  })
+  Response get();
 
   /**
    * Create a conclusion.

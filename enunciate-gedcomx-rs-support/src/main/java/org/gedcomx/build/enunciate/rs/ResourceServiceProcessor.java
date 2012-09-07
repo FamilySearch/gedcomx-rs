@@ -56,6 +56,7 @@ public class ResourceServiceProcessor {
 
   private final Map<QName, ResourceDefinitionDeclaration> resourceDefinitions = new HashMap<QName, ResourceDefinitionDeclaration>();
   private Map<String, ResourceBinding> bindingsByPath;
+  private Map<String, ResourceBinding> bindingsByName;
 
   /**
    * @see <a href="http://tools.ietf.org/html/draft-nottingham-http-link-header">Web Linking</a>
@@ -68,6 +69,10 @@ public class ResourceServiceProcessor {
 
   public Map<String, ResourceBinding> getBindingsByPath() {
     return bindingsByPath;
+  }
+
+  public Map<String, ResourceBinding> getBindingsByName() {
+    return bindingsByName;
   }
 
   public ValidationResult processModel(EnunciateFreemarkerModel model, Collection<TypeDeclaration> resourceServiceDefinitions) {
@@ -255,26 +260,51 @@ public class ResourceServiceProcessor {
               metadata = declaringResource.getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
             }
 
-            binding = new ResourceBinding(path, rsd, metadata);
-            bindingsByPath.put(path, binding);
+            List<String> resourceElementsFqn = new ArrayList<String>();
 
-            if (!this.resourceDefinitions.containsKey(new QName(binding.getNamespace(), binding.getName()))) {
-              //if there is no rsd for the binding, we need to create it:
-              rsd = new ResourceDefinitionDeclaration(rsd, binding);
-              this.resourceDefinitions.put(new QName(rsd.getNamespace(), rsd.getName()), rsd);
+            if (metadata != null) {
+              try {
+                for (Class<?> clazz : metadata.resourceElement()) {
+                  resourceElementsFqn.add(clazz.getName());
+                }
+              }
+              catch (MirroredTypesException e) {
+                resourceElementsFqn.addAll(e.getQualifiedNames());
+              }
             }
+
+            List<ElementDeclaration> resourceElements;
+            if (resourceElementsFqn.isEmpty()) {
+              resourceElements = rsd.getResourceElements();
+            }
+            else {
+              resourceElements = new ArrayList<ElementDeclaration>();
+              AnnotationProcessorEnvironment ape = Context.getCurrentEnvironment();
+              for (String resourceElementFqn : resourceElementsFqn) {
+                TypeDeclaration declaration = ape.getTypeDeclaration(resourceElementFqn);
+                ElementDeclaration resourceElement = null;
+                if (declaration instanceof ClassDeclaration) {
+                  resourceElement = model.findElementDeclaration((ClassDeclaration) declaration);
+                }
+
+                if (resourceElement == null) {
+                  result.addWarning(declaringResource, "Unable to find element declaration for " + resourceElementFqn + ".");
+                }
+                else {
+                  resourceElements.add(resourceElement);
+                }
+              }
+            }
+
+            binding = new ResourceBinding(path, rsd, resourceElements, metadata);
+            bindingsByPath.put(path, binding);
 
             ResourceBinding conflict = bindingsByName.put(binding.getName(), binding);
             if (conflict != null) {
               result.addError(bindingDeclaration, String.format("The name \"%s\" for the binding at %s conflicts with the binding at %s. Please apply the %s annotation to disambiguate.", binding.getName(), binding.getPath(), conflict.getPath(), org.gedcomx.rt.rs.ResourceBinding.class.getName()));
             }
 
-            if (rsd.getBinding() != null && !rsd.getBinding().getPath().equals(binding.getPath())) {
-              result.addError(bindingDeclaration, String.format("The resource \"%s\" is already bound by the binding at %s. Please apply the %s annotation to imply a new resource.", rsd.getName(), rsd.getBinding().getPath(), org.gedcomx.rt.rs.ResourceBinding.class.getName()));
-            }
-            else {
-              rsd.setBinding(binding);
-            }
+            rsd.getBindings().add(binding);
           }
           else {
             String fqn = binding.getDefinition().getQualifiedName();
@@ -290,6 +320,7 @@ public class ResourceServiceProcessor {
           }
 
           binding.getMethods().add(resourceMethod);
+          resourceMethod.putMetaData("boundBy", binding);
 
           if (declaringResource.getAnnotation(ResourceDefinition.class) == null) {
             //as long as the declaring resource class isn't a resource definition itself,
@@ -307,6 +338,7 @@ public class ResourceServiceProcessor {
     }
 
     this.bindingsByPath = bindingsByPath;
+    this.bindingsByName = bindingsByName;
 
     //todo: warn if a definition method isn't bound?
 
@@ -324,12 +356,7 @@ public class ResourceServiceProcessor {
   }
 
   public Set<ResourceLink> extractLinks(TypeDeclaration delegate) {
-    Set<ResourceLink> rels = new TreeSet<ResourceLink>(new Comparator<ResourceLink>() {
-      @Override
-      public int compare(ResourceLink o1, ResourceLink o2) {
-        return o1.rel.compareTo(o2.rel);
-      }
-    });
+    Set<ResourceLink> rels = new TreeSet<ResourceLink>();
 
     org.gedcomx.rt.rs.ResourceLink[] resourceLinkInfo = {};
     ResourceLinks resourceLinks = delegate.getAnnotation(ResourceLinks.class);

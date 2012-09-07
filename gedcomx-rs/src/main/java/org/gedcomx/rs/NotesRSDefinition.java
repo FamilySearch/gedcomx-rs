@@ -15,11 +15,60 @@
  */
 package org.gedcomx.rs;
 
+import org.gedcomx.common.Note;
+import org.gedcomx.conclusion.Person;
+import org.gedcomx.conclusion.Relationship;
+import org.gedcomx.rt.rs.*;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.core.Response;
+
 /**
- * The notes resource service is used to manage a collection of notes.
+ * The notes resource defines the set of notes on an entity (e.g. person, relationship).
+ * Some implementations may bind the notes resource and the person (or relationship) resource together.
  */
+@ResourceDefinition (
+  name = "Notes",
+  projectId = RSModel.RS_PROJECT_ID,
+  namespace = RSModel.RS_V1_NAMESPACE,
+  resourceElement = { Person.class, Relationship.class },
+  subresources = { NoteRSDefinition.class }
+)
+@ResourceLinks ( {
+  @ResourceLink ( rel = "self", definedBy = NotesRSDefinition.class, description = "Link to this notes resource." ),
+  @ResourceLink ( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person that contains this set of notes, if any." ),
+  @ResourceLink ( rel = RelationshipRSDefinition.REL, definedBy = RelationshipRSDefinition.class, description = "The link to the relationship that contains this set of notes, if any." )
+})
 public interface NotesRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "notes";
+
+  /**
+   * Read the notes on to entity. Each note in the set is a note summary which is a note but
+   * without the text field populated.
+   *
+   * @return The list of note summaries.
+   */
+  @GET
+  @StatusCodes ({
+    @ResponseCode ( code = 200, condition = "Upon a successful read."),
+    @ResponseCode( code = 204, condition = "Upon a successful query with no results."),
+    @ResponseCode( code = 404, condition = "The specified entity has been moved, deleted, or otherwise not found.")
+  })
+  Response get();
+
+  /**
+   * Create a note.
+   *
+   * @param note The note to be created.
+   * @return The appropriate response.
+   */
+  @POST
+  @StatusCodes({
+    @ResponseCode( code = 201, condition = "The creation of the note was successful. Expect a location header specifying the link to the note."),
+    @ResponseCode( code = 400, condition = "If the request was unable to be understood by the application.")
+  })
+  Response post( Note note );
 
 }

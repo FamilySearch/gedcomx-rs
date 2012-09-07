@@ -23,7 +23,7 @@ import javax.ws.rs.HEAD;
 import javax.ws.rs.core.Response;
 
 /**
- * The contributor resource service is used to manage a contributor.
+ * The contributor resource defines a contributor.
  */
 @ResourceDefinition (
   name = "Contributor",
@@ -45,9 +45,9 @@ public interface ContributorRSDefinition extends CommonRSParameters {
    */
   @HEAD
   @StatusCodes ( {
-                   @ResponseCode ( code = 200, condition = "Upon a successful read." ),
-                   @ResponseCode ( code = 404, condition = "If the requested contributor is not found." )
-                 } )
+    @ResponseCode ( code = 200, condition = "Upon a successful read." ),
+    @ResponseCode ( code = 404, condition = "If the requested contributor is not found." )
+   } )
   Response head();
 
   /**
@@ -57,8 +57,8 @@ public interface ContributorRSDefinition extends CommonRSParameters {
    */
   @GET
   @StatusCodes ( {
-                   @ResponseCode ( code = 200, condition = "Upon a successful read." ),
-                   @ResponseCode ( code = 404, condition = "If the requested contributor is not found." )
-                 } )
+    @ResponseCode ( code = 200, condition = "Upon a successful read." ),
+    @ResponseCode ( code = 404, condition = "If the requested contributor is not found." )
+   } )
   Response get();
 }

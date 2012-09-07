@@ -27,7 +27,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 
 /**
- * The conclusion resource service is used to manage a conclusion.
+ * The conclusion resource defines the interface for a specific name, gender, or fact conclusion.
  *
  * @author Ryan Heaton
  */
@@ -38,7 +38,9 @@ import javax.ws.rs.core.Response;
   namespace = RSModel.RS_V1_NAMESPACE
 )
 @ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = ConclusionRSDefinition.class, description = "Link to this conclusion." )
+  @ResourceLink ( rel = "self", definedBy = ConclusionRSDefinition.class, description = "Link to this conclusion." ),
+  @ResourceLink ( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person to which the conclusion applies." ),
+  @ResourceLink ( rel = RelationshipRSDefinition.REL, definedBy = RelationshipRSDefinition.class, description = "The link to the relationship to which the conclusion applies." )
 })
 public interface ConclusionRSDefinition extends CommonRSParameters {
 

@@ -49,4 +49,12 @@ public @interface ResourceBinding {
    * @return An identifier for a project to which this binding belongs.
    */
   String projectId() default "##default";
+
+  /**
+   * The class defining the element used as the representation model for this binding. The
+   * resource element should be a JAXB {@link javax.xml.bind.annotation.XmlRootElement}.
+   *
+   * @return The class defining the element used as the representation model for the resource.
+   */
+  Class<?>[] resourceElement() default {};
 }

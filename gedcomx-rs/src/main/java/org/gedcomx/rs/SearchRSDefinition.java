@@ -134,17 +134,23 @@ import javax.ws.rs.core.Response;
  *   </tr>
  * </table>
  *
+ * <p>Each entry in the search results MAY contain content of the GEDCOM X media type that provides data about
+ * the results of the search, e.g. persons and relationships.</p>
+ *
  * @author Ryan Heaton
  */
 @ResourceDefinition (
   name = "Search",
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,
-  resourceElement = Feed.class,
-  subresources = { PersonEntryRSDefinition.class }
+  resourceElement = Feed.class
 )
 @ResourceLinks ( {
-  @ResourceLink ( rel = "self", definedBy = RelationshipRSDefinition.class, description = "A link to this search result set." )
+  @ResourceLink ( rel = "self", definedBy = SearchRSDefinition.class, description = "A link to this search result set." ),
+  @ResourceLink ( rel = "first", definedBy = SearchRSDefinition.class, description = "A link to the first page of search results, if any." ),
+  @ResourceLink ( rel = "next", definedBy = SearchRSDefinition.class, description = "A link to the next page of search results, if any." ),
+  @ResourceLink ( rel = "prev", definedBy = SearchRSDefinition.class, description = "A link to the previous page of search results, if any." ),
+  @ResourceLink ( rel = "last", definedBy = SearchRSDefinition.class, description = "A link to the last page of search results, if any." )
 })
 public interface SearchRSDefinition extends CommonRSParameters {
 

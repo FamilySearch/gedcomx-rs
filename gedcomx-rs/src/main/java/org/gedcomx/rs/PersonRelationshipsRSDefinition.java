@@ -22,7 +22,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
 /**
- * The person relationships resource manages a set of relationships for a specific person.
+ * The person relationships resource manages a set of relationships that reference a specific person. Examples might include
+ * the set of relationships to the spouses of a person, the set of relationships to the parents of a person, and the set of relationships
+ * to the children of a person.
  */
 @ResourceDefinition (
   name = "Person Relationships",

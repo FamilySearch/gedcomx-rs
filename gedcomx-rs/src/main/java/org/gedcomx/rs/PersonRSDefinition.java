@@ -25,7 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 
 /**
- * The person resource service is used to manage a conclusion person.
+ * The person resource defines a person.
  *
  * @author Ryan Heaton
  */
@@ -38,8 +38,9 @@ import javax.ws.rs.core.Response;
 )
 @ResourceLinks({
   @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "The person itself." ),
-  @ResourceLink ( rel = PersonSourceReferencesRSDefinition.REL, definedBy = PersonSourceReferencesRSDefinition.class, description = "The source references for the person." ),
+  @ResourceLink ( rel = SourceReferencesRSDefinition.REL, definedBy = SourceReferencesRSDefinition.class, description = "The source references for the person." ),
   @ResourceLink ( rel = ConclusionsRSDefinition.REL, definedBy = ConclusionsRSDefinition.class, description = "The set of conclusions for the person." ),
+  @ResourceLink ( rel = NotesRSDefinition.REL, definedBy = ConclusionsRSDefinition.class, description = "The set of conclusions for the person." ),
   @ResourceLink ( rel = PersonWithRelationshipsRSDefinition.REL, definedBy = PersonWithRelationshipsRSDefinition.class, description = "The person and associated relationships." ),
   @ResourceLink ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the spouses of the person." ),
   @ResourceLink ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the children of the person." ),

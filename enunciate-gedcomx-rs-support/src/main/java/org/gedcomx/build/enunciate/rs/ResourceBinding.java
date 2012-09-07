@@ -15,6 +15,7 @@
  */
 package org.gedcomx.build.enunciate.rs;
 
+import org.codehaus.enunciate.contract.jaxb.ElementDeclaration;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.ResourceParameter;
 
@@ -23,7 +24,7 @@ import java.util.*;
 /**
  * @author Ryan Heaton
  */
-public class ResourceBinding {
+public class ResourceBinding implements LinkReference {
 
   private final String path;
   ResourceDefinitionDeclaration definition;
@@ -31,12 +32,7 @@ public class ResourceBinding {
   private final List<ResourceMethod> methods = new ArrayList<ResourceMethod>();
   private final Set<ResponseCode> statusCodes = new HashSet<ResponseCode>();
   private final Set<ResponseCode> warnings = new HashSet<ResponseCode>();
-  private final Set<ResourceLink> links = new TreeSet<ResourceLink>(new Comparator<ResourceLink>() {
-    @Override
-    public int compare(ResourceLink o1, ResourceLink o2) {
-      return o1.rel.compareTo(o2.rel);
-    }
-  });
+  private final Set<ResourceLink> links = new TreeSet<ResourceLink>();
   private final Set<ResourceParameter> resourceParameters = new TreeSet<ResourceParameter>(new Comparator<ResourceParameter>() {
     @Override
     public int compare(ResourceParameter param1, ResourceParameter param2) {
@@ -47,14 +43,18 @@ public class ResourceBinding {
       return comparison;
     }
   });
+
+  private final List<ElementDeclaration> resourceElements;
   private final org.gedcomx.rt.rs.ResourceBinding metadata;
 
-  public ResourceBinding(String path, ResourceDefinitionDeclaration definition, org.gedcomx.rt.rs.ResourceBinding metadata) {
+  public ResourceBinding(String path, ResourceDefinitionDeclaration definition, List<ElementDeclaration> resourceElements, org.gedcomx.rt.rs.ResourceBinding metadata) {
     this.path = path;
     this.definition = definition;
+    this.resourceElements = resourceElements;
     this.metadata = metadata;
   }
   
+  @Override
   public String getName() {
     String name = this.metadata == null ? "##default" : this.metadata.name();
     if ("##default".equals(name)) {
@@ -63,6 +63,7 @@ public class ResourceBinding {
     return name;
   }
 
+  @Override
   public String getNamespace() {
     String namespace = this.metadata == null ? "##default" : this.metadata.namespace();
     if ("##default".equals(namespace)) {
@@ -71,6 +72,7 @@ public class ResourceBinding {
     return namespace;
   }
 
+  @Override
   public String getProjectId() {
     String pid = this.metadata == null ? "##default" : this.metadata.projectId();
     if ("##default".equals(pid)) {
@@ -95,17 +97,18 @@ public class ResourceBinding {
     return warnings;
   }
 
+  @Override
   public Set<ResourceLink> getLinks() {
     return links;
   }
 
+  @Override
+  public List<ElementDeclaration> getResourceElements() {
+    return resourceElements;
+  }
+
   public Set<ResourceLink> getAllLinks() {
-    TreeSet<ResourceLink> allLinks = new TreeSet<ResourceLink>(new Comparator<ResourceLink>() {
-      @Override
-      public int compare(ResourceLink o1, ResourceLink o2) {
-        return o1.rel.compareTo(o2.rel);
-      }
-    });
+    TreeSet<ResourceLink> allLinks = new TreeSet<ResourceLink>();
 
     allLinks.addAll(this.links);
     allLinks.addAll(this.definition.getLinks());
@@ -120,6 +123,7 @@ public class ResourceBinding {
     return resourceParameters;
   }
 
+  @Override
   public String getDocValue() {
     return docValue;
   }
@@ -146,5 +150,10 @@ public class ResourceBinding {
 
   void replaceDefinition(ResourceDefinitionDeclaration rsd) {
     this.definition = rsd;
+  }
+
+  @Override
+  public boolean isBinding() {
+    return true;
   }
 }

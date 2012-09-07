@@ -32,7 +32,7 @@ import java.util.*;
 /**
  * @author Ryan Heaton
  */
-public class ResourceDefinitionDeclaration extends Resource {
+public class ResourceDefinitionDeclaration extends Resource implements LinkReference {
 
   private final ResourceServiceProcessor processor;
   private final String name;
@@ -44,7 +44,7 @@ public class ResourceDefinitionDeclaration extends Resource {
   private final Set<QName> subresources;
   private final Map<QName, TypeDefinition> subresourceElements;
   private final String projectId;
-  private ResourceBinding binding;
+  private final List<ResourceBinding> bindings = new ArrayList<ResourceBinding>();
 
   public ResourceDefinitionDeclaration(TypeDeclaration delegate, List<ElementDeclaration> resourceElements, Set<QName> subresources, Map<QName, TypeDefinition> subresourceElements, ResourceServiceProcessor processor) {
     super(delegate);
@@ -65,27 +65,6 @@ public class ResourceDefinitionDeclaration extends Resource {
     }
     this.subresourceElements = Collections.unmodifiableMap(subresourceElements);
     this.projectId = rsdInfo.projectId();
-  }
-
-  public ResourceDefinitionDeclaration(ResourceDefinitionDeclaration parent, ResourceBinding binding) {
-    super((TypeDeclaration) parent.delegate);
-
-    this.processor = parent.processor;
-    this.resourceElements = parent.resourceElements;
-    this.subresources = parent.subresources;
-    this.statusCodes = parent.statusCodes;
-    this.warnings = parent.warnings;
-    this.links = parent.links;
-    this.subresourceElements = parent.subresourceElements;
-
-    this.name = binding.getName();
-    this.namespace = binding.getNamespace();
-    this.projectId = binding.getProjectId();
-    for (ResourceMethod resourceMethod : getResourceMethods()) {
-      resourceMethod.putMetaData("statusCodes", processor.extractStatusCodes(resourceMethod));
-      resourceMethod.putMetaData("warnings", processor.extractWarnings(resourceMethod));
-    }
-    binding.replaceDefinition(this);
   }
 
   @Override
@@ -155,12 +134,8 @@ public class ResourceDefinitionDeclaration extends Resource {
     return links;
   }
 
-  public ResourceBinding getBinding() {
-    return binding;
-  }
-
-  public void setBinding(ResourceBinding binding) {
-    this.binding = binding;
+  public List<ResourceBinding> getBindings() {
+    return bindings;
   }
 
   public Map<ResourceLink, ResourceDefinitionDeclaration> getIncomingLinks() {
@@ -174,5 +149,10 @@ public class ResourceDefinitionDeclaration extends Resource {
       }
     }
     return linksIn;
+  }
+
+  @Override
+  public boolean isBinding() {
+    return false;
   }
 }

@@ -29,7 +29,7 @@ import java.util.Collection;
 /**
  * @author Ryan Heaton
  */
-public final class ResourceLink {
+public final class ResourceLink implements Comparable<ResourceLink> {
 
   final String rel;
   final String description;
@@ -56,10 +56,10 @@ public final class ResourceLink {
       }
     }
 
-    this.resource = findResourceDefinition(definedBy);
+    this.resource = findResolvesTo(definedBy);
   }
 
-  private QName findResourceDefinition(TypeDeclaration definedBy) {
+  private QName findResolvesTo(TypeDeclaration definedBy) {
     ResourceBinding binding = findFirst(definedBy, ResourceBinding.class);
     ResourceDefinition definition = findFirst(definedBy, ResourceDefinition.class);
     if (binding != null && definition != null) {
@@ -109,8 +109,12 @@ public final class ResourceLink {
     return description;
   }
 
-  public ResourceDefinitionDeclaration getResolvesTo() {
-    return this.processor.findResourceDefinition(this.resource);
+  public LinkReference getResolvesTo() {
+    LinkReference resolution = this.processor.getBindingsByName().get(this.resource.getLocalPart());
+    if (resolution == null) {
+      resolution = this.processor.findResourceDefinition(this.resource);
+    }
+    return resolution;
   }
 
   public boolean isTemplate() {
@@ -138,5 +142,10 @@ public final class ResourceLink {
   @Override
   public int hashCode() {
     return rel != null ? rel.hashCode() : 0;
+  }
+
+  @Override
+  public int compareTo(ResourceLink o) {
+    return this.rel.compareTo(o.rel);
   }
 }
