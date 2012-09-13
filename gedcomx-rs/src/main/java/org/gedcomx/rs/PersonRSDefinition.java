@@ -40,7 +40,7 @@ import javax.ws.rs.core.Response;
   @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "The person itself." ),
   @ResourceLink ( rel = SourceReferencesRSDefinition.REL, definedBy = SourceReferencesRSDefinition.class, description = "The source references for the person." ),
   @ResourceLink ( rel = ConclusionsRSDefinition.REL, definedBy = ConclusionsRSDefinition.class, description = "The set of conclusions for the person." ),
-  @ResourceLink ( rel = NotesRSDefinition.REL, definedBy = ConclusionsRSDefinition.class, description = "The set of conclusions for the person." ),
+  @ResourceLink ( rel = NotesRSDefinition.REL, definedBy = NotesRSDefinition.class, description = "The set of notes for the person." ),
   @ResourceLink ( rel = PersonWithRelationshipsRSDefinition.REL, definedBy = PersonWithRelationshipsRSDefinition.class, description = "The person and associated relationships." ),
   @ResourceLink ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the spouses of the person." ),
   @ResourceLink ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the children of the person." ),
