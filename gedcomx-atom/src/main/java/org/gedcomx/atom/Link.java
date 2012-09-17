@@ -211,4 +211,9 @@ public class Link implements HasUniqueJsonKey {
   public void setLength(String length) {
     this.length = length;
   }
+
+  @Override
+  public String toString() {
+    return String.format("<%s>; rel=\"%s\"", href.toString(), rel);
+  }
 }
