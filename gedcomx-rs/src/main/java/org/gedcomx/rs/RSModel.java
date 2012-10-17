@@ -15,6 +15,7 @@
  */
 package org.gedcomx.rs;
 
+import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.Model;
 import org.gedcomx.rt.Models;
 
@@ -41,7 +42,7 @@ public class RSModel {
   private RSModel() {}
 
   public static final String RS_PROJECT_ID = "gedcomx-rs";
-  public static final String RS_V1_NAMESPACE = "http://rs.gedcomx.org/v1";
-  public static final String RS_V1_XML_MEDIA_TYPE = "application/x-gedcomx-rs-v1+xml";
-  public static final String RS_V1_JSON_MEDIA_TYPE = "application/x-gedcomx-rs-v1+json";
+  public static final String RS_V1_NAMESPACE = CommonModels.GEDCOMX_NAMESPACE;
+  public static final String RS_V1_XML_MEDIA_TYPE = CommonModels.GEDCOMX_XML_MEDIA_TYPE;
+  public static final String RS_V1_JSON_MEDIA_TYPE = CommonModels.GEDCOMX_JSON_MEDIA_TYPE;
 }
