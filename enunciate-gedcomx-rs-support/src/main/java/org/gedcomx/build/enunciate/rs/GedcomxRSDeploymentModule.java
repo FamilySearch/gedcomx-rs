@@ -80,6 +80,10 @@ public class GedcomxRSDeploymentModule extends FreemarkerDeploymentModule implem
     this.resourceServiceProcessor = new ResourceServiceProcessor();
   }
 
+  public ResourceServiceProcessor getResourceServiceProcessor() {
+    return resourceServiceProcessor;
+  }
+
   @Override
   public void initModel(EnunciateFreemarkerModel model) {
     super.initModel(model);
