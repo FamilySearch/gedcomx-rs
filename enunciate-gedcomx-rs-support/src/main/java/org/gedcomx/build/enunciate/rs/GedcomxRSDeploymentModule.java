@@ -32,6 +32,8 @@ import org.gedcomx.rt.rs.ResourceDefinition;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,8 +137,41 @@ public class GedcomxRSDeploymentModule extends FreemarkerDeploymentModule implem
       model.setVariable("generateExampleRequestBody", new GenerateExampleRequestBodyMethod(model));
       model.setVariable("generateExampleResponseHeaders", new GenerateExampleResponseHeadersMethod(model));
       model.setVariable("generateExampleResponseBody", new GenerateExampleResponseBodyMethod(model));
-      model.put("resourceDefinitions", this.resourceServiceProcessor.getResourceDefinitions());
-      model.put("resourceBindingsByPath", this.resourceServiceProcessor.getBindingsByPath());
+      Collection<ResourceDefinitionDeclaration> resourceDefinitions = this.resourceServiceProcessor.getResourceDefinitions();
+      Map<String, Collection<ResourceDefinitionDeclaration>> resourceDefinitionsByNamespace = new HashMap<String, Collection<ResourceDefinitionDeclaration>>();
+      Map<String, Collection<ResourceDefinitionDeclaration>> resourceDefinitionsByName = new HashMap<String, Collection<ResourceDefinitionDeclaration>>();
+      for (ResourceDefinitionDeclaration definition : resourceDefinitions) {
+        Collection<ResourceDefinitionDeclaration> listByNamespace = resourceDefinitionsByNamespace.get(definition.getNamespace());
+        if (listByNamespace == null) {
+          listByNamespace = new ArrayList<ResourceDefinitionDeclaration>();
+          resourceDefinitionsByNamespace.put(definition.getNamespace(), listByNamespace);
+        }
+        listByNamespace.add(definition);
+
+        Collection<ResourceDefinitionDeclaration> listByName = resourceDefinitionsByName.get(definition.getName());
+        if (listByName == null) {
+          listByName = new ArrayList<ResourceDefinitionDeclaration>();
+          resourceDefinitionsByName.put(definition.getName(), listByName);
+        }
+        listByName.add(definition);
+      }
+      model.put("resourceDefinitions", resourceDefinitions);
+      model.put("resourceDefinitionsByNamespace", resourceDefinitionsByNamespace);
+      model.put("resourceDefinitionsByName", resourceDefinitionsByName);
+
+      Map<String, ResourceBinding> bindingsByPath = this.resourceServiceProcessor.getBindingsByPath();
+      Map<String, Collection<ResourceBinding>> bindingsByNamespace = new HashMap<String, Collection<ResourceBinding>>();
+      for (ResourceBinding binding : bindingsByPath.values()) {
+        Collection<ResourceBinding> list = bindingsByNamespace.get(binding.getNamespace());
+        if (list == null) {
+          list = new ArrayList<ResourceBinding>();
+          bindingsByNamespace.put(binding.getNamespace(), list);
+        }
+        list.add(binding);
+      }
+      model.put("resourceBindingsByPath", bindingsByPath);
+      model.put("resourceBindingsByNamespace", bindingsByNamespace);
+      model.put("resourceBindingsByName", this.resourceServiceProcessor.getBindingsByName());
       try {
         processTemplate(getDocsTemplateURL(), model);
       }
