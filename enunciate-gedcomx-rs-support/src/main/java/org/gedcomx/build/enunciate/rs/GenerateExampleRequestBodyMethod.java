@@ -15,6 +15,7 @@
  */
 package org.gedcomx.build.enunciate.rs;
 
+import freemarker.template.TemplateModelException;
 import org.codehaus.enunciate.apt.EnunciateFreemarkerModel;
 import org.codehaus.enunciate.contract.jaxb.ElementDeclaration;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
@@ -34,7 +35,7 @@ public class GenerateExampleRequestBodyMethod extends GenerateResourceExampleHtt
     super(model);
   }
 
-  protected Object generateExample(ResourceDefinitionDeclaration def, ResourceMethod resourceMethod, ElementDeclaration element, List<SubresourceElement> subresources, boolean json) {
+  protected Object generateExample(ResourceDefinitionDeclaration def, ResourceMethod resourceMethod, ElementDeclaration element, List<SubresourceElement> subresources, boolean json) throws TemplateModelException {
     if (element == null) {
       return "...";
     }

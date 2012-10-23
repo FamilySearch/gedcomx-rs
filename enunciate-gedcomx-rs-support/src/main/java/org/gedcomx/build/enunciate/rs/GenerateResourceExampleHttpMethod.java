@@ -19,6 +19,7 @@ import com.sun.mirror.declaration.ClassDeclaration;
 import com.sun.mirror.type.ClassType;
 import com.sun.mirror.type.InterfaceType;
 import freemarker.ext.beans.BeansWrapper;
+import freemarker.template.AdapterTemplateModel;
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -32,9 +33,14 @@ import org.codehaus.enunciate.contract.jaxb.types.XmlType;
 import org.codehaus.enunciate.contract.jaxrs.ResourceEntityParameter;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.ResourceRepresentationMetadata;
+import org.codehaus.enunciate.modules.docs.GenerateExampleXmlMethod;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
+import org.gedcomx.build.enunciate.GenerateExampleJsonMethod;
 import org.gedcomx.rt.CommonModels;
-import org.gedcomx.rt.json.JsonElementWrapper;
 import org.gedcomx.rt.SupportsExtensionElements;
+import org.gedcomx.rt.json.JsonElementWrapper;
+import org.jdom.Namespace;
 
 import javax.xml.namespace.QName;
 import java.io.PrintWriter;
@@ -104,7 +110,7 @@ public abstract class GenerateResourceExampleHttpMethod implements TemplateMetho
     return generateExample(def, resourceMethod, element, gatherSubresourceElements(element instanceof RootElementDeclaration ? ((RootElementDeclaration)element).getTypeDefinition() : null, def), json);
   }
 
-  protected abstract Object generateExample(ResourceDefinitionDeclaration def, ResourceMethod resourceMethod, ElementDeclaration element, List<SubresourceElement> subresources, boolean json);
+  protected abstract Object generateExample(ResourceDefinitionDeclaration def, ResourceMethod resourceMethod, ElementDeclaration element, List<SubresourceElement> subresources, boolean json) throws TemplateModelException;
 
   protected List<SubresourceElement> gatherSubresourceElements(TypeDefinition typeDef, ResourceDefinitionDeclaration def) {
     List<SubresourceElement> subresourceElements = new ArrayList<SubresourceElement>();
@@ -167,99 +173,131 @@ public abstract class GenerateResourceExampleHttpMethod implements TemplateMetho
 
   }
 
-  protected void writeExampleToBody(ElementDeclaration element, List<SubresourceElement> subresources, boolean json, PrintWriter body, boolean writeLinks, Collection<ResourceLink> links) {
+  protected void writeExampleToBody(final ElementDeclaration element, List<SubresourceElement> subresources, boolean json, PrintWriter body, boolean writeLinks, Collection<ResourceLink> links) throws TemplateModelException {
     if (json) {
-      body.printf("{\n");
-      body.printf("  ...\n");
-      if (writeLinks) {
-        writeLinks(body, links, json, 0, null);
-      }
-      writeSubresourcesExampleToBody(element.getQname(), subresources, json, body, 1, 2, writeLinks);
-      body.printf("  ...\n");
-      body.printf("}");
+      new ExampleJsonGenerator(element, subresources, writeLinks, links).writeTo(body);
     }
     else {
-      boolean isAtom = "http://www.w3.org/2005/Atom".equals(element.getNamespace());
-      body.printf("<%s xmlns=\"%s\"%s>\n", element.getName(), element.getNamespace(), isAtom ? "" : writeLinks ? " xmlns:atom=\"http://www.w3.org/2005/Atom\"" : "");
-      body.printf("  ...\n");
-      if (writeLinks) {
-        writeLinks(body, links, json, 0, isAtom ? "link" : "atom:link");
-      }
-      writeSubresourcesExampleToBody(element.getQname(), subresources, json, body, 1, 2, writeLinks);
-      body.printf("  ...\n");
-      body.printf("</%s>", element.getName());
+      new ExampleXmlGenerator(element, subresources, writeLinks, links).writeTo(body);
     }
   }
 
-  private void writeLinks(PrintWriter body, Collection<ResourceLink> links, boolean json, int depth, String linkElement) {
-    StringBuilder tab = new StringBuilder();
-    for (int i = 0; i < depth; i++) {
-      tab.append("  ");
+  private class ExampleXmlGenerator extends GenerateExampleXmlMethod {
+
+    private final ElementDeclaration element;
+    private final List<SubresourceElement> subresourceStack;
+    private final boolean writeLinks;
+    private final List<ResourceLink> linkStack;
+
+    private ExampleXmlGenerator(ElementDeclaration element, List<SubresourceElement> subresources, boolean writeLinks, Collection<ResourceLink> links) {
+      super(element.getNamespace(), model);
+      this.element = element;
+      this.subresourceStack = new ArrayList<SubresourceElement>(subresources);
+      this.writeLinks = writeLinks;
+      this.linkStack = new ArrayList<ResourceLink>(links);
     }
 
-    Iterator<ResourceLink> relIt = links.iterator();
-    if (json) {
-      if (relIt.hasNext()) {
-        body.printf("%s  \"links\" : {\n", tab);
-      }
-      while (relIt.hasNext()) {
-        ResourceLink rel = relIt.next();
-        body.printf("%s    \"%s\" : { \"%s\" : \"...\" }", tab, rel.getRel(), rel.isTemplate() ? "template" : "href");
-        if (!relIt.hasNext()) {
-          body.printf("\n%s  },\n", tab);
+    public void writeTo(PrintWriter writer) throws TemplateModelException {
+      String example = (String) exec(Arrays.asList(new AdapterTemplateModel() {
+        @Override
+        public Object getAdaptedObject(Class hint) {
+          return element;
+        }
+      }));
+      writer.print(example);
+    }
+
+    @Override
+    public void generateExampleXml(TypeDefinition type, org.jdom.Element parent, String defaultNs, int maxDepth) {
+      if (this.writeLinks) {
+        if (!linkStack.isEmpty()) {
+          if (!"http://www.w3.org/2005/Atom".equals(defaultNs)) {
+            parent.addNamespaceDeclaration(Namespace.getNamespace("atom", "http://www.w3.org/2005/Atom"));
+          }
+          writeLinks(parent, this.linkStack, defaultNs);
+          this.linkStack.clear();
         }
         else {
-          body.printf("%s,\n", tab);
+          //see if the type definition is a subresource, and if so, add the links.
+          for (SubresourceElement sub : subresourceStack) {
+            if (sub.getTypeDefinition().getQname().equals(type.getQname())) {
+              writeLinks(parent, sub.getDefinition().getLinks(), defaultNs);
+            }
+          }
         }
       }
+
+      super.generateExampleXml(type, parent, defaultNs, maxDepth);
     }
-    else {
-      while (relIt.hasNext()) {
-        ResourceLink rel = relIt.next();
-        body.printf("%s  <%s rel=\"%s\" %s=\"...\"/>\n", tab, linkElement, rel.getRel(), rel.isTemplate() ? "template" : "href");
+
+    private void writeLinks(org.jdom.Element parent, Collection<ResourceLink> links, String defaultNs) {
+      for (ResourceLink link : links) {
+        Namespace jdomNS = Namespace.getNamespace(!"http://www.w3.org/2005/Atom".equals(defaultNs) ? "atom" : "", "http://www.w3.org/2005/Atom");
+        org.jdom.Element el = new org.jdom.Element("link", jdomNS);
+        org.jdom.Attribute attr = new org.jdom.Attribute("rel", link.getRel(), Namespace.NO_NAMESPACE);
+        el.setAttribute(attr);
+        attr = new org.jdom.Attribute("href", "...", Namespace.NO_NAMESPACE);
+        el.setAttribute(attr);
+        parent.addContent(el);
       }
     }
   }
 
-  private void writeSubresourcesExampleToBody(QName parentQName, List<SubresourceElement> subresources, boolean json, PrintWriter body, int depth, int maxDepth, boolean writeLinks) {
-    StringBuilder tab = new StringBuilder();
-    for (int i = 0; i < depth; i++) {
-      tab.append("  ");
+  private class ExampleJsonGenerator extends GenerateExampleJsonMethod {
+
+    private final ElementDeclaration element;
+    private final List<SubresourceElement> subresourceStack;
+    private final boolean writeLinks;
+    private final List<ResourceLink> linkStack;
+
+    private ExampleJsonGenerator(ElementDeclaration element, List<SubresourceElement> subresources, boolean writeLinks, Collection<ResourceLink> links) {
+      super(model);
+      this.element = element;
+      this.subresourceStack = new ArrayList<SubresourceElement>(subresources);
+      this.writeLinks = writeLinks;
+      this.linkStack = new ArrayList<ResourceLink>(links);
     }
 
-    if (json) {
-      for (SubresourceElement subresource : subresources) {
-        body.printf("%s\"%s\" :%s{\n", tab, subresource.getJsonName(), subresource.isCollection() ? " [ " : " ");
-        if (depth < maxDepth) {
-          body.printf("%s  ...\n", tab);
-          if (writeLinks) {
-            writeLinks(body, subresource.getDefinition().getLinks(), json, depth, null);
-          }
-          writeSubresourcesExampleToBody(subresource.getXmlName(), gatherSubresourceElements(subresource.getTypeDefinition(), subresource.getDefinition()), json, body, depth + 1, maxDepth, writeLinks);
+    public void writeTo(PrintWriter writer) throws TemplateModelException {
+      String example = (String) exec(Arrays.asList(new AdapterTemplateModel() {
+        @Override
+        public Object getAdaptedObject(Class hint) {
+          return element;
         }
-        body.printf("%s  ...\n", tab);
-        body.printf("%s}%s,\n", tab, subresource.isCollection() ? " ]" : "");
-      }
+      }));
+      writer.print(example);
     }
-    else {
-      for (SubresourceElement subresource : subresources) {
-        String ns = subresource.getXmlName().getNamespaceURI();
-        String localPart = subresource.getXmlName().getLocalPart();
-        body.printf("%s<%s", tab, localPart);
-        if (!"".equals(ns) && !parentQName.getNamespaceURI().equals(ns)) {
-          body.printf(" xmlns=\"%s\"", ns);
+
+    @Override
+    protected void generateExampleJson(TypeDefinition type, ObjectNode jsonNode, int maxDepth) {
+      if (this.writeLinks) {
+        if (!linkStack.isEmpty()) {
+          writeLinks(jsonNode, this.linkStack);
+          this.linkStack.clear();
         }
-        body.printf(">\n");
-        if (depth < maxDepth) {
-          body.printf("%s  ...\n", tab);
-          if (writeLinks) {
-            writeLinks(body, subresource.getDefinition().getLinks(), json, depth, "http://www.w3.org/2005/Atom".equals(ns) ? "link" : "atom:link");
+        else {
+          //see if the type definition is a subresource, and if so, add the links.
+          for (SubresourceElement sub : subresourceStack) {
+            if (sub.getTypeDefinition().getQname().equals(type.getQname())) {
+              writeLinks(jsonNode, sub.getDefinition().getLinks());
+            }
           }
-          writeSubresourcesExampleToBody(subresource.getXmlName(), gatherSubresourceElements(subresource.getTypeDefinition(), subresource.getDefinition()), json, body, depth + 1, maxDepth, writeLinks);
         }
-        body.printf("%s  ...\n", tab);
-        body.printf("%s</%s>\n", tab, localPart);
       }
+
+      super.generateExampleJson(type, jsonNode, maxDepth);
     }
+
+    private void writeLinks(ObjectNode jsonNode, Collection<ResourceLink> links) {
+      ObjectNode linksNode = JsonNodeFactory.instance.objectNode();
+      for (ResourceLink link : links) {
+        ObjectNode linkNode = JsonNodeFactory.instance.objectNode();
+        linkNode.put("href", "...");
+        linksNode.put(link.getRel(), linkNode);
+      }
+      jsonNode.put("links", linksNode);
+    }
+
+
   }
 }
