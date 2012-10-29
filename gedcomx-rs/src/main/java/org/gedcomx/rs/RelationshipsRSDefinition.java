@@ -15,7 +15,7 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.ResourceSet;
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.conclusion.Relationship;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
   name = "Relationships",
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,
-  resourceElement = ResourceSet.class,
+  resourceElement = Gedcomx.class,
   subresources = RelationshipRSDefinition.class
 )
 public interface RelationshipsRSDefinition extends CommonRSParameters {

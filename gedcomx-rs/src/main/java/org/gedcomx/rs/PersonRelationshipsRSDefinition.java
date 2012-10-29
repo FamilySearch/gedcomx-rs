@@ -15,7 +15,7 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.ResourceSet;
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -30,7 +30,7 @@ import javax.ws.rs.core.Response;
   name = "Person Relationships",
   projectId = RSModel.RS_PROJECT_ID,
   namespace = RSModel.RS_V1_NAMESPACE,
-  resourceElement = ResourceSet.class,
+  resourceElement = Gedcomx.class,
   subresources = { RelationshipRSDefinition.class }
 )
 @ResourceLinks ({

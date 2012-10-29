@@ -15,7 +15,7 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.ResourceSet;
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.rt.CommonModels;
 import org.gedcomx.source.SourceDescription;
 import org.gedcomx.rt.rs.ResourceDefinition;
@@ -33,7 +33,7 @@ import javax.ws.rs.core.Response;
   name = "Source Descriptions",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
   projectId = RSModel.RS_PROJECT_ID,
-  resourceElement = ResourceSet.class,
+  resourceElement = Gedcomx.class,
   subresources = {SourceDescriptionRSDefinition.class}
 )
 public interface SourceDescriptionsRSDefinition extends CommonRSParameters {

@@ -51,7 +51,7 @@ import java.util.*;
  */
 public abstract class GenerateResourceExampleHttpMethod implements TemplateMethodModelEx {
   
-  static final QName RESOURCE_SET_TYPE_QNAME = new QName( CommonModels.GEDCOMX_NAMESPACE, "ResourceSet" );
+  static final QName RESOURCE_SET_TYPE_QNAME = new QName( CommonModels.GEDCOMX_NAMESPACE, "Gedcomx" );
 
   final EnunciateFreemarkerModel model;
 
