@@ -18,6 +18,7 @@ package org.gedcomx.atom;
 import org.codehaus.enunciate.json.JsonName;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.gedcomx.common.URI;
+import org.gedcomx.links.Link;
 import org.gedcomx.rt.json.JsonElementWrapper;
 import org.gedcomx.search.ResultConfidence;
 import org.gedcomx.search.SearchModel;

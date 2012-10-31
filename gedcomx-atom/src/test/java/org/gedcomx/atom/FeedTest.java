@@ -1,6 +1,7 @@
 package org.gedcomx.atom;
 
 import org.gedcomx.common.URI;
+import org.gedcomx.links.Link;
 import org.gedcomx.rt.GedcomNamespaceManager;
 import org.gedcomx.search.ResultConfidence;
 import org.testng.annotations.Test;
@@ -59,7 +60,6 @@ public class FeedTest {
     entry.getLinks().get(0).setHref(URI.create("urn:href"));
     entry.getLinks().get(0).setTitle("link title");
     entry.getLinks().get(0).setHreflang("en");
-    entry.getLinks().get(0).setLength("1234");
     entry.getLinks().get(0).setRel("self");
     entry.getLinks().get(0).setType("text/plain");
     entry.setPublished(new Date(1234567L));
@@ -149,7 +149,6 @@ public class FeedTest {
     assertEquals(URI.create("urn:href"), link.getHref());
     assertEquals("link title", link.getTitle());
     assertEquals("en", link.getHreflang());
-    assertEquals("1234", link.getLength());
     assertEquals("self", link.getRel());
     assertEquals("text/plain", link.getType());
 
