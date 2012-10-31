@@ -16,6 +16,7 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.common.Gedcomx;
+import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -28,8 +29,8 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Person With Relationships",
-  projectId = RSModel.RS_PROJECT_ID,
-  namespace = RSModel.RS_V1_NAMESPACE,
+  projectId = "gedcomx-rs",
+  namespace = CommonModels.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
   subresources = {PersonRSDefinition.class, RelationshipRSDefinition.class }
 )

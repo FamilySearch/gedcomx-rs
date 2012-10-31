@@ -16,6 +16,7 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.conclusion.Person;
+import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
@@ -32,8 +33,8 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Person",
   resourceElement = Person.class,
-  projectId = RSModel.RS_PROJECT_ID,
-  namespace = RSModel.RS_V1_NAMESPACE,
+  projectId = "gedcomx-rs",
+  namespace = CommonModels.GEDCOMX_NAMESPACE,
   subresources = { ConclusionRSDefinition.class, ConclusionsRSDefinition.class }
 )
 @ResourceLinks({

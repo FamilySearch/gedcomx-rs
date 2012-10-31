@@ -16,6 +16,7 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.atom.Feed;
+import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -47,9 +48,9 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition(
     name = "Discovery",
-    projectId = RSModel.RS_PROJECT_ID,
+    projectId = "gedcomx-rs",
     resourceElement = Feed.class,
-    namespace = RSModel.RS_V1_NAMESPACE
+    namespace = CommonModels.GEDCOMX_NAMESPACE
 )
 @ResourceLinks({
   @ResourceLink (rel = "self", definedBy = DiscoveryRSDefinition.class, description = "Link to this discovery resource."),

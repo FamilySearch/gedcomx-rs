@@ -18,6 +18,7 @@ package org.gedcomx.rs;
 import org.gedcomx.common.Note;
 import org.gedcomx.conclusion.Person;
 import org.gedcomx.conclusion.Relationship;
+import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -30,8 +31,8 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Notes",
-  projectId = RSModel.RS_PROJECT_ID,
-  namespace = RSModel.RS_V1_NAMESPACE,
+  projectId = "gedcomx-rs",
+  namespace = CommonModels.GEDCOMX_NAMESPACE,
   resourceElement = { Person.class, Relationship.class },
   subresources = { NoteRSDefinition.class }
 )

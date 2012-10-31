@@ -19,6 +19,7 @@ import org.gedcomx.conclusion.Conclusion;
 import org.gedcomx.conclusion.Fact;
 import org.gedcomx.conclusion.Gender;
 import org.gedcomx.conclusion.Name;
+import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
@@ -33,9 +34,9 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Conclusion",
-  projectId = RSModel.RS_PROJECT_ID,
+  projectId = "gedcomx-rs",
   resourceElement = { Name.class, Gender.class, Fact.class },
-  namespace = RSModel.RS_V1_NAMESPACE
+  namespace = CommonModels.GEDCOMX_NAMESPACE
 )
 @ResourceLinks ({
   @ResourceLink ( rel = "self", definedBy = ConclusionRSDefinition.class, description = "Link to this conclusion." ),

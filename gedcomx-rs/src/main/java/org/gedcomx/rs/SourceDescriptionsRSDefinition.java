@@ -32,7 +32,7 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Source Descriptions",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
-  projectId = RSModel.RS_PROJECT_ID,
+  projectId = "gedcomx-rs",
   resourceElement = Gedcomx.class,
   subresources = {SourceDescriptionRSDefinition.class}
 )

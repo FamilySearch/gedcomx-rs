@@ -33,7 +33,7 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Source References",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
-  projectId = RSModel.RS_PROJECT_ID,
+  projectId = "gedcomx-rs",
   resourceElement = { Person.class, Relationship.class },
   subresources = { SourceReferenceRSDefinition.class }
 )

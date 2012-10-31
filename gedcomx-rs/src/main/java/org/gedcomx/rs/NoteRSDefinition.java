@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition(
     name = "Note",
     namespace = CommonModels.GEDCOMX_NAMESPACE,
-    projectId = RSModel.RS_PROJECT_ID,
+    projectId = "gedcomx-rs",
     resourceElement = Note.class
 )
 @ResourceLinks ({
