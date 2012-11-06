@@ -19,6 +19,7 @@ import org.codehaus.enunciate.json.JsonName;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.gedcomx.common.URI;
 import org.gedcomx.links.Link;
+import org.gedcomx.links.SupportsLinks;
 import org.gedcomx.search.SearchModel;
 
 import javax.xml.XMLConstants;
@@ -26,6 +27,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +41,7 @@ import java.util.List;
 @XmlRootElement
 @XmlType( name = "Feed", propOrder = {"authors", "contributors", "generator", "icon", "id", "results", "index", "links", "logo", "rights", "subtitle", "title", "updated", "entries"} )
 @SuppressWarnings("gedcomx:no_id")
-public class Feed extends ExtensibleElement {
+public class Feed extends ExtensibleElement implements SupportsLinks {
   
   private List<Person> authors;
   private List<Person> contributors;
@@ -214,6 +216,80 @@ public class Feed extends ExtensibleElement {
   @JsonProperty("links")
   public void setLinks(List<Link> links) {
     this.links = links;
+  }
+
+  /**
+   * Add a hypermedia link.
+   *
+   * @param link The hypermedia link.
+   */
+  @Override
+  public void addLink(Link link) {
+    if (this.links == null) {
+      setLinks(new ArrayList<Link>());
+    }
+
+    this.links.add(link);
+  }
+
+  /**
+   * Add a hypermedia link.
+   *
+   * @param rel The link rel.
+   * @param href The target URI.
+   */
+  @Override
+  public void addLink(String rel, URI href) {
+    addLink(new Link(rel, href));
+  }
+
+  /**
+   * Add a templated link.
+   *
+   * @param rel The link rel.
+   * @param template The link template.
+   */
+  @Override
+  public void addTemplatedLink(String rel, String template) {
+    Link link = new Link();
+    link.setRel(rel);
+    link.setTemplate(template);
+    addLink(link);
+  }
+
+  /**
+   * Get a link by its rel.
+   *
+   * @param rel The link rel.
+   * @return The link by rel.
+   */
+  @Override
+  public Link getLink(String rel) {
+    List<Link> links = getLinks(rel);
+    Link link = null;
+    if (!links.isEmpty()) {
+      link = links.get(0);
+    }
+    return link;
+  }
+
+  /**
+   * Get a list of links by rel.
+   *
+   * @param rel The rel of the links.
+   * @return The link.
+   */
+  @Override
+  public List<Link> getLinks(String rel) {
+    ArrayList<Link> links = new ArrayList<Link>();
+    if (this.links != null) {
+      for (Link link : getLinks()) {
+        if (rel.equals(link.getRel())) {
+          links.add(link);
+        }
+      }
+    }
+    return links;
   }
 
   /**
