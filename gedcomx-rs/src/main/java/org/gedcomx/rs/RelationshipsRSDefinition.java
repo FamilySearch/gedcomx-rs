@@ -32,8 +32,7 @@ import javax.ws.rs.core.Response;
   name = "Relationships",
   projectId = "gedcomx-rs",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class,
-  subresources = RelationshipRSDefinition.class
+  resourceElement = Gedcomx.class
 )
 public interface RelationshipsRSDefinition extends CommonRSParameters {
 
@@ -50,5 +49,5 @@ public interface RelationshipsRSDefinition extends CommonRSParameters {
   @StatusCodes({
     @ResponseCode ( code = 201, condition = "The creation of the relationship was successful. Expect a location header specifying the link to the created relationship.")
   })
-  Response post(Relationship relationship);
+  Response post(Gedcomx relationship);
 }

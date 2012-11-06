@@ -15,13 +15,11 @@
  */
 package org.gedcomx.rs;
 
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.rt.CommonModels;
-import org.gedcomx.source.SourceReference;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 
 
@@ -32,39 +30,14 @@ import javax.ws.rs.core.Response;
   name = "Source Reference",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
-  resourceElement = SourceReference.class
+  resourceElement = Gedcomx.class
 )
 @ResourceLinks ( {
-                   @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." )
-                 } )
+  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." )
+} )
 public interface SourceReferenceRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/reference";
-
-  /**
-   * Read a source reference.
-   *
-   * @return The source reference.
-   */
-  @GET
-  @StatusCodes ( {
-                   @ResponseCode ( code = 200, condition = "Upon a successful read." ),
-                   @ResponseCode ( code = 404, condition = "If the requested source reference is not found." )
-                 } )
-  Response get();
-
-  /**
-   * Update a source reference.
-   *
-   * @param sourceReference The source reference to be used for the update.
-   * @return The appropriate response.
-   */
-  @PUT
-  @StatusCodes ( {
-                   @ResponseCode ( code = 204, condition = "The update was successful." ),
-                   @ResponseCode ( code = 404, condition = "If the requested source reference is not found." )
-                 } )
-  Response put(SourceReference sourceReference);
 
   /**
    * Delete a source reference.
@@ -73,9 +46,9 @@ public interface SourceReferenceRSDefinition extends CommonRSParameters {
    */
   @DELETE
   @StatusCodes ( {
-                   @ResponseCode ( code = 204, condition = "The delete was successful." ),
-                   @ResponseCode ( code = 404, condition = "If the requested source reference is not found." )
-                 } )
+    @ResponseCode ( code = 204, condition = "The delete was successful." ),
+    @ResponseCode ( code = 404, condition = "If the requested source reference is not found." )
+  } )
   Response delete();
 
 }

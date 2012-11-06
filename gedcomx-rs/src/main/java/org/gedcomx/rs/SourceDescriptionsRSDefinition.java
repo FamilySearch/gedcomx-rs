@@ -33,8 +33,7 @@ import javax.ws.rs.core.Response;
   name = "Source Descriptions",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
-  resourceElement = Gedcomx.class,
-  subresources = {SourceDescriptionRSDefinition.class}
+  resourceElement = Gedcomx.class
 )
 public interface SourceDescriptionsRSDefinition extends CommonRSParameters {
 
@@ -48,9 +47,9 @@ public interface SourceDescriptionsRSDefinition extends CommonRSParameters {
    */
   @POST
   @StatusCodes ( {
-                   @ResponseCode ( code = 201, condition = "The creation of the source description was successful. Expect a location header specifying the link to the created source description." ),
-                   @ResponseCode ( code = 400, condition = "If the request was unable to be understood by the application." )
-                 } )
-  Response post(SourceDescription sourceDescription);
+    @ResponseCode ( code = 201, condition = "The creation of the source description was successful. Expect a location header specifying the link to the created source description." ),
+    @ResponseCode ( code = 400, condition = "If the request was unable to be understood by the application." )
+  } )
+  Response post(Gedcomx sourceDescription);
 
 }

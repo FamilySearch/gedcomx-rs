@@ -16,7 +16,6 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.common.Gedcomx;
-import org.gedcomx.conclusion.Person;
 import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
@@ -34,8 +33,7 @@ import javax.ws.rs.core.Response;
   name = "Persons",
   projectId = "gedcomx-rs",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class,
-  subresources = PersonRSDefinition.class
+  resourceElement = Gedcomx.class
 )
 public interface PersonsRSDefinition extends CommonRSParameters {
 
@@ -44,8 +42,6 @@ public interface PersonsRSDefinition extends CommonRSParameters {
   /**
    * Create a person.
    *
-   *
-   *
    * @param person The person to be created.
    * @return The appropriate response.
    */
@@ -53,6 +49,6 @@ public interface PersonsRSDefinition extends CommonRSParameters {
   @StatusCodes({
     @ResponseCode ( code = 201, condition = "The creation of the person was successful. Expect a location header specifying the link to the created person.")
   })
-  Response post(Person person);
+  Response post(Gedcomx person);
 
 }

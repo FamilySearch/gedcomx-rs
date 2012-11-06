@@ -15,9 +15,7 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Note;
-import org.gedcomx.conclusion.Person;
-import org.gedcomx.conclusion.Relationship;
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
@@ -33,8 +31,7 @@ import javax.ws.rs.core.Response;
   name = "Notes",
   projectId = "gedcomx-rs",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
-  resourceElement = { Person.class, Relationship.class },
-  subresources = { NoteRSDefinition.class }
+  resourceElement = Gedcomx.class
 )
 @ResourceLinks ( {
   @ResourceLink ( rel = "self", definedBy = NotesRSDefinition.class, description = "Link to this notes resource." ),
@@ -46,10 +43,9 @@ public interface NotesRSDefinition extends CommonRSParameters {
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "notes";
 
   /**
-   * Read the notes on to entity. Each note in the set is a note summary which is a note but
-   * without the text field populated.
+   * Read the list of notes on the entity.
    *
-   * @return The list of note summaries.
+   * @return The list of notes.
    */
   @GET
   @StatusCodes ({
@@ -70,6 +66,6 @@ public interface NotesRSDefinition extends CommonRSParameters {
     @ResponseCode( code = 201, condition = "The creation of the note was successful. Expect a location header specifying the link to the note."),
     @ResponseCode( code = 400, condition = "If the request was unable to be understood by the application.")
   })
-  Response post( Note note );
+  Response post( Gedcomx note );
 
 }

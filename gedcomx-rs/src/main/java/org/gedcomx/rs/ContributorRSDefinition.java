@@ -15,7 +15,7 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.contributor.Agent;
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Contributor",
-  resourceElement = Agent.class,
+  resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
   namespace = CommonModels.GEDCOMX_NAMESPACE
 )

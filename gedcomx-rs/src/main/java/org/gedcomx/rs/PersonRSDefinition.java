@@ -15,14 +15,12 @@
  */
 package org.gedcomx.rs;
 
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.conclusion.Person;
 import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.HEAD;
-import javax.ws.rs.PUT;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 /**
@@ -32,15 +30,13 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Person",
-  resourceElement = Person.class,
+  resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
-  subresources = { ConclusionRSDefinition.class, ConclusionsRSDefinition.class }
+  namespace = CommonModels.GEDCOMX_NAMESPACE
 )
 @ResourceLinks({
   @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "The person itself." ),
   @ResourceLink ( rel = SourceReferencesRSDefinition.REL, definedBy = SourceReferencesRSDefinition.class, description = "The source references for the person." ),
-  @ResourceLink ( rel = ConclusionsRSDefinition.REL, definedBy = ConclusionsRSDefinition.class, description = "The set of conclusions for the person." ),
   @ResourceLink ( rel = NotesRSDefinition.REL, definedBy = NotesRSDefinition.class, description = "The set of notes for the person." ),
   @ResourceLink ( rel = PersonWithRelationshipsRSDefinition.REL, definedBy = PersonWithRelationshipsRSDefinition.class, description = "The person and associated relationships." ),
   @ResourceLink ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the spouses of the person." ),
@@ -85,13 +81,13 @@ public interface PersonRSDefinition extends CommonRSParameters {
    * @param person The person to be used for the update.
    *
    */
-  @PUT
+  @POST
   @StatusCodes({
     @ResponseCode ( code = 204, condition = "The update was successful."),
     @ResponseCode ( code = 404, condition = "If the requested person is not found."),
     @ResponseCode ( code = 410, condition = "If the requested person has been deleted.")
   })
-  Response put(Person person);
+  Response post(Gedcomx person);
 
   /**
    * Delete a person.

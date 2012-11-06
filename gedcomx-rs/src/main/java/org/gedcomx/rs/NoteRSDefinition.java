@@ -15,13 +15,13 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Note;
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 
@@ -32,7 +32,7 @@ import javax.ws.rs.core.Response;
     name = "Note",
     namespace = CommonModels.GEDCOMX_NAMESPACE,
     projectId = "gedcomx-rs",
-    resourceElement = Note.class
+    resourceElement = Gedcomx.class
 )
 @ResourceLinks ({
   @ResourceLink ( rel = "self", definedBy = NoteRSDefinition.class, description = "This note set." )
@@ -59,12 +59,12 @@ public interface NoteRSDefinition extends CommonRSParameters {
    * @param note The note to be used for the update.
    * @return The appropriate response.
    */
-  @PUT
+  @POST
   @StatusCodes({
       @ResponseCode ( code = 204, condition = "The update was successful."),
       @ResponseCode ( code = 404, condition = "If the requested note is not found.")
   })
-  Response put( Note note );
+  Response post( Gedcomx note );
 
   /**
    * Delete a note.

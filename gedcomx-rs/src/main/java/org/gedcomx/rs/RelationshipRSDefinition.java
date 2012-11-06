@@ -15,14 +15,14 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.conclusion.Relationship;
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HEAD;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 /**
@@ -30,14 +30,13 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Relationship",
-  resourceElement = Relationship.class,
+  resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
-  subresources = { ConclusionRSDefinition.class, ConclusionsRSDefinition.class }
+  subresources = { ConclusionRSDefinition.class }
 )
 @ResourceLinks ({
   @ResourceLink ( rel = "self", definedBy = RelationshipRSDefinition.class, description = "The relationship itself." ),
-  @ResourceLink ( rel = ConclusionsRSDefinition.REL, definedBy = ConclusionsRSDefinition.class, description = "The set of conclusions for the relationship." )
 })
 public interface RelationshipRSDefinition extends CommonRSParameters {
 
@@ -75,13 +74,13 @@ public interface RelationshipRSDefinition extends CommonRSParameters {
    * @param relationship The relationship to be used for the update.
    *
    */
-  @PUT
+  @POST
   @StatusCodes({
     @ResponseCode ( code = 204, condition = "The update was successful."),
     @ResponseCode ( code = 404, condition = "If the requested relationship is not found."),
     @ResponseCode ( code = 410, condition = "If the requested relationship has been deleted.")
 })
-  Response put(Relationship relationship);
+  Response post(Gedcomx relationship);
 
   /**
    * Delete a relationship.

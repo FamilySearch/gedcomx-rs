@@ -31,8 +31,7 @@ import javax.ws.rs.core.Response;
   name = "Person With Relationships",
   projectId = "gedcomx-rs",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class,
-  subresources = {PersonRSDefinition.class, RelationshipRSDefinition.class }
+  resourceElement = Gedcomx.class
 )
 public interface PersonWithRelationshipsRSDefinition extends CommonRSParameters {
 

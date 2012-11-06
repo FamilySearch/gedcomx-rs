@@ -15,8 +15,8 @@
  */
 package org.gedcomx.rs;
 
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.rt.CommonModels;
-import org.gedcomx.source.SourceDescription;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -24,7 +24,7 @@ import org.gedcomx.rt.rs.StatusCodes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HEAD;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 
@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
   name = "Source Description",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
-  resourceElement = SourceDescription.class
+  resourceElement = Gedcomx.class
 )
 public interface SourceDescriptionRSDefinition extends CommonRSParameters {
 
@@ -48,9 +48,9 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
    */
   @HEAD
   @StatusCodes ( {
-                   @ResponseCode ( code = 200, condition = "Upon a successful read." ),
-                   @ResponseCode ( code = 404, condition = "If the requested source description is not found." )
-                 } )
+    @ResponseCode ( code = 200, condition = "Upon a successful read." ),
+    @ResponseCode ( code = 404, condition = "If the requested source description is not found." )
+  } )
   Response head();
 
   /**
@@ -60,9 +60,9 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
    */
   @GET
   @StatusCodes ( {
-                   @ResponseCode ( code = 200, condition = "Upon a successful read." ),
-                   @ResponseCode ( code = 404, condition = "If the requested source description is not found." )
-                 } )
+    @ResponseCode ( code = 200, condition = "Upon a successful read." ),
+    @ResponseCode ( code = 404, condition = "If the requested source description is not found." )
+  } )
   Response get();
 
   /**
@@ -71,12 +71,12 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
    * @param sourceDescription The source description to be used for the update.
    * @return The appropriate response.
    */
-  @PUT
+  @POST
   @StatusCodes ( {
-                   @ResponseCode ( code = 204, condition = "The update was successful." ),
-                   @ResponseCode ( code = 404, condition = "If the requested source description is not found." )
-                 } )
-  Response put(SourceDescription sourceDescription);
+    @ResponseCode ( code = 204, condition = "The update was successful." ),
+    @ResponseCode ( code = 404, condition = "If the requested source description is not found." )
+  } )
+  Response post(Gedcomx sourceDescription);
 
   /**
    * Delete a source description.
@@ -85,9 +85,9 @@ public interface SourceDescriptionRSDefinition extends CommonRSParameters {
    */
   @DELETE
   @StatusCodes ( {
-                   @ResponseCode ( code = 204, condition = "The delete was successful." ),
-                   @ResponseCode ( code = 404, condition = "If the requested source description is not found." )
-                 } )
+    @ResponseCode ( code = 204, condition = "The delete was successful." ),
+    @ResponseCode ( code = 404, condition = "If the requested source description is not found." )
+  } )
   Response delete();
 
 }

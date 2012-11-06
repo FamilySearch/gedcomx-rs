@@ -15,11 +15,10 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.conclusion.Person;
-import org.gedcomx.conclusion.Relationship;
+import org.gedcomx.common.Gedcomx;
 import org.gedcomx.rt.CommonModels;
-import org.gedcomx.source.SourceReference;
 import org.gedcomx.rt.rs.*;
+import org.gedcomx.source.SourceReference;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -34,8 +33,7 @@ import javax.ws.rs.core.Response;
   name = "Source References",
   namespace = CommonModels.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
-  resourceElement = { Person.class, Relationship.class },
-  subresources = { SourceReferenceRSDefinition.class }
+  resourceElement = Gedcomx.class
 )
 @ResourceLinks ( {
   @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." ),
@@ -71,6 +69,6 @@ public interface SourceReferencesRSDefinition extends CommonRSParameters {
     @ResponseCode ( code = 400, condition = "If the request was unable to be understood by the application." ),
     @ResponseCode ( code = 404, condition = "The specified person has been moved, deleted, or otherwise not found." )
   } )
-  Response post(SourceReference sourceReference);
+  Response post(Gedcomx sourceReference);
 
 }
