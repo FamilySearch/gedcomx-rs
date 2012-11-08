@@ -22,7 +22,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Response;
 
 /**
- * The conclusion resource defines the interface for managing the state of a specific conclusion (e.g. name, gender, or fact).
+ * The conclusion resource defines the interface for a specific conclusion.
  *
  * @author Ryan Heaton
  */
