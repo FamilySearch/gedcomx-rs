@@ -19,6 +19,7 @@ import org.codehaus.enunciate.contract.jaxb.ElementDeclaration;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.ResourceParameter;
 
+import javax.xml.namespace.QName;
 import java.util.*;
 
 /**
@@ -26,8 +27,9 @@ import java.util.*;
  */
 public class ResourceBinding implements LinkReference {
 
+  private final ResourceServiceProcessor processor;
   private final String path;
-  ResourceDefinitionDeclaration definition;
+  private final List<ResourceDefinitionDeclaration> definitions = new ArrayList<ResourceDefinitionDeclaration>();
   private String docValue;
   private final List<ResourceMethod> methods = new ArrayList<ResourceMethod>();
   private final Set<ResponseCode> statusCodes = new HashSet<ResponseCode>();
@@ -47,9 +49,10 @@ public class ResourceBinding implements LinkReference {
   private final List<ElementDeclaration> resourceElements;
   private final org.gedcomx.rt.rs.ResourceBinding metadata;
 
-  public ResourceBinding(String path, ResourceDefinitionDeclaration definition, List<ElementDeclaration> resourceElements, org.gedcomx.rt.rs.ResourceBinding metadata) {
+  public ResourceBinding(ResourceServiceProcessor processor, String path, ResourceDefinitionDeclaration definition, List<ElementDeclaration> resourceElements, org.gedcomx.rt.rs.ResourceBinding metadata) {
+    this.processor = processor;
     this.path = path;
-    this.definition = definition;
+    this.definitions.add(definition);
     this.resourceElements = resourceElements;
     this.metadata = metadata;
   }
@@ -58,7 +61,10 @@ public class ResourceBinding implements LinkReference {
   public String getName() {
     String name = this.metadata == null ? "##default" : this.metadata.name();
     if ("##default".equals(name)) {
-      name = this.definition.getName();
+      if (this.definitions.size() > 1) {
+        throw new IllegalStateException(String.format("Cannot determine the name of the binding for %s because its binding multiple definitions. Use the @ResourceBinding annotation to specify a name.", this.path));
+      }
+      name = this.definitions.get(0).getName();
     }
     return name;
   }
@@ -67,7 +73,10 @@ public class ResourceBinding implements LinkReference {
   public String getNamespace() {
     String namespace = this.metadata == null ? "##default" : this.metadata.namespace();
     if ("##default".equals(namespace)) {
-      namespace = this.definition.getNamespace();
+      if (this.definitions.size() > 1) {
+        throw new IllegalStateException(String.format("Cannot determine the namespace of the binding for %s because its binding multiple definitions. Use the @ResourceBinding annotation to specify a name.", this.path));
+      }
+      namespace = this.definitions.get(0).getNamespace();
     }
     return namespace;
   }
@@ -76,7 +85,10 @@ public class ResourceBinding implements LinkReference {
   public String getProjectId() {
     String pid = this.metadata == null ? "##default" : this.metadata.projectId();
     if ("##default".equals(pid)) {
-      pid = this.definition.getProjectId();
+      if (this.definitions.size() > 1) {
+        throw new IllegalStateException(String.format("Cannot determine the project id of the binding for %s because its binding multiple definitions. Use the @ResourceBinding annotation to specify a name.", this.path));
+      }
+      pid = this.definitions.get(0).getProjectId();
     }
     return pid;
   }
@@ -85,16 +97,48 @@ public class ResourceBinding implements LinkReference {
     return path;
   }
 
-  public ResourceDefinitionDeclaration getDefinition() {
-    return definition;
+  public List<ResourceDefinitionDeclaration> getDefinitions() {
+    return Collections.unmodifiableList(definitions);
+  }
+
+  void addResourceDefinitionConditionally(ResourceDefinitionDeclaration rsd) {
+    boolean found = false;
+    for (ResourceDefinitionDeclaration definition : this.definitions) {
+      if (definition.getQualifiedName().equals(rsd.getQualifiedName())) {
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      this.definitions.add(rsd);
+    }
   }
 
   public Set<ResponseCode> getStatusCodes() {
     return statusCodes;
   }
 
+  public Set<ResponseCode> getAllStatusCodes() {
+    TreeSet<ResponseCode> allStatusCodes = new TreeSet<ResponseCode>();
+    allStatusCodes.addAll(this.statusCodes);
+    for (ResourceDefinitionDeclaration definition : this.definitions) {
+      allStatusCodes.addAll(definition.getStatusCodes());
+    }
+    return allStatusCodes;
+  }
+
   public Set<ResponseCode> getWarnings() {
     return warnings;
+  }
+
+  public Set<ResponseCode> getAllWarnings() {
+    TreeSet<ResponseCode> allWarnings = new TreeSet<ResponseCode>();
+    allWarnings.addAll(this.warnings);
+    for (ResourceDefinitionDeclaration definition : this.definitions) {
+      allWarnings.addAll(definition.getWarnings());
+    }
+    return allWarnings;
   }
 
   @Override
@@ -109,10 +153,24 @@ public class ResourceBinding implements LinkReference {
 
   public Set<ResourceLink> getAllLinks() {
     TreeSet<ResourceLink> allLinks = new TreeSet<ResourceLink>();
-
     allLinks.addAll(this.links);
-    allLinks.addAll(this.definition.getLinks());
+    for (ResourceDefinitionDeclaration definition : this.definitions) {
+      allLinks.addAll(definition.getLinks());
+    }
     return allLinks;
+  }
+
+  public Map<ResourceLink, ResourceBinding> getIncomingLinks() {
+    LinkedHashMap<ResourceLink, ResourceBinding> linksIn = new LinkedHashMap<ResourceLink, ResourceBinding>();
+    QName thisQName = new QName(getNamespace(), getName());
+    for (ResourceBinding binding : this.processor.getBindingsByPath().values()) {
+      for (ResourceLink link : binding.getLinks()) {
+        if (link.resource.equals(thisQName)) {
+          linksIn.put(link, binding);
+        }
+      }
+    }
+    return linksIn;
   }
 
   public List<ResourceMethod> getMethods() {
@@ -125,7 +183,7 @@ public class ResourceBinding implements LinkReference {
 
   @Override
   public String getDocValue() {
-    return docValue;
+    return this.docValue == null || this.docValue.trim().isEmpty() ? this.definitions.size() == 1 ? this.definitions.get(0).getDocValue() : null : this.docValue;
   }
 
   public void setDocValue(String docValue) {
@@ -146,10 +204,6 @@ public class ResourceBinding implements LinkReference {
       produces.addAll(method.getConsumesMime());
     }
     return produces;
-  }
-
-  void replaceDefinition(ResourceDefinitionDeclaration rsd) {
-    this.definition = rsd;
   }
 
   @Override

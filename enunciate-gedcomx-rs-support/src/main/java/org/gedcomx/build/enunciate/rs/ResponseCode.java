@@ -18,7 +18,7 @@ package org.gedcomx.build.enunciate.rs;
 /**
  * @author Ryan Heaton
  */
-public final class ResponseCode {
+public final class ResponseCode implements Comparable<ResponseCode> {
 
   private final int code;
   private final String condition;
@@ -34,6 +34,11 @@ public final class ResponseCode {
 
   public String getCondition() {
     return condition;
+  }
+
+  @Override
+  public int compareTo(ResponseCode o) {
+    return (String.valueOf(this.code) + this.condition).compareTo(String.valueOf(o.code) + o.condition);
   }
 
   @Override

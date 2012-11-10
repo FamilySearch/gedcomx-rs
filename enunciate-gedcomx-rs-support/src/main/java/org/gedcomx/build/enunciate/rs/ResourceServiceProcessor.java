@@ -296,7 +296,7 @@ public class ResourceServiceProcessor {
               }
             }
 
-            binding = new ResourceBinding(path, rsd, resourceElements, metadata);
+            binding = new ResourceBinding(this, path, rsd, resourceElements, metadata);
             bindingsByPath.put(path, binding);
 
             ResourceBinding conflict = bindingsByName.put(binding.getName(), binding);
@@ -307,16 +307,7 @@ public class ResourceServiceProcessor {
             rsd.getBindings().add(binding);
           }
           else {
-            String fqn = binding.getDefinition().getQualifiedName();
-            if (!fqn.equals(rsd.getQualifiedName())) {
-              //it would be nice if a binding could bind more that one resource because then
-              //you could return a different resource based on query paramaters.
-              //but there are a couple of reasons why this isn't supported yet
-              //one is because there would be no way to tell in the docs which resource method to use
-              //to get the error codes, etc.
-              result.addError(resourceMethod, String.format("Cannot bind resource %s defined by %s to path %s because that path is already binding resource %s defined by %s.", rsd.getName(), rsd.getQualifiedName(), path, binding.getDefinition().getName(), binding.getDefinition().getQualifiedName()));
-              continue;
-            }
+            binding.addResourceDefinitionConditionally(rsd);
           }
 
           binding.getMethods().add(resourceMethod);
