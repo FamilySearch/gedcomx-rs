@@ -23,12 +23,11 @@ import org.gedcomx.search.ResultConfidence;
 import org.gedcomx.search.SearchModel;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
+import javax.xml.namespace.QName;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The "atom:entry" element represents an individual entry, acting as a container for metadata and data associated with the entry.
@@ -53,6 +52,7 @@ public class Entry extends ExtensibleElement {
   private String rights;
   private String title;
   private Date updated;
+  private Map<QName, String> extensionAttributes;
 
   /**
    * The author of the entry.
@@ -289,4 +289,12 @@ public class Entry extends ExtensibleElement {
     this.updated = updated;
   }
 
+  @XmlAnyAttribute
+  public Map<QName, String> getExtensionAttributes() {
+    return extensionAttributes;
+  }
+
+  public void setExtensionAttributes(Map<QName, String> extensionAttributes) {
+    this.extensionAttributes = extensionAttributes;
+  }
 }
