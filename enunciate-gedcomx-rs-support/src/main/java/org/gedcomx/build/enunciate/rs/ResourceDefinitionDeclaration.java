@@ -19,51 +19,49 @@ import com.sun.mirror.declaration.InterfaceDeclaration;
 import com.sun.mirror.declaration.TypeDeclaration;
 import com.sun.mirror.type.InterfaceType;
 import org.codehaus.enunciate.contract.jaxb.ElementDeclaration;
-import org.codehaus.enunciate.contract.jaxb.TypeDefinition;
 import org.codehaus.enunciate.contract.jaxrs.Resource;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.ResourceParameter;
 import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.StateDefinition;
 
 import javax.ws.rs.Path;
-import javax.xml.namespace.QName;
 import java.util.*;
 
 /**
  * @author Ryan Heaton
  */
-public class ResourceDefinitionDeclaration extends Resource implements LinkReference {
+public class ResourceDefinitionDeclaration extends Resource {
 
-  private final ResourceServiceProcessor processor;
-  private final String name;
   private final String namespace;
+  private final String projectId;
   private final Set<ResponseCode> statusCodes;
   private final Set<ResponseCode> warnings;
-  private final Set<ResourceLink> links;
   private final List<ElementDeclaration> resourceElements;
-  private final Set<QName> subresources;
-  private final Map<QName, TypeDefinition> subresourceElements;
-  private final String projectId;
   private final List<ResourceBinding> bindings = new ArrayList<ResourceBinding>();
+  private final List<ApplicationState> applicationStates;
 
-  public ResourceDefinitionDeclaration(TypeDeclaration delegate, List<ElementDeclaration> resourceElements, Set<QName> subresources, Map<QName, TypeDefinition> subresourceElements, ResourceServiceProcessor processor) {
+  public ResourceDefinitionDeclaration(TypeDeclaration delegate, List<ElementDeclaration> resourceElements, ResourceServiceProcessor processor) {
     super(delegate);
 
-    this.processor = processor;
     this.resourceElements = resourceElements;
-    this.subresources = subresources;
 
     ResourceDefinition rsdInfo = delegate.getAnnotation(ResourceDefinition.class);
-    this.name = rsdInfo.name();
     this.namespace = rsdInfo.namespace();
     this.statusCodes = processor.extractStatusCodes(delegate);
     this.warnings = processor.extractWarnings(delegate);
-    this.links = processor.extractLinks(delegate);
+    this.applicationStates = new ArrayList<ApplicationState>();
+    for (StateDefinition stateDefinition : rsdInfo.states()) {
+      ArrayList<StateTransition> transitions = new ArrayList<StateTransition>();
+      for (org.gedcomx.rt.rs.StateTransition stateTransition : stateDefinition.transitions()) {
+        transitions.add(new StateTransition(stateTransition, processor));
+      }
+      this.applicationStates.add(new ApplicationState(stateDefinition.name(), stateDefinition.rel(), stateDefinition.description(), transitions, this));
+    }
     for (ResourceMethod resourceMethod : getResourceMethods()) {
       resourceMethod.putMetaData("statusCodes", processor.extractStatusCodes(resourceMethod));
       resourceMethod.putMetaData("warnings", processor.extractWarnings(resourceMethod));
     }
-    this.subresourceElements = Collections.unmodifiableMap(subresourceElements);
     this.projectId = rsdInfo.projectId();
   }
 
@@ -91,10 +89,6 @@ public class ResourceDefinitionDeclaration extends Resource implements LinkRefer
     return null;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public String getNamespace() {
     return namespace;
   }
@@ -107,21 +101,6 @@ public class ResourceDefinitionDeclaration extends Resource implements LinkRefer
     return projectId;
   }
 
-  public List<ResourceDefinitionDeclaration> getSubresources() {
-    ArrayList<ResourceDefinitionDeclaration> subresources = new ArrayList<ResourceDefinitionDeclaration>();
-    for (QName sub : this.subresources) {
-      ResourceDefinitionDeclaration rs = this.processor.findResourceDefinition(sub);
-      if (rs != null) {
-        subresources.add(rs);
-      }
-    }
-    return subresources;
-  }
-
-  public Map<QName, TypeDefinition> getSubresourceElements() {
-    return subresourceElements;
-  }
-
   public Set<ResponseCode> getStatusCodes() {
     return statusCodes;
   }
@@ -130,29 +109,12 @@ public class ResourceDefinitionDeclaration extends Resource implements LinkRefer
     return warnings;
   }
 
-  public Set<ResourceLink> getLinks() {
-    return links;
-  }
-
   public List<ResourceBinding> getBindings() {
     return bindings;
   }
 
-  public Map<ResourceLink, ResourceDefinitionDeclaration> getIncomingLinks() {
-    LinkedHashMap<ResourceLink, ResourceDefinitionDeclaration> linksIn = new LinkedHashMap<ResourceLink, ResourceDefinitionDeclaration>();
-    QName thisQName = new QName(getNamespace(), getName());
-    for (ResourceDefinitionDeclaration def : this.processor.getResourceDefinitions()) {
-      for (ResourceLink link : def.getLinks()) {
-        if (link.resource.equals(thisQName)) {
-          linksIn.put(link, def);
-        }
-      }
-    }
-    return linksIn;
+  public List<ApplicationState> getApplicationStates() {
+    return applicationStates;
   }
 
-  @Override
-  public boolean isBinding() {
-    return false;
-  }
 }

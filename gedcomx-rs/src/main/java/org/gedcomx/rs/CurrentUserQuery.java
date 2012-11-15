@@ -15,27 +15,30 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
 /**
- * The person with relationships resource is used to get a person and their associated relationships.
+ * The current user query is used to query the application for the current user.
  */
 @ResourceDefinition (
-  name = "Person With Relationships",
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  resourceElement = Gedcomx.class,
+  states = {
+    @StateDefinition (name = "Current User", rel = CurrentUserQuery.REL, description = "The query for the person for the current user.")
+  }
 )
-public interface PersonWithRelationshipsRSDefinition extends CommonRSParameters {
+public interface CurrentUserQuery extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "persons-with-relationships";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "current-user";
 
   /**
    * Read a person and their relationships.
@@ -44,10 +47,7 @@ public interface PersonWithRelationshipsRSDefinition extends CommonRSParameters 
    */
   @GET
   @StatusCodes({
-    @ResponseCode ( code = 200, condition = "Upon a successful read."),
-    @ResponseCode ( code = 301, condition = "If the requested person has been merged into another person."),
-    @ResponseCode ( code = 404, condition = "If the requested person is not found."),
-    @ResponseCode ( code = 410, condition = "If the requested person has been deleted.")
+    @ResponseCode ( code = 303, condition = "The query was successful. The location of the current user is provided in the Location header.")
   })
   Response get();
 }

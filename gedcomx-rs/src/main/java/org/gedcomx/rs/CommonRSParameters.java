@@ -15,29 +15,15 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.rt.CommonModels;
-import org.gedcomx.rt.rs.ResourceLink;
-import org.gedcomx.rt.rs.ResourceLinks;
-import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StatusCodes;
+import org.gedcomx.rt.GedcomxConstants;
 
 /**
  * The common resource service definition supplies a set of common parameters and error codes applicable to GEDCOM X resources.
  *
  * @author Ryan Heaton
  */
-@StatusCodes ( {
-  @ResponseCode ( code = 304, condition = "If the client has performed a conditional GET request and access is allowed, but the resource has not been modified."),
-  @ResponseCode ( code = 401, condition = "If authentication is needed, or if the supplied authentication is expired or otherwise invalid."),
-  @ResponseCode ( code = 403, condition = "If the resource is forbidden even after considering a possibly valid authentication."),
-  @ResponseCode ( code = 405, condition = "If the method is not supported."),
-  @ResponseCode ( code = 501, condition = "If the resource is not supported by the implementation.")
-} )
-@ResourceLinks ({
-  @ResourceLink ( rel = DiscoveryRSDefinition.REL, definedBy = DiscoveryRSDefinition.class, description = "The discovery resource for this application.")
-} )
 public interface CommonRSParameters {
 
-  public static final String GEDCOMX_LINK_REL_PREFIX = CommonModels.GEDCOMX_DOMAIN + "links/";
+  public static final String GEDCOMX_LINK_REL_PREFIX = GedcomxConstants.GEDCOMX_DOMAIN + "links/";
 
 }

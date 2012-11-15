@@ -15,8 +15,9 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.common.Note;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
@@ -26,20 +27,37 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * The note resource service is used to manage a note.
+ * The note resource defines the interface for a note.
  */
 @ResourceDefinition(
-    name = "Note",
-    namespace = CommonModels.GEDCOMX_NAMESPACE,
-    projectId = "gedcomx-rs",
-    resourceElement = Gedcomx.class
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  projectId = "gedcomx-rs",
+  resourceElement = Gedcomx.class,
+  states = {
+    @StateDefinition (
+      name = "Person Note",
+      rel = NoteRSDefinition.REL_PERSON,
+      description = "A person note.",
+      transitions = {
+        @StateTransition( rel = NotesRSDefinition.REL_PERSON, description = "The list containing the note.", scope = Note.class ),
+        @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Note.class )
+      }
+    ),
+    @StateDefinition (
+      name = "Relationship Note",
+      rel = NoteRSDefinition.REL_RELATIONSHIP,
+      description = "A relationship note.",
+      transitions = {
+        @StateTransition( rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The list containing the note.", scope = Note.class ),
+        @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Note.class )
+      }
+    )
+  }
 )
-@ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = NoteRSDefinition.class, description = "This note set." )
-})
 public interface NoteRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "note";
+  public static final String REL_PERSON = GEDCOMX_LINK_REL_PREFIX + "person-note";
+  public static final String REL_RELATIONSHIP = GEDCOMX_LINK_REL_PREFIX + "relationship-note";
 
   /**
    * Read a note.

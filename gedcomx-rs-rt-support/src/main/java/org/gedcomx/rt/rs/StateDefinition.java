@@ -15,38 +15,46 @@
  */
 package org.gedcomx.rt.rs;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Metadata for a specific binding of a resource definition.
+ * Identification of application state.
  *
  * @author Ryan Heaton
  */
 @Retention ( RetentionPolicy.RUNTIME )
-@Target ({ ElementType.TYPE, ElementType.METHOD })
-public @interface ResourceBinding {
+@Target ({ })
+public @interface StateDefinition {
 
   /**
-   * A namespace for the binding. Default is the namespace of the resource definition.
+   * The name of the state being defined.
    *
-   * @return A namespace for the resource.
+   * @return The name of the state being defined.
    */
-  String namespace() default "##default";
+  String name();
 
   /**
-   * An identifier for a project to which this binding belongs. Default is the project id of the resource.
+   * 'rel' identifier for the state.
    *
-   * @return An identifier for a project to which this binding belongs.
+   * @see <a href="http://tools.ietf.org/html/draft-nottingham-http-link-header-10">Web Linking</a>
+   * @return The state identifier.
    */
-  String projectId() default "##default";
+  String rel();
 
   /**
-   * The states being bound by this resource. Each state may only be bound by a single binding.
+   * A human-readable description of the state definition.
    *
-   * @return The states being bound by this resource.
+   * @return A human-readable description of the state definition.
    */
-  String[] states() default {};
+  String description();
+
+  /**
+   * The transitions to other application states.
+   *
+   * @return The transitions to other application states.
+   */
+  StateTransition[] transitions() default {};
+
 }

@@ -15,25 +15,12 @@
  */
 package org.gedcomx.search;
 
-import org.gedcomx.rt.Model;
-import org.gedcomx.rt.Models;
-
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author Ryan Heaton
  */
 @XmlTransient
-@Models ( {
-  @Model (
-    id = "gxq",
-    projectId = "gedcomx-rs",
-    namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE,
-    label = "Search Model",
-    description = "The search model defines elements and types used for providing metadata about the results of a search.",
-    version = "1.0"
-  )
-} )
 public class SearchModel {
 
   private SearchModel() {}

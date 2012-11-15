@@ -16,7 +16,7 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.atom.Feed;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -47,21 +47,40 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition(
-    name = "Discovery",
-    projectId = "gedcomx-rs",
-    resourceElement = Feed.class,
-    namespace = CommonModels.GEDCOMX_NAMESPACE
+  projectId = "gedcomx-rs",
+  resourceElement = Feed.class,
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  states = {
+    @StateDefinition (
+      name = "Discovery",
+      rel = DiscoveryRSDefinition.REL,
+      description = "The root index of the application, providing links to the various application states.",
+      transitions = {
+        @StateTransition (rel = ConclusionRSDefinition.REL, description = "The templated link to the conclusion resources of the application.", template = true ),
+        @StateTransition (rel = ConclusionsRSDefinition.REL_PERSON, description = "The templated link to the person conclusions resources of the application.", template = true ),
+        @StateTransition (rel = ConclusionsRSDefinition.REL_RELATIONSHIP, description = "The templated link to the relationship conclusions resources of the application.", template = true ),
+        @StateTransition (rel = ContributorRSDefinition.REL, description = "The templated link to the contributor resources of the application.", template = true ),
+        @StateTransition (rel = CurrentUserPersonQuery.REL, description = "The link to the current user person of the application." ),
+        @StateTransition (rel = CurrentUserQuery.REL, description = "The link to the current user of the application." ),
+        @StateTransition (rel = NoteRSDefinition.REL_PERSON, description = "The templated link to the person note resources of the application.", template = true ),
+        @StateTransition (rel = NoteRSDefinition.REL_RELATIONSHIP, description = "The templated link to the relationship note resources of the application.", template = true ),
+        @StateTransition (rel = NotesRSDefinition.REL_PERSON, description = "The templated link to the person notes resources of the application.", template = true ),
+        @StateTransition (rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The templated link to the relationship notes resources of the application.", template = true ),
+        @StateTransition (rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, description = "The templated link to the child relationships resources of the application.", template = true ),
+        @StateTransition (rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, description = "The templated link to the spouse relationships resources of the application.", template = true ),
+        @StateTransition (rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, description = "The templated link to the parent relationships resources of the application.", template = true ),
+        @StateTransition (rel = PersonRSDefinition.REL, description = "The templated link to the person resources of the application.", template = true ),
+        @StateTransition (rel = PersonsRSDefinition.REL, description = "The link to the persons of the application."),
+        @StateTransition (rel = RelationshipRSDefinition.REL, description = "The templated link to the relationship resources of the application.", template = true ),
+        @StateTransition (rel = RelationshipsRSDefinition.COUPLE_RELATIONSHIPS_REL, description = "The link to the couple relationships for this application." ),
+        @StateTransition (rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, description = "The link to the parent-child relationships for this application." ),
+        @StateTransition (rel = SourceDescriptionRSDefinition.REL, description = "The templated link to the source description resources for this application.", template = true ),
+        @StateTransition (rel = SourceDescriptionsRSDefinition.REL, description = "The source descriptions resource for this application." ),
+        @StateTransition (rel = PersonSearchQuery.REL, description = "The person search query for this application.", template = true )
+      }
+    )
+  }
 )
-@ResourceLinks({
-  @ResourceLink (rel = "self", definedBy = DiscoveryRSDefinition.class, description = "Link to this discovery resource."),
-  @ResourceLink (rel = PersonsRSDefinition.REL, definedBy = PersonsRSDefinition.class, description = "The set of persons for this application."),
-  @ResourceLink (rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for the currently logged in user." ),
-  @ResourceLink (rel = ContributorRSDefinition.REL, definedBy = ContributorRSDefinition.class, description = "The current contributor." ),
-  @ResourceLink (rel = RelationshipsRSDefinition.COUPLE_RELATIONSHIPS_REL, definedBy = RelationshipsRSDefinition.class, description = "The set of couple relationships for this application." ),
-  @ResourceLink (rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, definedBy = RelationshipsRSDefinition.class, description = "The set of parent-child relationships for this application." ),
-  @ResourceLink (rel = SourceDescriptionsRSDefinition.REL, definedBy = SourceDescriptionsRSDefinition.class, description = "The source descriptions resource for this application." ),
-  @ResourceLink (rel = SearchRSDefinition.REL, definedBy = SearchRSDefinition.class, description = "The search resource for this application (linked via URI template).", template = true )
-})
 public interface DiscoveryRSDefinition extends CommonRSParameters {
 
   String REL = GEDCOMX_LINK_REL_PREFIX + "discovery";

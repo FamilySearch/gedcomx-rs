@@ -15,25 +15,28 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 /**
- * The persons resource service is used to manage a collection of persons.
+ * The persons resource defines the interface for the set of persons in the application.
  *
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "Persons",
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  resourceElement = Gedcomx.class,
+  states = {
+    @StateDefinition ( name = "Persons", rel = PersonsRSDefinition.REL, description = "The set of persons." )
+  }
 )
 public interface PersonsRSDefinition extends CommonRSParameters {
 

@@ -15,11 +15,10 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
-import org.gedcomx.rt.rs.ResourceDefinition;
-import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StatusCodes;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.conclusion.*;
+import org.gedcomx.rt.GedcomxConstants;
+import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -33,14 +32,34 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "Conclusions",
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  resourceElement = Gedcomx.class,
+  states = {
+    @StateDefinition (
+      name = "Person Conclusions",
+      rel = ConclusionsRSDefinition.REL_PERSON,
+      description = "A list of conclusions about a person.",
+      transitions = {
+        @StateTransition( rel = ConclusionRSDefinition.REL, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }),
+        @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class )
+      }
+    ),
+    @StateDefinition (
+      name = "Relationship Conclusions",
+      rel = ConclusionsRSDefinition.REL_RELATIONSHIP,
+      description = "The list of conclusions about a relationship.",
+      transitions = {
+        @StateTransition( rel = ConclusionRSDefinition.REL, description = "A conclusion.", scope = Fact.class ),
+        @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class )
+      }
+    )
+  }
 )
 public interface ConclusionsRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "conclusions";
+  public static final String REL_PERSON = GEDCOMX_LINK_REL_PREFIX + "person-conclusions";
+  public static final String REL_RELATIONSHIP = GEDCOMX_LINK_REL_PREFIX + "relationship-conclusions";
 
   /**
    * Read a conclusions of an entity.

@@ -29,6 +29,13 @@
       <version>${gedcomx.core.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-server</artifactId>
+      <version>1.11</version>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
 
 </project>

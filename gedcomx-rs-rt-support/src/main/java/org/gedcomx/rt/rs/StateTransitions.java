@@ -21,14 +21,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Wrapper annotation for a set of {@link ResourceLink}s.
+ * Wrapper annotation for a set of {@link StateTransition}s.
  *
  * @author Ryan Heaton
  */
 @Retention ( RetentionPolicy.RUNTIME )
 @Target ({ ElementType.TYPE })
-public @interface ResourceLinks {
+public @interface StateTransitions {
 
-  ResourceLink[] value() default {};
+  StateTransition[] value() default {};
 
 }

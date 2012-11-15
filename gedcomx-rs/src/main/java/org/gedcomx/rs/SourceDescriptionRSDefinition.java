@@ -15,10 +15,11 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.DELETE;
@@ -29,17 +30,19 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * The source description resource service is used to manage a source description.
+ * The source description resource defines the interface for a source description.
  */
 @ResourceDefinition (
-  name = "Source Description",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
-  resourceElement = Gedcomx.class
+  resourceElement = Gedcomx.class,
+  states = {
+    @StateDefinition ( name = "Source Description", rel = SourceDescriptionRSDefinition.REL, description = "A source description." )
+  }
 )
 public interface SourceDescriptionRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/description";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source-description";
 
   /**
    * Read a source description's header attributes.

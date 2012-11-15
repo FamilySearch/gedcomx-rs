@@ -15,19 +15,16 @@
  */
 package org.gedcomx.rs;
 
+import org.gedcomx.atom.Entry;
 import org.gedcomx.atom.Feed;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
 /**
- * <p>The search resource defines the set of entries in the system that are applicable to specific search criteria.</p>
- *
- * <p>Links to the search resource should be defined using a URI template as defined by <a href="http://tools.ietf.org/html/draft-gregorio-uritemplate">the
- * latest URI template specification draft</a>. Implementations are free to choose which parameters are supported and how to apply them to their
- * URI space, but the following parameters are reserved for conformance to the GEDCOM X specification and are defined as follows:</p>
+ * <p>The person search query provides the mechanism for querying the application for specific persons. The following query parameters apply:</p>
  *
  * <table>
  *   <tr>
@@ -135,25 +132,29 @@ import javax.ws.rs.core.Response;
  *   </tr>
  * </table>
  *
- * <p>Each entry in the search results MAY contain content of the GEDCOM X media type that provides data about
- * the results of the search, e.g. persons and relationships.</p>
- *
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "Search",
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
-  resourceElement = Feed.class
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  resourceElement = Feed.class,
+  states = {
+    @StateDefinition (
+      name = "Person Search",
+      rel = PersonSearchQuery.REL,
+      description = "A person search query.",
+      transitions = {
+        @StateTransition ( rel = PersonRSDefinition.REL, description = "The person in the search result.", scope = Entry.class ),
+        @StateTransition ( rel = "self", description = "A link to this search result set." ),
+        @StateTransition ( rel = "first", description = "A link to the first page of search results, if any." ),
+        @StateTransition ( rel = "next", description = "A link to the next page of search results, if any." ),
+        @StateTransition ( rel = "prev", description = "A link to the previous page of search results, if any." ),
+        @StateTransition ( rel = "last", description = "A link to the last page of search results, if any." )
+      }
+    )
+  }
 )
-@ResourceLinks ( {
-  @ResourceLink ( rel = "self", definedBy = SearchRSDefinition.class, description = "A link to this search result set." ),
-  @ResourceLink ( rel = "first", definedBy = SearchRSDefinition.class, description = "A link to the first page of search results, if any." ),
-  @ResourceLink ( rel = "next", definedBy = SearchRSDefinition.class, description = "A link to the next page of search results, if any." ),
-  @ResourceLink ( rel = "prev", definedBy = SearchRSDefinition.class, description = "A link to the previous page of search results, if any." ),
-  @ResourceLink ( rel = "last", definedBy = SearchRSDefinition.class, description = "A link to the last page of search results, if any." )
-})
-public interface SearchRSDefinition extends CommonRSParameters {
+public interface PersonSearchQuery extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "search";
 

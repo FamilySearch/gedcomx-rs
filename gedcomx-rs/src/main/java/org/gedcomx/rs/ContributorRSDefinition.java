@@ -15,8 +15,8 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -24,17 +24,16 @@ import javax.ws.rs.HEAD;
 import javax.ws.rs.core.Response;
 
 /**
- * The contributor resource defines a contributor.
+ * The contributor resource defines the interface for a contributor.
  */
 @ResourceDefinition (
-  name = "Contributor",
   resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  states = {
+    @StateDefinition (name = "Contributor", rel = ContributorRSDefinition.REL, description = "A contributor .")
+  }
 )
-@ResourceLinks ({
-  @ResourceLink( rel = "self", definedBy = ContributorRSDefinition.class, description = "Link to this contributor." )
-})
 public interface ContributorRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "contributor";

@@ -15,8 +15,10 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.conclusion.Person;
+import org.gedcomx.conclusion.Relationship;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 import org.gedcomx.source.SourceReference;
 
@@ -30,19 +32,34 @@ import javax.ws.rs.core.Response;
  * Some implementations may bind the notes resource and the person (or relationship) resource together.
  */
 @ResourceDefinition (
-  name = "Source References",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
-  resourceElement = Gedcomx.class
+  resourceElement = Gedcomx.class,
+  states = {
+    @StateDefinition (
+      name = "Person Source References",
+      rel = SourceReferencesRSDefinition.REL_PERSON,
+      description = "The set of source references applicable to, and contained by, a specific person.",
+      transitions = {
+        @StateTransition( rel = SourceReferenceRSDefinition.REL, description = "A source reference.", scope = SourceReference.class),
+        @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class )
+      }
+    ),
+    @StateDefinition (
+      name = "Relationship Source References",
+      rel = SourceReferencesRSDefinition.REL_RELATIONSHIP,
+      description = "The set of source references applicable to, and contained by, a specific relationship.",
+      transitions = {
+        @StateTransition( rel = SourceReferenceRSDefinition.REL, description = "A source reference.", scope = SourceReference.class),
+        @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class)
+      }
+    )
+  }
 )
-@ResourceLinks ( {
-  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." ),
-  @ResourceLink ( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for which this is a set of source references, if any." ),
-  @ResourceLink ( rel = RelationshipRSDefinition.REL, definedBy = RelationshipRSDefinition.class, description = "The relationship for which this is a set of source references, if any." )
-} )
 public interface SourceReferencesRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/references";
+  public static final String REL_PERSON = GEDCOMX_LINK_REL_PREFIX + "person-source-references";
+  public static final String REL_RELATIONSHIP = GEDCOMX_LINK_REL_PREFIX + "relationship-source-references";
 
   /**
    * Read the references to sources.

@@ -1,65 +1,52 @@
 [#ftl]
 [#-- @ftlvariable name="schema" type="org.codehaus.enunciate.config.SchemaInfo" --]
 [#import "boilerplate.fmt" as libBoilerplate/]
-[#import "rsd.fmt" as libRsd/]
+[#import "state.fmt" as libState/]
 
-[#list resourceDefinitions as rsd]
-  [#if (projectId!"") = rsd.projectId]
-    [@file name=(rsd.name + "_resource.html")]
-      [@libRsd.writeResourceServiceDefinitionPage rsd=rsd/]
+[#list applicationStates as state]
+  [#if (projectId!"") = state.projectId]
+    [@file name=(state.id + "-state.html")]
+      [@libState.writeApplicationStatePage state=state/]
     [/@file]
   [/#if]
 [/#list]
-[#if resourceDefinitions?size > 0]
-[@file name="resource_definitions.html" charset="utf-8"]
-  [@libBoilerplate.writeStartBody label="Resources"/]
+[#if applicationStates?size > 0]
+[@file name="application-states.html" charset="utf-8"]
+  [@libBoilerplate.writeStartBody label="Application States"/]
   <div class="container">
     [@libBoilerplate.writeHeader]
       <ul class="xbreadcrumbs" id="breadcrumbs">
         <li><a href="Home.html" class="home">Home</a></li>
         <li>
-          <a href="resource_definitions.html">Resource Definitions</a>
+          <a href="application-states.html">Application States</a>
           <ul>
-            <li><a href="models.html">Models</a></li>
-            <li><a href="#">Resource Definitions</a></li>
-            <li><a href="recipes.html">Recipes</a></li>
+            <li><a href="media-types.html">Media Types</a></li>
+            <li><a href="#">Application States</a></li>
           </ul>
         </li>
       </ul>
     [/@libBoilerplate.writeHeader]
     <div id="main" class="column first last span-20">
-      <h1>GEDCOM X[#if projectLabelModifier??] ${projectLabelModifier}[/#if] Resource Definitions</h1>
+      <h1>GEDCOM X[#if projectLabelModifier??] ${projectLabelModifier}[/#if] Application States</h1>
 
       <hr/>
 
-    [#list resourceDefinitions?sort_by("name") as rsd]
-      [#if (projectId!"") = rsd.projectId]
-      <h3><a href="${rsd.name}_resource.html">${rsd.name} Resource</a></h3>
       <table>
         <tr>
-          <td align="right">Name:</td>
-          <td>${rsd.name}</td>
+          <th>name</th>
+          <th>rel</th>
+          <th>description</th>
         </tr>
+    [#list applicationStates as state]
+      [#if (projectId!"") = state.projectId]
         <tr>
-          <td align="right">Namespace:</td>
-          <td>${rsd.namespace}</td>
+          <td><a href="${state.id}-state.html">${state.name}</a></td>
+          <td><tt>${state.rel}</tt></td>
+          <td>${state.description}</td>
         </tr>
-        [#if rsd.resourceElements?size > 0]
-        <tr>
-          <td align="right">Representation(s):</td>
-          <td>[#list rsd.resourceElements as resourceElement]<a href="${baseProjectUri(resourceElement)}${schemaForNamespace(resourceElement).id}_el_${resourceElement.name}.html">${resourceElement.name}</a>[#if resourceElement_has_next] or [/#if][/#list]</td>
-        </tr>
-        [/#if]
-        [#if rsd.subresources?size > 0]
-        <tr>
-          <td align="right">Subresources:</td>
-          <td>[#list rsd.subresources as subresource]<a href="${(baseProjectUris[subresource.projectId])!""}${subresource.name}_resource.html">${subresource.name} Resource</a>[#if subresource_has_next], [/#if][/#list]</td>
-        </tr>
-        [/#if]
-
-      </table>
       [/#if]
     [/#list]
+      </table>
 
       <div class="clear" />
     </div>

@@ -15,8 +15,11 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.common.Note;
+import org.gedcomx.conclusion.Person;
+import org.gedcomx.conclusion.Relationship;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -24,23 +27,37 @@ import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 /**
- * The notes resource defines the set of notes on an entity (e.g. person, relationship).
- * Some implementations may bind the notes resource and the person (or relationship) resource together.
+ * The notes resource defines the interface for a list of notes on an entity (e.g. person, relationship).
  */
 @ResourceDefinition (
-  name = "Notes",
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  resourceElement = Gedcomx.class,
+  states = {
+    @StateDefinition (
+      name = "Person Notes",
+      rel = NotesRSDefinition.REL_PERSON,
+      description = "The set of notes applicable to, and contained by, a specific person.",
+      transitions = {
+        @StateTransition( rel = NoteRSDefinition.REL_PERSON, description = "A note.", scope = Note.class),
+        @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class )
+      }
+    ),
+    @StateDefinition (
+      name = "Relationship Notes",
+      rel = NotesRSDefinition.REL_RELATIONSHIP,
+      description = "The set of notes applicable to, and contained by, a specific relationship.",
+      transitions = {
+        @StateTransition( rel = NoteRSDefinition.REL_RELATIONSHIP, description = "A note.", scope = Note.class),
+        @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class)
+      }
+    )
+  }
 )
-@ResourceLinks ( {
-  @ResourceLink ( rel = "self", definedBy = NotesRSDefinition.class, description = "Link to this notes resource." ),
-  @ResourceLink ( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person that contains this set of notes, if any." ),
-  @ResourceLink ( rel = RelationshipRSDefinition.REL, definedBy = RelationshipRSDefinition.class, description = "The link to the relationship that contains this set of notes, if any." )
-})
 public interface NotesRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "notes";
+  public static final String REL_PERSON = GEDCOMX_LINK_REL_PREFIX + "person-notes";
+  public static final String REL_RELATIONSHIP = GEDCOMX_LINK_REL_PREFIX + "relationship-notes";
 
   /**
    * Read the list of notes on the entity.

@@ -15,7 +15,6 @@
  */
 package org.gedcomx.rt.rs;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,7 +24,7 @@ import java.lang.annotation.Target;
  * Metadata used to describe a resource and the way the HTTP operations apply to the resource. A resource
  * definition does not dictate the paths at which the resources are bound, but describes the resource in generic
  * terms such as the representation model, {@link StatusCodes status codes}, {@link Warnings warnings}, and
- * {@link ResourceLink resource relationship}s.
+ * {@link StateTransition resource relationship}s.
  *
  * @author Ryan Heaton
  */
@@ -34,18 +33,18 @@ import java.lang.annotation.Target;
 public @interface ResourceDefinition {
 
   /**
-   * The name of the resource being defined. Default is the name of the annotated class.
-   *
-   * @return The name of the resource being defined.
-   */
-  String name();
-
-  /**
    * A namespace for the resource. Default is the empty namespace.
    *
    * @return A namespace for the resource.
    */
   String namespace() default "";
+
+  /**
+   * An identifier for a project to which this resource definition belongs.
+   *
+   * @return An identifier for a project to which this resource definition belongs.
+   */
+  String projectId();
 
   /**
    * The class defining the element used as the representation model for the resource. The
@@ -56,25 +55,10 @@ public @interface ResourceDefinition {
   Class<?>[] resourceElement() default {};
 
   /**
-   * The resource service definitions that are considered subresources of this resource.
+   * The states being defined by this resource definition.
    *
-   * @return The resource service definitions that are considered subresources of this resource.
+   * @return The states being defined by this resource definition.
    */
-  Class<?>[] subresources() default {};
+  StateDefinition[] states() default {};
 
-  /**
-   * The valid elements that are used to carry the subresources of this resource. This is currently only applicable
-   * to resources that are represented by an extensible element that will use its extension mechanism
-   * to supply subresources.
-   *
-   * @return The valid elements that are used to carry the subresources of this resource.
-   */
-  XmlElement[] subresourceElements() default {};
-
-  /**
-   * An identifier for a project to which this resource definition belongs.
-   *
-   * @return An identifier for a project to which this resource definition belongs.
-   */
-  String projectId();
 }

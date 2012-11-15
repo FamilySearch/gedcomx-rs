@@ -15,8 +15,8 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
@@ -24,20 +24,19 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * The source reference resource service is used to manage a source reference.
+ * The source reference resource defines the interface for a source reference.
  */
 @ResourceDefinition (
-  name = "Source Reference",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
-  resourceElement = Gedcomx.class
+  resourceElement = Gedcomx.class,
+  states = {
+    @StateDefinition ( name = "Source Reference", rel = SourceReferenceRSDefinition.REL, description = "The source reference." )
+  }
 )
-@ResourceLinks ( {
-  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This source reference set." )
-} )
 public interface SourceReferenceRSDefinition extends CommonRSParameters {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source/reference";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source-reference";
 
   /**
    * Delete a source reference.

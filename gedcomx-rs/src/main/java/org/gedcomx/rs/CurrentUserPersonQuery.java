@@ -22,35 +22,32 @@ import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
 /**
- * The relationships resource defines the interface for the set of relationships in the application.
+ * The current user person query is used to query the application for the person for the current user.
  */
 @ResourceDefinition (
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
   states = {
-    @StateDefinition ( name = "Couple Relationships", rel = RelationshipsRSDefinition.COUPLE_RELATIONSHIPS_REL, description = "The set of couple relationships." ),
-    @StateDefinition ( name = "Parent Relationships", rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, description = "The set of couple relationships." )
+    @StateDefinition (name = "Current User Person", rel = CurrentUserPersonQuery.REL, description = "The query for the person for the current user.")
   }
 )
-public interface RelationshipsRSDefinition extends CommonRSParameters {
+public interface CurrentUserPersonQuery extends CommonRSParameters {
 
-  public static final String COUPLE_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "couple-relationships";
-  public static final String PARENT_CHILD_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "parent-child-relationships";
+  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "current-user-person";
 
   /**
-   * Create a relationship.
+   * Read a person and their relationships.
    *
-   * @param relationship The relationship to be created.
-   * @return The appropriate response.
+   * @return The person and relationships.
    */
-  @POST
+  @GET
   @StatusCodes({
-    @ResponseCode ( code = 201, condition = "The creation of the relationship was successful. Expect a location header specifying the link to the created relationship.")
+    @ResponseCode ( code = 303, condition = "The query was successful. The location of the person for the current user is provided in the Location header.")
   })
-  Response post(Gedcomx relationship);
+  Response get();
 }

@@ -20,6 +20,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.gedcomx.common.URI;
 import org.gedcomx.links.Link;
 import org.gedcomx.links.SupportsLinks;
+import org.gedcomx.rt.MediaTypeDefinition;
+import org.gedcomx.rt.Model;
 import org.gedcomx.search.SearchModel;
 
 import javax.xml.XMLConstants;
@@ -32,12 +34,35 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The "atom:feed" element is the document (i.e., top-level) element of an Atom Feed Document,
- * acting as a container for metadata and data associated with the feed.
+ * <p>The Atom media types provide a format for web content and metadata syndication. The XML media type is defined by
+ * <a href="http://tools.ietf.org/html/rfc4287#section-4">RFC 4287</a>. The JSON media type is specific to GEDCOM X and is a
+ * translation to JSON from the XML.</p>
  *
  * @author Ryan Heaton
- * @see <a href="http://tools.ietf.org/html/rfc4287#section-4">The atom spec, section 4.</a>
  */
+@MediaTypeDefinition (
+  id = "atom",
+  name = "Atom",
+  description = "The Atom media types provide a format for web content and metadata syndication.",
+  version = "1.0",
+  xmlMediaType = AtomModel.ATOM_XML_MEDIA_TYPE,
+  jsonMediaType = AtomModel.ATOM_GEDCOMX_JSON_MEDIA_TYPE,
+  projectId = "gedcomx-rs",
+  models = {
+    @Model (
+      id = "atom",
+      namespace = AtomModel.ATOM_NAMESPACE,
+      label = "Atom Model",
+      description = "The Atom model supplied the types and elements defined by the Atom syndication format."
+    ),
+    @Model (
+      id = "gxq",
+      namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE,
+      label = "Search Model",
+      description = "The search model defines elements and types used for providing metadata about the results of a search."
+    )
+  }
+)
 @XmlRootElement
 @XmlType( name = "Feed", propOrder = {"authors", "contributors", "generator", "icon", "id", "results", "index", "links", "logo", "rights", "subtitle", "title", "updated", "entries"} )
 @SuppressWarnings("gedcomx:no_id")

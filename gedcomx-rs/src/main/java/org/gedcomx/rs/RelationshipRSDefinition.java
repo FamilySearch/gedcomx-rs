@@ -15,8 +15,9 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.conclusion.*;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
@@ -29,15 +30,22 @@ import javax.ws.rs.core.Response;
  * The relationship resource service is used to manage a relationship.
  */
 @ResourceDefinition (
-  name = "Relationship",
   resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
-  subresources = { ConclusionRSDefinition.class }
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  states = {
+    @StateDefinition (
+      name = "Relationship",
+      rel = RelationshipRSDefinition.REL,
+      description = "A relationship.",
+      transitions = {
+        @StateTransition ( rel = ConclusionsRSDefinition.REL_RELATIONSHIP, description = "The conclusions for the relationship.", scope = Relationship.class ),
+        @StateTransition ( rel = SourceReferencesRSDefinition.REL_RELATIONSHIP, description = "The source references for the relationship.", scope = Relationship.class ),
+        @StateTransition ( rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The notes for the relationship.", scope = Relationship.class )
+      }
+    )
+  }
 )
-@ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = RelationshipRSDefinition.class, description = "The relationship itself." ),
-})
 public interface RelationshipRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "relationship";

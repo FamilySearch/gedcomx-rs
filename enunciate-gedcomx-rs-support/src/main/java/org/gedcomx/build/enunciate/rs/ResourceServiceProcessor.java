@@ -17,7 +17,8 @@ package org.gedcomx.build.enunciate.rs;
 
 import com.sun.mirror.apt.AnnotationProcessorEnvironment;
 import com.sun.mirror.declaration.*;
-import com.sun.mirror.type.*;
+import com.sun.mirror.type.InterfaceType;
+import com.sun.mirror.type.MirroredTypesException;
 import com.sun.mirror.util.Declarations;
 import net.sf.jelly.apt.Context;
 import net.sf.jelly.apt.decorations.declaration.DecoratedDeclaration;
@@ -25,26 +26,19 @@ import net.sf.jelly.apt.decorations.declaration.DecoratedMethodDeclaration;
 import org.codehaus.enunciate.apt.EnunciateFreemarkerModel;
 import org.codehaus.enunciate.config.SchemaInfo;
 import org.codehaus.enunciate.contract.jaxb.ElementDeclaration;
-import org.codehaus.enunciate.contract.jaxb.LocalElementDeclaration;
-import org.codehaus.enunciate.contract.jaxb.RootElementDeclaration;
-import org.codehaus.enunciate.contract.jaxb.TypeDefinition;
 import org.codehaus.enunciate.contract.jaxrs.Resource;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.RootResource;
 import org.codehaus.enunciate.contract.jaxrs.SubResource;
 import org.codehaus.enunciate.contract.validation.ValidationResult;
 import org.codehaus.enunciate.util.ResourceMethodPathComparator;
-import org.gedcomx.rt.json.JsonElementWrapper;
+import org.gedcomx.build.enunciate.MediaTypeDeclaration;
 import org.gedcomx.rt.rs.ResourceDefinition;
-import org.gedcomx.rt.rs.ResourceLinks;
+import org.gedcomx.rt.rs.StateTransitions;
 import org.gedcomx.rt.rs.StatusCodes;
 import org.gedcomx.rt.rs.Warnings;
 
 import javax.ws.rs.Path;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.namespace.QName;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 
 /**
@@ -54,9 +48,9 @@ import java.util.*;
  */
 public class ResourceServiceProcessor {
 
-  private final Map<QName, ResourceDefinitionDeclaration> resourceDefinitions = new HashMap<QName, ResourceDefinitionDeclaration>();
+  private final List<ResourceDefinitionDeclaration> resourceDefinitions = new ArrayList<ResourceDefinitionDeclaration>();
   private Map<String, ResourceBinding> bindingsByPath;
-  private Map<String, ResourceBinding> bindingsByName;
+  private Map<String, ApplicationState> applicationStates;
 
   /**
    * @see <a href="http://tools.ietf.org/html/draft-nottingham-http-link-header">Web Linking</a>
@@ -64,15 +58,15 @@ public class ResourceServiceProcessor {
   private static final Set<String> REGISTERED_LINK_RELATIONS = new TreeSet<String>(Arrays.asList("alternate", "appendix", "bookmark", "chapter", "contents", "copyright", "current", "describedby", "edit", "edit-media", "enclosure", "first", "glossary", "help", "hub", "index", "last", "latest-version", "license", "next", "next-archive", "payment", "prev", "predecessor-version", "previous", "prev-archive", "related", "replies", "section", "self", "service", "start", "stylesheet", "subsection", "successor-version", "up", "version-history", "via", "working-copy", "working-copy-of"));
 
   public Collection<ResourceDefinitionDeclaration> getResourceDefinitions() {
-    return resourceDefinitions.values();
+    return resourceDefinitions;
   }
 
   public Map<String, ResourceBinding> getBindingsByPath() {
     return bindingsByPath;
   }
 
-  public Map<String, ResourceBinding> getBindingsByName() {
-    return bindingsByName;
+  public Map<String, ApplicationState> getApplicationStates() {
+    return applicationStates;
   }
 
   public ValidationResult processModel(EnunciateFreemarkerModel model, Collection<TypeDeclaration> resourceServiceDefinitions) {
@@ -80,6 +74,7 @@ public class ResourceServiceProcessor {
 
     //todo: error if setter-based resource parameters in the implementation don't carry the annotations defined in the definition, binding...
 
+    Map<String, ApplicationState> applicationStates = new TreeMap<String, ApplicationState>();
     for (TypeDeclaration resourceServiceDefinition : resourceServiceDefinitions) {
       ResourceDefinition rsdInfo = resourceServiceDefinition.getAnnotation(ResourceDefinition.class);
       if (rsdInfo != null) {
@@ -111,99 +106,7 @@ public class ResourceServiceProcessor {
           }
         }
 
-        Set<QName> subresources = new HashSet<QName>();
-        try {
-          Class<?>[] subs = rsdInfo.subresources();
-          for (Class<?> sub : subs) {
-            ResourceDefinition subresourceInfo = sub.getAnnotation(ResourceDefinition.class);
-            if (subresourceInfo == null) {
-              result.addError(resourceServiceDefinition, String.format("Subresource %s is not annotated with @%s.", sub.getName(), ResourceDefinition.class.getName()));
-            }
-            else {
-              subresources.add(new QName(subresourceInfo.namespace(), subresourceInfo.name()));
-            }
-          }
-        }
-        catch (MirroredTypesException e) {
-          Collection<TypeMirror> subresourceTypes = e.getTypeMirrors();
-          for (TypeMirror subresourceType : subresourceTypes) {
-            if (subresourceType instanceof DeclaredType && ((DeclaredType) subresourceType).getDeclaration() != null) {
-              ResourceDefinition subresourceInfo = ((DeclaredType) subresourceType).getDeclaration().getAnnotation(ResourceDefinition.class);
-              if (subresourceInfo == null) {
-                result.addError(resourceServiceDefinition, String.format("Subresource %s is not annotated with @%s.", ((DeclaredType) subresourceType).getDeclaration().getQualifiedName(), ResourceDefinition.class.getName()));
-              }
-              else {
-                subresources.add(new QName(subresourceInfo.namespace(), subresourceInfo.name()));
-              }
-            }
-            else {
-              result.addError(resourceServiceDefinition, String.format("Unable to find @%s on subresource %s.", ResourceDefinition.class.getName(), subresourceType));
-            }
-          }
-        }
-
-        LinkedHashMap<QName, TypeDefinition> subresourceElements = new LinkedHashMap<QName, TypeDefinition>();
-        XmlElement[] subresourceElementsInfo = rsdInfo.subresourceElements();
-        for (XmlElement xmlElement : subresourceElementsInfo) {
-          TypeDeclaration subelementDeclaration = null;
-          try {
-            Class type = xmlElement.type();
-            subelementDeclaration = ape.getTypeDeclaration(type.getName());
-          }
-          catch (MirroredTypeException e) {
-            TypeMirror typeMirror = e.getTypeMirror();
-            if (typeMirror instanceof ClassType) {
-              subelementDeclaration = ((ClassType) typeMirror).getDeclaration();
-            }
-            else {
-              result.addError(resourceServiceDefinition, "Subresource elements must specify type() in the @XmlElement annotation.");
-            }
-          }
-
-          TypeDefinition typeDef = null;
-          RootElementDeclaration rootEl = null;
-          if (subelementDeclaration instanceof ClassDeclaration) {
-            if ("javax.xml.bind.annotation.XmlElement.DEFAULT".equals(subelementDeclaration.getQualifiedName())) {
-              result.addError(resourceServiceDefinition, "Subresource elements must specify type() in the @XmlElement annotation.");
-            }
-            else {
-              rootEl = model.findRootElementDeclaration((ClassDeclaration) subelementDeclaration);
-              typeDef = model.findTypeDefinition((ClassDeclaration) subelementDeclaration);
-            }
-          }
-
-          if (typeDef != null) {
-            String ns = xmlElement.namespace();
-            if ("##default".equals(ns)) {
-              ns = rootEl == null ? "" : rootEl.getNamespace();
-            }
-
-            String name = xmlElement.name();
-            if ("##default".equals(name)) {
-              name = rootEl == null ? null : rootEl.getName();
-            }
-
-            if (name != null) {
-              QName xmlName = new QName(ns, name);
-              ElementDeclaration elementDeclaration = findLocalElementDeclaration(model, xmlName);
-              if (elementDeclaration == null) {
-                elementDeclaration = rootEl;
-              }
-
-              if (elementDeclaration != null) {
-                JsonElementWrapper elementWrapper = elementDeclaration.getAnnotation(JsonElementWrapper.class);
-                String jsonName = elementWrapper != null ? (elementWrapper.namespace() + elementWrapper.name()) : (elementDeclaration.getNamespace() + elementDeclaration.getName());
-                subresourceElements.put(new QName(xmlName.getNamespaceURI(), xmlName.getLocalPart(), jsonName), typeDef);
-              }
-              else {
-                result.addWarning(resourceServiceDefinition, "Unable to find element declaration for subresource element " + xmlName);
-              }
-            }
-          }
-        }
-
-
-        ResourceDefinitionDeclaration rsd = new ResourceDefinitionDeclaration(resourceServiceDefinition, resourceElements, subresources, subresourceElements, this);
+        ResourceDefinitionDeclaration rsd = new ResourceDefinitionDeclaration(resourceServiceDefinition, resourceElements, this);
         Map<String, ResourceMethod> methodsByOp = new HashMap<String, ResourceMethod>();
         for (ResourceMethod method : rsd.getResourceMethods()) {
           if (method.getHttpMethods().size() > 1) {
@@ -218,29 +121,25 @@ public class ResourceServiceProcessor {
           }
         }
 
-        for (ResourceLink link : rsd.getLinks()) {
-          String identifier = link.getRel();
-          if (!REGISTERED_LINK_RELATIONS.contains(identifier)) {
-            try {
-              if (!new URI(identifier).isAbsolute()) {
-                result.addWarning(rsd, String.format("Link rel %s should be either a registered link type or a valid absolute URI. For more information, see http://tools.ietf.org/html/draft-nottingham-http-link-header.", identifier));
-              }
-            }
-            catch (URISyntaxException e) {
-              result.addWarning(rsd, String.format("Link rel %s should be either a registered link type or a valid absolute URI. For more information, see http://tools.ietf.org/html/draft-nottingham-http-link-header.", identifier));
-            }
+        for (ApplicationState applicationState : rsd.getApplicationStates()) {
+          if (REGISTERED_LINK_RELATIONS.contains(applicationState.getRel())) {
+            result.addError(rsd, String.format("Illegal application state definition: %s is a registered link relation.", applicationState.getRel()));
+          }
+          ApplicationState conflict = applicationStates.put(applicationState.getRel(), applicationState);
+          if (conflict != null) {
+            result.addError(rsd, String.format("The state \"%s\" for the resource definition at %s is already being defined by resource definition %s.", applicationState.getRel(), rsd.getQualifiedName(), conflict.getDefinition().getQualifiedName()));
           }
         }
 
-        this.resourceDefinitions.put(new QName(rsd.getNamespace(), rsd.getName()), rsd);
+        this.resourceDefinitions.add(rsd);
       }
       else {
         result.addWarning(resourceServiceDefinition, String.format("No @%s annotation found.", ResourceDefinition.class.getName()));
       }
     }
+    this.applicationStates = applicationStates;
 
     TreeMap<String, ResourceBinding> bindingsByPath = new TreeMap<String, ResourceBinding>(new ResourceMethodPathComparator());
-    HashMap<String, ResourceBinding> bindingsByName = new HashMap<String, ResourceBinding>();
     for (RootResource rootResource : model.getRootResources()) {
       List<ResourceMethod> resourceMethods = rootResource.getResourceMethods(true);
       for (ResourceMethod resourceMethod : resourceMethods) {
@@ -260,48 +159,16 @@ public class ResourceServiceProcessor {
               metadata = declaringResource.getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
             }
 
-            List<String> resourceElementsFqn = new ArrayList<String>();
-
-            if (metadata != null) {
-              try {
-                for (Class<?> clazz : metadata.resourceElement()) {
-                  resourceElementsFqn.add(clazz.getName());
-                }
-              }
-              catch (MirroredTypesException e) {
-                resourceElementsFqn.addAll(e.getQualifiedNames());
-              }
-            }
-
-            List<ElementDeclaration> resourceElements;
-            if (resourceElementsFqn.isEmpty()) {
-              resourceElements = rsd.getResourceElements();
-            }
-            else {
-              resourceElements = new ArrayList<ElementDeclaration>();
-              AnnotationProcessorEnvironment ape = Context.getCurrentEnvironment();
-              for (String resourceElementFqn : resourceElementsFqn) {
-                TypeDeclaration declaration = ape.getTypeDeclaration(resourceElementFqn);
-                ElementDeclaration resourceElement = null;
-                if (declaration instanceof ClassDeclaration) {
-                  resourceElement = model.findElementDeclaration((ClassDeclaration) declaration);
-                }
-
-                if (resourceElement == null) {
-                  result.addWarning(declaringResource, "Unable to find element declaration for " + resourceElementFqn + ".");
-                }
-                else {
-                  resourceElements.add(resourceElement);
-                }
-              }
-            }
-
-            binding = new ResourceBinding(this, path, rsd, resourceElements, metadata);
+            binding = new ResourceBinding(bindingDeclaration, path, rsd, metadata);
             bindingsByPath.put(path, binding);
 
-            ResourceBinding conflict = bindingsByName.put(binding.getName(), binding);
-            if (conflict != null) {
-              result.addError(bindingDeclaration, String.format("The name \"%s\" for the binding at %s conflicts with the binding at %s. Please apply the %s annotation to disambiguate.", binding.getName(), binding.getPath(), conflict.getPath(), org.gedcomx.rt.rs.ResourceBinding.class.getName()));
+            for (String state : binding.getStates()) {
+              ApplicationState applicationState = applicationStates.get(state);
+              ResourceBinding conflict = applicationState.getBinding();
+              applicationState.setBinding(binding);
+              if (conflict != null) {
+                result.addError(bindingDeclaration, String.format("The state \"%s\" bound by %s is already being bound by %s.", state, binding.getPath(), conflict.getPath()));
+              }
             }
 
             rsd.getBindings().add(binding);
@@ -321,41 +188,61 @@ public class ResourceServiceProcessor {
             binding.getWarnings().addAll(extractWarnings(declaringResource));
             binding.getLinks().addAll(extractLinks(declaringResource));
             binding.getResourceParameters().addAll(declaringResource.getResourceParameters());
+          }
+        }
+      }
+    }
 
-            binding.setDocValue(declaringResource.getDocValue()); //last one in wins.
+    for (ResourceBinding binding : bindingsByPath.values()) {
+      for (ResourceDefinitionDeclaration definition : binding.getDefinitions()) {
+        boolean applicable = false;
+        for (ApplicationState state : definition.getApplicationStates()) {
+          if (binding.getStates().contains(state.getRel())) {
+            applicable = true;
+            break;
+          }
+        }
+
+        if (!applicable) {
+          result.addWarning(binding, String.format("Binding %s implements resource definition %s, but it doesn't bind any states defined by it.", binding.getPath(), definition.getQualifiedName()));
+        }
+
+        for (ElementDeclaration resourceElement : definition.getResourceElements()) {
+          SchemaInfo schemaInfo = model.getNamespacesToSchemas().get(resourceElement.getNamespace());
+          MediaTypeDeclaration declaration = (MediaTypeDeclaration) schemaInfo.getProperties().get("mediaType");
+          if (declaration != null) {
+            if (declaration.getXmlMediaType() != null && !binding.getConsumes().contains(declaration.getXmlMediaType())) {
+              result.addError(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
+            }
+            if (declaration.getJsonMediaType() != null && !binding.getConsumes().contains(declaration.getJsonMediaType())) {
+              result.addError(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+            }
+            if (declaration.getXmlMediaType() != null && !binding.getProduces().contains(declaration.getXmlMediaType())) {
+              result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
+            }
+            if (declaration.getJsonMediaType() != null && !binding.getProduces().contains(declaration.getJsonMediaType())) {
+              result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+            }
           }
         }
       }
     }
 
     this.bindingsByPath = bindingsByPath;
-    this.bindingsByName = bindingsByName;
-
-    //todo: warn if a definition method isn't bound?
 
     return result;
   }
 
-  private ElementDeclaration findLocalElementDeclaration(EnunciateFreemarkerModel model, QName xmlName) {
-    SchemaInfo schemaInfo = model.getNamespacesToSchemas().get(xmlName.getNamespaceURI());
-    for (LocalElementDeclaration localElementDeclaration : schemaInfo.getLocalElementDeclarations()) {
-      if (xmlName.getLocalPart().equals(localElementDeclaration.getName())) {
-        return localElementDeclaration;
-      }
-    }
-    return null;
-  }
+  public Set<StateTransition> extractLinks(TypeDeclaration delegate) {
+    Set<StateTransition> rels = new TreeSet<StateTransition>();
 
-  public Set<ResourceLink> extractLinks(TypeDeclaration delegate) {
-    Set<ResourceLink> rels = new TreeSet<ResourceLink>();
-
-    org.gedcomx.rt.rs.ResourceLink[] resourceLinkInfo = {};
-    ResourceLinks resourceLinks = delegate.getAnnotation(ResourceLinks.class);
-    if (resourceLinks != null) {
-      resourceLinkInfo = resourceLinks.value();
+    org.gedcomx.rt.rs.StateTransition[] stateTransitionInfo = {};
+    StateTransitions stateTransitions = delegate.getAnnotation(StateTransitions.class);
+    if (stateTransitions != null) {
+      stateTransitionInfo = stateTransitions.value();
     }
-    for (org.gedcomx.rt.rs.ResourceLink rel : resourceLinkInfo) {
-      rels.add(new ResourceLink(rel, this));
+    for (org.gedcomx.rt.rs.StateTransition transition : stateTransitionInfo) {
+      rels.add(new StateTransition(transition, this));
     }
 
     Collection<InterfaceType> supers = delegate.getSuperinterfaces();
@@ -386,7 +273,7 @@ public class ResourceServiceProcessor {
       }
 
       if (type instanceof ClassDeclaration) {
-        codes.addAll(extractStatusCodes(((ClassDeclaration)type).getSuperclass().getDeclaration(), method));
+        codes.addAll(extractStatusCodes(((ClassDeclaration) type).getSuperclass().getDeclaration(), method));
       }
     }
 
@@ -495,8 +382,14 @@ public class ResourceServiceProcessor {
     return codes;
   }
 
-  public ResourceDefinitionDeclaration findResourceDefinition(QName qname) {
-    return this.resourceDefinitions.get(qname);
+  private ResourceDefinitionDeclaration findResourceDefinition(String fqn) {
+    for (ResourceDefinitionDeclaration rsd : this.resourceDefinitions) {
+      if (rsd.getQualifiedName().equals(fqn)) {
+        return rsd;
+      }
+    }
+
+    return null;
   }
 
   public ResourceDefinitionDeclaration findDefiningResourceDefinition(ResourceMethod method) {
@@ -506,15 +399,14 @@ public class ResourceServiceProcessor {
     }
     else if (declaringType.getAnnotation(ResourceDefinition.class) != null) {
       //the resource method is declared on a resource definition...
-      ResourceDefinition rsdInfo = declaringType.getAnnotation(ResourceDefinition.class);
-      return findResourceDefinition(new QName(rsdInfo.namespace(), rsdInfo.name()));
+      return findResourceDefinition(declaringType.getQualifiedName());
     }
     else {
-      HashMap<QName, TypeDeclaration> candidates = new HashMap<QName, TypeDeclaration>();
+      List<TypeDeclaration> candidates = new ArrayList<TypeDeclaration>();
       gatherResourceDefinitions(candidates, declaringType);
       Declarations utils = Context.getCurrentEnvironment().getDeclarationUtils();
-      for (Map.Entry<QName, TypeDeclaration> candidate : candidates.entrySet()) {
-        for (MethodDeclaration op : candidate.getValue().getMethods()) {
+      for (TypeDeclaration candidate : candidates) {
+        for (MethodDeclaration op : candidate.getMethods()) {
           while (op instanceof DecoratedMethodDeclaration) {
             op = (MethodDeclaration) ((DecoratedMethodDeclaration) op).getDelegate();
           }
@@ -525,7 +417,7 @@ public class ResourceServiceProcessor {
           }
 
           if (utils.overrides(implOp, op)) {
-            return findResourceDefinition(candidate.getKey());
+            return findResourceDefinition(candidate.getQualifiedName());
           }
         }
       }
@@ -534,14 +426,14 @@ public class ResourceServiceProcessor {
     return null;
   }
 
-  private void gatherResourceDefinitions(Map<QName, TypeDeclaration> bucket, TypeDeclaration declaration) {
+  private void gatherResourceDefinitions(List<TypeDeclaration> bucket, TypeDeclaration declaration) {
     Collection<InterfaceType> supers = declaration.getSuperinterfaces();
     for (InterfaceType iface : supers) {
       InterfaceDeclaration idecl = iface.getDeclaration();
       if (idecl != null) {
         ResourceDefinition rsdInfo = idecl.getAnnotation(ResourceDefinition.class);
         if (rsdInfo != null) {
-          bucket.put(new QName(rsdInfo.namespace(), rsdInfo.name()), idecl);
+          bucket.add(idecl);
         }
 
         gatherResourceDefinitions(bucket, idecl);

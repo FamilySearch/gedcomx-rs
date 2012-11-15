@@ -20,31 +20,22 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Metadata used to describe the links between resources.
+ * Metadata used to describe the state transitions.
  *
  * @author Ryan Heaton
  */
 @Retention ( RetentionPolicy.RUNTIME )
 @Target ({ })
-public @interface ResourceLink {
+public @interface StateTransition {
 
   /**
-   * Identifier for the resource relationship. This is the value that will be used for the
-   * <tt>rel</tt> attribute of the link. Per <a href="http://tools.ietf.org/html/draft-nottingham-http-link-header-10#section-4">Web Linking,
-   * section 4</a>, the identifier should be either a registered relationship type (e.g. "self")
-   * or it should be a URI.
+   * Identifier for the state to which this is a transition. This is the value that will be used for the
+   * <tt>rel</tt> attribute of the link.
    *
    * @see <a href="http://tools.ietf.org/html/draft-nottingham-http-link-header-10">Web Linking</a>
-   * @return The relationship identifier.
+   * @return The state transition identifier.
    */
   String rel();
-
-  /**
-   * The resource service definition that defines the resource being related to.
-   *
-   * @return The resource service definition that defines the resource being related to.
-   */
-  Class<?> definedBy();
 
   /**
    * A human-readable description of the resource relationship.
@@ -54,10 +45,16 @@ public @interface ResourceLink {
   String description();
 
   /**
-   * Whether this is a template link instead of an href.
+   * The scope of the link, meaning what data type can be expected to carry the link.
    *
-   * @return Whether this is a template link instead of an href.
+   * @return The scope of the link, meaning what data type can be expected to carry the link.
+   */
+  Class<?>[] scope() default {};
+
+  /**
+   * Whether this transition is provided as a templated link (as opposed to an outbound link).
+   *
+   * @return Whether this transition is provided as a templated link (as opposed to an outbound link).
    */
   boolean template() default false;
-
 }

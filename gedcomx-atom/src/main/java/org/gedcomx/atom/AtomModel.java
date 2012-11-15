@@ -15,27 +15,12 @@
  */
 package org.gedcomx.atom;
 
-import org.gedcomx.rt.Model;
-import org.gedcomx.rt.Models;
-
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author Ryan Heaton
  */
 @XmlTransient
-@Models ( {
-  @Model (
-    id = "atom",
-    namespace = AtomModel.ATOM_NAMESPACE,
-    projectId = "gedcomx-rs",
-    label = "Atom Model",
-    description = "The Atom model supplied the types and elements defined by the Atom syndication format.",
-    version = "2005",
-    xmlMediaType = AtomModel.ATOM_XML_MEDIA_TYPE,
-    jsonMediaType = AtomModel.ATOM_GEDCOMX_JSON_MEDIA_TYPE
-  )
-} )
 public class AtomModel {
 
   private AtomModel() {}

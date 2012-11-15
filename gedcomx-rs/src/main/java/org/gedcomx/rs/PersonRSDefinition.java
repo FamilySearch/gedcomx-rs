@@ -15,9 +15,9 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.conclusion.Person;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.conclusion.*;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.*;
@@ -29,20 +29,25 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "Person",
   resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  states = {
+    @StateDefinition (
+      name = "Person",
+      rel = PersonRSDefinition.REL,
+      description = "A person.",
+      transitions = {
+        @StateTransition ( rel = ConclusionsRSDefinition.REL_PERSON, description = "The conclusions for the person.", scope = Person.class ),
+        @StateTransition ( rel = SourceReferencesRSDefinition.REL_PERSON, description = "The source references for the person.", scope = Person.class ),
+        @StateTransition ( rel = NotesRSDefinition.REL_PERSON, description = "The notes for the person.", scope = Person.class ),
+        @StateTransition ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, description = "The relationships to the spouses of the person." ),
+        @StateTransition ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, description = "The relationships to the children of the person." ),
+        @StateTransition ( rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, description = "The relationships to the parents of the person." )
+      }
+    )
+  }
 )
-@ResourceLinks({
-  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "The person itself." ),
-  @ResourceLink ( rel = SourceReferencesRSDefinition.REL, definedBy = SourceReferencesRSDefinition.class, description = "The source references for the person." ),
-  @ResourceLink ( rel = NotesRSDefinition.REL, definedBy = NotesRSDefinition.class, description = "The set of notes for the person." ),
-  @ResourceLink ( rel = PersonWithRelationshipsRSDefinition.REL, definedBy = PersonWithRelationshipsRSDefinition.class, description = "The person and associated relationships." ),
-  @ResourceLink ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the spouses of the person." ),
-  @ResourceLink ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the children of the person." ),
-  @ResourceLink ( rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, definedBy = PersonRelationshipsRSDefinition.class, description = "The relationships to the parents of the person." )
-})
 public interface PersonRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "person";

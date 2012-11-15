@@ -15,34 +15,54 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.common.Gedcomx;
-import org.gedcomx.rt.CommonModels;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
 /**
- * The person relationships resource manages a set of relationships that reference a specific person. Examples might include
+ * The person relationships resource defines the interface for a set of relationships that reference a specific person. Examples might include
  * the set of relationships to the spouses of a person, the set of relationships to the parents of a person, and the set of relationships
  * to the children of a person.
  */
 @ResourceDefinition (
-  name = "Person Relationships",
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE,
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
-  subresources = { RelationshipRSDefinition.class }
+  states = {
+    @StateDefinition (
+      name = "Spouse Relationships",
+      rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL,
+      description = "The spouse relationships for a person.",
+      transitions = {
+        @StateTransition( rel = PersonRSDefinition.REL, description = "The person." )
+      }
+    ),
+    @StateDefinition (
+      name = "Parent Relationships",
+      rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL,
+      description = "The relationships to the parents of a person.",
+      transitions = {
+        @StateTransition( rel = PersonRSDefinition.REL, description = "The person." )
+      }
+    ),
+    @StateDefinition (
+      name = "Child Relationships",
+      rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL,
+      description = "The relationships to the children of a person.",
+      transitions = {
+        @StateTransition( rel = PersonRSDefinition.REL, description = "The person." )
+      }
+    )
+  }
 )
-@ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = PersonRSDefinition.class, description = "This relationship set." ),
-  @ResourceLink ( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The person for which this is a set of relationships." )
-})
 public interface PersonRelationshipsRSDefinition extends CommonRSParameters {
 
-  public static final String SPOUSE_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "relationships/spouse";
-  public static final String PARENT_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "relationships/parent";
-  public static final String CHILD_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "relationships/child";
+  public static final String SPOUSE_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "spouse-relationships";
+  public static final String PARENT_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "parent-relationships";
+  public static final String CHILD_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "child-relationships";
 
   /**
    * Read the set of relationships for a specific person.

@@ -137,13 +137,8 @@ public class GedcomxRSDeploymentModule extends FreemarkerDeploymentModule implem
     if (!getEnunciate().isUpToDateWithSources(getBuildDir())) {
       EnunciateFreemarkerModel model = getModel();
       model.setFileOutputDirectory(getBuildDir());
-      model.setVariable("generateExampleRequestHeaders", new GenerateExampleRequestHeadersMethod(model));
-      model.setVariable("generateExampleRequestBody", new GenerateExampleRequestBodyMethod(model));
-      model.setVariable("generateExampleResponseHeaders", new GenerateExampleResponseHeadersMethod(model));
-      model.setVariable("generateExampleResponseBody", new GenerateExampleResponseBodyMethod(model));
       Collection<ResourceDefinitionDeclaration> resourceDefinitions = this.resourceServiceProcessor.getResourceDefinitions();
       Map<String, Collection<ResourceDefinitionDeclaration>> resourceDefinitionsByNamespace = new HashMap<String, Collection<ResourceDefinitionDeclaration>>();
-      Map<String, Collection<ResourceDefinitionDeclaration>> resourceDefinitionsByName = new HashMap<String, Collection<ResourceDefinitionDeclaration>>();
       for (ResourceDefinitionDeclaration definition : resourceDefinitions) {
         Collection<ResourceDefinitionDeclaration> listByNamespace = resourceDefinitionsByNamespace.get(definition.getNamespace());
         if (listByNamespace == null) {
@@ -151,17 +146,9 @@ public class GedcomxRSDeploymentModule extends FreemarkerDeploymentModule implem
           resourceDefinitionsByNamespace.put(definition.getNamespace(), listByNamespace);
         }
         listByNamespace.add(definition);
-
-        Collection<ResourceDefinitionDeclaration> listByName = resourceDefinitionsByName.get(definition.getName());
-        if (listByName == null) {
-          listByName = new ArrayList<ResourceDefinitionDeclaration>();
-          resourceDefinitionsByName.put(definition.getName(), listByName);
-        }
-        listByName.add(definition);
       }
       model.put("resourceDefinitions", resourceDefinitions);
       model.put("resourceDefinitionsByNamespace", resourceDefinitionsByNamespace);
-      model.put("resourceDefinitionsByName", resourceDefinitionsByName);
 
       Map<String, ResourceBinding> bindingsByPath = this.resourceServiceProcessor.getBindingsByPath();
       Map<String, Collection<ResourceBinding>> bindingsByNamespace = new HashMap<String, Collection<ResourceBinding>>();
@@ -175,7 +162,9 @@ public class GedcomxRSDeploymentModule extends FreemarkerDeploymentModule implem
       }
       model.put("resourceBindingsByPath", bindingsByPath);
       model.put("resourceBindingsByNamespace", bindingsByNamespace);
-      model.put("resourceBindingsByName", this.resourceServiceProcessor.getBindingsByName());
+
+      model.put("applicationStates", this.resourceServiceProcessor.getApplicationStates().values());
+
       try {
         processTemplate(getDocsTemplateURL(), model);
       }

@@ -15,8 +15,12 @@
  */
 package org.gedcomx.rs;
 
-import org.gedcomx.rt.CommonModels;
-import org.gedcomx.rt.rs.*;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.rt.GedcomxConstants;
+import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateDefinition;
+import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Response;
@@ -27,15 +31,13 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
-  name = "Conclusion",
   projectId = "gedcomx-rs",
-  namespace = CommonModels.GEDCOMX_NAMESPACE
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
+  resourceElement = Gedcomx.class,
+  states = {
+    @StateDefinition ( name = "Conclusion", rel = ConclusionRSDefinition.REL, description = "A single name, gender, or fact." )
+  }
 )
-@ResourceLinks ({
-  @ResourceLink ( rel = "self", definedBy = ConclusionRSDefinition.class, description = "Link to this conclusion." ),
-  @ResourceLink ( rel = PersonRSDefinition.REL, definedBy = PersonRSDefinition.class, description = "The link to the person to which the conclusion applies." ),
-  @ResourceLink ( rel = RelationshipRSDefinition.REL, definedBy = RelationshipRSDefinition.class, description = "The link to the relationship to which the conclusion applies." )
-})
 public interface ConclusionRSDefinition extends CommonRSParameters {
 
   public static final String REL = GEDCOMX_LINK_REL_PREFIX + "conclusion";
