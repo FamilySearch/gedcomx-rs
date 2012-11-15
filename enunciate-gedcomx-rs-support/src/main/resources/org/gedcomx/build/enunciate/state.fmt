@@ -29,10 +29,6 @@
 
       <hr/>
 
-      <p>${state.description!""}</p>
-
-      <p>${state.definition.docValue!""}</p>
-
       <table>
         <tr>
           <td align="right">Rel:</td>
@@ -43,24 +39,28 @@
           <td>${state.namespace}</td>
         </tr>
         [#if state.resourceElements?size > 0]
-        <tr>
-          <td align="right">Media Types:</td>
-          <td>
-            <ul>
-            </ul>
-            [#list state.resourceElements as resourceElement]
-              [#assign schema=ns2schema[resourceElement.namespace]/]
-              [#if schema.properties.mediaType?? && schema.properties.mediaType.jsonMediaType??]
-                <li><a href="${baseProjectUri(schema.properties.mediaType)}mt_${schema.properties.mediaType.id}_json.html">${schema.properties.mediaType.jsonMediaType}</a> (element <a href="${baseProjectUri(resourceElement)}${schemaForNamespace(resourceElement).id}_el_${resourceElement.name}_json.html">${resourceElement.name}</a>)</li>
-              [/#if]
-              [#if schema.properties.mediaType?? && schema.properties.mediaType.xmlMediaType??]
-                <li><a href="${baseProjectUri(schema.properties.mediaType)}mt_${schema.properties.mediaType.id}_xml.html">${schema.properties.mediaType.xmlMediaType}</a> (element <a href="${baseProjectUri(resourceElement)}${schemaForNamespace(resourceElement).id}_el_${resourceElement.name}_xml.html">${resourceElement.name}</a>)</li>
-              [/#if]
-            [/#list]
-          </td>
-        </tr>
+          <tr>
+            <td align="right">Media Types:</td>
+            <td>
+              <ul>
+                [#list state.resourceElements as resourceElement]
+                  [#assign schema=ns2schema[resourceElement.namespace]/]
+                  [#if schema.properties.mediaType?? && schema.properties.mediaType.jsonMediaType??]
+                    <li><a href="${baseProjectUris[schema.properties.mediaType.projectId]!""}mt_${schema.properties.mediaType.id}_json.html">${schema.properties.mediaType.jsonMediaType}</a> (element <a href="${baseProjectUri(resourceElement)}${schemaForNamespace(resourceElement).id}_el_${resourceElement.name}_json.html">${resourceElement.name}</a>)</li>
+                  [/#if]
+                  [#if schema.properties.mediaType?? && schema.properties.mediaType.xmlMediaType??]
+                    <li><a href="${baseProjectUris[schema.properties.mediaType.projectId]!""}mt_${schema.properties.mediaType.id}_xml.html">${schema.properties.mediaType.xmlMediaType}</a> (element <a href="${baseProjectUri(resourceElement)}${schemaForNamespace(resourceElement).id}_el_${resourceElement.name}_xml.html">${resourceElement.name}</a>)</li>
+                  [/#if]
+                [/#list]
+              </ul>
+            </td>
+          </tr>
         [/#if]
       </table>
+
+      <p>${state.description!""}</p>
+
+      <p>${state.definition.docValue!""}</p>
 
       [#if state.transitions?size > 0]
       <h3>Links</h3>

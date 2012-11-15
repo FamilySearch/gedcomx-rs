@@ -34,9 +34,9 @@ import javax.ws.rs.core.Response;
     @StateDefinition (name = "Contributor", rel = ContributorRSDefinition.REL, description = "A contributor .")
   }
 )
-public interface ContributorRSDefinition extends CommonRSParameters {
+public interface ContributorRSDefinition {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "contributor";
+  public static final String REL = "contributor";
 
   /**
    * Read a contributor header attributes.

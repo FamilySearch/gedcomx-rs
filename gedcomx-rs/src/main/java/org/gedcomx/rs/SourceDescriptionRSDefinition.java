@@ -40,9 +40,9 @@ import javax.ws.rs.core.Response;
     @StateDefinition ( name = "Source Description", rel = SourceDescriptionRSDefinition.REL, description = "A source description." )
   }
 )
-public interface SourceDescriptionRSDefinition extends CommonRSParameters {
+public interface SourceDescriptionRSDefinition {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source-description";
+  public static final String REL = "source-description";
 
   /**
    * Read a source description's header attributes.

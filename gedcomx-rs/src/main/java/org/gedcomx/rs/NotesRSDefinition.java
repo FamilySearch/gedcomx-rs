@@ -54,10 +54,10 @@ import javax.ws.rs.core.Response;
     )
   }
 )
-public interface NotesRSDefinition extends CommonRSParameters {
+public interface NotesRSDefinition {
 
-  public static final String REL_PERSON = GEDCOMX_LINK_REL_PREFIX + "person-notes";
-  public static final String REL_RELATIONSHIP = GEDCOMX_LINK_REL_PREFIX + "relationship-notes";
+  public static final String REL_PERSON = "person-notes";
+  public static final String REL_RELATIONSHIP = "relationship-notes";
 
   /**
    * Read the list of notes on the entity.

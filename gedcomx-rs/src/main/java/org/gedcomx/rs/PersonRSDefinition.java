@@ -48,9 +48,9 @@ import javax.ws.rs.core.Response;
     )
   }
 )
-public interface PersonRSDefinition extends CommonRSParameters {
+public interface PersonRSDefinition {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "person";
+  public static final String REL = "person";
 
   /**
    * Read a person header attributes.

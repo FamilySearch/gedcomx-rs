@@ -154,9 +154,9 @@ import javax.ws.rs.core.Response;
     )
   }
 )
-public interface PersonSearchQuery extends CommonRSParameters {
+public interface PersonSearchQuery {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "search";
+  public static final String REL = "search";
 
   /**
    * Read the results of a search.

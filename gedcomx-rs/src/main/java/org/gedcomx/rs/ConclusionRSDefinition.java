@@ -38,9 +38,9 @@ import javax.ws.rs.core.Response;
     @StateDefinition ( name = "Conclusion", rel = ConclusionRSDefinition.REL, description = "A single name, gender, or fact." )
   }
 )
-public interface ConclusionRSDefinition extends CommonRSParameters {
+public interface ConclusionRSDefinition {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "conclusion";
+  public static final String REL = "conclusion";
 
   /**
    * Delete a conclusion.

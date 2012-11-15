@@ -37,10 +37,10 @@ import javax.ws.rs.core.Response;
     @StateDefinition ( name = "Parent Relationships", rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, description = "The set of couple relationships." )
   }
 )
-public interface RelationshipsRSDefinition extends CommonRSParameters {
+public interface RelationshipsRSDefinition {
 
-  public static final String COUPLE_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "couple-relationships";
-  public static final String PARENT_CHILD_RELATIONSHIPS_REL = GEDCOMX_LINK_REL_PREFIX + "parent-child-relationships";
+  public static final String COUPLE_RELATIONSHIPS_REL = "couple-relationships";
+  public static final String PARENT_CHILD_RELATIONSHIPS_REL = "parent-child-relationships";
 
   /**
    * Create a relationship.

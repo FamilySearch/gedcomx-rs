@@ -56,10 +56,10 @@ import javax.ws.rs.core.Response;
     )
   }
 )
-public interface ConclusionsRSDefinition extends CommonRSParameters {
+public interface ConclusionsRSDefinition {
 
-  public static final String REL_PERSON = GEDCOMX_LINK_REL_PREFIX + "person-conclusions";
-  public static final String REL_RELATIONSHIP = GEDCOMX_LINK_REL_PREFIX + "relationship-conclusions";
+  public static final String REL_PERSON = "person-conclusions";
+  public static final String REL_RELATIONSHIP = "relationship-conclusions";
 
   /**
    * Read a conclusions of an entity.

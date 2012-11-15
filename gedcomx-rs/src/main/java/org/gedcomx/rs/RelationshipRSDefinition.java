@@ -46,9 +46,9 @@ import javax.ws.rs.core.Response;
     )
   }
 )
-public interface RelationshipRSDefinition extends CommonRSParameters {
+public interface RelationshipRSDefinition {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "relationship";
+  public static final String REL = "relationship";
 
   /**
    * Read a relationship header attributes.

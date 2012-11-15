@@ -34,9 +34,9 @@ import javax.ws.rs.core.Response;
     @StateDefinition ( name = "Source Reference", rel = SourceReferenceRSDefinition.REL, description = "The source reference." )
   }
 )
-public interface SourceReferenceRSDefinition extends CommonRSParameters {
+public interface SourceReferenceRSDefinition {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source-reference";
+  public static final String REL = "source-reference";
 
   /**
    * Delete a source reference.

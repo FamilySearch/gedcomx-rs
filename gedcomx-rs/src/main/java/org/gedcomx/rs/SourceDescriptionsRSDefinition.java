@@ -37,9 +37,9 @@ import javax.ws.rs.core.Response;
     @StateDefinition ( name = "Source Descriptions", rel = SourceDescriptionsRSDefinition.REL, description = "The set of source descriptions." )
   }
 )
-public interface SourceDescriptionsRSDefinition extends CommonRSParameters {
+public interface SourceDescriptionsRSDefinition {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "source-descriptions";
+  public static final String REL = "source-descriptions";
 
   /**
    * Add a source description.

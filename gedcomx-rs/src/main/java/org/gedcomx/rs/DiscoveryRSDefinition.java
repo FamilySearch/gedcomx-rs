@@ -81,9 +81,9 @@ import javax.ws.rs.core.Response;
     )
   }
 )
-public interface DiscoveryRSDefinition extends CommonRSParameters {
+public interface DiscoveryRSDefinition {
 
-  String REL = GEDCOMX_LINK_REL_PREFIX + "discovery";
+  String REL = "discovery";
 
   /**
    * Read the host metadata.

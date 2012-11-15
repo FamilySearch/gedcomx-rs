@@ -36,9 +36,9 @@ import javax.ws.rs.core.Response;
     @StateDefinition (name = "Current User", rel = CurrentUserQuery.REL, description = "The query for the person for the current user.")
   }
 )
-public interface CurrentUserQuery extends CommonRSParameters {
+public interface CurrentUserQuery {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "current-user";
+  public static final String REL = "current-user";
 
   /**
    * Read a person and their relationships.

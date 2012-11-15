@@ -38,9 +38,9 @@ import javax.ws.rs.core.Response;
     @StateDefinition ( name = "Persons", rel = PersonsRSDefinition.REL, description = "The set of persons." )
   }
 )
-public interface PersonsRSDefinition extends CommonRSParameters {
+public interface PersonsRSDefinition {
 
-  public static final String REL = GEDCOMX_LINK_REL_PREFIX + "persons";
+  public static final String REL = "persons";
 
   /**
    * Create a person.

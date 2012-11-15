@@ -56,10 +56,10 @@ import javax.ws.rs.core.Response;
     )
   }
 )
-public interface SourceReferencesRSDefinition extends CommonRSParameters {
+public interface SourceReferencesRSDefinition {
 
-  public static final String REL_PERSON = GEDCOMX_LINK_REL_PREFIX + "person-source-references";
-  public static final String REL_RELATIONSHIP = GEDCOMX_LINK_REL_PREFIX + "relationship-source-references";
+  public static final String REL_PERSON = "person-source-references";
+  public static final String REL_RELATIONSHIP = "relationship-source-references";
 
   /**
    * Read the references to sources.
