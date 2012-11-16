@@ -1,5 +1,6 @@
 package org.gedcomx.atom;
 
+import org.gedcomx.Gedcomx;
 import org.gedcomx.common.URI;
 import org.gedcomx.links.Link;
 import org.gedcomx.rt.GedcomNamespaceManager;
@@ -46,11 +47,9 @@ public class FeedTest {
     entry.getCategories().get(0).setScheme(URI.create("urn:scheme"));
     entry.getCategories().get(0).setTerm("term");
     entry.setContent(new Content());
-    entry.getContent().setBase(URI.create("urn:base"));
-    entry.getContent().setLang("fr");
     entry.getContent().setType("application/x-gedcom-conclusion-v1+xml");
-    entry.getContent().addExtensionElement(new CustomEntity());
-    entry.getContent().findExtensionOfType(CustomEntity.class).setId("contententityid");
+    entry.getContent().setGedcomx(new Gedcomx());
+    entry.getContent().getGedcomx().setId("gxid");
     entry.setContributors(new ArrayList<Person>());
     entry.getContributors().add(new Person());
     entry.getContributors().get(0).setEmail("contributor2@contributor.com");
@@ -134,12 +133,9 @@ public class FeedTest {
     assertEquals(URI.create("urn:scheme"), category.getScheme());
     assertEquals("term", category.getTerm());
 
-    assertEquals(URI.create("urn:base"), entry.getContent().getBase());
-    assertEquals("fr", entry.getContent().getLang());
     assertEquals("application/x-gedcom-conclusion-v1+xml", entry.getContent().getType());
-    assertNotNull(entry.getContent().getExtensionElements());
-    assertEquals(entry.getContent().getExtensionElements().size(), 1);
-    assertEquals("contententityid", ((CustomEntity)entry.getContent().getExtensionElements().get(0)).getId());
+    assertNotNull(entry.getContent().getGedcomx());
+    assertEquals(entry.getContent().getGedcomx().getId(), "gxid");
 
     assertEquals(1, entry.getContributors().size());
     assertEquals("contributor2@contributor.com", entry.getContributors().get(0).getEmail());

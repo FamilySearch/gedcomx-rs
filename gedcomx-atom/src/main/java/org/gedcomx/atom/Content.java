@@ -15,10 +15,12 @@
  */
 package org.gedcomx.atom;
 
-import org.codehaus.jackson.annotate.JsonTypeInfo;
-import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.gedcomx.Gedcomx;
+import org.gedcomx.rt.GedcomxConstants;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -27,9 +29,10 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType ( name = "Content" )
 @SuppressWarnings("gedcomx:no_id")
-public class Content extends ExtensibleElement {
+public final class Content {
 
-  private String type;
+  private String type = GedcomxConstants.GEDCOMX_XML_MEDIA_TYPE;
+  private Gedcomx gedcomx;
 
   /**
    * The type of the content.
@@ -37,6 +40,7 @@ public class Content extends ExtensibleElement {
    * @return The type of the content.
    */
   @XmlAttribute
+  @JsonIgnore
   public String getType() {
     return type;
   }
@@ -46,7 +50,27 @@ public class Content extends ExtensibleElement {
    *
    * @param type The type of the content.
    */
+  @JsonIgnore
   public void setType(String type) {
     this.type = type;
+  }
+
+  /**
+   * The genealogical data associated with this entry.
+   *
+   * @return The genealogical data associated with this entry.
+   */
+  @XmlElement ( name = "gedcomx", namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
+  public Gedcomx getGedcomx() {
+    return gedcomx;
+  }
+
+  /**
+   * The genealogical data associated with this entry.
+   *
+   * @param gedcomx The genealogical data associated with this entry.
+   */
+  public void setGedcomx(Gedcomx gedcomx) {
+    this.gedcomx = gedcomx;
   }
 }

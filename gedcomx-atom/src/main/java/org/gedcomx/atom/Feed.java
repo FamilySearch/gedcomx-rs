@@ -20,9 +20,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.gedcomx.common.URI;
 import org.gedcomx.links.Link;
 import org.gedcomx.links.SupportsLinks;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.MediaTypeDefinition;
 import org.gedcomx.rt.Model;
-import org.gedcomx.search.SearchModel;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlElement;
@@ -54,12 +54,6 @@ import java.util.List;
       namespace = AtomModel.ATOM_NAMESPACE,
       label = "Atom Model",
       description = "The Atom model supplied the types and elements defined by the Atom syndication format."
-    ),
-    @Model (
-      id = "gxq",
-      namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE,
-      label = "Search Model",
-      description = "The search model defines elements and types used for providing metadata about the results of a search."
     )
   }
 )
@@ -184,38 +178,38 @@ public class Feed extends ExtensibleElement implements SupportsLinks {
   }
 
   /**
-   * The number of search results available for the current search, if this feed is supplying search results.
+   * The total number of results available, if this feed is supplying a subset of results, such as for a query.
    *
-   * @return The number of search results available for the current search, if this feed is supplying search results.
+   * @return The total number of results available, if this feed is supplying a subset of results, such as for a query.
    */
-  @XmlElement (namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
+  @XmlElement (namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
   public Integer getResults() {
     return results;
   }
 
   /**
-   * The number of search results available for the current search, if this feed is supplying search results.
+   * The total number of results available, if this feed is supplying a subset of results, such as for a query.
    *
-   * @param results The number of search results available for the current search, if this feed is supplying search results.
+   * @param results The total number of results available, if this feed is supplying a subset of results, such as for a query.
    */
   public void setResults(Integer results) {
     this.results = results;
   }
 
   /**
-   * The index of the first search result in the current set of search results, if this feed is supplying search results.
+   * The index of the first entry in this page of data, if this feed is supplying a page of data.
    *
-   * @return The index of the first search result in the current set of search results, if this feed is supplying search results.
+   * @return The index of the first entry in this page of data, if this feed is supplying a page of data.
    */
-  @XmlElement (namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
+  @XmlElement (namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
   public Integer getIndex() {
     return index;
   }
 
   /**
-   * The index of the first search result in the current set of search results, if this feed is supplying search results.
+   * The index of the first entry in this page of data, if this feed is supplying a page of data.
    *
-   * @param index The index of the first search result in the current set of search results, if this feed is supplying search results.
+   * @param index The index of the first entry in this page of data, if this feed is supplying a page of data.
    */
   public void setIndex(Integer index) {
     this.index = index;

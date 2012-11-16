@@ -18,13 +18,15 @@
  * The opensearch model defines elements and types used for searches.
  */
 @XmlSchema (
-  namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE,
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   elementFormDefault = XmlNsForm.QUALIFIED
 )
 @XmlAccessorOrder ( XmlAccessOrder.ALPHABETICAL )
 package org.gedcomx.search;
 
 //todo: opensearch description resource?
+
+import org.gedcomx.rt.GedcomxConstants;
 
 import javax.xml.bind.annotation.XmlAccessOrder;
 import javax.xml.bind.annotation.XmlAccessorOrder;

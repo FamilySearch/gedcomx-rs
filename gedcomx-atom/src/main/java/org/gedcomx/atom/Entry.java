@@ -20,9 +20,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.gedcomx.common.URI;
 import org.gedcomx.links.Link;
 import org.gedcomx.links.SupportsLinks;
+import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.json.JsonElementWrapper;
 import org.gedcomx.search.ResultConfidence;
-import org.gedcomx.search.SearchModel;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlElement;
@@ -165,7 +165,7 @@ public class Entry extends ExtensibleElement implements SupportsLinks {
    *
    * @return The relevance score.
    */
-  @XmlElement(namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
+  @XmlElement (namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
   public Float getScore() {
     return score;
   }
@@ -184,7 +184,7 @@ public class Entry extends ExtensibleElement implements SupportsLinks {
    *
    * @return The confidence of the result, if this entry represents a search result.
    */
-  @XmlElement(namespace = SearchModel.GEDCOMX_SEARCH_NAMESPACE )
+  @XmlElement (namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
   public ResultConfidence getConfidence() {
     return confidence;
   }
