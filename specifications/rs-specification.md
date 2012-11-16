@@ -135,7 +135,6 @@ name  | description | data type | constraints
 name | The name of the person. | string | OPTIONAL.
 gender | The displayable label for the gender of the person. | string | OPTIONAL.
 lifespan | The displayable label for the lifespan of the person. | string | OPTIONAL.
-lifespanYears | The displayable label for the lifespan of the person in units of years. | string | OPTIONAL.
 birthDate | The displayable label for the birth date of the person. | string | OPTIONAL.
 birthPlace | The displayable label for the birth date of the person. | string | OPTIONAL.
 deathDate | The displayable label for the death date of the person. | string | OPTIONAL.
