@@ -21,6 +21,7 @@ import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 /**
@@ -28,20 +29,20 @@ import javax.ws.rs.core.Response;
  *
  * <table>
  *   <tr>
- *     <th>variable</th>
+ *     <th>parameter</th>
  *     <th>description</th>
  *   </tr>
  *   <tr>
  *     <td>start</td>
- *     <td>The index of the first search result desired by the search client.</td>
+ *     <td>The index of the first search result for this page of results.</td>
  *   </tr>
  *   <tr>
  *     <td>count</td>
- *     <td>The number of search results per page desired by the search client.</td>
+ *     <td>The number of search results per page.</td>
  *   </tr>
  *   <tr>
  *     <td>q</td>
- *     <td><p>The query parameter describing the search criteria. A parameter name and value is separated by a colon ':' and each name value pair is separated
+ *     <td><p>The query describing the search criteria. A parameter name and value is separated by a colon ':' and each name value pair is separated
  *     by a white space '&nbsp;'.</p>
  *     For example:<br/>
  *     <h4>q=giveName:John surname:Smith gender:male birthDate:"30 June 1900"</h4><br/>
@@ -161,6 +162,9 @@ public interface PersonSearchQuery {
   /**
    * Read the results of a search.
    *
+   * @param start The index of the first search result for this page of results.
+   * @param count The number of search results per page.
+   * @param query The search query.
    * @return The search results.
    */
   @GET
@@ -173,6 +177,6 @@ public interface PersonSearchQuery {
   @Warnings({
     @ResponseCode( code = 299, condition = "If part or all of the query is unable to be processed.")
   })
-  Response get();
+  Response get(@QueryParam("start") String start, @QueryParam("count") String count, @QueryParam("q") String query);
 
 }

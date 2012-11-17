@@ -150,6 +150,19 @@ todo:
 
 todo:
 
+## 2.3 The "normalized" Extension Element on Date
+
+For display purposes, applications MAY supply an extension property named "normalized" of type `http://gedcomx.org/TextValue` on instances of
+`Date`.
+
+### 2.3.1 The "normalized" XML Element
+
+The `gx:normalized` element is used to provide a normalized value on a date.
+
+### 2.3.2 The "normalized" JSON Element
+
+The `normalized` member name is used to provide the list of normalized values on a date. The value of the `normalized` member is an array of `TextValue`.
+
 # 3. The Application States
 
 todo: fill in

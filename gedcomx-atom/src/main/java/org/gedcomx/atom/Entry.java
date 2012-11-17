@@ -19,7 +19,6 @@ import org.codehaus.enunciate.json.JsonName;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.gedcomx.common.URI;
 import org.gedcomx.links.Link;
-import org.gedcomx.links.SupportsLinks;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.json.JsonElementWrapper;
 import org.gedcomx.search.ResultConfidence;
@@ -42,7 +41,7 @@ import java.util.List;
 @XmlType ( name = "Entry" )
 @JsonElementWrapper (name = "entries")
 @SuppressWarnings("gedcomx:no_id")
-public class Entry extends ExtensibleElement implements SupportsLinks {
+public class Entry extends ExtensibleElement {
   
   private List<Person> authors;
   private List<Category> categories;
@@ -225,7 +224,6 @@ public class Entry extends ExtensibleElement implements SupportsLinks {
    *
    * @param link The hypermedia link.
    */
-  @Override
   public void addLink(Link link) {
     if (this.links == null) {
       setLinks(new ArrayList<Link>());
@@ -240,7 +238,6 @@ public class Entry extends ExtensibleElement implements SupportsLinks {
    * @param rel The link rel.
    * @param href The target URI.
    */
-  @Override
   public void addLink(String rel, URI href) {
     addLink(new Link(rel, href));
   }
@@ -251,7 +248,6 @@ public class Entry extends ExtensibleElement implements SupportsLinks {
    * @param rel The link rel.
    * @param template The link template.
    */
-  @Override
   public void addTemplatedLink(String rel, String template) {
     Link link = new Link();
     link.setRel(rel);
@@ -265,7 +261,6 @@ public class Entry extends ExtensibleElement implements SupportsLinks {
    * @param rel The link rel.
    * @return The link by rel.
    */
-  @Override
   public Link getLink(String rel) {
     List<Link> links = getLinks(rel);
     Link link = null;
@@ -281,7 +276,6 @@ public class Entry extends ExtensibleElement implements SupportsLinks {
    * @param rel The rel of the links.
    * @return The link.
    */
-  @Override
   public List<Link> getLinks(String rel) {
     ArrayList<Link> links = new ArrayList<Link>();
     if (this.links != null) {
