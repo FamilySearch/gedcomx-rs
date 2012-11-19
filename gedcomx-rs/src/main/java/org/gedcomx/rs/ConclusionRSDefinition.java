@@ -35,12 +35,14 @@ import javax.ws.rs.core.Response;
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
   states = {
-    @StateDefinition ( name = "Conclusion", rel = ConclusionRSDefinition.REL, description = "A single name, gender, or fact." )
+    @StateDefinition ( name = "Person Conclusion", rel = ConclusionRSDefinition.REL_PERSON, description = "A single name, gender, or fact on a person." ),
+    @StateDefinition ( name = "Relationship Conclusion", rel = ConclusionRSDefinition.REL_RELATIONSHIP, description = "A single fact on a relationship." )
   }
 )
 public interface ConclusionRSDefinition {
 
-  public static final String REL = "conclusion";
+  public static final String REL_PERSON = "person-conclusion";
+  public static final String REL_RELATIONSHIP = "relationship-conclusion";
 
   /**
    * Delete a conclusion.

@@ -56,7 +56,8 @@ import javax.ws.rs.core.Response;
       rel = DiscoveryRSDefinition.REL,
       description = "The root index of the application, providing links to the various application states.",
       transitions = {
-        @StateTransition (rel = ConclusionRSDefinition.REL, description = "The templated link to the conclusion resources of the application.", template = true ),
+        @StateTransition (rel = ConclusionRSDefinition.REL_PERSON, description = "The templated link to the person conclusion resources of the application.", template = true ),
+        @StateTransition (rel = ConclusionRSDefinition.REL_RELATIONSHIP, description = "The templated link to the relationship conclusion resources of the application.", template = true ),
         @StateTransition (rel = ConclusionsRSDefinition.REL_PERSON, description = "The templated link to the person conclusions resources of the application.", template = true ),
         @StateTransition (rel = ConclusionsRSDefinition.REL_RELATIONSHIP, description = "The templated link to the relationship conclusions resources of the application.", template = true ),
         @StateTransition (rel = ContributorRSDefinition.REL, description = "The templated link to the contributor resources of the application.", template = true ),
@@ -74,6 +75,10 @@ import javax.ws.rs.core.Response;
         @StateTransition (rel = RelationshipRSDefinition.REL, description = "The templated link to the relationship resources of the application.", template = true ),
         @StateTransition (rel = RelationshipsRSDefinition.COUPLE_RELATIONSHIPS_REL, description = "The link to the couple relationships for this application." ),
         @StateTransition (rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, description = "The link to the parent-child relationships for this application." ),
+        @StateTransition (rel = SourceReferencesRSDefinition.REL_PERSON, description = "The templated link to the person source references resources of the application.", template = true ),
+        @StateTransition (rel = SourceReferencesRSDefinition.REL_RELATIONSHIP, description = "The templated link to the person source references resources of the application.", template = true ),
+        @StateTransition (rel = SourceReferenceRSDefinition.REL_PERSON, description = "The templated link to the person source reference resources of the application.", template = true ),
+        @StateTransition (rel = SourceReferenceRSDefinition.REL_RELATIONSHIP, description = "The templated link to the person source reference resources of the application.", template = true ),
         @StateTransition (rel = SourceDescriptionRSDefinition.REL, description = "The templated link to the source description resources for this application.", template = true ),
         @StateTransition (rel = SourceDescriptionsRSDefinition.REL, description = "The source descriptions resource for this application." ),
         @StateTransition (rel = PersonSearchQuery.REL, description = "The person search query for this application.", template = true )

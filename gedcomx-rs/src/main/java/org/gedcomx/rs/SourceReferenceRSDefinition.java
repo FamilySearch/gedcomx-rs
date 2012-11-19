@@ -31,12 +31,14 @@ import javax.ws.rs.core.Response;
   projectId = "gedcomx-rs",
   resourceElement = Gedcomx.class,
   states = {
-    @StateDefinition ( name = "Source Reference", rel = SourceReferenceRSDefinition.REL, description = "The source reference." )
+    @StateDefinition ( name = "Person Source Reference", rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference on a person." ),
+    @StateDefinition ( name = "Relationship Source Reference", rel = SourceReferenceRSDefinition.REL_RELATIONSHIP, description = "A source reference on a relationship." )
   }
 )
 public interface SourceReferenceRSDefinition {
 
-  public static final String REL = "source-reference";
+  public static final String REL_PERSON = "person-source-reference";
+  public static final String REL_RELATIONSHIP = "relationship-source-reference";
 
   /**
    * Delete a source reference.

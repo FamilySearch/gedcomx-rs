@@ -41,7 +41,7 @@ import javax.ws.rs.core.Response;
       rel = ConclusionsRSDefinition.REL_PERSON,
       description = "A list of conclusions about a person.",
       transitions = {
-        @StateTransition( rel = ConclusionRSDefinition.REL, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }),
+        @StateTransition( rel = ConclusionRSDefinition.REL_PERSON, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }),
         @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class )
       }
     ),
@@ -50,7 +50,7 @@ import javax.ws.rs.core.Response;
       rel = ConclusionsRSDefinition.REL_RELATIONSHIP,
       description = "The list of conclusions about a relationship.",
       transitions = {
-        @StateTransition( rel = ConclusionRSDefinition.REL, description = "A conclusion.", scope = Fact.class ),
+        @StateTransition( rel = ConclusionRSDefinition.REL_PERSON, description = "A conclusion.", scope = Fact.class ),
         @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class )
       }
     )
