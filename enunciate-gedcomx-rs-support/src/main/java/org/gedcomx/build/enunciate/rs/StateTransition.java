@@ -31,6 +31,7 @@ import java.util.TreeSet;
 public final class StateTransition implements Comparable<StateTransition> {
 
   final String rel;
+  final String endpoint;
   final String description;
   final Set<String> scope;
   final ResourceServiceProcessor processor;
@@ -41,6 +42,11 @@ public final class StateTransition implements Comparable<StateTransition> {
     this.rel = meta.rel();
     this.description = meta.description();
     this.template = meta.template();
+    String endpoint = meta.endpoint();
+    if ("##default".equals(endpoint)) {
+      endpoint = this.rel;
+    }
+    this.endpoint = endpoint;
 
     this.scope = new TreeSet<String>();
     try {
@@ -63,7 +69,7 @@ public final class StateTransition implements Comparable<StateTransition> {
   }
 
   public ApplicationState getState() {
-    return this.processor.getApplicationStates().get(this.rel);
+    return this.processor.getApplicationStates().get(this.endpoint);
   }
 
   public boolean isTemplate() {

@@ -157,7 +157,7 @@ import javax.ws.rs.core.Response;
 )
 public interface PersonSearchQuery {
 
-  public static final String REL = "search";
+  public static final String REL = "person-search";
 
   /**
    * Read the results of a search.

@@ -17,11 +17,9 @@ package org.gedcomx.build.enunciate.rs;
 
 import com.sun.mirror.declaration.Declaration;
 import net.sf.jelly.apt.decorations.declaration.DecoratedDeclaration;
-import org.codehaus.enunciate.contract.jaxb.ElementDeclaration;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.ResourceParameter;
 
-import javax.xml.namespace.QName;
 import java.util.*;
 
 /**
@@ -128,7 +126,7 @@ public class ResourceBinding extends DecoratedDeclaration {
     allLinks.addAll(this.links);
     for (ResourceDefinitionDeclaration definition : this.definitions) {
       for (ApplicationState applicationState : definition.getApplicationStates()) {
-        if (this.states.contains(applicationState.getRel())) {
+        if (this.states.contains(applicationState.getId())) {
           allLinks.addAll(applicationState.getTransitions());
         }
       }

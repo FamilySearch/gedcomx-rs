@@ -18,7 +18,7 @@
           <a href="${state.name}_resource.html">${state.name}</a>
           <ul>
       [#list applicationStates as st]
-            <li><a href="${st.id}-state.html">${st.name}</a></li>
+            <li><a href="${st.systemId}-state.html">${st.name}</a></li>
       [/#list]
           </ul>
         </li>
@@ -31,8 +31,8 @@
 
       <table>
         <tr>
-          <td align="right">Rel:</td>
-          <td>${state.rel}</td>
+          <td align="right">Id:</td>
+          <td>${state.id}</td>
         </tr>
         <tr>
           <td align="right">Namespace:</td>
@@ -68,13 +68,13 @@
       <table>
         <tr>
           <th>Rel</th>
-          <th>To</th>
+          <th>Endpoint</th>
           <th>Description</th>
         </tr>
         [#list state.transitions as link]
           <tr>
             <td>${link.rel}</td>
-            <td>[#if link.state??]<a href="${link.state.id}-state.html">${link.state.name}</a>[/#if]</td>
+            <td>[#if link.state??]<a href="${link.state.systemId}-state.html">${link.state.name}</a>[/#if]</td>
             <td>${link.description}</td>
           </tr>
         [/#list]

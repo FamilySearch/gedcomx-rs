@@ -5,7 +5,7 @@
 
 [#list applicationStates as state]
   [#if (projectId!"") = state.projectId]
-    [@file name=(state.id + "-state.html")]
+    [@file name=(state.systemId + "-state.html")]
       [@libState.writeApplicationStatePage state=state/]
     [/@file]
   [/#if]
@@ -34,14 +34,14 @@
       <table>
         <tr>
           <th>name</th>
-          <th>rel</th>
+          <th>id</th>
           <th>description</th>
         </tr>
     [#list applicationStates as state]
       [#if (projectId!"") = state.projectId]
         <tr>
-          <td><a href="${state.id}-state.html">${state.name}</a></td>
-          <td><tt>${state.rel}</tt></td>
+          <td><a href="${state.systemId}-state.html">${state.name}</a></td>
+          <td><tt>${state.id}</tt></td>
           <td>${state.description}</td>
         </tr>
       [/#if]

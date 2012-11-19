@@ -34,7 +34,7 @@ import javax.ws.rs.core.Response;
   resourceElement = Gedcomx.class,
   states = {
     @StateDefinition ( name = "Couple Relationships", rel = RelationshipsRSDefinition.COUPLE_RELATIONSHIPS_REL, description = "The set of couple relationships." ),
-    @StateDefinition ( name = "Parent Relationships", rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, description = "The set of couple relationships." )
+    @StateDefinition ( name = "Parent-Child Relationships", rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, description = "The set of parent-child relationships." )
   }
 )
 public interface RelationshipsRSDefinition {

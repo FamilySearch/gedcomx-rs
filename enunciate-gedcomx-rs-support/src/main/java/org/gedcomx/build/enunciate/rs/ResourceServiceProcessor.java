@@ -122,12 +122,12 @@ public class ResourceServiceProcessor {
         }
 
         for (ApplicationState applicationState : rsd.getApplicationStates()) {
-          if (REGISTERED_LINK_RELATIONS.contains(applicationState.getRel())) {
-            result.addError(rsd, String.format("Illegal application state definition: %s is a registered link relation.", applicationState.getRel()));
+          if (REGISTERED_LINK_RELATIONS.contains(applicationState.getId())) {
+            result.addError(rsd, String.format("Illegal application state definition: %s is a registered link relation.", applicationState.getId()));
           }
-          ApplicationState conflict = applicationStates.put(applicationState.getRel(), applicationState);
+          ApplicationState conflict = applicationStates.put(applicationState.getId(), applicationState);
           if (conflict != null) {
-            result.addError(rsd, String.format("The state \"%s\" for the resource definition at %s is already being defined by resource definition %s.", applicationState.getRel(), rsd.getQualifiedName(), conflict.getDefinition().getQualifiedName()));
+            result.addError(rsd, String.format("The state \"%s\" for the resource definition at %s is already being defined by resource definition %s.", applicationState.getId(), rsd.getQualifiedName(), conflict.getDefinition().getQualifiedName()));
           }
         }
 
@@ -197,7 +197,7 @@ public class ResourceServiceProcessor {
       for (ResourceDefinitionDeclaration definition : binding.getDefinitions()) {
         boolean applicable = false;
         for (ApplicationState state : definition.getApplicationStates()) {
-          if (binding.getStates().contains(state.getRel())) {
+          if (binding.getStates().contains(state.getId())) {
             applicable = true;
             break;
           }

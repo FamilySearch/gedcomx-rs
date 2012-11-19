@@ -38,6 +38,14 @@ public @interface StateTransition {
   String rel();
 
   /**
+   * The id of the state that is the endpoint of the transition. If no endpoint is explicitly identified, an
+   * attempt will be made to use the 'rel' as the identifier for the endpoint.
+   *
+   * @return The id of the endpoint state.
+   */
+  String endpoint() default "##default";
+
+  /**
    * A human-readable description of the resource relationship.
    *
    * @return A human-readable description of the resource relationship.

@@ -25,22 +25,22 @@ import java.util.List;
 public class ApplicationState {
 
   private final String name;
-  private final String rel;
+  private final String id;
   private final String description;
   private final List<StateTransition> transitions;
   private final ResourceDefinitionDeclaration definition;
   private ResourceBinding binding;
 
-  public ApplicationState(String name, String rel, String description, List<StateTransition> transitions, ResourceDefinitionDeclaration definition) {
+  public ApplicationState(String name, String id, String description, List<StateTransition> transitions, ResourceDefinitionDeclaration definition) {
     this.name = name;
-    this.rel = rel;
+    this.id = id;
     this.description = description;
     this.transitions = transitions;
     this.definition = definition;
   }
 
-  public String getId() {
-    return getRel().replace('/', '-').replace(':', '_');
+  public String getSystemId() {
+    return getId().replace('/', '-').replace(':', '_');
   }
 
   public String getNamespace() {
@@ -59,8 +59,8 @@ public class ApplicationState {
     return definition.getResourceElements();
   }
 
-  public String getRel() {
-    return rel;
+  public String getId() {
+    return id;
   }
 
   public String getDescription() {
