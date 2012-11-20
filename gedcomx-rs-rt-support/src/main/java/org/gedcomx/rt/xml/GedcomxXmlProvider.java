@@ -16,6 +16,7 @@
 package org.gedcomx.rt.xml;
 
 import com.sun.jersey.core.provider.jaxb.AbstractRootElementProvider;
+import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
 
 import javax.ws.rs.Consumes;
@@ -57,13 +58,7 @@ public class GedcomxXmlProvider extends AbstractRootElementProvider {
 
   protected GedcomxXmlProvider(Providers ps, MediaType mt, Class<?> instanceClass, QName qName) {
     super(ps);
-    try {
-      this.rootClass = Class.forName("org.gedcomx.common.Gedcomx");
-    }
-    catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
-    }
-
+    this.rootClass = Gedcomx.class;
     this.mt = mt;
     this.qName = qName;
     this.instanceClass = instanceClass == null ? this.rootClass : instanceClass;

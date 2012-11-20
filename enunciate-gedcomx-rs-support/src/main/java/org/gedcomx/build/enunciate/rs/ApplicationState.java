@@ -16,8 +16,13 @@
 package org.gedcomx.build.enunciate.rs;
 
 import org.codehaus.enunciate.contract.jaxb.ElementDeclaration;
+import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
+import org.codehaus.enunciate.contract.jaxrs.ResourceParameter;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Ryan Heaton
@@ -44,7 +49,7 @@ public class ApplicationState {
   }
 
   public String getNamespace() {
-    return definition.getNamespace();
+    return this.binding != null ? this.binding.getNamespace() : definition.getNamespace();
   }
 
   public String getName() {
@@ -67,8 +72,38 @@ public class ApplicationState {
     return description;
   }
 
-  public List<StateTransition> getTransitions() {
+  public Set<StateTransition> getTransitions() {
+    TreeSet<StateTransition> transitions = new TreeSet<StateTransition>(this.transitions);
+    if (this.binding != null) {
+      transitions.addAll(this.binding.getLinks());
+    }
     return transitions;
+  }
+
+  public Set<ResponseCode> getStatusCodes() {
+    TreeSet<ResponseCode> statusCodes = new TreeSet<ResponseCode>();
+    statusCodes.addAll(this.definition.getStatusCodes());
+    if (this.binding != null) {
+      statusCodes.addAll(this.binding.getStatusCodes());
+    }
+    return statusCodes;
+  }
+
+  public Set<ResponseCode> getWarnings() {
+    TreeSet<ResponseCode> warnings = new TreeSet<ResponseCode>();
+    warnings.addAll(this.definition.getWarnings());
+    if (this.binding != null) {
+      warnings.addAll(this.binding.getWarnings());
+    }
+    return warnings;
+  }
+
+  public List<ResourceMethod> getResourceMethods() {
+    return this.binding != null ? this.binding.getMethods() : this.definition.getResourceMethods();
+  }
+
+  public Collection<ResourceParameter> getResourceParameters() {
+    return this.binding != null ? this.binding.getResourceParameters() : this.definition.getResourceParameters();
   }
 
   public ResourceDefinitionDeclaration getDefinition() {
@@ -81,5 +116,9 @@ public class ApplicationState {
 
   public void setBinding(ResourceBinding binding) {
     this.binding = binding;
+  }
+
+  public String getDocValue() {
+    return this.binding != null ? this.binding.getDocValue(): this.definition.getDocValue();
   }
 }

@@ -95,43 +95,12 @@ public class ResourceBinding extends DecoratedDeclaration {
     return statusCodes;
   }
 
-  public Set<ResponseCode> getAllStatusCodes() {
-    TreeSet<ResponseCode> allStatusCodes = new TreeSet<ResponseCode>();
-    allStatusCodes.addAll(this.statusCodes);
-    for (ResourceDefinitionDeclaration definition : this.definitions) {
-      allStatusCodes.addAll(definition.getStatusCodes());
-    }
-    return allStatusCodes;
-  }
-
   public Set<ResponseCode> getWarnings() {
     return warnings;
   }
 
-  public Set<ResponseCode> getAllWarnings() {
-    TreeSet<ResponseCode> allWarnings = new TreeSet<ResponseCode>();
-    allWarnings.addAll(this.warnings);
-    for (ResourceDefinitionDeclaration definition : this.definitions) {
-      allWarnings.addAll(definition.getWarnings());
-    }
-    return allWarnings;
-  }
-
   public Set<StateTransition> getLinks() {
     return links;
-  }
-
-  public Set<StateTransition> getAllLinks() {
-    TreeSet<StateTransition> allLinks = new TreeSet<StateTransition>();
-    allLinks.addAll(this.links);
-    for (ResourceDefinitionDeclaration definition : this.definitions) {
-      for (ApplicationState applicationState : definition.getApplicationStates()) {
-        if (this.states.contains(applicationState.getId())) {
-          allLinks.addAll(applicationState.getTransitions());
-        }
-      }
-    }
-    return allLinks;
   }
 
   public List<ResourceMethod> getMethods() {

@@ -18,6 +18,7 @@ package org.gedcomx.rt.json;
 import org.codehaus.jackson.jaxrs.Annotations;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
 
 import javax.ws.rs.Consumes;
@@ -56,13 +57,7 @@ public class GedcomJsonProvider extends JacksonJaxbJsonProvider {
   protected GedcomJsonProvider(ObjectMapper mapper, Annotations[] annotationsToUse, Class<?> instanceClass, MediaType mt) {
     super(mapper, annotationsToUse);
 
-    try {
-      this.rootClass = Class.forName("org.gedcomx.common.Gedcomx");
-    }
-    catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
-    }
-
+    this.rootClass = Gedcomx.class;
     this.mt = mt;
     this.instanceClass = instanceClass == null ? this.rootClass : instanceClass;
   }

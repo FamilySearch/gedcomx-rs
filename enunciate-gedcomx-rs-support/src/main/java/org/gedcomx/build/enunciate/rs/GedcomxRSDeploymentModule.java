@@ -140,6 +140,7 @@ public class GedcomxRSDeploymentModule extends FreemarkerDeploymentModule implem
       Collection<ResourceDefinitionDeclaration> resourceDefinitions = this.resourceServiceProcessor.getResourceDefinitions();
       Map<String, Collection<ResourceDefinitionDeclaration>> resourceDefinitionsByNamespace = new HashMap<String, Collection<ResourceDefinitionDeclaration>>();
       for (ResourceDefinitionDeclaration definition : resourceDefinitions) {
+        model.addNamespace(definition.getNamespace());
         Collection<ResourceDefinitionDeclaration> listByNamespace = resourceDefinitionsByNamespace.get(definition.getNamespace());
         if (listByNamespace == null) {
           listByNamespace = new ArrayList<ResourceDefinitionDeclaration>();
@@ -153,6 +154,7 @@ public class GedcomxRSDeploymentModule extends FreemarkerDeploymentModule implem
       Map<String, ResourceBinding> bindingsByPath = this.resourceServiceProcessor.getBindingsByPath();
       Map<String, Collection<ResourceBinding>> bindingsByNamespace = new HashMap<String, Collection<ResourceBinding>>();
       for (ResourceBinding binding : bindingsByPath.values()) {
+        model.addNamespace(binding.getNamespace());
         Collection<ResourceBinding> list = bindingsByNamespace.get(binding.getNamespace());
         if (list == null) {
           list = new ArrayList<ResourceBinding>();
@@ -163,7 +165,19 @@ public class GedcomxRSDeploymentModule extends FreemarkerDeploymentModule implem
       model.put("resourceBindingsByPath", bindingsByPath);
       model.put("resourceBindingsByNamespace", bindingsByNamespace);
 
-      model.put("applicationStates", this.resourceServiceProcessor.getApplicationStates().values());
+      Map<String, Collection<ApplicationState>> statesByNamespace = new HashMap<String, Collection<ApplicationState>>();
+      Collection<ApplicationState> states = this.resourceServiceProcessor.getApplicationStates().values();
+      for (ApplicationState state : states) {
+        model.addNamespace(state.getNamespace());
+        Collection<ApplicationState> list = statesByNamespace.get(state.getNamespace());
+        if (list == null) {
+          list = new ArrayList<ApplicationState>();
+          statesByNamespace.put(state.getNamespace(), list);
+        }
+        list.add(state);
+      }
+      model.put("applicationStates", states);
+      model.put("applicationStatesByNamespace", statesByNamespace);
 
       try {
         processTemplate(getDocsTemplateURL(), model);

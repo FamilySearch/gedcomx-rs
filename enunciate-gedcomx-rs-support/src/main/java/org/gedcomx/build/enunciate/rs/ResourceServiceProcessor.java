@@ -129,9 +129,11 @@ public class ResourceServiceProcessor {
           if (conflict != null) {
             result.addError(rsd, String.format("The state \"%s\" for the resource definition at %s is already being defined by resource definition %s.", applicationState.getId(), rsd.getQualifiedName(), conflict.getDefinition().getQualifiedName()));
           }
+          model.addNamespace(applicationState.getNamespace());
         }
 
         this.resourceDefinitions.add(rsd);
+        model.addNamespace(rsd.getNamespace());
       }
       else {
         result.addWarning(resourceServiceDefinition, String.format("No @%s annotation found.", ResourceDefinition.class.getName()));
@@ -189,6 +191,8 @@ public class ResourceServiceProcessor {
             binding.getLinks().addAll(extractLinks(declaringResource));
             binding.getResourceParameters().addAll(declaringResource.getResourceParameters());
           }
+
+          model.addNamespace(binding.getNamespace());
         }
       }
     }
@@ -211,17 +215,23 @@ public class ResourceServiceProcessor {
           SchemaInfo schemaInfo = model.getNamespacesToSchemas().get(resourceElement.getNamespace());
           MediaTypeDeclaration declaration = (MediaTypeDeclaration) schemaInfo.getProperties().get("mediaType");
           if (declaration != null) {
-            if (declaration.getXmlMediaType() != null && !binding.getConsumes().contains(declaration.getXmlMediaType())) {
-              result.addError(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
+            if (declaration.getXmlMediaType() != null) {
+              if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getXmlMediaType())) {
+                result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
+              }
+
+              if (!binding.getProduces().contains(declaration.getXmlMediaType())) {
+                result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
+              }
             }
-            if (declaration.getJsonMediaType() != null && !binding.getConsumes().contains(declaration.getJsonMediaType())) {
-              result.addError(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
-            }
-            if (declaration.getXmlMediaType() != null && !binding.getProduces().contains(declaration.getXmlMediaType())) {
-              result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
-            }
-            if (declaration.getJsonMediaType() != null && !binding.getProduces().contains(declaration.getJsonMediaType())) {
-              result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+
+            if (declaration.getJsonMediaType() != null) {
+              if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getJsonMediaType())) {
+                result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+              }
+              if (declaration.getJsonMediaType() != null && !binding.getProduces().contains(declaration.getJsonMediaType())) {
+                result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+              }
             }
           }
         }
