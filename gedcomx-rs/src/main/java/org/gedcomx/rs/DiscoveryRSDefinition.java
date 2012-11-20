@@ -24,7 +24,7 @@ import javax.ws.rs.core.Response;
 /**
  * <p>The discovery resource is the starting point for a Web service API. The discovery resource is the index of all available resources in the application.</p>
  *
- * <p>The discover resource allows a consumer of the API to use _links_ to figure out __at runtime__ where all the resources are. Consumers shouldn't be
+ * <p>The discovery resource allows a consumer of the API to use links to figure out at runtime where all the resources are. Consumers shouldn't be
  * required to hard-code endpoint URLs, nor to plug in identifiers into a a URL template to access resources. The only thing consumers of the API should
  * need is the URL to the discovery resource.</p>
  *
