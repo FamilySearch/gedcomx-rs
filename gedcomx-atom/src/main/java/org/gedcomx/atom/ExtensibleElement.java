@@ -22,6 +22,8 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Ryan Heaton
@@ -30,6 +32,7 @@ import java.util.List;
 public abstract class ExtensibleElement extends CommonAttributes implements SupportsExtensionElements {
 
   private List<Object> extensionElements;
+  protected Map<String, Object> transientProperties;
 
   /**
    * Custom extension elements.
@@ -102,5 +105,29 @@ public abstract class ExtensibleElement extends CommonAttributes implements Supp
     }
 
     return ext;
+  }
+
+  /**
+   * Get a transient (non-serialized) property.
+   *
+   * @param name The name of the property.
+   * @return The property.
+   */
+  public Object getTransientProperty(String name) {
+    return this.transientProperties == null ? null : this.transientProperties.get(name);
+  }
+
+  /**
+   * Set a transient (non-serialized) property.
+   *
+   * @param name the name of the property.
+   * @param value the property value.
+   */
+  public void setTransientProperty(String name, Object value) {
+    if (this.transientProperties == null) {
+      this.transientProperties = new TreeMap<String, Object>();
+    }
+
+    this.transientProperties.put(name, value);
   }
 }
