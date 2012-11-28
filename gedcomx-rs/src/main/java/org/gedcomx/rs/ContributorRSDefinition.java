@@ -17,7 +17,10 @@ package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
-import org.gedcomx.rt.rs.*;
+import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateDefinition;
+import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HEAD;
@@ -31,7 +34,7 @@ import javax.ws.rs.core.Response;
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   states = {
-    @StateDefinition (name = "Contributor", rel = ContributorRSDefinition.REL, description = "A contributor .")
+    @StateDefinition (name = "User", rel = ContributorRSDefinition.REL, description = "A user.")
   }
 )
 public interface ContributorRSDefinition {
