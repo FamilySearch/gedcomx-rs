@@ -30,7 +30,8 @@ import javax.ws.rs.core.Response;
  * <p>The descendancy query is used to query the application for an descending pedigree rooted at a person for a specific number of generations.
  * The result of the query should provide a list of persons and relationships. Each person MAY supply a descendancy number in the display
  * properties for the person. The descendancy number is interpreted as an d'Aboville number which can be used to determine the position of
- * each person in the descendancy.</p>
+ * each person in the descendancy. The descendancy query MAY support the inclusion of the spouses of each person in the descendancy graph. Spouses
+ * returned in the query MUST have a "-S" appended to their descendancy number to indicate the person is the spouse of the associated person.</p>
  *
  * <p>The descendancy query MUST support the following parameters:</p>
  *
