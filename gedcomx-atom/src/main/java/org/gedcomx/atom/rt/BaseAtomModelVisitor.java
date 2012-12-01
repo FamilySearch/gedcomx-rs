@@ -36,21 +36,21 @@ public class BaseAtomModelVisitor extends BasicGedcomxModelVisitor implements At
     List<Entry> entries = feed.getEntries();
     if (entries != null) {
       for (Entry entry : entries) {
-        visitEntry(entry);
+        entry.accept(this);
       }
     }
 
     List<Person> authors = feed.getAuthors();
     if (authors != null) {
       for (Person author : authors) {
-        visitAtomPerson(author);
+        author.accept(this);
       }
     }
 
     List<Person> contributors = feed.getContributors();
     if (contributors != null) {
       for (Person contributor : contributors) {
-        visitAtomPerson(contributor);
+        contributor.accept(this);
       }
     }
   }
@@ -64,20 +64,20 @@ public class BaseAtomModelVisitor extends BasicGedcomxModelVisitor implements At
   public void visitEntry(Entry entry) {
     Content content = entry.getContent();
     if (content != null) {
-      visitAtomContent(content);
+      content.accept(this);
     }
 
     List<Person> authors = entry.getAuthors();
     if (authors != null) {
       for (Person author : authors) {
-        visitAtomPerson(author);
+        author.accept(this);
       }
     }
 
     List<Person> contributors = entry.getContributors();
     if (contributors != null) {
       for (Person contributor : contributors) {
-        visitAtomPerson(contributor);
+        contributor.accept(this);
       }
     }
   }
@@ -86,7 +86,7 @@ public class BaseAtomModelVisitor extends BasicGedcomxModelVisitor implements At
   public void visitAtomContent(Content content) {
     Gedcomx gedcomx = content.getGedcomx();
     if (gedcomx != null) {
-      visitGedcomx(gedcomx);
+      gedcomx.accept(this);
     }
   }
 }

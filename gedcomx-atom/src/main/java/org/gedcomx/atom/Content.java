@@ -17,6 +17,7 @@ package org.gedcomx.atom;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.gedcomx.Gedcomx;
+import org.gedcomx.atom.rt.AtomModelVisitor;
 import org.gedcomx.rt.GedcomxConstants;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -72,5 +73,14 @@ public final class Content {
    */
   public void setGedcomx(Gedcomx gedcomx) {
     this.gedcomx = gedcomx;
+  }
+
+  /**
+   * Accept a visitor.
+   *
+   * @param visitor The visitor to accept.
+   */
+  public void accept(AtomModelVisitor visitor) {
+    visitor.visitAtomContent(this);
   }
 }

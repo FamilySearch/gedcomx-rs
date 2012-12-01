@@ -17,6 +17,7 @@ package org.gedcomx.atom;
 
 import org.codehaus.enunciate.json.JsonName;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.gedcomx.atom.rt.AtomModelVisitor;
 import org.gedcomx.common.URI;
 import org.gedcomx.links.Link;
 import org.gedcomx.rt.GedcomxConstants;
@@ -367,5 +368,14 @@ public class Entry extends ExtensibleElement {
 
   public void setExtensionAttributes(Map<QName, String> extensionAttributes) {
     this.extensionAttributes = extensionAttributes;
+  }
+
+  /**
+   * Accept a visitor.
+   *
+   * @param visitor The visitor to accept.
+   */
+  public void accept(AtomModelVisitor visitor) {
+    visitor.visitEntry(this);
   }
 }

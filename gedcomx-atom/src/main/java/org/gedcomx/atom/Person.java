@@ -15,6 +15,7 @@
  */
 package org.gedcomx.atom;
 
+import org.gedcomx.atom.rt.AtomModelVisitor;
 import org.gedcomx.common.URI;
 
 import javax.xml.XMLConstants;
@@ -87,5 +88,14 @@ public final class Person extends ExtensibleElement {
    */
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  /**
+   * Accept a visitor.
+   *
+   * @param visitor The visitor to accept.
+   */
+  public void accept(AtomModelVisitor visitor) {
+    visitor.visitAtomPerson(this);
   }
 }
