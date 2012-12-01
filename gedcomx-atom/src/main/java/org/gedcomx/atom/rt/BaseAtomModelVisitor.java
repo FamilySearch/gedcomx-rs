@@ -33,6 +33,7 @@ public class BaseAtomModelVisitor extends BasicGedcomxModelVisitor implements At
 
   @Override
   public void visitFeed(Feed feed) {
+    this.contextStack.push(feed);
     List<Entry> entries = feed.getEntries();
     if (entries != null) {
       for (Entry entry : entries) {
@@ -53,6 +54,7 @@ public class BaseAtomModelVisitor extends BasicGedcomxModelVisitor implements At
         contributor.accept(this);
       }
     }
+    this.contextStack.pop();
   }
 
   @Override
@@ -62,6 +64,7 @@ public class BaseAtomModelVisitor extends BasicGedcomxModelVisitor implements At
 
   @Override
   public void visitEntry(Entry entry) {
+    this.contextStack.push(entry);
     Content content = entry.getContent();
     if (content != null) {
       content.accept(this);
@@ -80,13 +83,16 @@ public class BaseAtomModelVisitor extends BasicGedcomxModelVisitor implements At
         contributor.accept(this);
       }
     }
+    this.contextStack.pop();
   }
 
   @Override
   public void visitAtomContent(Content content) {
+    this.contextStack.push(content);
     Gedcomx gedcomx = content.getGedcomx();
     if (gedcomx != null) {
       gedcomx.accept(this);
     }
+    this.contextStack.pop();
   }
 }
