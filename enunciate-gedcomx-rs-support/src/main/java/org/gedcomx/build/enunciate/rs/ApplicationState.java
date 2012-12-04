@@ -119,6 +119,15 @@ public class ApplicationState {
   }
 
   public String getDocValue() {
-    return this.binding != null ? this.binding.getDocValue(): this.definition.getDocValue();
+    String docValue = null;
+    if (this.binding != null) {
+      docValue = this.binding.getDocValue();
+    }
+
+    if (docValue == null || docValue.trim().isEmpty()) {
+      docValue = this.definition.getDocValue();
+    }
+
+    return docValue;
   }
 }
