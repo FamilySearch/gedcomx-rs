@@ -20,7 +20,7 @@ import org.gedcomx.atom.Content;
 import org.gedcomx.atom.Entry;
 import org.gedcomx.atom.Feed;
 import org.gedcomx.atom.Person;
-import org.gedcomx.rt.BasicGedcomxModelVisitor;
+import org.gedcomx.rt.GedcomxModelVisitorBase;
 
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
  * @author Ryan Heaton
  */
 @XmlTransient
-public class BaseAtomModelVisitor extends BasicGedcomxModelVisitor implements AtomModelVisitor {
+public class AtomModelVisitorBase extends GedcomxModelVisitorBase implements AtomModelVisitor {
 
   @Override
   public void visitFeed(Feed feed) {
