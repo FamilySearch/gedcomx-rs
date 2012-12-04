@@ -39,10 +39,10 @@ import java.util.Map;
  */
 @XmlRootElement
 @XmlType ( name = "Entry" )
-@JsonElementWrapper (name = "entries")
-@SuppressWarnings("gedcomx:no_id")
+@JsonElementWrapper ( name = "entries" )
+@SuppressWarnings ( "gedcomx:no_id" )
 public class Entry extends ExtensibleElement {
-  
+
   private List<Person> authors;
   private List<Category> categories;
   private Content content;
@@ -62,9 +62,9 @@ public class Entry extends ExtensibleElement {
    *
    * @return The author of the entry.
    */
-  @XmlElement (name = "author")
-  @JsonName ("authors")
-  @JsonProperty ("authors")
+  @XmlElement ( name = "author" )
+  @JsonName ( "authors" )
+  @JsonProperty ( "authors" )
   public List<Person> getAuthors() {
     return authors;
   }
@@ -74,7 +74,7 @@ public class Entry extends ExtensibleElement {
    *
    * @param authors The author of the entry.
    */
-  @JsonProperty("authors")
+  @JsonProperty ( "authors" )
   public void setAuthors(List<Person> authors) {
     this.authors = authors;
   }
@@ -84,9 +84,9 @@ public class Entry extends ExtensibleElement {
    *
    * @return information about a category associated with an entry.
    */
-  @XmlElement (name = "category")
-  @JsonName ("categories")
-  @JsonProperty ("categories")
+  @XmlElement ( name = "category" )
+  @JsonName ( "categories" )
+  @JsonProperty ( "categories" )
   public List<Category> getCategories() {
     return categories;
   }
@@ -96,7 +96,7 @@ public class Entry extends ExtensibleElement {
    *
    * @param categories information about a category associated with an entry.
    */
-  @JsonProperty ("categories")
+  @JsonProperty ( "categories" )
   public void setCategories(List<Category> categories) {
     this.categories = categories;
   }
@@ -124,9 +124,9 @@ public class Entry extends ExtensibleElement {
    *
    * @return information about a category associated with the entry
    */
-  @XmlElement (name = "contributor")
-  @JsonName("contributors")
-  @JsonProperty("contributors")
+  @XmlElement ( name = "contributor" )
+  @JsonName ( "contributors" )
+  @JsonProperty ( "contributors" )
   public List<Person> getContributors() {
     return contributors;
   }
@@ -136,7 +136,7 @@ public class Entry extends ExtensibleElement {
    *
    * @param contributors information about a category associated with the entry
    */
-  @JsonProperty("contributors")
+  @JsonProperty ( "contributors" )
   public void setContributors(List<Person> contributors) {
     this.contributors = contributors;
   }
@@ -146,7 +146,7 @@ public class Entry extends ExtensibleElement {
    *
    * @return a permanent, universally unique identifier for the entry.
    */
-  @XmlSchemaType (name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI)
+  @XmlSchemaType ( name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI )
   public URI getId() {
     return id;
   }
@@ -165,7 +165,7 @@ public class Entry extends ExtensibleElement {
    *
    * @return The relevance score.
    */
-  @XmlElement (namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
+  @XmlElement ( namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
   public Float getScore() {
     return score;
   }
@@ -184,7 +184,7 @@ public class Entry extends ExtensibleElement {
    *
    * @return The confidence of the result, if this entry represents a search result.
    */
-  @XmlElement (namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
+  @XmlElement ( namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
   public ResultConfidence getConfidence() {
     return confidence;
   }
@@ -203,9 +203,9 @@ public class Entry extends ExtensibleElement {
    *
    * @return a reference from a entry to a Web resource.
    */
-  @XmlElement (name = "link")
-  @JsonName("links")
-  @JsonProperty("links")
+  @XmlElement ( name = "link" )
+  @JsonName ( "links" )
+  @JsonProperty ( "links" )
   public List<Link> getLinks() {
     return links;
   }
@@ -215,7 +215,7 @@ public class Entry extends ExtensibleElement {
    *
    * @param links a reference from a entry to a Web resource.
    */
-  @JsonProperty("links")
+  @JsonProperty ( "links" )
   public void setLinks(List<Link> links) {
     this.links = links;
   }
@@ -236,7 +236,7 @@ public class Entry extends ExtensibleElement {
   /**
    * Add a hypermedia link.
    *
-   * @param rel The link rel.
+   * @param rel  The link rel.
    * @param href The target URI.
    */
   public void addLink(String rel, URI href) {
@@ -246,7 +246,7 @@ public class Entry extends ExtensibleElement {
   /**
    * Add a templated link.
    *
-   * @param rel The link rel.
+   * @param rel      The link rel.
    * @param template The link template.
    */
   public void addTemplatedLink(String rel, String template) {
@@ -263,12 +263,14 @@ public class Entry extends ExtensibleElement {
    * @return The link by rel.
    */
   public Link getLink(String rel) {
-    List<Link> links = getLinks(rel);
-    Link link = null;
-    if (!links.isEmpty()) {
-      link = links.get(0);
+    if (this.links != null) {
+      for (Link link : getLinks()) {
+        if (rel.equals(link.getRel())) {
+          return link;
+        }
+      }
     }
-    return link;
+    return null;
   }
 
   /**

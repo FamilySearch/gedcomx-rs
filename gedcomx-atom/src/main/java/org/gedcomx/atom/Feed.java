@@ -57,10 +57,10 @@ import java.util.List;
   }
 )
 @XmlRootElement
-@XmlType( name = "Feed", propOrder = {"authors", "contributors", "generator", "icon", "id", "results", "index", "links", "logo", "rights", "subtitle", "title", "updated", "entries"} )
-@SuppressWarnings("gedcomx:no_id")
+@XmlType ( name = "Feed", propOrder = {"authors", "contributors", "generator", "icon", "id", "results", "index", "links", "logo", "rights", "subtitle", "title", "updated", "entries"} )
+@SuppressWarnings ( "gedcomx:no_id" )
 public class Feed extends ExtensibleElement {
-  
+
   private List<Person> authors;
   private List<Person> contributors;
   private Generator generator;
@@ -81,9 +81,9 @@ public class Feed extends ExtensibleElement {
    *
    * @return The author of the feed.
    */
-  @XmlElement (name = "author")
-  @JsonName("authors")
-  @JsonProperty("authors")
+  @XmlElement ( name = "author" )
+  @JsonName ( "authors" )
+  @JsonProperty ( "authors" )
   public List<Person> getAuthors() {
     return authors;
   }
@@ -93,7 +93,7 @@ public class Feed extends ExtensibleElement {
    *
    * @param authors The author of the feed.
    */
-  @JsonProperty("authors")
+  @JsonProperty ( "authors" )
   public void setAuthors(List<Person> authors) {
     this.authors = authors;
   }
@@ -103,9 +103,9 @@ public class Feed extends ExtensibleElement {
    *
    * @return information about a category associated with the feed
    */
-  @XmlElement (name = "contributor")
-  @JsonName("contributors")
-  @JsonProperty("contributors")
+  @XmlElement ( name = "contributor" )
+  @JsonName ( "contributors" )
+  @JsonProperty ( "contributors" )
   public List<Person> getContributors() {
     return contributors;
   }
@@ -115,7 +115,7 @@ public class Feed extends ExtensibleElement {
    *
    * @param contributors information about a category associated with the feed
    */
-  @JsonProperty("contributors")
+  @JsonProperty ( "contributors" )
   public void setContributors(List<Person> contributors) {
     this.contributors = contributors;
   }
@@ -143,7 +143,7 @@ public class Feed extends ExtensibleElement {
    *
    * @return identifies an image that provides iconic visual identification for the feed.
    */
-  @XmlSchemaType (name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI)
+  @XmlSchemaType ( name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI )
   public URI getIcon() {
     return icon;
   }
@@ -162,7 +162,7 @@ public class Feed extends ExtensibleElement {
    *
    * @return a permanent, universally unique identifier for the feed.
    */
-  @XmlSchemaType (name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI)
+  @XmlSchemaType ( name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI )
   public URI getId() {
     return id;
   }
@@ -181,7 +181,7 @@ public class Feed extends ExtensibleElement {
    *
    * @return The total number of results available, if this feed is supplying a subset of results, such as for a query.
    */
-  @XmlElement (namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
+  @XmlElement ( namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
   public Integer getResults() {
     return results;
   }
@@ -200,7 +200,7 @@ public class Feed extends ExtensibleElement {
    *
    * @return The index of the first entry in this page of data, if this feed is supplying a page of data.
    */
-  @XmlElement (namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
+  @XmlElement ( namespace = GedcomxConstants.GEDCOMX_NAMESPACE )
   public Integer getIndex() {
     return index;
   }
@@ -219,9 +219,9 @@ public class Feed extends ExtensibleElement {
    *
    * @return a reference from a feed to a Web resource.
    */
-  @XmlElement (name = "link")
-  @JsonName("links")
-  @JsonProperty("links")
+  @XmlElement ( name = "link" )
+  @JsonName ( "links" )
+  @JsonProperty ( "links" )
   public List<Link> getLinks() {
     return links;
   }
@@ -231,7 +231,7 @@ public class Feed extends ExtensibleElement {
    *
    * @param links a reference from a feed to a Web resource.
    */
-  @JsonProperty("links")
+  @JsonProperty ( "links" )
   public void setLinks(List<Link> links) {
     this.links = links;
   }
@@ -252,7 +252,7 @@ public class Feed extends ExtensibleElement {
   /**
    * Add a hypermedia link.
    *
-   * @param rel The link rel.
+   * @param rel  The link rel.
    * @param href The target URI.
    */
   public void addLink(String rel, URI href) {
@@ -262,7 +262,7 @@ public class Feed extends ExtensibleElement {
   /**
    * Add a templated link.
    *
-   * @param rel The link rel.
+   * @param rel      The link rel.
    * @param template The link template.
    */
   public void addTemplatedLink(String rel, String template) {
@@ -279,12 +279,14 @@ public class Feed extends ExtensibleElement {
    * @return The link by rel.
    */
   public Link getLink(String rel) {
-    List<Link> links = getLinks(rel);
-    Link link = null;
-    if (!links.isEmpty()) {
-      link = links.get(0);
+    if (this.links != null) {
+      for (Link link : getLinks()) {
+        if (rel.equals(link.getRel())) {
+          return link;
+        }
+      }
     }
-    return link;
+    return null;
   }
 
   /**
@@ -310,7 +312,7 @@ public class Feed extends ExtensibleElement {
    *
    * @return identifies an image that provides visual identification for the feed.
    */
-  @XmlSchemaType (name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI)
+  @XmlSchemaType ( name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI )
   public URI getLogo() {
     return logo;
   }
@@ -401,9 +403,9 @@ public class Feed extends ExtensibleElement {
    *
    * @return The entries in the feed.
    */
-  @XmlElement( name = "entry" )
-  @JsonName("entries")
-  @JsonProperty("entries")
+  @XmlElement ( name = "entry" )
+  @JsonName ( "entries" )
+  @JsonProperty ( "entries" )
   public List<Entry> getEntries() {
     return entries;
   }
@@ -413,7 +415,7 @@ public class Feed extends ExtensibleElement {
    *
    * @param entries The entries in the feed.
    */
-  @JsonProperty("entries")
+  @JsonProperty ( "entries" )
   public void setEntries(List<Entry> entries) {
     this.entries = entries;
   }
