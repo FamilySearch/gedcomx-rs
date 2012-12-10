@@ -11,7 +11,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <enunciate.version>1.26.2</enunciate.version>
-    <gedcomx.core.version>0.25.0-SNAPSHOT</gedcomx.core.version>
+    <gedcomx.core.version>0.25.0</gedcomx.core.version>
     <root.basedir>${project.basedir}</root.basedir>
     <year>${inceptionYear}</year>
   </properties>
@@ -319,6 +319,22 @@
       </reporting>
     </profile>
   </profiles>
+
+  <repositories>
+    <repository>
+      <id>codehaus-release-repo</id>
+      <name>Codehaus Release Repository</name>
+      <url>http://repository.codehaus.org/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>codehaus-release-repo</id>
+      <name>Codehaus Release Repository</name>
+      <url>http://repository.codehaus.org/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <distributionManagement>
     <repository>
