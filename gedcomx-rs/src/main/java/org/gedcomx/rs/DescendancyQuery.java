@@ -58,16 +58,37 @@ public interface DescendancyQuery {
   public static final String REL = "descendancy";
 
   /**
-   * Query for a person and the ancestors of a person for a number of generations.
+   * Query for a person and the descendants of the person for a number of generations.
    *
-   * @param person The id of the person whose descendancy is being queried.
-   * @param spouse If provided, the descendancy will be narrowed to a specific spouse. An empty value indicates the system will choose a spouse.
-   * @param generations The number of generations being queried.
    * @return A person and the ancestors of a person for a number of generations.
    */
   @GET
   @StatusCodes({
     @ResponseCode ( code = 200, condition = "The query was successful.")
   })
-  Response get(@QueryParam ( "person" ) String person, @QueryParam ( "spouse" ) String spouse, @QueryParam ( "generations" ) String generations);
+  Response get();
+
+  /**
+   * The id of the person whose descendancy is being queried.
+   *
+   * @param personId The id of the person whose descendancy is being queried.
+   */
+  @QueryParam("person")
+  void setPersonId(String personId);
+
+  /**
+   *  If provided, the descendancy will be narrowed to a specific spouse. An empty value indicates the system will choose a spouse.
+   *
+   * @param spouseId  If provided, the descendancy will be narrowed to a specific spouse. An empty value indicates the system will choose a spouse.
+   */
+  @QueryParam("spouse")
+  void setSpouseId(String spouseId);
+
+  /**
+   * The number of generations being queried.
+   *
+   * @param generations The number of generations being queried.
+   */
+  @QueryParam("generations")
+  void setGenerations(String generations);
 }

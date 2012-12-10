@@ -162,9 +162,6 @@ public interface PersonSearchQuery {
   /**
    * Read the results of a search.
    *
-   * @param start The index of the first search result for this page of results.
-   * @param count The number of search results per page.
-   * @param query The search query.
    * @return The search results.
    */
   @GET
@@ -177,6 +174,30 @@ public interface PersonSearchQuery {
   @Warnings({
     @ResponseCode( code = 299, condition = "If part or all of the query is unable to be processed.")
   })
-  Response get(@QueryParam("start") String start, @QueryParam("count") String count, @QueryParam("q") String query);
+  Response get();
+
+  /**
+   * The index of the first search result for this page of results.
+   *
+   * @param start The index of the first search result for this page of results.
+   */
+  @QueryParam("start")
+  void setStart(String start);
+
+  /**
+   * The number of search results per page.
+   *
+   * @param count The number of search results per page.
+   */
+  @QueryParam("count")
+  void setCount(String count);
+
+  /**
+   * The search query.
+   *
+   * @param query The search query.
+   */
+  @QueryParam("q")
+  void setQuery(String query);
 
 }
