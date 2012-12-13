@@ -21,8 +21,10 @@ import org.gedcomx.rt.GedcomxConstants;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.Providers;
 import javax.xml.bind.JAXBElement;
@@ -76,7 +78,18 @@ public class GedcomxXmlProvider extends AbstractRootElementProvider {
 
   @Override
   protected Object readFrom(Class<Object> type, MediaType mediaType, Unmarshaller u, InputStream entityStream) throws JAXBException {
-    return u.unmarshal(new StreamSource(entityStream), this.instanceClass).getValue();
+    try {
+      return u.unmarshal(new StreamSource(entityStream), this.instanceClass).getValue();
+    }
+    catch (Exception e) {
+      String msg = "299 Malformed payload";
+      if (e.getMessage() != null)
+        msg += ": " + e.getMessage();
+      if (e.getCause() != null && e.getCause().getMessage() != null)
+        msg += ": " + e.getCause().getMessage();
+      Response response = Response.status(Response.Status.BAD_REQUEST).header("Warning", msg).build();
+      throw new WebApplicationException( e, response );
+    }
   }
 
   @Override

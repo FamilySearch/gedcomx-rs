@@ -23,8 +23,10 @@ import org.gedcomx.rt.GedcomxConstants;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.io.InputStream;
@@ -74,7 +76,18 @@ public class GedcomJsonProvider extends JacksonJaxbJsonProvider {
 
   @Override
   public Object readFrom(Class<Object> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException {
-    return super.readFrom((Class<Object>) this.instanceClass, genericType, annotations, mediaType, httpHeaders, entityStream);
+    try {
+      return super.readFrom((Class<Object>) this.instanceClass, genericType, annotations, mediaType, httpHeaders, entityStream);
+    }
+    catch (IOException e) {
+      String msg = "299 Malformed payload";
+      if (e.getMessage() != null)
+        msg += ": " + e.getMessage();
+      if (e.getCause() != null && e.getCause().getMessage() != null)
+        msg += ": " + e.getCause().getMessage();
+      Response response = Response.status(Response.Status.BAD_REQUEST).header("Warning", msg).build();
+      throw  new WebApplicationException( e, response );
+    }
   }
 
   @Override
