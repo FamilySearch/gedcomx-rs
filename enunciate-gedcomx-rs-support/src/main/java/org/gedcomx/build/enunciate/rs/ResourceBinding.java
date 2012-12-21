@@ -19,6 +19,7 @@ import com.sun.mirror.declaration.Declaration;
 import net.sf.jelly.apt.decorations.declaration.DecoratedDeclaration;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.ResourceParameter;
+import org.gedcomx.rt.rs.StateTransitionParameter;
 
 import java.util.*;
 
@@ -125,5 +126,44 @@ public class ResourceBinding extends DecoratedDeclaration {
       produces.addAll(method.getConsumesMime());
     }
     return produces;
+  }
+
+  public Properties getTransitionTemplateProperties() {
+    Properties properties = new Properties();
+    for (String state : this.states) {
+      StringBuilder queryParams = new StringBuilder();
+      boolean appendComma = false;
+      for (ResourceParameter parameter : getResourceParameters()) {
+        if (parameter.isPathParam() || parameter.isQueryParam()) {
+          String parameterName = parameter.getParameterName();
+
+          if (parameter.isQueryParam()) {
+            if (appendComma) {
+              queryParams.append(',');
+            }
+            queryParams.append(parameterName);
+            appendComma = true;
+          }
+
+          boolean optional = false;
+          String variableName = parameterName;
+          StateTransitionParameter transitionParameter = parameter.getAnnotation(StateTransitionParameter.class);
+          if (transitionParameter != null) {
+            optional = transitionParameter.optional();
+            if (!"##default".equals(transitionParameter.name())) {
+              variableName = transitionParameter.name();
+            }
+          }
+
+          properties.setProperty(state + "." + parameterName + ".optional", String.valueOf(optional));
+          properties.setProperty(state + "." + parameterName + ".variableName", variableName);
+        }
+      }
+
+      properties.setProperty(state + ".queryParams", queryParams.toString());
+      properties.setProperty(state + ".path", getPath());
+      properties.setProperty(state + ".namespace", getNamespace());
+    }
+    return properties;
   }
 }
