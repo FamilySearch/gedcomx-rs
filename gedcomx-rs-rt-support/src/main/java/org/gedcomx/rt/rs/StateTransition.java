@@ -43,7 +43,7 @@ public @interface StateTransition {
    *
    * @return The id of the endpoint state.
    */
-  String endpoint() default "##default";
+  String targetState() default "##default";
 
   /**
    * A human-readable description of the resource relationship.
@@ -65,4 +65,11 @@ public @interface StateTransition {
    * @return Whether this transition is provided as a templated link (as opposed to an outbound link).
    */
   boolean template() default false;
+
+  /**
+   * Whether this transition is conditional on the availability of all of its transition variables in the source state.
+   *
+   * @return Whether this transition is conditional on the availability of all of its transition variables in the source state.
+   */
+  boolean conditional() default false;
 }

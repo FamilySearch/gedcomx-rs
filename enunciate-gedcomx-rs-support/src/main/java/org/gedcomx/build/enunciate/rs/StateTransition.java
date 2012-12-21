@@ -31,22 +31,24 @@ import java.util.TreeSet;
 public final class StateTransition implements Comparable<StateTransition> {
 
   final String rel;
-  final String endpoint;
+  final String target;
   final String description;
   final Set<String> scope;
   final ResourceServiceProcessor processor;
   final boolean template;
+  final boolean conditional;
 
   public StateTransition(org.gedcomx.rt.rs.StateTransition meta, ResourceServiceProcessor processor) {
     this.processor = processor;
     this.rel = meta.rel();
     this.description = meta.description();
     this.template = meta.template();
-    String endpoint = meta.endpoint();
-    if ("##default".equals(endpoint)) {
-      endpoint = this.rel;
+    this.conditional = meta.conditional();
+    String target = meta.targetState();
+    if ("##default".equals(target)) {
+      target = this.rel;
     }
-    this.endpoint = endpoint;
+    this.target = target;
 
     this.scope = new TreeSet<String>();
     try {
@@ -69,11 +71,15 @@ public final class StateTransition implements Comparable<StateTransition> {
   }
 
   public ApplicationState getState() {
-    return this.processor.getApplicationStates().get(this.endpoint);
+    return this.processor.getApplicationStates().get(this.target);
   }
 
   public boolean isTemplate() {
     return template;
+  }
+
+  public boolean isConditional() {
+    return conditional;
   }
 
   public List<TypeDefinition> getScope() {
