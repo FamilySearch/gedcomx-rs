@@ -20,6 +20,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.gedcomx.atom.rt.AtomModelVisitor;
 import org.gedcomx.common.URI;
 import org.gedcomx.links.Link;
+import org.gedcomx.links.SupportsLinks;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.MediaTypeDefinition;
 import org.gedcomx.rt.Model;
@@ -60,7 +61,7 @@ import java.util.List;
 @XmlRootElement
 @XmlType ( name = "Feed", propOrder = {"authors", "contributors", "generator", "icon", "id", "results", "index", "links", "logo", "rights", "subtitle", "title", "updated", "entries"} )
 @SuppressWarnings ( "gedcomx:no_id" )
-public class Feed extends ExtensibleElement {
+public class Feed extends ExtensibleElement implements SupportsLinks {
 
   private List<Person> authors;
   private List<Person> contributors;

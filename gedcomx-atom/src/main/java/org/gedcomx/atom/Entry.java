@@ -20,6 +20,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.gedcomx.atom.rt.AtomModelVisitor;
 import org.gedcomx.common.URI;
 import org.gedcomx.links.Link;
+import org.gedcomx.links.SupportsLinks;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.json.JsonElementWrapper;
 import org.gedcomx.search.ResultConfidence;
@@ -41,7 +42,7 @@ import java.util.Map;
 @XmlType ( name = "Entry" )
 @JsonElementWrapper ( name = "entries" )
 @SuppressWarnings ( "gedcomx:no_id" )
-public class Entry extends ExtensibleElement {
+public class Entry extends ExtensibleElement implements SupportsLinks {
 
   private List<Person> authors;
   private List<Category> categories;
