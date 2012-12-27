@@ -16,6 +16,7 @@
 package org.gedcomx.atom;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.gedcomx.common.HasTransientProperties;
 import org.gedcomx.rt.SupportsExtensionElements;
 
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -29,7 +30,7 @@ import java.util.TreeMap;
  * @author Ryan Heaton
  */
 @XmlType ( name = "ExtensibleElement" )
-public abstract class ExtensibleElement extends CommonAttributes implements SupportsExtensionElements {
+public abstract class ExtensibleElement extends CommonAttributes implements SupportsExtensionElements, HasTransientProperties {
 
   private List<Object> extensionElements;
   protected Map<String, Object> transientProperties;
