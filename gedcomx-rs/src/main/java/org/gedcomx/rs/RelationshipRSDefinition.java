@@ -41,7 +41,9 @@ import javax.ws.rs.core.Response;
       transitions = {
         @StateTransition ( rel = ConclusionsRSDefinition.REL_RELATIONSHIP, description = "The conclusions for the relationship.", scope = Relationship.class ),
         @StateTransition ( rel = SourceReferencesRSDefinition.REL_RELATIONSHIP, description = "The source references for the relationship.", scope = Relationship.class ),
-        @StateTransition ( rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The notes for the relationship.", scope = Relationship.class )
+        @StateTransition ( rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The notes for the relationship.", scope = Relationship.class ),
+        @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON1, description = "Person 1 in the relationship.", scope = Relationship.class ),
+        @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON2, description = "Person 2 in the relationship.", scope = Relationship.class )
       }
     )
   }
@@ -49,6 +51,8 @@ import javax.ws.rs.core.Response;
 public interface RelationshipRSDefinition {
 
   public static final String REL = "relationship";
+  public static final String REL_PERSON1 = "person1";
+  public static final String REL_PERSON2 = "person2";
 
   /**
    * Read a relationship header attributes.
