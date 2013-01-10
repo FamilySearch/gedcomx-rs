@@ -20,11 +20,9 @@ import org.gedcomx.common.HasTransientProperties;
 import org.gedcomx.rt.SupportsExtensionElements;
 
 import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author Ryan Heaton
@@ -33,7 +31,7 @@ import java.util.TreeMap;
 public abstract class ExtensibleElement extends CommonAttributes implements SupportsExtensionElements, HasTransientProperties {
 
   private List<Object> extensionElements;
-  protected Map<String, Object> transientProperties;
+  protected final Map<String, Object> transientProperties = new TreeMap<String, Object>();
 
   /**
    * Custom extension elements.
@@ -108,6 +106,13 @@ public abstract class ExtensibleElement extends CommonAttributes implements Supp
     return ext;
   }
 
+  @JsonIgnore
+  @XmlTransient
+  @Override
+  public Map<String, Object> getTransientProperties() {
+    return Collections.unmodifiableMap(this.transientProperties);
+  }
+
   /**
    * Get a transient (non-serialized) property.
    *
@@ -115,7 +120,7 @@ public abstract class ExtensibleElement extends CommonAttributes implements Supp
    * @return The property.
    */
   public Object getTransientProperty(String name) {
-    return this.transientProperties == null ? null : this.transientProperties.get(name);
+    return this.transientProperties.get(name);
   }
 
   /**
@@ -125,10 +130,6 @@ public abstract class ExtensibleElement extends CommonAttributes implements Supp
    * @param value the property value.
    */
   public void setTransientProperty(String name, Object value) {
-    if (this.transientProperties == null) {
-      this.transientProperties = new TreeMap<String, Object>();
-    }
-
     this.transientProperties.put(name, value);
   }
 }

@@ -29,7 +29,7 @@ import java.util.*;
 public class ResourceBinding extends DecoratedDeclaration {
 
   private final String path;
-  private final List<ResourceDefinitionDeclaration> definitions = new ArrayList<ResourceDefinitionDeclaration>();
+  private final ResourceDefinitionDeclaration definition;
   private final List<ResourceMethod> methods = new ArrayList<ResourceMethod>();
   private final Set<ResponseCode> statusCodes = new HashSet<ResponseCode>();
   private final Set<ResponseCode> warnings = new HashSet<ResponseCode>();
@@ -45,17 +45,17 @@ public class ResourceBinding extends DecoratedDeclaration {
     }
   });
 
-  private final Set<String> states;
+  private final ApplicationState state;
   final String namespace;
   final String projectId;
 
-  public ResourceBinding(Declaration delegate, String path, ResourceDefinitionDeclaration definition, org.gedcomx.rt.rs.ResourceBinding metadata) {
+  public ResourceBinding(Declaration delegate, String path, ResourceDefinitionDeclaration definition, ApplicationState state, org.gedcomx.rt.rs.ResourceBinding metadata) {
     super(delegate);
     this.path = path;
-    this.definitions.add(definition);
+    this.definition = definition;
     this.namespace = metadata == null || "##default".equals(metadata.namespace()) ? null : metadata.namespace();
     this.projectId = metadata == null || "##default".equals(metadata.projectId()) ? null : metadata.projectId();
-    this.states = new TreeSet<String>(Arrays.asList(metadata.states()));
+    this.state = state;
   }
 
   public String getNamespace() {
@@ -70,26 +70,12 @@ public class ResourceBinding extends DecoratedDeclaration {
     return path;
   }
 
-  public Set<String> getStates() {
-    return states;
+  public ApplicationState getState() {
+    return state;
   }
 
-  public List<ResourceDefinitionDeclaration> getDefinitions() {
-    return Collections.unmodifiableList(definitions);
-  }
-
-  void addResourceDefinitionConditionally(ResourceDefinitionDeclaration rsd) {
-    boolean found = false;
-    for (ResourceDefinitionDeclaration definition : this.definitions) {
-      if (definition.getQualifiedName().equals(rsd.getQualifiedName())) {
-        found = true;
-        break;
-      }
-    }
-
-    if (!found) {
-      this.definitions.add(rsd);
-    }
+  public ResourceDefinitionDeclaration getDefinition() {
+    return definition;
   }
 
   public Set<ResponseCode> getStatusCodes() {
@@ -130,7 +116,7 @@ public class ResourceBinding extends DecoratedDeclaration {
 
   public Properties getTransitionTemplateProperties() {
     Properties properties = new Properties();
-    for (String state : this.states) {
+    if (this.state != null) {
       StringBuilder queryParams = new StringBuilder();
       boolean appendComma = false;
       for (ResourceParameter parameter : getResourceParameters()) {
@@ -155,14 +141,50 @@ public class ResourceBinding extends DecoratedDeclaration {
             }
           }
 
-          properties.setProperty(state + "." + parameterName + ".optional", String.valueOf(optional));
-          properties.setProperty(state + "." + parameterName + ".variableName", variableName);
+          properties.setProperty(this.state + "." + parameterName + ".optional", String.valueOf(optional));
+          properties.setProperty(this.state + "." + parameterName + ".variableName", variableName);
         }
       }
 
-      properties.setProperty(state + ".queryParams", queryParams.toString());
-      properties.setProperty(state + ".path", getPath());
-      properties.setProperty(state + ".namespace", getNamespace());
+      properties.setProperty(this.state + ".queryParams", queryParams.toString());
+      properties.setProperty(this.state + ".path", getPath());
+      properties.setProperty(this.state + ".namespace", getNamespace());
+      properties.setProperty(this.state + ".title", this.state.getName());
+
+      Iterator<String> it = getConsumes().iterator();
+      StringBuilder accept = new StringBuilder();
+      while (it.hasNext()) {
+        String consumes = it.next();
+        accept.append(consumes);
+        if (it.hasNext()) {
+          accept.append(',');
+        }
+      }
+      properties.setProperty(state + ".accept", accept.toString());
+
+      it = getProduces().iterator();
+      StringBuilder type = new StringBuilder();
+      while (it.hasNext()) {
+        String produces = it.next();
+        type.append(produces);
+        if (it.hasNext()) {
+          type.append(',');
+        }
+      }
+      properties.setProperty(state + ".type", type.toString());
+
+      StringBuilder allow = new StringBuilder();
+      appendComma = false;
+      for (ResourceMethod method : getMethods()) {
+        for (String op : method.getHttpMethods()) {
+          if (appendComma) {
+            allow.append(',');
+          }
+          allow.append(op);
+          appendComma = true;
+        }
+      }
+      properties.setProperty(state + ".allow", allow.toString());
     }
     return properties;
   }

@@ -44,9 +44,9 @@ public @interface ResourceBinding {
   String projectId() default "##default";
 
   /**
-   * The states being bound by this resource. Each state may only be bound by a single binding.
+   * The state bound by this resource. Each state may only be bound by a single binding.
    *
-   * @return The states being bound by this resource.
+   * @return The state bound by this resource.
    */
-  String[] states() default {};
+  String state() default "##default";
 }

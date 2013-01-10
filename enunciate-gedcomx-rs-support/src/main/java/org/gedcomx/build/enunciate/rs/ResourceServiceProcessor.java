@@ -52,11 +52,6 @@ public class ResourceServiceProcessor {
   private Map<String, ResourceBinding> bindingsByPath;
   private Map<String, ApplicationState> applicationStates;
 
-  /**
-   * @see <a href="http://tools.ietf.org/html/draft-nottingham-http-link-header">Web Linking</a>
-   */
-  private static final Set<String> REGISTERED_LINK_RELATIONS = new TreeSet<String>(Arrays.asList("alternate", "appendix", "bookmark", "chapter", "contents", "copyright", "current", "describedby", "edit", "edit-media", "enclosure", "first", "glossary", "help", "hub", "index", "last", "latest-version", "license", "next", "next-archive", "payment", "prev", "predecessor-version", "previous", "prev-archive", "related", "replies", "section", "self", "service", "start", "stylesheet", "subsection", "successor-version", "up", "version-history", "via", "working-copy", "working-copy-of"));
-
   public Collection<ResourceDefinitionDeclaration> getResourceDefinitions() {
     return resourceDefinitions;
   }
@@ -122,9 +117,6 @@ public class ResourceServiceProcessor {
         }
 
         for (ApplicationState applicationState : rsd.getApplicationStates()) {
-          if (REGISTERED_LINK_RELATIONS.contains(applicationState.getId())) {
-            result.addError(rsd, String.format("Illegal application state definition: %s is a registered link relation.", applicationState.getId()));
-          }
           ApplicationState conflict = applicationStates.put(applicationState.getId(), applicationState);
           if (conflict != null) {
             result.addError(rsd, String.format("The state \"%s\" for the resource definition at %s is already being defined by resource definition %s.", applicationState.getId(), rsd.getQualifiedName(), conflict.getDefinition().getQualifiedName()));
@@ -161,22 +153,29 @@ public class ResourceServiceProcessor {
               metadata = declaringResource.getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
             }
 
-            binding = new ResourceBinding(bindingDeclaration, path, rsd, metadata);
-            bindingsByPath.put(path, binding);
-
-            for (String state : binding.getStates()) {
-              ApplicationState applicationState = applicationStates.get(state);
-              ResourceBinding conflict = applicationState.getBinding();
-              applicationState.setBinding(binding);
-              if (conflict != null) {
-                result.addError(bindingDeclaration, String.format("The state \"%s\" bound by %s is already being bound by %s.", state, binding.getPath(), conflict.getPath()));
+            String stateId = metadata == null ? null : metadata.state();
+            ApplicationState state = null;
+            for (ApplicationState candidate : rsd.getApplicationStates()) {
+              if (candidate.getId().equals(stateId)) {
+                state = candidate;
+                break;
               }
             }
 
+            binding = new ResourceBinding(bindingDeclaration, path, rsd, state, metadata);
+            bindingsByPath.put(path, binding);
+
+            if (state == null) {
+              result.addWarning(binding, String.format("Binding %s implements resource definition %s, but it doesn't bind any states defined by it.", binding.getPath(), rsd.getQualifiedName()));
+            }
+            else if (state.getBinding() != null) {
+              result.addError(bindingDeclaration, String.format("The state \"%s\" bound by %s is already being bound by %s.", stateId, path, state.getBinding().getPath()));
+            }
+            else {
+              state.setBinding(binding);
+            }
+
             rsd.getBindings().add(binding);
-          }
-          else {
-            binding.addResourceDefinitionConditionally(rsd);
           }
 
           binding.getMethods().add(resourceMethod);
@@ -198,40 +197,27 @@ public class ResourceServiceProcessor {
     }
 
     for (ResourceBinding binding : bindingsByPath.values()) {
-      for (ResourceDefinitionDeclaration definition : binding.getDefinitions()) {
-        boolean applicable = false;
-        for (ApplicationState state : definition.getApplicationStates()) {
-          if (binding.getStates().contains(state.getId())) {
-            applicable = true;
-            break;
-          }
-        }
-
-        if (!applicable) {
-          result.addWarning(binding, String.format("Binding %s implements resource definition %s, but it doesn't bind any states defined by it.", binding.getPath(), definition.getQualifiedName()));
-        }
-
-        for (ElementDeclaration resourceElement : definition.getResourceElements()) {
-          SchemaInfo schemaInfo = model.getNamespacesToSchemas().get(resourceElement.getNamespace());
-          MediaTypeDeclaration declaration = (MediaTypeDeclaration) schemaInfo.getProperties().get("mediaType");
-          if (declaration != null) {
-            if (declaration.getXmlMediaType() != null) {
-              if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getXmlMediaType())) {
-                result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
-              }
-
-              if (!binding.getProduces().contains(declaration.getXmlMediaType())) {
-                result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
-              }
+      ResourceDefinitionDeclaration definition = binding.getDefinition();
+      for (ElementDeclaration resourceElement : definition.getResourceElements()) {
+        SchemaInfo schemaInfo = model.getNamespacesToSchemas().get(resourceElement.getNamespace());
+        MediaTypeDeclaration declaration = (MediaTypeDeclaration) schemaInfo.getProperties().get("mediaType");
+        if (declaration != null) {
+          if (declaration.getXmlMediaType() != null) {
+            if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getXmlMediaType())) {
+              result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
             }
 
-            if (declaration.getJsonMediaType() != null) {
-              if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getJsonMediaType())) {
-                result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
-              }
-              if (declaration.getJsonMediaType() != null && !binding.getProduces().contains(declaration.getJsonMediaType())) {
-                result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
-              }
+            if (!binding.getProduces().contains(declaration.getXmlMediaType())) {
+              result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
+            }
+          }
+
+          if (declaration.getJsonMediaType() != null) {
+            if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getJsonMediaType())) {
+              result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+            }
+            if (declaration.getJsonMediaType() != null && !binding.getProduces().contains(declaration.getJsonMediaType())) {
+              result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
             }
           }
         }
