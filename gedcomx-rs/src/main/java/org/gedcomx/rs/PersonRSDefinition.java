@@ -16,9 +16,11 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
+import org.gedcomx.common.Note;
 import org.gedcomx.conclusion.*;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
+import org.gedcomx.source.SourceReference;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -42,12 +44,16 @@ import javax.ws.rs.core.Response;
       rel = PersonRSDefinition.REL,
       description = "A person.",
       transitions = {
-        @StateTransition ( rel = ConclusionsRSDefinition.REL_PERSON, description = "The conclusions for the person (embedded link).", scope = Person.class ),
-        @StateTransition ( rel = SourceReferencesRSDefinition.REL_PERSON, description = "The source references for the person (embedded link).", scope = Person.class ),
-        @StateTransition ( rel = NotesRSDefinition.REL_PERSON, description = "The notes for the person (embedded link).", scope = Person.class ),
-        @StateTransition ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, description = "The relationships to the spouses of the person (embedded link).", scope = Person.class ),
-        @StateTransition ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, description = "The relationships to the children of the person (embedded link).", scope = Person.class ),
-        @StateTransition ( rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, description = "The relationships to the parents of the person (embedded link).", scope = Person.class )
+        @StateTransition ( rel = ConclusionRSDefinition.REL_PERSON, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }, conditional = true ),
+        @StateTransition ( rel = ConclusionsRSDefinition.REL_PERSON, description = "The conclusions for the person (embedded link).", scope = Person.class, conditional = true ),
+        @StateTransition ( rel = SourceReferencesRSDefinition.REL_PERSON, description = "The source references for the person (embedded link).", scope = Person.class, conditional = true),
+        @StateTransition ( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class, conditional = true),
+        @StateTransition ( rel = NotesRSDefinition.REL_PERSON, description = "The notes for the person (embedded link).", scope = Person.class, conditional = true),
+        @StateTransition ( rel = NoteRSDefinition.REL_PERSON, description = "A note.", scope = Note.class, conditional = true),
+        @StateTransition ( rel = RelationshipRSDefinition.REL, description = "A relationship.", scope = Relationship.class ),
+        @StateTransition ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, description = "The relationships to the spouses of the person (embedded link).", scope = Person.class, conditional = true ),
+        @StateTransition ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, description = "The relationships to the children of the person (embedded link).", scope = Person.class, conditional = true ),
+        @StateTransition ( rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, description = "The relationships to the parents of the person (embedded link).", scope = Person.class, conditional = true )
       }
     )
   }

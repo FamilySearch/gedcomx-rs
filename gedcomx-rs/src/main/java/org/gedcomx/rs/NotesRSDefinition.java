@@ -41,7 +41,7 @@ import javax.ws.rs.core.Response;
       rel = NotesRSDefinition.REL_PERSON,
       description = "The set of notes applicable to, and contained by, a specific person.",
       transitions = {
-        @StateTransition( rel = NoteRSDefinition.REL_PERSON, description = "A note.", scope = Note.class),
+        @StateTransition( rel = NoteRSDefinition.REL_PERSON, description = "A note.", scope = Note.class, conditional = true),
         @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class )
       }
     ),
@@ -50,7 +50,7 @@ import javax.ws.rs.core.Response;
       rel = NotesRSDefinition.REL_RELATIONSHIP,
       description = "The set of notes applicable to, and contained by, a specific relationship.",
       transitions = {
-        @StateTransition( rel = NoteRSDefinition.REL_RELATIONSHIP, description = "A note.", scope = Note.class),
+        @StateTransition( rel = NoteRSDefinition.REL_RELATIONSHIP, description = "A note.", scope = Note.class, conditional = true),
         @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class)
       }
     )

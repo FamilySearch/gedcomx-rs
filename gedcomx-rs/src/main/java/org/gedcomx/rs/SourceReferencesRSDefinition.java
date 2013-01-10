@@ -42,7 +42,7 @@ import javax.ws.rs.core.Response;
       rel = SourceReferencesRSDefinition.REL_PERSON,
       description = "The set of source references applicable to, and contained by, a specific person.",
       transitions = {
-        @StateTransition( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class),
+        @StateTransition( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class, conditional = true ),
         @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class )
       }
     ),
@@ -51,7 +51,7 @@ import javax.ws.rs.core.Response;
       rel = SourceReferencesRSDefinition.REL_RELATIONSHIP,
       description = "The set of source references applicable to, and contained by, a specific relationship.",
       transitions = {
-        @StateTransition( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class),
+        @StateTransition( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class, conditional = true ),
         @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class)
       }
     )
