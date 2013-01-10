@@ -26,8 +26,9 @@ import javax.ws.rs.core.Response;
 
 /**
  * The conclusions resource defines the interface for a list of conclusions that are contained by a specific resource,
- * such as a person or relationship. Some implementations may bind the conclusions resource to the same path as the
- * resource that contains the conclusions (e.g. person or relationship).
+ * such as a person or relationship. The conclusions resource is to be considered an embedded resource, any links to this
+ * resource are to be treated as embedded links. This means that some implementations MAY choose to bind this interface
+ * to the containing resource (person or relationship).
  *
  * @author Ryan Heaton
  */

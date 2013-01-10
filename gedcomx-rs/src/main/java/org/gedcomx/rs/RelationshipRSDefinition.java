@@ -27,7 +27,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 /**
- * The relationship resource service is used to manage a relationship.
+ * <p>The relationship resource defines the interface for a relationship, including the components of a relationship such as the relationship's facts, source references, and notes.</p>
+ *
+ * <p>The relationship resource MAY contain links to other resources that are to be considered "embedded", meaning the resources being linked to are to be considered
+ * as components of the relationship resource and MUST be resolved and embedded in order to fully resolve all of the components of the relationship.</p>
  */
 @ResourceDefinition (
   resourceElement = Gedcomx.class,
@@ -39,9 +42,9 @@ import javax.ws.rs.core.Response;
       rel = RelationshipRSDefinition.REL,
       description = "A relationship.",
       transitions = {
-        @StateTransition ( rel = ConclusionsRSDefinition.REL_RELATIONSHIP, description = "The conclusions for the relationship.", scope = Relationship.class ),
-        @StateTransition ( rel = SourceReferencesRSDefinition.REL_RELATIONSHIP, description = "The source references for the relationship.", scope = Relationship.class ),
-        @StateTransition ( rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The notes for the relationship.", scope = Relationship.class ),
+        @StateTransition ( rel = ConclusionsRSDefinition.REL_RELATIONSHIP, description = "The conclusions for the relationship (embedded link).", scope = Relationship.class ),
+        @StateTransition ( rel = SourceReferencesRSDefinition.REL_RELATIONSHIP, description = "The source references for the relationship (embedded link).", scope = Relationship.class ),
+        @StateTransition ( rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The notes for the relationship (embedded link).", scope = Relationship.class ),
         @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON1, description = "Person 1 in the relationship.", scope = Relationship.class ),
         @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON2, description = "Person 2 in the relationship.", scope = Relationship.class )
       }

@@ -27,7 +27,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 /**
- * The notes resource defines the interface for a list of notes on an entity (e.g. person, relationship).
+ * The notes resource defines the interface for a list of notes on an entity (e.g. person, relationship). The notes resource is to be considered an
+ * embedded resource, any links to this resource are to be treated as embedded links. This means that some implementations MAY choose to bind this interface
+ * to the containing resource (person or relationship).
  */
 @ResourceDefinition (
   projectId = "gedcomx-rs",

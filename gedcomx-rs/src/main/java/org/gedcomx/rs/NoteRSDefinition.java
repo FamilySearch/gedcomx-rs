@@ -27,7 +27,9 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * The note resource defines the interface for a note.
+ * The note resource defines the interface for a note. The note resource is to be considered an embedded resource, any links to this
+ * resource are to be treated as embedded links. This means that some implementations MAY choose to bind this interface
+ * to the containing resource (person or relationship).
  */
 @ResourceDefinition(
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,

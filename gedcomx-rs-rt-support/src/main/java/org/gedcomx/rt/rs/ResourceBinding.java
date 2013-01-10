@@ -49,4 +49,11 @@ public @interface ResourceBinding {
    * @return The state bound by this resource.
    */
   String state() default "##default";
+
+  /**
+   * The list of states that are being included by this binding.
+   *
+   * @return The list of states that are being included by this binding.
+   */
+  String[] includedStates() default {};
 }

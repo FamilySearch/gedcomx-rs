@@ -24,7 +24,11 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 /**
- * The person resource defines a person.
+ * <p>The person resource defines the interface for a person, including the components of a person such as the person's names, gender, facts, source references, and notes.
+ * The person resource also includes the relationships in which the person is a member, such as the relationships to parents, spouses, and children.</p>
+ *
+ * <p>The person resource MAY contain links to other resources that are to be considered "embedded", meaning the resources being linked to are to be considered
+ * as components of the person resource and MUST be resolved and embedded in order to fully resolve all of the components of the person.</p>
  *
  * @author Ryan Heaton
  */
@@ -38,12 +42,12 @@ import javax.ws.rs.core.Response;
       rel = PersonRSDefinition.REL,
       description = "A person.",
       transitions = {
-        @StateTransition ( rel = ConclusionsRSDefinition.REL_PERSON, description = "The conclusions for the person.", scope = Person.class ),
-        @StateTransition ( rel = SourceReferencesRSDefinition.REL_PERSON, description = "The source references for the person.", scope = Person.class ),
-        @StateTransition ( rel = NotesRSDefinition.REL_PERSON, description = "The notes for the person.", scope = Person.class ),
-        @StateTransition ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, description = "The relationships to the spouses of the person." ),
-        @StateTransition ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, description = "The relationships to the children of the person." ),
-        @StateTransition ( rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, description = "The relationships to the parents of the person." )
+        @StateTransition ( rel = ConclusionsRSDefinition.REL_PERSON, description = "The conclusions for the person (embedded link).", scope = Person.class ),
+        @StateTransition ( rel = SourceReferencesRSDefinition.REL_PERSON, description = "The source references for the person (embedded link).", scope = Person.class ),
+        @StateTransition ( rel = NotesRSDefinition.REL_PERSON, description = "The notes for the person (embedded link).", scope = Person.class ),
+        @StateTransition ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, description = "The relationships to the spouses of the person (embedded link).", scope = Person.class ),
+        @StateTransition ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, description = "The relationships to the children of the person (embedded link).", scope = Person.class ),
+        @StateTransition ( rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, description = "The relationships to the parents of the person (embedded link).", scope = Person.class )
       }
     )
   }

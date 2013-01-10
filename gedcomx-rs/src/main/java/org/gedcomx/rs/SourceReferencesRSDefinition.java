@@ -28,8 +28,9 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * The source references resource defines a collection of source references on an entity (e.g. person, relationship).
- * Some implementations may bind the notes resource and the person (or relationship) resource together.
+ * The source references resource defines a collection of source references on an entity (e.g. person, relationship). The source references
+ * resource is to be considered an embedded resource, any links to this resource are to be treated as embedded links. This means that some
+ * implementations MAY choose to bind this interface to the containing resource (person or relationship).
  */
 @ResourceDefinition (
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,

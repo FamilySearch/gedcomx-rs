@@ -25,7 +25,9 @@ import javax.ws.rs.core.Response;
 /**
  * The person relationships resource defines the interface for a set of relationships that reference a specific person. Examples might include
  * the set of relationships to the spouses of a person, the set of relationships to the parents of a person, and the set of relationships
- * to the children of a person.
+ * to the children of a person. The person relationships resource is to be considered an embedded resource, any links to this
+ * resource are to be treated as embedded links. This means that some implementations MAY choose to bind this interface
+ * to the containing resource (person or relationship).
  */
 @ResourceDefinition (
   projectId = "gedcomx-rs",
