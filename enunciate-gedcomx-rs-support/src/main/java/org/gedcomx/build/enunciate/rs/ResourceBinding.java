@@ -131,7 +131,7 @@ public class ResourceBinding extends DecoratedDeclaration {
             appendComma = true;
           }
 
-          boolean optional = false;
+          boolean optional = true;
           String variableName = parameterName;
           StateTransitionParameter transitionParameter = parameter.getAnnotation(StateTransitionParameter.class);
           if (transitionParameter != null) {

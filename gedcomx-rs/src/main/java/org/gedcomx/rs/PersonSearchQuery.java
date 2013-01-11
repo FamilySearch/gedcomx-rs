@@ -146,11 +146,11 @@ import javax.ws.rs.core.Response;
       description = "A person search query.",
       transitions = {
         @StateTransition ( rel = PersonRSDefinition.REL, description = "The person in the search result.", scope = Entry.class ),
-        @StateTransition ( rel = "self", description = "A link to this search result set." ),
-        @StateTransition ( rel = "first", description = "A link to the first page of search results, if any." ),
-        @StateTransition ( rel = "next", description = "A link to the next page of search results, if any." ),
-        @StateTransition ( rel = "prev", description = "A link to the previous page of search results, if any." ),
-        @StateTransition ( rel = "last", description = "A link to the last page of search results, if any." )
+        @StateTransition ( rel = "self", targetState = PersonSearchQuery.REL, description = "A link to this search result set." ),
+        @StateTransition ( rel = "first", targetState = PersonSearchQuery.REL, description = "A link to the first page of search results, if any.", conditional = true ),
+        @StateTransition ( rel = "next", targetState = PersonSearchQuery.REL, description = "A link to the next page of search results, if any.", conditional = true ),
+        @StateTransition ( rel = "prev", targetState = PersonSearchQuery.REL, description = "A link to the previous page of search results, if any.", conditional = true ),
+        @StateTransition ( rel = "last", targetState = PersonSearchQuery.REL, description = "A link to the last page of search results, if any.", conditional = true )
       }
     )
   }

@@ -50,8 +50,8 @@ import javax.ws.rs.core.Response;
         @StateTransition ( rel = SourceReferencesRSDefinition.REL_RELATIONSHIP, description = "The source references for the relationship (embedded link).", scope = Relationship.class, conditional = true ),
         @StateTransition ( rel = NoteRSDefinition.REL_PERSON, description = "A note.", scope = Note.class, conditional = true),
         @StateTransition ( rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The notes for the relationship (embedded link).", scope = Relationship.class, conditional = true ),
-        @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON1, description = "Person 1 in the relationship.", scope = Relationship.class ),
-        @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON2, description = "Person 2 in the relationship.", scope = Relationship.class )
+        @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON1, targetState = PersonRSDefinition.REL, description = "Person 1 in the relationship.", scope = Relationship.class ),
+        @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON2, targetState = PersonRSDefinition.REL, description = "Person 2 in the relationship.", scope = Relationship.class )
       }
     )
   }
