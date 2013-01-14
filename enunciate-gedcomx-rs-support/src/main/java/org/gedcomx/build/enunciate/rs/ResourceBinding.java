@@ -117,6 +117,7 @@ public class ResourceBinding extends DecoratedDeclaration {
   public Properties getTransitionTemplateProperties() {
     Properties properties = new Properties();
     if (this.state != null) {
+      String state = this.state.getId();
       StringBuilder queryParams = new StringBuilder();
       boolean appendComma = false;
       for (ResourceParameter parameter : getResourceParameters()) {
@@ -141,15 +142,15 @@ public class ResourceBinding extends DecoratedDeclaration {
             }
           }
 
-          properties.setProperty(this.state + "." + parameterName + ".optional", String.valueOf(optional));
-          properties.setProperty(this.state + "." + parameterName + ".variableName", variableName);
+          properties.setProperty(state + "." + parameterName + ".optional", String.valueOf(optional));
+          properties.setProperty(state + "." + parameterName + ".variableName", variableName);
         }
       }
 
-      properties.setProperty(this.state + ".queryParams", queryParams.toString());
-      properties.setProperty(this.state + ".path", getPath());
-      properties.setProperty(this.state + ".namespace", getNamespace());
-      properties.setProperty(this.state + ".title", this.state.getName());
+      properties.setProperty(state + ".queryParams", queryParams.toString());
+      properties.setProperty(state + ".path", getPath());
+      properties.setProperty(state + ".namespace", getNamespace());
+      properties.setProperty(state + ".title", this.state.getName());
 
       Iterator<String> it = getConsumes().iterator();
       StringBuilder accept = new StringBuilder();
