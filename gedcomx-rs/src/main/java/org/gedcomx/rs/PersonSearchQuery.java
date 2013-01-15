@@ -17,6 +17,7 @@ package org.gedcomx.rs;
 
 import org.gedcomx.atom.Entry;
 import org.gedcomx.atom.Feed;
+import org.gedcomx.conclusion.Person;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
@@ -146,6 +147,7 @@ import javax.ws.rs.core.Response;
       description = "A person search query.",
       transitions = {
         @StateTransition ( rel = PersonRSDefinition.REL, description = "The person in the search result.", scope = Entry.class ),
+        @StateTransition ( rel = PersonRSDefinition.REL, description = "The person in the search result.", scope = Person.class ),
         @StateTransition ( rel = "self", targetState = PersonSearchQuery.REL, description = "A link to this search result set." ),
         @StateTransition ( rel = "first", targetState = PersonSearchQuery.REL, description = "A link to the first page of search results, if any.", conditional = true ),
         @StateTransition ( rel = "next", targetState = PersonSearchQuery.REL, description = "A link to the next page of search results, if any.", conditional = true ),
