@@ -77,7 +77,7 @@ public class GedcomJsonProvider extends JacksonJaxbJsonProvider {
   @Override
   public Object readFrom(Class<Object> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException {
     try {
-      return super.readFrom((Class<Object>) this.instanceClass, genericType, annotations, mediaType, httpHeaders, entityStream);
+      return super.readFrom((Class<Object>) this.instanceClass, this.instanceClass, annotations, mediaType, httpHeaders, entityStream);
     }
     catch (IOException e) {
       String msg = "299 Malformed payload";
