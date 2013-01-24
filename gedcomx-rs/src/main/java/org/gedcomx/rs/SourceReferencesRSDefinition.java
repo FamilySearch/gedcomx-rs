@@ -61,6 +61,7 @@ public interface SourceReferencesRSDefinition {
 
   public static final String REL_PERSON = "person-source-references";
   public static final String REL_RELATIONSHIP = "relationship-source-references";
+  public static final String REL_COUPLE_CHILD_RELATIONSHIP = "couple-child-relationship-source-references";
 
   /**
    * Read the references to sources.

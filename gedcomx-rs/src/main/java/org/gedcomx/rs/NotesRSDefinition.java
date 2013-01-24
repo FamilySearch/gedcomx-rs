@@ -60,6 +60,7 @@ public interface NotesRSDefinition {
 
   public static final String REL_PERSON = "person-notes";
   public static final String REL_RELATIONSHIP = "relationship-notes";
+  public static final String REL_COUPLE_CHILD_RELATIONSHIP = "couple-child-relationship-notes";
 
   /**
    * Read the list of notes on the entity.
