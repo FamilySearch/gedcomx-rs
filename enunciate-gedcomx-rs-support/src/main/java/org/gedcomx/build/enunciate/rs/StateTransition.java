@@ -15,6 +15,7 @@
  */
 package org.gedcomx.build.enunciate.rs;
 
+import com.sun.mirror.type.MirroredTypeException;
 import com.sun.mirror.type.MirroredTypesException;
 import net.sf.jelly.apt.freemarker.FreemarkerModel;
 import org.codehaus.enunciate.apt.EnunciateFreemarkerModel;
@@ -31,9 +32,10 @@ import java.util.TreeSet;
 public final class StateTransition implements Comparable<StateTransition> {
 
   final String rel;
-  final String target;
   final String description;
   final Set<String> scope;
+  final String targetResourceQualifiedName;
+  final String targetHref;
   final ResourceServiceProcessor processor;
   final boolean template;
   final boolean conditional;
@@ -44,11 +46,22 @@ public final class StateTransition implements Comparable<StateTransition> {
     this.description = meta.description();
     this.template = meta.template();
     this.conditional = meta.conditional();
-    String target = meta.targetState();
-    if ("##default".equals(target)) {
-      target = this.rel;
+    String targetHref = meta.targetHref();
+    this.targetHref = "##default".equals(targetHref) ? null : targetHref;
+
+    String targetResourceName = null;
+    try {
+      targetResourceName = meta.targetResource().getName();
     }
-    this.target = target;
+    catch (MirroredTypeException e) {
+      targetResourceName = e.getQualifiedName();
+    }
+
+    if ("org.gedcomx.rt.rs.StateTransition.DEFAULT".equals(targetResourceName)) {
+      targetResourceName = null;
+    }
+
+    this.targetResourceQualifiedName = targetResourceName;
 
     this.scope = new TreeSet<String>();
     try {
@@ -66,12 +79,16 @@ public final class StateTransition implements Comparable<StateTransition> {
     return rel;
   }
 
-  public String getDescription() {
-    return description;
+  public String getTargetResourceQualifiedName() {
+    return targetResourceQualifiedName;
   }
 
-  public ApplicationState getState() {
-    return this.processor.getApplicationStates().get(this.target);
+  public String getTargetHref() {
+    return targetHref;
+  }
+
+  public String getDescription() {
+    return description;
   }
 
   public boolean isTemplate() {
@@ -104,16 +121,35 @@ public final class StateTransition implements Comparable<StateTransition> {
     }
 
     StateTransition that = (StateTransition) o;
-    return this.rel.equals(that.rel);
+
+    if (rel != null ? !rel.equals(that.rel) : that.rel != null) {
+      return false;
+    }
+
+    if (scope != null ? !scope.equals(that.scope) : that.scope != null) {
+      return false;
+    }
+
+    return true;
   }
 
   @Override
   public int hashCode() {
-    return this.rel.hashCode();
+    int result = rel != null ? rel.hashCode() : 0;
+    result = 31 * result + (scope != null ? scope.hashCode() : 0);
+    return result;
+  }
+
+  private String buildComparisonString() {
+    StringBuilder base = new StringBuilder(this.rel);
+    for (String scope : this.scope) {
+      base.append(scope);
+    }
+    return base.toString();
   }
 
   @Override
   public int compareTo(StateTransition o) {
-    return this.rel.compareTo(o.rel);
+    return buildComparisonString().compareTo(o.buildComparisonString());
   }
 }

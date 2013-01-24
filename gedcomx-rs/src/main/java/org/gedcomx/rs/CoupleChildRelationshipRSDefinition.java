@@ -20,7 +20,6 @@ import org.gedcomx.conclusion.CoupleChildRelationship;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StateTransition;
 import org.gedcomx.rt.rs.StatusCodes;
 
@@ -35,24 +34,17 @@ import javax.ws.rs.core.Response;
  * <p>The couple-child relationship resource manages the relationship between a child and <em>one or two</em> parents.</p>
  */
 @ResourceDefinition (
+  name = "Couple-Child Relationship",
+  description = "A couple-child relationship.",
   projectId = GedcomxConstants.GEDCOMX_PROJECT_ID,
   resourceElement = Gedcomx.class,
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  states = {
-    @StateDefinition (
-      name = "Couple-Child Relationship",
-      rel = CoupleChildRelationshipRSDefinition.REL,
-      description = "A couple-child relationship.",
-      transitions = {
-        @StateTransition ( rel = SourceReferencesRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "The source references for the couple-child relationship.", scope = CoupleChildRelationship.class ),
-        @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_FATHER, targetState = PersonRSDefinition.REL, description = "The father of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true ),
-        @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_MOTHER, targetState = PersonRSDefinition.REL, description = "The mother of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true ),
-        @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_CHILD, targetState = PersonRSDefinition.REL, description = "The child of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true ),
-        @StateTransition ( rel = NotesRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "The notes for the couple-child relationship.", scope = CoupleChildRelationship.class )
-//        ,
-//        @StateTransition ( rel = "restore", targetState = RestoreActionRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "The link to restore the couple-child relationship, if the relationship has been deleted.", scope = CoupleChildRelationship.class, conditional = true )
-      }
-    )
+  transitions = {
+    @StateTransition ( rel = SourceReferencesRSDefinition.REL, description = "The source references for the couple-child relationship.", scope = CoupleChildRelationship.class ),
+    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_FATHER, targetResource = PersonRSDefinition.class, description = "The father of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true ),
+    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_MOTHER, targetResource = PersonRSDefinition.class, description = "The mother of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true ),
+    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_CHILD, targetResource = PersonRSDefinition.class, description = "The child of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true ),
+    @StateTransition ( rel = NotesRSDefinition.REL, description = "The notes for the couple-child relationship.", scope = CoupleChildRelationship.class )
   }
 )
 public interface CoupleChildRelationshipRSDefinition {

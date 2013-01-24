@@ -19,30 +19,27 @@ import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
 
 /**
- * The agent resource defines the interface for a agent.
+ * The agent resource defines the interface for an agent, such as a user or other contributor.
  */
 @ResourceDefinition (
+  name = "Agent",
+  description = "An agent, such as a user or other contributor.",
   resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  states = {
-    @StateDefinition (name = "Agent", rel = AgentRSDefinition.REL, description = "An agent which is typically a user that has contributed information.")
-  }
+  namespace = GedcomxConstants.GEDCOMX_NAMESPACE
 )
-public interface AgentRSDefinition
-{
+public interface AgentRSDefinition {
 
   public static final String REL = "agent";
 
   /**
-   * Read a agent.
+   * Read an agent.
    *
    * @return The agent.
    */

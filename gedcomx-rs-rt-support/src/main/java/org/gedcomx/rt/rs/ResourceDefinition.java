@@ -33,6 +33,13 @@ import java.lang.annotation.Target;
 public @interface ResourceDefinition {
 
   /**
+   * A name for this resource definition.
+   *
+   * @return A name for this resource definition.
+   */
+  String name();
+
+  /**
    * A namespace for the resource. Default is the empty namespace.
    *
    * @return A namespace for the resource.
@@ -47,6 +54,13 @@ public @interface ResourceDefinition {
   String projectId();
 
   /**
+   * A human-readable description of this resource.
+   *
+   * @return A human-readable description of this resource.
+   */
+  String description();
+
+  /**
    * The class defining the element used as the representation model for the resource. The
    * resource element should be a JAXB {@link javax.xml.bind.annotation.XmlRootElement}.
    *
@@ -55,10 +69,17 @@ public @interface ResourceDefinition {
   Class<?>[] resourceElement() default {};
 
   /**
-   * The states being defined by this resource definition.
+   * The transitions to other resource definitions.
    *
-   * @return The states being defined by this resource definition.
+   * @return The transitions to other resource definitions.
    */
-  StateDefinition[] states() default {};
+  StateTransition[] transitions() default {};
+
+  /**
+   * Whether this resource is to be considered an embedded resource, within the context of another resource.
+   *
+   * @return Whether this resource is to be considered an embedded resource, within the context of another resource.
+   */
+  boolean embedded() default false;
 
 }

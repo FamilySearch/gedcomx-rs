@@ -19,7 +19,6 @@ import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.POST;
@@ -29,12 +28,11 @@ import javax.ws.rs.core.Response;
  * The relationships resource defines the interface for the set of relationships in the application.
  */
 @ResourceDefinition (
+  name = "Couple-Child Relationships",
+  description = "The set of couple-child relationships.",
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition ( name = "Couple-Child Relationships", rel = CoupleChildRelationshipsRSDefinition.REL, description = "The set of couple-child relationships." )
-  }
+  resourceElement = Gedcomx.class
 )
 public interface CoupleChildRelationshipsRSDefinition {
 
@@ -48,7 +46,7 @@ public interface CoupleChildRelationshipsRSDefinition {
    */
   @POST
   @StatusCodes ( {
-                   @ResponseCode ( code = 201, condition = "The creation of the couple-child relationship was successful. Expect a location header specifying the link to the created couple-child relationship." )
-                 } )
+    @ResponseCode ( code = 201, condition = "The creation of the couple-child relationship was successful. Expect a location header specifying the link to the created couple-child relationship." )
+  } )
   Response post(Gedcomx relationship);
 }

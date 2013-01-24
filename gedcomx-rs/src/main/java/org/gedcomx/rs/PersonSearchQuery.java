@@ -137,24 +137,19 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
+  name = "Person Search",
+  description = "A search query for a person.",
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Feed.class,
-  states = {
-    @StateDefinition (
-      name = "Person Search",
-      rel = PersonSearchQuery.REL,
-      description = "A person search query.",
-      transitions = {
-        @StateTransition ( rel = PersonRSDefinition.REL, description = "The person in the search result.", scope = Entry.class ),
-        @StateTransition ( rel = PersonRSDefinition.REL, description = "The person in the search result.", scope = Person.class ),
-        @StateTransition ( rel = "self", targetState = PersonSearchQuery.REL, description = "A link to this search result set." ),
-        @StateTransition ( rel = "first", targetState = PersonSearchQuery.REL, description = "A link to the first page of search results, if any.", conditional = true ),
-        @StateTransition ( rel = "next", targetState = PersonSearchQuery.REL, description = "A link to the next page of search results, if any.", conditional = true ),
-        @StateTransition ( rel = "prev", targetState = PersonSearchQuery.REL, description = "A link to the previous page of search results, if any.", conditional = true ),
-        @StateTransition ( rel = "last", targetState = PersonSearchQuery.REL, description = "A link to the last page of search results, if any.", conditional = true )
-      }
-    )
+  transitions = {
+    @StateTransition ( rel = PersonRSDefinition.REL, description = "The person in the search result.", scope = Entry.class, targetResource = PersonRSDefinition.class ),
+    @StateTransition ( rel = PersonRSDefinition.REL, description = "The person in the search result.", scope = Person.class, targetResource = PersonRSDefinition.class ),
+    @StateTransition ( rel = "self", description = "A link to this search result set.", targetResource = PersonSearchQuery.class ),
+    @StateTransition ( rel = "first", description = "A link to the first page of search results, if any.", conditional = true, targetResource = PersonSearchQuery.class ),
+    @StateTransition ( rel = "next", description = "A link to the next page of search results, if any.", conditional = true, targetResource = PersonSearchQuery.class ),
+    @StateTransition ( rel = "prev", description = "A link to the previous page of search results, if any.", conditional = true, targetResource = PersonSearchQuery.class ),
+    @StateTransition ( rel = "last", description = "A link to the last page of search results, if any.", conditional = true, targetResource = PersonSearchQuery.class )
   }
 )
 public interface PersonSearchQuery {

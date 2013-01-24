@@ -23,7 +23,6 @@ import org.codehaus.enunciate.contract.jaxrs.Resource;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.ResourceParameter;
 import org.gedcomx.rt.rs.ResourceDefinition;
-import org.gedcomx.rt.rs.StateDefinition;
 
 import javax.ws.rs.Path;
 import java.util.*;
@@ -33,13 +32,16 @@ import java.util.*;
  */
 public class ResourceDefinitionDeclaration extends Resource {
 
+  private final String name;
+  private final String description;
+  private final List<StateTransition> transitions;
   private final String namespace;
   private final String projectId;
   private final Set<ResponseCode> statusCodes;
   private final Set<ResponseCode> warnings;
   private final List<ElementDeclaration> resourceElements;
   private final List<ResourceBinding> bindings = new ArrayList<ResourceBinding>();
-  private final List<ApplicationState> applicationStates;
+  private final boolean embedded;
 
   public ResourceDefinitionDeclaration(TypeDeclaration delegate, List<ElementDeclaration> resourceElements, ResourceServiceProcessor processor) {
     super(delegate);
@@ -47,22 +49,21 @@ public class ResourceDefinitionDeclaration extends Resource {
     this.resourceElements = resourceElements;
 
     ResourceDefinition rsdInfo = delegate.getAnnotation(ResourceDefinition.class);
+    this.name = rsdInfo.name();
+    this.description = rsdInfo.description();
     this.namespace = rsdInfo.namespace();
     this.statusCodes = processor.extractStatusCodes(delegate);
     this.warnings = processor.extractWarnings(delegate);
-    this.applicationStates = new ArrayList<ApplicationState>();
-    for (StateDefinition stateDefinition : rsdInfo.states()) {
-      ArrayList<StateTransition> transitions = new ArrayList<StateTransition>();
-      for (org.gedcomx.rt.rs.StateTransition stateTransition : stateDefinition.transitions()) {
-        transitions.add(new StateTransition(stateTransition, processor));
-      }
-      this.applicationStates.add(new ApplicationState(stateDefinition.name(), stateDefinition.rel(), stateDefinition.description(), transitions, this));
+    this.transitions = new ArrayList<StateTransition>();
+    for (org.gedcomx.rt.rs.StateTransition stateTransition : rsdInfo.transitions()) {
+      transitions.add(new StateTransition(stateTransition, processor));
     }
     for (ResourceMethod resourceMethod : getResourceMethods()) {
       resourceMethod.putMetaData("statusCodes", processor.extractStatusCodes(resourceMethod));
       resourceMethod.putMetaData("warnings", processor.extractWarnings(resourceMethod));
     }
     this.projectId = rsdInfo.projectId();
+    this.embedded = rsdInfo.embedded();
   }
 
   @Override
@@ -89,8 +90,24 @@ public class ResourceDefinitionDeclaration extends Resource {
     return null;
   }
 
+  public String getSystemId() {
+    return getName().replace(' ', '_');
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
   public String getNamespace() {
     return namespace;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public List<StateTransition> getTransitions() {
+    return this.transitions;
   }
 
   public List<ElementDeclaration> getResourceElements() {
@@ -113,8 +130,7 @@ public class ResourceDefinitionDeclaration extends Resource {
     return bindings;
   }
 
-  public List<ApplicationState> getApplicationStates() {
-    return applicationStates;
+  public boolean isEmbedded() {
+    return embedded;
   }
-
 }

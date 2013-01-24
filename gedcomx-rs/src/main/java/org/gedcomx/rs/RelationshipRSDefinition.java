@@ -35,25 +35,20 @@ import javax.ws.rs.core.Response;
  * as components of the relationship resource and MUST be resolved and embedded in order to fully resolve all of the components of the relationship.</p>
  */
 @ResourceDefinition (
+  name = "Relationship",
+  description = "A relationship.",
   resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  states = {
-    @StateDefinition (
-      name = "Relationship",
-      rel = RelationshipRSDefinition.REL,
-      description = "A relationship.",
-      transitions = {
-        @StateTransition ( rel = ConclusionRSDefinition.REL_PERSON, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }, conditional = true ),
-        @StateTransition ( rel = ConclusionsRSDefinition.REL_RELATIONSHIP, description = "The conclusions for the relationship (embedded link).", scope = Relationship.class, conditional = true ),
-        @StateTransition ( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class, conditional = true),
-        @StateTransition ( rel = SourceReferencesRSDefinition.REL_RELATIONSHIP, description = "The source references for the relationship (embedded link).", scope = Relationship.class, conditional = true ),
-        @StateTransition ( rel = NoteRSDefinition.REL_PERSON, description = "A note.", scope = Note.class, conditional = true),
-        @StateTransition ( rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The notes for the relationship (embedded link).", scope = Relationship.class, conditional = true ),
-        @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON1, targetState = PersonRSDefinition.REL, description = "Person 1 in the relationship.", scope = Relationship.class ),
-        @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON2, targetState = PersonRSDefinition.REL, description = "Person 2 in the relationship.", scope = Relationship.class )
-      }
-    )
+  transitions = {
+    @StateTransition ( rel = ConclusionRSDefinition.REL, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }, conditional = true, targetResource = ConclusionRSDefinition.class ),
+    @StateTransition ( rel = ConclusionsRSDefinition.REL, description = "The conclusions for the relationship (embedded link).", scope = Relationship.class, conditional = true, targetResource = ConclusionsRSDefinition.class ),
+    @StateTransition ( rel = SourceReferenceRSDefinition.REL, description = "A source reference.", scope = SourceReference.class, conditional = true, targetResource = SourceReferenceRSDefinition.class ),
+    @StateTransition ( rel = SourceReferencesRSDefinition.REL, description = "The source references for the relationship (embedded link).", scope = Relationship.class, conditional = true, targetResource = SourceReferencesRSDefinition.class ),
+    @StateTransition ( rel = NoteRSDefinition.REL, description = "A note.", scope = Note.class, conditional = true, targetResource = NoteRSDefinition.class ),
+    @StateTransition ( rel = NotesRSDefinition.REL, description = "The notes for the relationship (embedded link).", scope = Relationship.class, conditional = true, targetResource = NotesRSDefinition.class ),
+    @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON1, description = "Person 1 in the relationship.", scope = Relationship.class, targetResource = PersonRSDefinition.class ),
+    @StateTransition ( rel = RelationshipRSDefinition.REL_PERSON2, description = "Person 2 in the relationship.", scope = Relationship.class, targetResource = PersonRSDefinition.class )
   }
 )
 public interface RelationshipRSDefinition {

@@ -33,44 +33,22 @@ import javax.ws.rs.core.Response;
  * to the containing resource (person or relationship).
  */
 @ResourceDefinition (
+  name = "Notes",
+  description = "The set of notes attached to a person or relationship.",
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition (
-      name = "Person Notes",
-      rel = NotesRSDefinition.REL_PERSON,
-      description = "The set of notes applicable to, and contained by, a specific person.",
-      transitions = {
-        @StateTransition( rel = NoteRSDefinition.REL_PERSON, description = "A note.", scope = Note.class, conditional = true),
-        @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class )
-      }
-    ),
-    @StateDefinition (
-      name = "Relationship Notes",
-      rel = NotesRSDefinition.REL_RELATIONSHIP,
-      description = "The set of notes applicable to, and contained by, a specific relationship.",
-      transitions = {
-        @StateTransition( rel = NoteRSDefinition.REL_RELATIONSHIP, description = "A note.", scope = Note.class, conditional = true),
-        @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class)
-      }
-    ),
-    @StateDefinition (
-    name = "Couple-Child Relationship Notes",
-    rel = NotesRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP,
-    description = "The set of notes applicable to, and contained by, a specific couple-child relationship.",
-    transitions = {
-      @StateTransition( rel = NoteRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "A note.", scope = Note.class, conditional = true),
-      @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The relationship.", scope = CoupleChildRelationship.class)
-    }
-  )
-}
+  embedded = true,
+  transitions = {
+    @StateTransition( rel = NoteRSDefinition.REL, description = "A note.", scope = Note.class, conditional = true, targetResource = NoteRSDefinition.class ),
+    @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class, conditional = true, targetResource = PersonRSDefinition.class ),
+    @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class, conditional = true, targetResource = RelationshipRSDefinition.class ),
+    @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The couple-child relationship.", scope = Relationship.class, conditional = true, targetResource = CoupleChildRelationshipRSDefinition.class )
+  }
 )
 public interface NotesRSDefinition {
 
-  public static final String REL_PERSON = "person-notes";
-  public static final String REL_RELATIONSHIP = "relationship-notes";
-  public static final String REL_COUPLE_CHILD_RELATIONSHIP = "couple-child-relationship-notes";
+  public static final String REL = "notes";
 
   /**
    * Read the list of notes on the entity.

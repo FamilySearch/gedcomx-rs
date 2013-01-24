@@ -19,7 +19,6 @@ import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.POST;
@@ -29,13 +28,11 @@ import javax.ws.rs.core.Response;
  * The relationships resource defines the interface for the set of relationships in the application.
  */
 @ResourceDefinition (
+  name = "Relationships",
+  description = "The set of relationships in the application.",
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition ( name = "Couple Relationships", rel = RelationshipsRSDefinition.COUPLE_RELATIONSHIPS_REL, description = "The set of couple relationships." ),
-    @StateDefinition ( name = "Parent-Child Relationships", rel = RelationshipsRSDefinition.PARENT_CHILD_RELATIONSHIPS_REL, description = "The set of parent-child relationships." )
-  }
+  resourceElement = Gedcomx.class
 )
 public interface RelationshipsRSDefinition {
 

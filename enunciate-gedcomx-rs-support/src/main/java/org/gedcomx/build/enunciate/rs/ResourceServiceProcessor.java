@@ -50,7 +50,6 @@ public class ResourceServiceProcessor {
 
   private final List<ResourceDefinitionDeclaration> resourceDefinitions = new ArrayList<ResourceDefinitionDeclaration>();
   private Map<String, ResourceBinding> bindingsByPath;
-  private Map<String, ApplicationState> applicationStates;
 
   public Collection<ResourceDefinitionDeclaration> getResourceDefinitions() {
     return resourceDefinitions;
@@ -60,16 +59,10 @@ public class ResourceServiceProcessor {
     return bindingsByPath;
   }
 
-  public Map<String, ApplicationState> getApplicationStates() {
-    return applicationStates;
-  }
-
   public ValidationResult processModel(EnunciateFreemarkerModel model, Collection<TypeDeclaration> resourceServiceDefinitions) {
     ValidationResult result = new ValidationResult();
 
     //todo: error if setter-based resource parameters in the implementation don't carry the annotations defined in the definition, binding...
-
-    Map<String, ApplicationState> applicationStates = new TreeMap<String, ApplicationState>();
     for (TypeDeclaration resourceServiceDefinition : resourceServiceDefinitions) {
       ResourceDefinition rsdInfo = resourceServiceDefinition.getAnnotation(ResourceDefinition.class);
       if (rsdInfo != null) {
@@ -116,14 +109,6 @@ public class ResourceServiceProcessor {
           }
         }
 
-        for (ApplicationState applicationState : rsd.getApplicationStates()) {
-          ApplicationState conflict = applicationStates.put(applicationState.getId(), applicationState);
-          if (conflict != null) {
-            result.addError(rsd, String.format("The state \"%s\" for the resource definition at %s is already being defined by resource definition %s.", applicationState.getId(), rsd.getQualifiedName(), conflict.getDefinition().getQualifiedName()));
-          }
-          model.addNamespace(applicationState.getNamespace());
-        }
-
         this.resourceDefinitions.add(rsd);
         model.addNamespace(rsd.getNamespace());
       }
@@ -131,7 +116,6 @@ public class ResourceServiceProcessor {
         result.addWarning(resourceServiceDefinition, String.format("No @%s annotation found.", ResourceDefinition.class.getName()));
       }
     }
-    this.applicationStates = applicationStates;
 
     TreeMap<String, ResourceBinding> bindingsByPath = new TreeMap<String, ResourceBinding>(new ResourceMethodPathComparator());
     for (RootResource rootResource : model.getRootResources()) {
@@ -153,31 +137,12 @@ public class ResourceServiceProcessor {
               metadata = declaringResource.getAnnotation(org.gedcomx.rt.rs.ResourceBinding.class);
             }
 
-            String stateId = metadata == null ? null : metadata.state();
-            ApplicationState state = null;
-            for (ApplicationState candidate : rsd.getApplicationStates()) {
-              if (candidate.getId().equals(stateId)) {
-                state = candidate;
-                break;
-              }
-            }
-
-            binding = new ResourceBinding(bindingDeclaration, path, rsd, state, metadata);
+            binding = new ResourceBinding(bindingDeclaration, path, metadata);
             bindingsByPath.put(path, binding);
-
-            if (state == null) {
-              result.addWarning(binding, String.format("Binding %s implements resource definition %s, but it doesn't bind any states defined by it.", binding.getPath(), rsd.getQualifiedName()));
-            }
-            else if (state.getBinding() != null) {
-              result.addError(bindingDeclaration, String.format("The state \"%s\" bound by %s is already being bound by %s.", stateId, path, state.getBinding().getPath()));
-            }
-            else {
-              state.setBinding(binding);
-            }
-
             rsd.getBindings().add(binding);
           }
 
+          binding.getDefinitions().add(rsd);
           binding.getMethods().add(resourceMethod);
           resourceMethod.putMetaData("boundBy", binding);
 
@@ -197,27 +162,36 @@ public class ResourceServiceProcessor {
     }
 
     for (ResourceBinding binding : bindingsByPath.values()) {
-      ResourceDefinitionDeclaration definition = binding.getDefinition();
-      for (ElementDeclaration resourceElement : definition.getResourceElements()) {
-        SchemaInfo schemaInfo = model.getNamespacesToSchemas().get(resourceElement.getNamespace());
-        MediaTypeDeclaration declaration = (MediaTypeDeclaration) schemaInfo.getProperties().get("mediaType");
-        if (declaration != null) {
-          if (declaration.getXmlMediaType() != null) {
-            if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getXmlMediaType())) {
-              result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
-            }
-
-            if (!binding.getProduces().contains(declaration.getXmlMediaType())) {
-              result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
-            }
+      Set<ResourceDefinitionDeclaration> definitions = binding.getDefinitions();
+      ResourceDefinitionDeclaration primary = null;
+      for (ResourceDefinitionDeclaration definition : definitions) {
+        if (!definition.isEmbedded()) {
+          if (primary != null) {
+            result.addWarning(binding, String.format("Binding is implementing multiple primary (non-embedded) resources (%s and %s). Only one resource being bound may be embedded.", primary.getQualifiedName(), definition.getQualifiedName()));
           }
+          primary = definition;
+        }
+        for (ElementDeclaration resourceElement : definition.getResourceElements()) {
+          SchemaInfo schemaInfo = model.getNamespacesToSchemas().get(resourceElement.getNamespace());
+          MediaTypeDeclaration declaration = (MediaTypeDeclaration) schemaInfo.getProperties().get("mediaType");
+          if (declaration != null) {
+            if (declaration.getXmlMediaType() != null) {
+              if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getXmlMediaType())) {
+                result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
+              }
 
-          if (declaration.getJsonMediaType() != null) {
-            if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getJsonMediaType())) {
-              result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+              if (!binding.getProduces().contains(declaration.getXmlMediaType())) {
+                result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getXmlMediaType(), resourceElement.getQname()));
+              }
             }
-            if (declaration.getJsonMediaType() != null && !binding.getProduces().contains(declaration.getJsonMediaType())) {
-              result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+
+            if (declaration.getJsonMediaType() != null) {
+              if (!binding.getConsumes().isEmpty() && !binding.getConsumes().contains("*/*") && !binding.getConsumes().contains(declaration.getJsonMediaType())) {
+                result.addWarning(binding, String.format("Binding doesn't consume %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+              }
+              if (declaration.getJsonMediaType() != null && !binding.getProduces().contains(declaration.getJsonMediaType())) {
+                result.addError(binding, String.format("Binding doesn't produce %s, even though resource element %s is of that media type.", declaration.getJsonMediaType(), resourceElement.getQname()));
+              }
             }
           }
         }

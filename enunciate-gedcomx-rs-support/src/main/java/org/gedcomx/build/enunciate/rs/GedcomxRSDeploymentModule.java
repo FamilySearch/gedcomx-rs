@@ -165,19 +165,7 @@ public class GedcomxRSDeploymentModule extends FreemarkerDeploymentModule implem
       model.put("resourceBindingsByPath", bindingsByPath);
       model.put("resourceBindingsByNamespace", bindingsByNamespace);
 
-      Map<String, Collection<ApplicationState>> statesByNamespace = new HashMap<String, Collection<ApplicationState>>();
-      Collection<ApplicationState> states = this.resourceServiceProcessor.getApplicationStates().values();
-      for (ApplicationState state : states) {
-        model.addNamespace(state.getNamespace());
-        Collection<ApplicationState> list = statesByNamespace.get(state.getNamespace());
-        if (list == null) {
-          list = new ArrayList<ApplicationState>();
-          statesByNamespace.put(state.getNamespace(), list);
-        }
-        list.add(state);
-      }
-      model.put("applicationStates", states);
-      model.put("applicationStatesByNamespace", statesByNamespace);
+      model.put("findTargetResource", new FindTargetResourceMethod(this.resourceServiceProcessor));
 
       try {
         processTemplate(getDocsTemplateURL(), model);

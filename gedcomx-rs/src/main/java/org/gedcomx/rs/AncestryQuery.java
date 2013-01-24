@@ -19,7 +19,6 @@ import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.GET;
@@ -46,12 +45,11 @@ import javax.ws.rs.core.Response;
  * </ul>
  */
 @ResourceDefinition (
+  name = "Ancestry",
+  description = "The query for the ancestry of a person.",
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition (name = "Ancestry", rel = AncestryQuery.REL, description = "The query for the ancestry of a person.")
-  }
+  resourceElement = Gedcomx.class
 )
 public interface AncestryQuery {
 

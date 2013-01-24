@@ -30,34 +30,13 @@ import javax.ws.rs.core.Response;
  * to the containing resource (person or relationship).
  */
 @ResourceDefinition (
+  name = "Person Relationships",
+  description = "A set of relationships that reference a specific person, such as the spouse relationships, parent relationships, or child relationships.",
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition (
-      name = "Spouse Relationships",
-      rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL,
-      description = "The spouse relationships for a person.",
-      transitions = {
-        @StateTransition( rel = PersonRSDefinition.REL, description = "The person." )
-      }
-    ),
-    @StateDefinition (
-      name = "Parent Relationships",
-      rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL,
-      description = "The relationships to the parents of a person.",
-      transitions = {
-        @StateTransition( rel = PersonRSDefinition.REL, description = "The person." )
-      }
-    ),
-    @StateDefinition (
-      name = "Child Relationships",
-      rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL,
-      description = "The relationships to the children of a person.",
-      transitions = {
-        @StateTransition( rel = PersonRSDefinition.REL, description = "The person." )
-      }
-    )
+  transitions = {
+    @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", targetResource = PersonRSDefinition.class )
   }
 )
 public interface PersonRelationshipsRSDefinition {

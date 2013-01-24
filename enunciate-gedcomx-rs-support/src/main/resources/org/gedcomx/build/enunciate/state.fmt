@@ -15,9 +15,9 @@
           </ul>
         </li>
         <li class="current">
-          <a href="${state.name}_resource.html">${state.name}</a>
+          <a href="${state.systemId}-state.html">${state.name}</a>
           <ul>
-      [#list applicationStates as st]
+      [#list resourceDefinitions as st]
             <li><a href="${st.systemId}-state.html">${st.name}</a></li>
       [/#list]
           </ul>
@@ -30,10 +30,6 @@
       <hr/>
 
       <table>
-        <tr>
-          <td align="right">Id:</td>
-          <td>${state.id}</td>
-        </tr>
         <tr>
           <td align="right">Namespace:</td>
           <td>${state.namespace}</td>
@@ -60,7 +56,7 @@
 
       <p>${state.description!""}</p>
 
-      <p>${state.definition.docValue!""}</p>
+      <p>${state.docValue!""}</p>
 
       [#if state.transitions?size > 0]
       <h3>Links</h3>
@@ -68,20 +64,21 @@
       <table>
         <tr>
           <th>Rel</th>
-          <th>Endpoint</th>
+          <th>Target</th>
           <th>Description</th>
         </tr>
         [#list state.transitions as link]
+          [#assign targetState=findTargetResource(link)/]
           <tr>
             <td>${link.rel}</td>
-            <td>[#if link.state??]<a href="${link.state.systemId}-state.html">${link.state.name}</a>[/#if]</td>
+            <td><a href="${targetState.systemId}-state.html">${targetState.name}</a></td>
             <td>${link.description}</td>
           </tr>
         [/#list]
       </table>
 
       [/#if]
-      [#if state.definition.statusCodes?size > 0]
+      [#if state.statusCodes?size > 0]
       <h3>Status Codes</h3>
 
       <table>
@@ -89,7 +86,7 @@
           <th align="center">code</th>
           <th align="center">condition</th>
         </tr>
-        [#list state.definition.statusCodes as statusCode]
+        [#list state.statusCodes as statusCode]
         <tr>
           <td>${statusCode.code}</td>
           <td>${statusCode.condition}</td>
@@ -98,7 +95,7 @@
       </table>
 
       [/#if]
-      [#if state.definition.warnings?size > 0]
+      [#if state.warnings?size > 0]
       <h3>Warnings</h3>
 
       <table>
@@ -106,7 +103,7 @@
           <th align="center">code</th>
           <th align="center">condition</th>
         </tr>
-        [#list state.definition.warnings as warning]
+        [#list state.warnings as warning]
         <tr>
           <td>${warning.code}</td>
           <td>${warning.condition}</td>
@@ -115,7 +112,7 @@
       </table>
 
       [/#if]
-      [#if state.definition.resourceParameters?size > 0]
+      [#if state.resourceParameters?size > 0]
       <h3>Common Parameters</h3>
 
       <table>
@@ -124,7 +121,7 @@
           <th align="center">type</th>
           <th align="center">description</th>
         </tr>
-        [#list state.definition.resourceParameters?sort_by("typeName") as param]
+        [#list state.resourceParameters?sort_by("typeName") as param]
         <tr>
           <td>${param.parameterName}</td>
           <td>${param.typeName}</td>
@@ -136,14 +133,14 @@
       [/#if]
       <h3>Operations</h3>
 
-      [#if state.definition.resourceMethods?size > 0]
+      [#if state.resourceMethods?size > 0]
       <div id="tabs">
         <ul>
-        [#list state.definition.resourceMethods as op]
+        [#list state.resourceMethods as op]
           <li><a href="#${op.httpMethods[0]?upper_case}">${op.httpMethods[0]?upper_case}</a></li>
         [/#list]
         </ul>
-        [#list state.definition.resourceMethods as op]
+        [#list state.resourceMethods as op]
           [#assign method=op.httpMethods[0]?upper_case/]
         <div id="${method}">
         <p>${op.docValue!""}</p>

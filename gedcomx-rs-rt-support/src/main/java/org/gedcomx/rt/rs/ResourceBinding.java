@@ -30,6 +30,13 @@ import java.lang.annotation.Target;
 public @interface ResourceBinding {
 
   /**
+   * A name for this resource definition.
+   *
+   * @return A name for this resource definition.
+   */
+  String name() default "##default";
+
+  /**
    * A namespace for the binding. Default is the namespace of the resource definition.
    *
    * @return A namespace for the resource.
@@ -43,17 +50,4 @@ public @interface ResourceBinding {
    */
   String projectId() default "##default";
 
-  /**
-   * The state bound by this resource. Each state may only be bound by a single binding.
-   *
-   * @return The state bound by this resource.
-   */
-  String state() default "##default";
-
-  /**
-   * The list of states that are being included by this binding.
-   *
-   * @return The list of states that are being included by this binding.
-   */
-  String[] includedStates() default {};
 }

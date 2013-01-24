@@ -19,7 +19,6 @@ import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.POST;
@@ -31,12 +30,11 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
+  name = "Persons",
+  description = "The set of persons in the application.",
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition ( name = "Persons", rel = PersonsRSDefinition.REL, description = "The set of persons." )
-  }
+  resourceElement = Gedcomx.class
 )
 public interface PersonsRSDefinition {
 

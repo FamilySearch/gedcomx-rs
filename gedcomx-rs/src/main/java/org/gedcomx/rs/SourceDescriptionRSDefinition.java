@@ -19,7 +19,6 @@ import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.DELETE;
@@ -33,12 +32,11 @@ import javax.ws.rs.core.Response;
  * The source description resource defines the interface for a source description.
  */
 @ResourceDefinition (
+  name = "Source Description",
+  description = "A source description",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
-  resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition ( name = "Source Description", rel = SourceDescriptionRSDefinition.REL, description = "A source description." )
-  }
+  resourceElement = Gedcomx.class
 )
 public interface SourceDescriptionRSDefinition {
 

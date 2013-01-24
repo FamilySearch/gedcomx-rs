@@ -17,10 +17,7 @@ package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
-import org.gedcomx.rt.rs.ResourceDefinition;
-import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StateDefinition;
-import org.gedcomx.rt.rs.StatusCodes;
+import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Response;
@@ -30,20 +27,16 @@ import javax.ws.rs.core.Response;
  * The source reference resource defines the interface for a source reference.
  */
 @ResourceDefinition (
+  name = "Source Reference",
+  description = "A source reference.",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
   resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition ( name = "Person Source Reference", rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference on a person." ),
-    @StateDefinition ( name = "Relationship Source Reference", rel = SourceReferenceRSDefinition.REL_RELATIONSHIP, description = "A source reference on a relationship." ),
-    @StateDefinition ( name = "Couple-Child Relationship Source Reference", rel = SourceReferenceRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "A source reference on a couple-child relationship." )
-  }
+  embedded = true
 )
 public interface SourceReferenceRSDefinition {
 
-  public static final String REL_PERSON = "person-source-reference";
-  public static final String REL_RELATIONSHIP = "relationship-source-reference";
-  public static final String REL_COUPLE_CHILD_RELATIONSHIP = "couple-child-relationship-source-reference";
+  public static final String REL = "source-reference";
 
   /**
    * Delete a source reference.

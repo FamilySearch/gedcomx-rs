@@ -33,34 +33,21 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
+  name = "Conclusions",
+  description = "The set of conclusions about a person or relationship",
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition (
-      name = "Person Conclusions",
-      rel = ConclusionsRSDefinition.REL_PERSON,
-      description = "A list of conclusions about a person.",
-      transitions = {
-        @StateTransition( rel = ConclusionRSDefinition.REL_PERSON, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }, conditional = true),
-        @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class )
-      }
-    ),
-    @StateDefinition (
-      name = "Relationship Conclusions",
-      rel = ConclusionsRSDefinition.REL_RELATIONSHIP,
-      description = "The list of conclusions about a relationship.",
-      transitions = {
-        @StateTransition( rel = ConclusionRSDefinition.REL_PERSON, description = "A conclusion.", scope = Fact.class, conditional = true),
-        @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class )
-      }
-    )
+  embedded = true,
+  transitions = {
+    @StateTransition( rel = ConclusionRSDefinition.REL, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }, conditional = true, targetResource = ConclusionRSDefinition.class ),
+    @StateTransition( rel = PersonRSDefinition.REL, description = "The person containing this set of conclusions.", scope = Person.class, conditional = true, targetResource = PersonRSDefinition.class ),
+    @StateTransition( rel = RelationshipRSDefinition.REL, description = "The person containing this set of conclusions.", scope = Relationship.class, conditional = true, targetResource = RelationshipRSDefinition.class )
   }
 )
 public interface ConclusionsRSDefinition {
 
-  public static final String REL_PERSON = "person-conclusions";
-  public static final String REL_RELATIONSHIP = "relationship-conclusions";
+  public static final String REL = "conclusions";
 
   /**
    * Read a conclusions of an entity.

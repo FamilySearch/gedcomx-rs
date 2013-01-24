@@ -34,44 +34,22 @@ import javax.ws.rs.core.Response;
  * implementations MAY choose to bind this interface to the containing resource (person or relationship).
  */
 @ResourceDefinition (
+  name = "Source References",
+  description = "A set of source references on a conclusion.",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   projectId = "gedcomx-rs",
   resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition (
-      name = "Person Source References",
-      rel = SourceReferencesRSDefinition.REL_PERSON,
-      description = "The set of source references applicable to, and contained by, a specific person.",
-      transitions = {
-        @StateTransition( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class, conditional = true ),
-        @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class )
-      }
-    ),
-    @StateDefinition (
-      name = "Relationship Source References",
-      rel = SourceReferencesRSDefinition.REL_RELATIONSHIP,
-      description = "The set of source references applicable to, and contained by, a specific relationship.",
-      transitions = {
-        @StateTransition( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class, conditional = true ),
-        @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class)
-      }
-    ),
-    @StateDefinition (
-      name = "Couple-Child Source References",
-      rel = SourceReferencesRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP,
-      description = "The set of source references applicable to, and contained by, a specific couple-child relationship.",
-      transitions = {
-        @StateTransition( rel = SourceReferenceRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "A source reference.", scope = SourceReference.class),
-        @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The relationship.", scope = CoupleChildRelationship.class )
-      }
-    )
+  embedded = true,
+  transitions = {
+    @StateTransition( rel = SourceReferenceRSDefinition.REL, description = "A source reference.", scope = SourceReference.class, conditional = true, targetResource = SourceReferenceRSDefinition.class ),
+    @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class, conditional = true, targetResource = PersonRSDefinition.class ),
+    @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class, conditional = true, targetResource = RelationshipRSDefinition.class ),
+    @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = CoupleChildRelationshipRSDefinition.class )
   }
 )
 public interface SourceReferencesRSDefinition {
 
-  public static final String REL_PERSON = "person-source-references";
-  public static final String REL_RELATIONSHIP = "relationship-source-references";
-  public static final String REL_COUPLE_CHILD_RELATIONSHIP = "couple-child-relationship-source-references";
+  public static final String REL = "source-references";
 
   /**
    * Read the references to sources.

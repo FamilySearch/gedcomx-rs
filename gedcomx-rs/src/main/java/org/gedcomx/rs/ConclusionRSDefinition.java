@@ -19,7 +19,6 @@ import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
-import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.DELETE;
@@ -31,18 +30,16 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
+  name = "Conclusion",
+  description = "A single name, gender, or fact on a person or relationship.",
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
-  states = {
-    @StateDefinition ( name = "Person Conclusion", rel = ConclusionRSDefinition.REL_PERSON, description = "A single name, gender, or fact on a person." ),
-    @StateDefinition ( name = "Relationship Conclusion", rel = ConclusionRSDefinition.REL_RELATIONSHIP, description = "A single fact on a relationship." )
-  }
+  embedded = true
 )
 public interface ConclusionRSDefinition {
 
-  public static final String REL_PERSON = "person-conclusion";
-  public static final String REL_RELATIONSHIP = "relationship-conclusion";
+  public static final String REL = "conclusion";
 
   /**
    * Delete a conclusion.

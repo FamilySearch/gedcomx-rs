@@ -35,27 +35,22 @@ import javax.ws.rs.core.Response;
  * @author Ryan Heaton
  */
 @ResourceDefinition (
+  name = "Person",
+  description = "A person.",
   resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  states = {
-    @StateDefinition (
-      name = "Person",
-      rel = PersonRSDefinition.REL,
-      description = "A person.",
-      transitions = {
-        @StateTransition ( rel = ConclusionRSDefinition.REL_PERSON, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }, conditional = true ),
-        @StateTransition ( rel = ConclusionsRSDefinition.REL_PERSON, description = "The conclusions for the person (embedded link).", scope = Person.class, conditional = true ),
-        @StateTransition ( rel = SourceReferencesRSDefinition.REL_PERSON, description = "The source references for the person (embedded link).", scope = Person.class, conditional = true),
-        @StateTransition ( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class, conditional = true),
-        @StateTransition ( rel = NotesRSDefinition.REL_PERSON, description = "The notes for the person (embedded link).", scope = Person.class, conditional = true),
-        @StateTransition ( rel = NoteRSDefinition.REL_PERSON, description = "A note.", scope = Note.class, conditional = true),
-        @StateTransition ( rel = RelationshipRSDefinition.REL, description = "A relationship.", scope = Relationship.class ),
-        @StateTransition ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, description = "The relationships to the spouses of the person (embedded link).", scope = Person.class, conditional = true ),
-        @StateTransition ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, description = "The relationships to the children of the person (embedded link).", scope = Person.class, conditional = true ),
-        @StateTransition ( rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, description = "The relationships to the parents of the person (embedded link).", scope = Person.class, conditional = true )
-      }
-    )
+  transitions = {
+    @StateTransition ( rel = ConclusionRSDefinition.REL, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }, conditional = true, targetResource = ConclusionRSDefinition.class ),
+    @StateTransition ( rel = ConclusionsRSDefinition.REL, description = "The conclusions for the person (embedded link).", scope = Person.class, conditional = true, targetResource = ConclusionsRSDefinition.class ),
+    @StateTransition ( rel = SourceReferencesRSDefinition.REL, description = "The source references for the person (embedded link).", scope = Person.class, conditional = true, targetResource = SourceReferencesRSDefinition.class ),
+    @StateTransition ( rel = SourceReferenceRSDefinition.REL, description = "A source reference.", scope = SourceReference.class, conditional = true, targetResource = SourceReferenceRSDefinition.class ),
+    @StateTransition ( rel = NotesRSDefinition.REL, description = "The notes for the person (embedded link).", scope = Person.class, conditional = true, targetResource = NotesRSDefinition.class ),
+    @StateTransition ( rel = NoteRSDefinition.REL, description = "A note.", scope = Note.class, conditional = true, targetResource = NoteRSDefinition.class ),
+    @StateTransition ( rel = RelationshipRSDefinition.REL, description = "A relationship.", scope = Relationship.class, targetResource = RelationshipRSDefinition.class ),
+    @StateTransition ( rel = PersonRelationshipsRSDefinition.SPOUSE_RELATIONSHIPS_REL, description = "The relationships to the spouses of the person (embedded link).", scope = Person.class, conditional = true, targetResource = PersonRelationshipsRSDefinition.class ),
+    @StateTransition ( rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, description = "The relationships to the children of the person (embedded link).", scope = Person.class, conditional = true, targetResource = PersonRelationshipsRSDefinition.class  ),
+    @StateTransition ( rel = PersonRelationshipsRSDefinition.PARENT_RELATIONSHIPS_REL, description = "The relationships to the parents of the person (embedded link).", scope = Person.class, conditional = true, targetResource = PersonRelationshipsRSDefinition.class  )
   }
 )
 public interface PersonRSDefinition {

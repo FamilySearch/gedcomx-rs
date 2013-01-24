@@ -38,12 +38,18 @@ public @interface StateTransition {
   String rel();
 
   /**
-   * The id of the state that is the endpoint of the transition. If no endpoint is explicitly identified, an
-   * attempt will be made to use the 'rel' as the identifier for the endpoint.
+   * The resource class to which we're linking.
    *
-   * @return The id of the endpoint state.
+   * @return The resource class to which we're linking.
    */
-  String targetState() default "##default";
+  Class<?> targetResource() default DEFAULT.class;
+
+  /**
+   * A URI template specifying the URI of the resource to which we're linking.
+   *
+   * @return A URI template specifying the URI of the resource to which we're linking.
+   */
+  String targetHref() default "##default";
 
   /**
    * A human-readable description of the resource relationship.
@@ -72,4 +78,9 @@ public @interface StateTransition {
    * @return Whether this transition is conditional on the availability of all of its transition variables in the source state.
    */
   boolean conditional() default false;
+
+  /**
+   * Class marker used to identify default resource class.
+   */
+  public static class DEFAULT {}
 }
