@@ -53,6 +53,15 @@ import javax.ws.rs.core.Response;
         @StateTransition( rel = NotesRSDefinition.REL_RELATIONSHIP, description = "The list containing the note.", scope = Note.class, conditional = true ),
         @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Note.class )
       }
+    ),
+    @StateDefinition (
+      name = "Couple-Child Relationship Note",
+      rel = NoteRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP,
+      description = "A couple-child relationship note.",
+      transitions = {
+        @StateTransition( rel = NotesRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "The list containing the note.", scope = Note.class, conditional = true ),
+        @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The relationship.", scope = Note.class )
+      }
     )
   }
 )
@@ -60,6 +69,7 @@ public interface NoteRSDefinition {
 
   public static final String REL_PERSON = "person-note";
   public static final String REL_RELATIONSHIP = "relationship-note";
+  public static final String REL_COUPLE_CHILD_RELATIONSHIP = "couple-child-relationship-note";
 
   /**
    * Read a note.

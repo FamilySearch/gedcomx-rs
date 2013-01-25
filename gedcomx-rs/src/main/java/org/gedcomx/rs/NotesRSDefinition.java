@@ -17,6 +17,7 @@ package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
 import org.gedcomx.common.Note;
+import org.gedcomx.conclusion.CoupleChildRelationship;
 import org.gedcomx.conclusion.Person;
 import org.gedcomx.conclusion.Relationship;
 import org.gedcomx.rt.GedcomxConstants;
@@ -53,8 +54,17 @@ import javax.ws.rs.core.Response;
         @StateTransition( rel = NoteRSDefinition.REL_RELATIONSHIP, description = "A note.", scope = Note.class, conditional = true),
         @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class)
       }
-    )
-  }
+    ),
+    @StateDefinition (
+    name = "Couple-Child Relationship Notes",
+    rel = NotesRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP,
+    description = "The set of notes applicable to, and contained by, a specific couple-child relationship.",
+    transitions = {
+      @StateTransition( rel = NoteRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "A note.", scope = Note.class, conditional = true),
+      @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The relationship.", scope = CoupleChildRelationship.class)
+    }
+  )
+}
 )
 public interface NotesRSDefinition {
 
