@@ -16,6 +16,7 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
+import org.gedcomx.conclusion.CoupleChildRelationship;
 import org.gedcomx.conclusion.Person;
 import org.gedcomx.conclusion.Relationship;
 import org.gedcomx.rt.GedcomxConstants;
@@ -53,6 +54,15 @@ import javax.ws.rs.core.Response;
       transitions = {
         @StateTransition( rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference.", scope = SourceReference.class, conditional = true ),
         @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class)
+      }
+    ),
+    @StateDefinition (
+      name = "Couple-Child Source References",
+      rel = SourceReferencesRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP,
+      description = "The set of source references applicable to, and contained by, a specific couple-child relationship.",
+      transitions = {
+        @StateTransition( rel = SourceReferenceRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "A source reference.", scope = SourceReference.class),
+        @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The relationship.", scope = CoupleChildRelationship.class )
       }
     )
   }

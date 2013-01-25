@@ -17,7 +17,10 @@ package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
 import org.gedcomx.rt.GedcomxConstants;
-import org.gedcomx.rt.rs.*;
+import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateDefinition;
+import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Response;
@@ -32,13 +35,15 @@ import javax.ws.rs.core.Response;
   resourceElement = Gedcomx.class,
   states = {
     @StateDefinition ( name = "Person Source Reference", rel = SourceReferenceRSDefinition.REL_PERSON, description = "A source reference on a person." ),
-    @StateDefinition ( name = "Relationship Source Reference", rel = SourceReferenceRSDefinition.REL_RELATIONSHIP, description = "A source reference on a relationship." )
+    @StateDefinition ( name = "Relationship Source Reference", rel = SourceReferenceRSDefinition.REL_RELATIONSHIP, description = "A source reference on a relationship." ),
+    @StateDefinition ( name = "Couple-Child Relationship Source Reference", rel = SourceReferenceRSDefinition.REL_COUPLE_CHILD_RELATIONSHIP, description = "A source reference on a couple-child relationship." )
   }
 )
 public interface SourceReferenceRSDefinition {
 
   public static final String REL_PERSON = "person-source-reference";
   public static final String REL_RELATIONSHIP = "relationship-source-reference";
+  public static final String REL_COUPLE_CHILD_RELATIONSHIP = "couple-child-relationship-source-reference";
 
   /**
    * Delete a source reference.
