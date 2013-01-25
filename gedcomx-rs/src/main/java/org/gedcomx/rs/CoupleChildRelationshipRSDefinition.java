@@ -40,11 +40,11 @@ import javax.ws.rs.core.Response;
   resourceElement = Gedcomx.class,
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   transitions = {
-    @StateTransition ( rel = SourceReferencesRSDefinition.REL, description = "The source references for the couple-child relationship.", scope = CoupleChildRelationship.class ),
-    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_FATHER, targetResource = PersonRSDefinition.class, description = "The father of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true ),
-    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_MOTHER, targetResource = PersonRSDefinition.class, description = "The mother of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true ),
-    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_CHILD, targetResource = PersonRSDefinition.class, description = "The child of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true ),
-    @StateTransition ( rel = NotesRSDefinition.REL, description = "The notes for the couple-child relationship.", scope = CoupleChildRelationship.class )
+    @StateTransition ( rel = SourceReferencesRSDefinition.REL, description = "The source references for the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = SourceReferencesRSDefinition.class ),
+    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_FATHER, description = "The father of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = PersonRSDefinition.class ),
+    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_MOTHER, description = "The mother of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = PersonRSDefinition.class ),
+    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_CHILD, description = "The child of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = PersonRSDefinition.class ),
+    @StateTransition ( rel = NotesRSDefinition.REL, description = "The notes for the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = NotesRSDefinition.class  )
   }
 )
 public interface CoupleChildRelationshipRSDefinition {
