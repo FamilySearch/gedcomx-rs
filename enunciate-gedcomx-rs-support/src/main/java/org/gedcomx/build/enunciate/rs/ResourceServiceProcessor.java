@@ -161,7 +161,13 @@ public class ResourceServiceProcessor {
       }
     }
 
+    Map<String, ResourceBinding> bindingsByName = new TreeMap<String, ResourceBinding>();
     for (ResourceBinding binding : bindingsByPath.values()) {
+      ResourceBinding duplicate = bindingsByName.put(binding.getName(), binding);
+      if (duplicate != null) {
+        result.addError(binding, String.format("Resource binding name %s of %s conflicts %s.", binding.getName(), binding.getSimpleName(), duplicate.getSimpleName()));
+      }
+
       Set<ResourceDefinitionDeclaration> definitions = binding.getDefinitions();
       ResourceDefinitionDeclaration primary = null;
       for (ResourceDefinitionDeclaration definition : definitions) {
