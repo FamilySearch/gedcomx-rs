@@ -23,45 +23,33 @@ import org.gedcomx.rt.rs.StateDefinition;
 import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.HEAD;
 import javax.ws.rs.core.Response;
 
 /**
- * The contributor resource defines the interface for a contributor.
+ * The agent resource defines the interface for a agent.
  */
 @ResourceDefinition (
   resourceElement = Gedcomx.class,
   projectId = "gedcomx-rs",
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   states = {
-    @StateDefinition (name = "User", rel = ContributorRSDefinition.REL, description = "A user.")
+    @StateDefinition (name = "Agent", rel = AgentRSDefinition.REL, description = "An agent which is typically a user that has contributed information.")
   }
 )
-public interface ContributorRSDefinition {
+public interface AgentRSDefinition
+{
 
-  public static final String REL = "contributor";
-
-  /**
-   * Read a contributor header attributes.
-   *
-   * @return The header attributes for the contributor.
-   */
-  @HEAD
-  @StatusCodes ( {
-    @ResponseCode ( code = 200, condition = "Upon a successful read." ),
-    @ResponseCode ( code = 404, condition = "If the requested contributor is not found." )
-   } )
-  Response head();
+  public static final String REL = "agent";
 
   /**
-   * Read a contributor.
+   * Read a agent.
    *
-   * @return The contributor.
+   * @return The agent.
    */
   @GET
   @StatusCodes ( {
     @ResponseCode ( code = 200, condition = "Upon a successful read." ),
-    @ResponseCode ( code = 404, condition = "If the requested contributor is not found." )
+    @ResponseCode ( code = 404, condition = "If the requested agent is not found." )
    } )
   Response get();
 }

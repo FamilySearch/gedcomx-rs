@@ -60,7 +60,7 @@ import javax.ws.rs.core.Response;
         @StateTransition (rel = ConclusionRSDefinition.REL_RELATIONSHIP, description = "The templated link to the relationship conclusion resources of the application.", template = true, conditional = true ),
         @StateTransition (rel = ConclusionsRSDefinition.REL_PERSON, description = "The templated link to the person conclusions resources of the application.", template = true, conditional = true ),
         @StateTransition (rel = ConclusionsRSDefinition.REL_RELATIONSHIP, description = "The templated link to the relationship conclusions resources of the application.", template = true, conditional = true ),
-        @StateTransition (rel = ContributorRSDefinition.REL, description = "The templated link to the contributor resources of the application.", template = true ),
+        @StateTransition (rel = AgentRSDefinition.REL, description = "The templated link to the contributor resources of the application.", template = true ),
         @StateTransition (rel = CurrentUserPersonQuery.REL, description = "The link to the current user person of the application.", conditional = true ),
         @StateTransition (rel = CurrentUserQuery.REL, description = "The link to the current user of the application.", conditional = true ),
         @StateTransition (rel = NoteRSDefinition.REL_PERSON, description = "The templated link to the person note resources of the application.", template = true, conditional = true ),

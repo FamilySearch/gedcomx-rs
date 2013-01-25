@@ -33,7 +33,7 @@ import javax.ws.rs.core.Response;
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
   states = {
-    @StateDefinition (name = "Current User", rel = CurrentUserQuery.REL, description = "The query for the person for the current user.")
+    @StateDefinition (name = "Current User", rel = CurrentUserQuery.REL, description = "The user profile for the current user.")
   }
 )
 public interface CurrentUserQuery {
@@ -47,7 +47,7 @@ public interface CurrentUserQuery {
    */
   @GET
   @StatusCodes({
-    @ResponseCode ( code = 303, condition = "The query was successful. The location of the current user is provided in the Location header.")
+    @ResponseCode ( code = 200, condition = "TUpon a successful read.")
   })
   Response get();
 }
