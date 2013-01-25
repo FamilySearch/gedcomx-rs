@@ -41,8 +41,8 @@ import javax.ws.rs.core.Response;
   namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   transitions = {
     @StateTransition ( rel = SourceReferencesRSDefinition.REL, description = "The source references for the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = SourceReferencesRSDefinition.class ),
-    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_FATHER, description = "The father of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = PersonRSDefinition.class ),
-    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_MOTHER, description = "The mother of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = PersonRSDefinition.class ),
+    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_PARENT1, description = "The father of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = PersonRSDefinition.class ),
+    @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_PARENT2, description = "The mother of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = PersonRSDefinition.class ),
     @StateTransition ( rel = CoupleChildRelationshipRSDefinition.REL_CHILD, description = "The child of the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = PersonRSDefinition.class ),
     @StateTransition ( rel = NotesRSDefinition.REL, description = "The notes for the couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = NotesRSDefinition.class  )
   }
@@ -50,8 +50,8 @@ import javax.ws.rs.core.Response;
 public interface CoupleChildRelationshipRSDefinition {
 
   public static final String REL = "couple-child-relationship";
-  public static final String REL_FATHER = "father";
-  public static final String REL_MOTHER = "mother";
+  public static final String REL_PARENT1 = "parent1";
+  public static final String REL_PARENT2 = "parent2";
   public static final String REL_CHILD = "child";
 
   /**
