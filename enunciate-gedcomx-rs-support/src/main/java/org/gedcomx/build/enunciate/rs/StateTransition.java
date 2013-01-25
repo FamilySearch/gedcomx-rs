@@ -126,6 +126,14 @@ public final class StateTransition implements Comparable<StateTransition> {
       return false;
     }
 
+    if (targetHref != null ? !targetHref.equals(that.targetHref) : that.targetHref != null) {
+      return false;
+    }
+
+    if (targetResourceQualifiedName != null ? !targetResourceQualifiedName.equals(that.targetResourceQualifiedName) : that.targetResourceQualifiedName != null) {
+      return false;
+    }
+
     if (scope != null ? !scope.equals(that.scope) : that.scope != null) {
       return false;
     }
@@ -137,6 +145,8 @@ public final class StateTransition implements Comparable<StateTransition> {
   public int hashCode() {
     int result = rel != null ? rel.hashCode() : 0;
     result = 31 * result + (scope != null ? scope.hashCode() : 0);
+    result = 31 * result + (targetHref != null ? targetHref.hashCode() : 0);
+    result = 31 * result + (targetResourceQualifiedName != null ? targetResourceQualifiedName.hashCode() : 0);
     return result;
   }
 
@@ -144,6 +154,12 @@ public final class StateTransition implements Comparable<StateTransition> {
     StringBuilder base = new StringBuilder(this.rel);
     for (String scope : this.scope) {
       base.append(scope);
+    }
+    if (this.targetHref != null) {
+      base.append(this.targetHref);
+    }
+    if (this.targetResourceQualifiedName != null) {
+      base.append(this.targetResourceQualifiedName);
     }
     return base.toString();
   }
