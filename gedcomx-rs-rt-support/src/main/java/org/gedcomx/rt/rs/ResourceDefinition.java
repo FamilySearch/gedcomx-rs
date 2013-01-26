@@ -40,20 +40,6 @@ public @interface ResourceDefinition {
   String name();
 
   /**
-   * A namespace for the resource. Default is the empty namespace.
-   *
-   * @return A namespace for the resource.
-   */
-  String namespace() default "";
-
-  /**
-   * An identifier for a project to which this resource definition belongs.
-   *
-   * @return An identifier for a project to which this resource definition belongs.
-   */
-  String projectId();
-
-  /**
    * A human-readable description of this resource.
    *
    * @return A human-readable description of this resource.

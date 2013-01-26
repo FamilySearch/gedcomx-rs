@@ -19,8 +19,10 @@ import org.gedcomx.Gedcomx;
 import org.gedcomx.conclusion.CoupleChildRelationship;
 import org.gedcomx.conclusion.Person;
 import org.gedcomx.conclusion.Relationship;
-import org.gedcomx.rt.GedcomxConstants;
-import org.gedcomx.rt.rs.*;
+import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateTransition;
+import org.gedcomx.rt.rs.StatusCodes;
 import org.gedcomx.source.SourceReference;
 
 import javax.ws.rs.GET;
@@ -36,8 +38,6 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Source References",
   description = "A set of source references on a conclusion.",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  projectId = "gedcomx-rs",
   resourceElement = Gedcomx.class,
   embedded = true,
   transitions = {

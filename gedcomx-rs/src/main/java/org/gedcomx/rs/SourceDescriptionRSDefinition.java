@@ -16,7 +16,6 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
-import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -34,8 +33,6 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Source Description",
   description = "A source description",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  projectId = "gedcomx-rs",
   resourceElement = Gedcomx.class
 )
 public interface SourceDescriptionRSDefinition {

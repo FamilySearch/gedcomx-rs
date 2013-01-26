@@ -18,7 +18,6 @@ package org.gedcomx.rs;
 import org.gedcomx.atom.Entry;
 import org.gedcomx.atom.Feed;
 import org.gedcomx.conclusion.Person;
-import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.*;
 
 import javax.ws.rs.GET;
@@ -139,8 +138,6 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Person Search",
   description = "A search query for a person.",
-  projectId = "gedcomx-rs",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Feed.class,
   transitions = {
     @StateTransition ( rel = PersonRSDefinition.REL, description = "The person in the search result.", scope = Entry.class, targetResource = PersonRSDefinition.class ),

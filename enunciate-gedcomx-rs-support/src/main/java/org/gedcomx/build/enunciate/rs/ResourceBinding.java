@@ -16,10 +16,13 @@
 package org.gedcomx.build.enunciate.rs;
 
 import com.sun.mirror.declaration.Declaration;
+import com.sun.mirror.declaration.PackageDeclaration;
+import com.sun.mirror.declaration.TypeDeclaration;
 import net.sf.jelly.apt.decorations.declaration.DecoratedDeclaration;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.ResourceParameter;
 import org.codehaus.enunciate.util.TypeDeclarationComparator;
+import org.gedcomx.rt.rs.RSMetadata;
 import org.gedcomx.rt.rs.StateTransitionParameter;
 
 import java.util.*;
@@ -53,9 +56,26 @@ public class ResourceBinding extends DecoratedDeclaration {
   public ResourceBinding(Declaration delegate, String path, org.gedcomx.rt.rs.ResourceBinding metadata) {
     super(delegate);
     this.path = path;
-    this.name = metadata == null || "##default".equals(metadata.name()) ? null : metadata.name();
-    this.namespace = metadata == null || "##default".equals(metadata.namespace()) ? null : metadata.namespace();
-    this.projectId = metadata == null || "##default".equals(metadata.projectId()) ? null : metadata.projectId();
+    this.name = metadata == null || "##default".equals(metadata.value()) ? null : metadata.value();
+    String namespace = null;
+    String projectId = null;
+    PackageDeclaration pkg = (delegate instanceof TypeDeclaration) ? ((TypeDeclaration)delegate).getPackage() : null;
+    if (pkg != null) {
+      RSMetadata rsm = pkg.getAnnotation(RSMetadata.class);
+      if (rsm != null) {
+        namespace = "##default".equals(rsm.namespace()) ? namespace : rsm.namespace();
+        projectId = "##default".equals(rsm.projectId()) ? projectId : rsm.projectId();
+      }
+    }
+
+    RSMetadata rsm = delegate.getAnnotation(RSMetadata.class);
+    if (rsm != null) {
+      namespace = "##default".equals(rsm.namespace()) ? namespace : rsm.namespace();
+      projectId = "##default".equals(rsm.projectId()) ? projectId : rsm.projectId();
+    }
+
+    this.namespace = namespace;
+    this.projectId = projectId;
   }
 
   public String getName() {

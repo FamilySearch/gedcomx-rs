@@ -16,12 +16,14 @@
 package org.gedcomx.build.enunciate.rs;
 
 import com.sun.mirror.declaration.InterfaceDeclaration;
+import com.sun.mirror.declaration.PackageDeclaration;
 import com.sun.mirror.declaration.TypeDeclaration;
 import com.sun.mirror.type.InterfaceType;
 import org.codehaus.enunciate.contract.jaxb.ElementDeclaration;
 import org.codehaus.enunciate.contract.jaxrs.Resource;
 import org.codehaus.enunciate.contract.jaxrs.ResourceMethod;
 import org.codehaus.enunciate.contract.jaxrs.ResourceParameter;
+import org.gedcomx.rt.rs.RSMetadata;
 import org.gedcomx.rt.rs.ResourceDefinition;
 
 import javax.ws.rs.Path;
@@ -51,7 +53,26 @@ public class ResourceDefinitionDeclaration extends Resource {
     ResourceDefinition rsdInfo = delegate.getAnnotation(ResourceDefinition.class);
     this.name = rsdInfo.name();
     this.description = rsdInfo.description();
-    this.namespace = rsdInfo.namespace();
+
+    String namespace = null;
+    String projectId = null;
+    PackageDeclaration pkg = delegate.getPackage();
+    if (pkg != null) {
+      RSMetadata rsm = pkg.getAnnotation(RSMetadata.class);
+      if (rsm != null) {
+        namespace = "##default".equals(rsm.namespace()) ? namespace : rsm.namespace();
+        projectId = "##default".equals(rsm.projectId()) ? projectId : rsm.projectId();
+      }
+    }
+
+    RSMetadata rsm = delegate.getAnnotation(RSMetadata.class);
+    if (rsm != null) {
+      namespace = "##default".equals(rsm.namespace()) ? namespace : rsm.namespace();
+      projectId = "##default".equals(rsm.projectId()) ? projectId : rsm.projectId();
+    }
+
+    this.namespace = namespace;
+    this.projectId = projectId;
     this.statusCodes = processor.extractStatusCodes(delegate);
     this.warnings = processor.extractWarnings(delegate);
     this.transitions = new ArrayList<StateTransition>();
@@ -62,7 +83,6 @@ public class ResourceDefinitionDeclaration extends Resource {
       resourceMethod.putMetaData("statusCodes", processor.extractStatusCodes(resourceMethod));
       resourceMethod.putMetaData("warnings", processor.extractWarnings(resourceMethod));
     }
-    this.projectId = rsdInfo.projectId();
     this.embedded = rsdInfo.embedded();
   }
 

@@ -16,7 +16,6 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
-import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -30,8 +29,6 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Current User Person",
   description = "The query for the person for the current user.",
-  projectId = "gedcomx-rs",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class
 )
 public interface CurrentUserPersonQuery {

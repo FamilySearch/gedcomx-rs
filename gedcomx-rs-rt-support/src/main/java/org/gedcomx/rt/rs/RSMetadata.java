@@ -21,19 +21,26 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Metadata for a specific binding of a resource definition.
+ * Metadata for resource definitions and bindings.
  *
  * @author Ryan Heaton
  */
 @Retention ( RetentionPolicy.RUNTIME )
-@Target ({ ElementType.TYPE, ElementType.METHOD })
-public @interface ResourceBinding {
+@Target ({ ElementType.PACKAGE, ElementType.TYPE, ElementType.METHOD })
+public @interface RSMetadata {
 
   /**
-   * A name for this resource definition.
+   * A namespace for the component(s).
    *
-   * @return A name for this resource definition.
+   * @return A namespace for the component(s).
    */
-  String value() default "##default";
+  String namespace() default "##default";
+
+  /**
+   * An identifier for a project to which the component(s) belong.
+   *
+   * @return An identifier for a project to which the component(s) belong.
+   */
+  String projectId() default "##default";
 
 }

@@ -16,8 +16,10 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
-import org.gedcomx.rt.GedcomxConstants;
-import org.gedcomx.rt.rs.*;
+import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateTransition;
+import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
@@ -32,8 +34,6 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Person Relationships",
   description = "A set of relationships that reference a specific person, such as the spouse relationships, parent relationships, or child relationships.",
-  projectId = "gedcomx-rs",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
   transitions = {
     @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", targetResource = PersonRSDefinition.class )

@@ -17,9 +17,14 @@ package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
 import org.gedcomx.common.Note;
-import org.gedcomx.conclusion.*;
-import org.gedcomx.rt.GedcomxConstants;
-import org.gedcomx.rt.rs.*;
+import org.gedcomx.conclusion.Fact;
+import org.gedcomx.conclusion.Gender;
+import org.gedcomx.conclusion.Name;
+import org.gedcomx.conclusion.Relationship;
+import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateTransition;
+import org.gedcomx.rt.rs.StatusCodes;
 import org.gedcomx.source.SourceReference;
 
 import javax.ws.rs.DELETE;
@@ -38,8 +43,6 @@ import javax.ws.rs.core.Response;
   name = "Relationship",
   description = "A relationship.",
   resourceElement = Gedcomx.class,
-  projectId = "gedcomx-rs",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   transitions = {
     @StateTransition ( rel = ConclusionRSDefinition.REL, description = "A conclusion.", scope = { Name.class, Gender.class, Fact.class }, conditional = true, targetResource = ConclusionRSDefinition.class ),
     @StateTransition ( rel = ConclusionsRSDefinition.REL, description = "The conclusions for the relationship (embedded link).", scope = Relationship.class, conditional = true, targetResource = ConclusionsRSDefinition.class ),

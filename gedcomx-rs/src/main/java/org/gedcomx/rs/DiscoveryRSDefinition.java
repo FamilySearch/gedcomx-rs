@@ -16,8 +16,10 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.atom.Feed;
-import org.gedcomx.rt.GedcomxConstants;
-import org.gedcomx.rt.rs.*;
+import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateTransition;
+import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.core.Response;
@@ -49,9 +51,7 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition(
   name = "Discovery",
   description = "The root index of the application, providing links to the various application states.",
-  projectId = "gedcomx-rs",
   resourceElement = Feed.class,
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   transitions = {
     @StateTransition (rel = ConclusionRSDefinition.REL, description = "The templated link to the conclusion resources of the application.", template = true, conditional = true, targetResource = ConclusionRSDefinition.class ),
     @StateTransition (rel = ConclusionsRSDefinition.REL, description = "The templated link to the conclusions resources of the application.", template = true, conditional = true, targetResource = ConclusionsRSDefinition.class ),

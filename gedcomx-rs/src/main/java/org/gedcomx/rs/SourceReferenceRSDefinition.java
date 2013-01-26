@@ -16,8 +16,9 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
-import org.gedcomx.rt.GedcomxConstants;
-import org.gedcomx.rt.rs.*;
+import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Response;
@@ -29,8 +30,6 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Source Reference",
   description = "A source reference.",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
-  projectId = "gedcomx-rs",
   resourceElement = Gedcomx.class,
   embedded = true
 )

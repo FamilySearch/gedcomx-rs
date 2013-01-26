@@ -20,8 +20,10 @@ import org.gedcomx.common.Note;
 import org.gedcomx.conclusion.CoupleChildRelationship;
 import org.gedcomx.conclusion.Person;
 import org.gedcomx.conclusion.Relationship;
-import org.gedcomx.rt.GedcomxConstants;
-import org.gedcomx.rt.rs.*;
+import org.gedcomx.rt.rs.ResourceDefinition;
+import org.gedcomx.rt.rs.ResponseCode;
+import org.gedcomx.rt.rs.StateTransition;
+import org.gedcomx.rt.rs.StatusCodes;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -35,8 +37,6 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Notes",
   description = "The set of notes attached to a person or relationship.",
-  projectId = "gedcomx-rs",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE,
   resourceElement = Gedcomx.class,
   embedded = true,
   transitions = {

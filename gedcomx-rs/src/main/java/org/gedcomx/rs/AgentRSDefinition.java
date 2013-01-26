@@ -16,7 +16,6 @@
 package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
-import org.gedcomx.rt.GedcomxConstants;
 import org.gedcomx.rt.rs.ResourceDefinition;
 import org.gedcomx.rt.rs.ResponseCode;
 import org.gedcomx.rt.rs.StatusCodes;
@@ -30,9 +29,7 @@ import javax.ws.rs.core.Response;
 @ResourceDefinition (
   name = "Agent",
   description = "An agent, such as a user or other contributor.",
-  resourceElement = Gedcomx.class,
-  projectId = "gedcomx-rs",
-  namespace = GedcomxConstants.GEDCOMX_NAMESPACE
+  resourceElement = Gedcomx.class
 )
 public interface AgentRSDefinition {
 
