@@ -37,6 +37,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Source References",
+  id = SourceReferencesRSDefinition.REL,
   description = "A set of source references on a conclusion.",
   resourceElement = Gedcomx.class,
   embedded = true,

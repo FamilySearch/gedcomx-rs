@@ -33,6 +33,14 @@ import java.lang.annotation.Target;
 public @interface ResourceDefinition {
 
   /**
+   * A simple id for the resource definition. This idea, appended to the namespace provides the (full) identifier for the resource definition and associated
+   * profile.
+   *
+   * @return The simple, relative id for the resource definition.
+   */
+  String id();
+
+  /**
    * A name for this resource definition.
    *
    * @return A name for this resource definition.

@@ -30,6 +30,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Persons",
+  id = PersonsRSDefinition.REL,
   description = "The set of persons in the application.",
   resourceElement = Gedcomx.class
 )

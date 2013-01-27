@@ -28,6 +28,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Couple-Child Relationships",
+  id = CoupleChildRelationshipsRSDefinition.REL,
   description = "The set of couple-child relationships.",
   resourceElement = Gedcomx.class
 )

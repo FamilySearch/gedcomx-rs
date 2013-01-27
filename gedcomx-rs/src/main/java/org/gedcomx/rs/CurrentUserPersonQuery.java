@@ -28,6 +28,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Current User Person",
+  id = CurrentUserPersonQuery.REL,
   description = "The query for the person for the current user.",
   resourceElement = Gedcomx.class
 )

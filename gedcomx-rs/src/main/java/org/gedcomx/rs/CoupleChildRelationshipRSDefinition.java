@@ -34,6 +34,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Couple-Child Relationship",
+  id = CoupleChildRelationshipRSDefinition.REL,
   description = "A couple-child relationship.",
   resourceElement = Gedcomx.class,
   transitions = {

@@ -28,11 +28,13 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Relationships",
+  id = RelationshipsRSDefinition.REL,
   description = "The set of relationships in the application.",
   resourceElement = Gedcomx.class
 )
 public interface RelationshipsRSDefinition {
 
+  public static final String REL = "relationships";
   public static final String COUPLE_RELATIONSHIPS_REL = "couple-relationships";
   public static final String PARENT_CHILD_RELATIONSHIPS_REL = "parent-child-relationships";
 

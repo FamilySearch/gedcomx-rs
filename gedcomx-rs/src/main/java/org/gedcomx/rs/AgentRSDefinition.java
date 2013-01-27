@@ -28,6 +28,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Agent",
+  id = AgentRSDefinition.REL,
   description = "An agent, such as a user or other contributor.",
   resourceElement = Gedcomx.class
 )

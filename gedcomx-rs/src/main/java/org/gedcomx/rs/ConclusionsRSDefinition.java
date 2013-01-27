@@ -36,6 +36,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Conclusions",
+  id = ConclusionsRSDefinition.REL,
   description = "The set of conclusions about a person or relationship",
   resourceElement = Gedcomx.class,
   embedded = true,

@@ -45,6 +45,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Descendancy",
+  id = DescendancyQuery.REL,
   description = "The query for the descendancy of a person.",
   resourceElement = Gedcomx.class
 )

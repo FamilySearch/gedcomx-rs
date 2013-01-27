@@ -50,6 +50,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition(
   name = "Discovery",
+  id = DiscoveryRSDefinition.REL,
   description = "The root index of the application, providing links to the various application states.",
   resourceElement = Feed.class,
   transitions = {

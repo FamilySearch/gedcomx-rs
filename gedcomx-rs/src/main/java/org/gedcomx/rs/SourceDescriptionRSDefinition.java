@@ -32,6 +32,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Source Description",
+  id = SourceDescriptionRSDefinition.REL,
   description = "A source description",
   resourceElement = Gedcomx.class
 )

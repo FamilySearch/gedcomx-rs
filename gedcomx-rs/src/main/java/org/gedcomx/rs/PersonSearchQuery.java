@@ -137,6 +137,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Person Search",
+  id = PersonSearchQuery.REL,
   description = "A search query for a person.",
   resourceElement = Feed.class,
   transitions = {

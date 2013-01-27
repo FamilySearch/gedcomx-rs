@@ -41,6 +41,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Relationship",
+  id = RelationshipRSDefinition.REL,
   description = "A relationship.",
   resourceElement = Gedcomx.class,
   transitions = {

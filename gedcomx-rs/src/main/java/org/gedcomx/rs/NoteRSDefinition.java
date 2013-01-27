@@ -38,6 +38,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition(
   name = "Note",
+  id = NoteRSDefinition.REL,
   description = "A note on a person or relationship.",
   resourceElement = Gedcomx.class,
   embedded = true,

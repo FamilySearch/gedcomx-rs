@@ -33,6 +33,7 @@ import javax.ws.rs.core.Response;
  */
 @ResourceDefinition (
   name = "Person Relationships",
+  id = PersonRelationshipsRSDefinition.REL,
   description = "A set of relationships that reference a specific person, such as the spouse relationships, parent relationships, or child relationships.",
   resourceElement = Gedcomx.class,
   transitions = {
@@ -41,6 +42,7 @@ import javax.ws.rs.core.Response;
 )
 public interface PersonRelationshipsRSDefinition {
 
+  public static final String REL = "person-relationships";
   public static final String SPOUSE_RELATIONSHIPS_REL = "spouse-relationships";
   public static final String PARENT_RELATIONSHIPS_REL = "parent-relationships";
   public static final String CHILD_RELATIONSHIPS_REL = "child-relationships";
