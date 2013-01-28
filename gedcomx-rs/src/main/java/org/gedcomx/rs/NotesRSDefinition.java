@@ -44,7 +44,7 @@ import javax.ws.rs.core.Response;
     @StateTransition( rel = NoteRSDefinition.REL, description = "A note.", scope = Note.class, conditional = true, targetResource = NoteRSDefinition.class ),
     @StateTransition( rel = PersonRSDefinition.REL, description = "The person.", scope = Person.class, conditional = true, targetResource = PersonRSDefinition.class ),
     @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship.", scope = Relationship.class, conditional = true, targetResource = RelationshipRSDefinition.class ),
-    @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The couple-child relationship.", scope = Relationship.class, conditional = true, targetResource = CoupleChildRelationshipRSDefinition.class )
+    @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The couple-child relationship.", scope = CoupleChildRelationship.class, conditional = true, targetResource = CoupleChildRelationshipRSDefinition.class )
   }
 )
 public interface NotesRSDefinition {
