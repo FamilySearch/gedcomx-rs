@@ -77,19 +77,6 @@ public interface CoupleChildRelationshipRSDefinition {
   Response get();
 
   /**
-   * Update a couple-child relationship.
-   *
-   * @return The couple-child relationship.
-   */
-  @POST
-  @StatusCodes ({
-    @ResponseCode ( code = 204, condition = "The update was successful."),
-    @ResponseCode ( code = 404, condition = "If the requested relationship is not found."),
-    @ResponseCode ( code = 410, condition = "If the requested relationship has been deleted.")
-  })
-  Response post(Gedcomx root);
-
-  /**
    * Delete a couple-child relationship.
    *
    */
