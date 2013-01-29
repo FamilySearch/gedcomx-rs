@@ -58,7 +58,6 @@ import javax.ws.rs.core.Response;
     @StateTransition (rel = ConclusionsRSDefinition.REL, description = "The templated link to the conclusions resources of the application.", template = true, conditional = true, targetResource = ConclusionsRSDefinition.class ),
     @StateTransition (rel = AgentRSDefinition.REL, description = "The templated link to the contributor resources of the application.", template = true, targetResource = AgentRSDefinition.class ),
     @StateTransition (rel = CurrentUserPersonQuery.REL, description = "The link to the current user person of the application.", conditional = true, targetResource = CurrentUserPersonQuery.class ),
-    @StateTransition (rel = CurrentUserQuery.REL, description = "The link to the current user of the application.", conditional = true, targetResource = CurrentUserQuery.class ),
     @StateTransition (rel = NoteRSDefinition.REL, description = "The templated link to the note resources of the application.", template = true, conditional = true, targetResource = NoteRSDefinition.class ),
     @StateTransition (rel = NotesRSDefinition.REL, description = "The templated link to the notes resources of the application.", template = true, conditional = true, targetResource = NotesRSDefinition.class ),
     @StateTransition (rel = PersonRelationshipsRSDefinition.CHILD_RELATIONSHIPS_REL, description = "The templated link to the child relationships resources of the application.", template = true, conditional = true, targetResource = PersonRelationshipsRSDefinition.class ),
