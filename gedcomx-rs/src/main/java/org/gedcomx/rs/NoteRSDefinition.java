@@ -17,7 +17,6 @@ package org.gedcomx.rs;
 
 import org.gedcomx.Gedcomx;
 import org.gedcomx.common.Note;
-import org.gedcomx.conclusion.CoupleChildRelationship;
 import org.gedcomx.conclusion.Person;
 import org.gedcomx.conclusion.Relationship;
 import org.gedcomx.rt.rs.ResourceDefinition;
@@ -45,8 +44,7 @@ import javax.ws.rs.core.Response;
   transitions = {
     @StateTransition( rel = NotesRSDefinition.REL, description = "The list containing the note.", scope = Note.class, conditional = true, targetResource = NotesRSDefinition.class ),
     @StateTransition( rel = PersonRSDefinition.REL, description = "The person to which the note is attached.", scope = Person.class, conditional = true, targetResource = PersonRSDefinition.class ),
-    @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship to which the note is attached.", scope = Relationship.class, conditional = true, targetResource = RelationshipRSDefinition.class ),
-    @StateTransition( rel = CoupleChildRelationshipRSDefinition.REL, description = "The relationship to which the note is attached.", scope = CoupleChildRelationship.class, conditional = true, targetResource = CoupleChildRelationshipRSDefinition.class )
+    @StateTransition( rel = RelationshipRSDefinition.REL, description = "The relationship to which the note is attached.", scope = Relationship.class, conditional = true, targetResource = RelationshipRSDefinition.class )
   }
 )
 public interface NoteRSDefinition {
