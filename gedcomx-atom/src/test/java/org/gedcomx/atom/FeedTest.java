@@ -51,7 +51,7 @@ public class FeedTest {
     entry.getCategories().get(0).setScheme(URI.create("urn:scheme"));
     entry.getCategories().get(0).setTerm("term");
     entry.setContent(new Content());
-    entry.getContent().setType("application/x-gedcom-v1+xml");
+    entry.getContent().setType("application/x-gedcomx-v1+xml");
     entry.getContent().setGedcomx(new Gedcomx());
     entry.getContent().getGedcomx().setId("gxid");
     entry.setContributors(new ArrayList<Person>());
@@ -179,7 +179,7 @@ public class FeedTest {
     assertEquals(URI.create("urn:scheme"), category.getScheme());
     assertEquals("term", category.getTerm());
 
-    assertEquals("application/x-gedcom-v1+xml", entry.getContent().getType());
+    assertEquals("application/x-gedcomx-v1+xml", entry.getContent().getType());
     assertNotNull(entry.getContent().getGedcomx());
     assertEquals(entry.getContent().getGedcomx().getId(), "gxid");
 
