@@ -115,6 +115,11 @@ public class ResourceBinding extends DecoratedDeclaration {
       }
     }
 
+    //didn't find a non-embedded definition. we'll use the first embedded one, then.
+    if (this.definitions.size() > 0) {
+      return this.definitions.iterator().next();
+    }
+
     return null;
   }
 
