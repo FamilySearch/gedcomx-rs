@@ -78,6 +78,15 @@ public class ResourceBinding extends DecoratedDeclaration {
     this.projectId = projectId;
   }
 
+  @Override
+  public String getDocValue() {
+    String docValue = super.getDocValue();
+    if (docValue == null || "".equals(docValue.trim())) {
+      docValue = getPrimaryDefinition().getDocValue();
+    }
+    return docValue;
+  }
+
   public String getName() {
     return this.name == null ? getPrimaryDefinition().getName() : this.name;
   }
