@@ -52,6 +52,13 @@ public @interface StateTransition {
   String targetHref() default "##default";
 
   /**
+   * The template for the fragment of the target resource, if any.
+   *
+   * @return The template for the fragment of the target resource, if any.
+   */
+  String targetFragment() default "##default";
+
+  /**
    * A human-readable description of the resource relationship.
    *
    * @return A human-readable description of the resource relationship.

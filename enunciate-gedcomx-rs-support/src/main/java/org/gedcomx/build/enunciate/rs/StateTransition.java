@@ -49,7 +49,7 @@ public final class StateTransition implements Comparable<StateTransition> {
     String targetHref = meta.targetHref();
     this.targetHref = "##default".equals(targetHref) ? null : targetHref;
 
-    String targetResourceName = null;
+    String targetResourceName;
     try {
       targetResourceName = meta.targetResource().getName();
     }
