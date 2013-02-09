@@ -167,7 +167,8 @@ public interface PersonSearchQuery {
     @ResponseCode ( code = 400, condition = "If the application declines to process the query because it would have resulted in too many results.")
   })
   @Warnings({
-    @ResponseCode( code = 299, condition = "If part or all of the query is unable to be processed.")
+    @ResponseCode( code = 299, condition = "If the query to be processed was unable to be understood by the application."),
+    @ResponseCode( code = 413, condition = "If the application declines to process the query because it would have resulted in too many results.")
   })
   Response get();
 
