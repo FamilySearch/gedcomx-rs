@@ -11,11 +11,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <enunciate.version>1.26.2</enunciate.version>
-    <gedcomx.core.version>0.28.0.b4</gedcomx.core.version>
+    <gedcomx.core.version>0.28.0-SNAPSHOT</gedcomx.core.version>
     <root.basedir>${project.basedir}</root.basedir>
     <year>${inceptionYear}</year>
-    <maven.repository.approved.url>https://mvn.fsglobal.net/content/repositories/approved</maven.repository.approved.url>
-    <maven.repository.approved-snapshots.url>https://mvn.fsglobal.net/content/repositories/approved-snapshots</maven.repository.approved-snapshots.url>
   </properties>
 
   <modules>
@@ -340,20 +338,6 @@
 
   <distributionManagement>
     <repository>
-      <id>approved</id>
-      <name>Approved Artifact Repository</name>
-      <url>${maven.repository.approved.url}</url>
-    </repository>
-    <snapshotRepository>
-      <id>approved-snapshots</id>
-      <name>Approved Artifact Repository</name>
-      <url>${maven.repository.approved-snapshots.url}</url>
-    </snapshotRepository>
-  </distributionManagement>
-
-  <!--
-  <distributionManagement>
-    <repository>
       <id>gedcomx-release-repo</id>
       <name>GEDCOM X Release Repository</name>
       <url>https://repository-gedcom.forge.cloudbees.com/release/</url>
@@ -364,5 +348,4 @@
       <url>https://repository-gedcom.forge.cloudbees.com/snapshot/</url>
     </snapshotRepository>
   </distributionManagement>
-  -->
 </project>
