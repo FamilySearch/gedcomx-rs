@@ -17,12 +17,14 @@ package org.gedcomx.search;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * The levels of confidence of a search result.
  *
  * @author Ryan Heaton
  */
+@XmlType ( name = "ResultConfidence" )
 @XmlEnum ( Integer.class )
 public enum ResultConfidence {
 
