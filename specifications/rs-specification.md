@@ -168,3 +168,11 @@ The `normalized` member name is used to provide the list of normalized values on
 todo: fill in
 
 todo: explain that this media type assumes the 'rels' are URIs relative to the 'http://rs.gedcomx.org' URI. This is to address the definition of a rel per RFC 5988.
+
+todo: "preferred" on name
+
+todo: "living" flag on person
+
+todo: place display properties
+
+todo: "normalized" on place reference

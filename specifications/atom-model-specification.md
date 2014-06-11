@@ -71,6 +71,12 @@ This specification uses the same namespace prefix conventions that are used by t
 [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 specification.
 
+In addition to those prefixes, the following namespace prefixes are used:
+
+prefix | namespace
+-------|----------
+atom | `http://www.w3.org/2005/Atom`
+
 # 2. Atom Element Extensions
 
 This section defines how the Atom Container Elements are extended for the purposes of this
