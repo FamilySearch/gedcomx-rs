@@ -401,8 +401,69 @@ name | JSON member | JSON object type
 living | living | boolean
 
 
-# 3. The Application States
+# 3. Application States
 
-todo: fill in
+This section defines a set of application states for a genealogical data application.
+
+An "application state" is a snapshot of the state of genealogical data at a specific point in time.
+
+
+## 3.1 The "Agent" State
+
+The `Agent` application state captures the state of a single agent in the system.
+
+### 3.1.1 Media Types
+
+### 3.1.2 Operations
+
+### 3.1.3 Data Elements
+
+### 3.1.4 Transitions
+
+
+## 3.2 The "Ancestry Results" State
+
+## 3.3 The "Collections" State
+
+## 3.4 The "Collection" State
+
+## 3.5 The "Descendancy Results" State
+
+## 3.6 The "Persons" State
+
+## 3.7 The "Person" State
+
+## 3.8 The "Person Search Results" State
+
+## 3.9 The "Person Children" State
+
+## 3.10 The "Person Spouses" State
+
+## 3.11 The "Person Parents" State
+
+## 3.12 The "Place Descriptions" State
+
+## 3.13 The "Place Description" State
+
+## 3.14 The "Place Search Results" State
+
+## 3.15 The "Records" State
+
+## 3.16 The "Record" State
+
+## 3.17 The "Relationships" State
+
+## 3.18 The "Relationship" State
+
+## 3.19 The "Source Descriptions" State
+
+## 3.20 The "Source Description" State
+
+
+# 4. State Transitions
+
+todo: embedded links
+
+todo: search query
 
 todo: explain that this media type assumes the 'rels' are URIs relative to the 'http://gedcomx.org/' URI. This is to address the definition of a rel per RFC 5988.
