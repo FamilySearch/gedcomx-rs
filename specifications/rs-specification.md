@@ -28,6 +28,10 @@ and the [GEDCOM X Records Specification](https://github.com/FamilySearch/gedcomx
 to accommodate the requirements of a web-based application. The states of the application are identified and the transitions
 between the application states are defined.
 
+A genealogical application that conforms to this specification uses the Hypertext Transfer Protocol (HTTP) to accept requests from
+and provide responses to client applications. This specification leverages the concepts and principles defined by HTTP to describe
+how a client can expect to interact with a conforming genealogical application.
+
 ## 1.1 Identifier, Version, and Dependencies
 
 The identifier for this specification is:
@@ -51,6 +55,8 @@ by [`http://gedcomx.org/atom-extensions/v1`](https://github.com/FamilySearch/ged
 This specification references the GEDCOM X Record Extensions specification identified
 by [`http://gedcomx.org/records/v1`](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md).
 
+This specification references the HTTP 1/1 specification, [RFC 2616](http://tools.ietf.org/html/rfc2616).
+
 ## 1.2 Notational Conventions
 
 ### 1.2.1 Keywords
@@ -61,7 +67,7 @@ document are to be interpreted as described in BCP 14,
 [RFC2119](http://tools.ietf.org/html/rfc2119), as scoped to those conformance
 targets.
 
-## 1.2.2 Compliance
+### 1.2.2 Compliance
 
 An implementation of GEDCOM X RS is "non-compliant" if it fails to satisfy
 one or more of the MUST or REQUIRED level requirements. An implementation that satisfies all of
@@ -69,20 +75,63 @@ the  MUST or REQUIRED and all of the SHOULD level requirements is said to be "un
 compliant"; and implementation that satisfies all of the MUST level requirements but not all of the
 SHOULD level requirements is said to be "conditionally compliant".
 
-### 1.2.3 Application States
+## 1.3 Concepts and Definitions
 
-GEDCOM X RS is defined in terms of application states. Examples of an application state include resources, such as persons,
-relationships, or sources managed by an application. Each application state is defined in terms of the available transitions
-to other states (i.e. "links"), the operations that are applicable to those resources, and the media types that are used to
-read or update application states.
+### 1.3.1 Client
 
-## 1.3 Operations
+todo:
+
+### 1.3.2 Server
+
+todo:
+
+### 1.3.3 Application States
+
+GEDCOM X RS is defined by a set of application states. An "application state" is a snapshot of 
+the state of genealogical data in an application at a specific point in time. Examples of an application 
+state include resources such as persons, relationships, or sources. 
+
+### 1.3.4 State Transitions (i.e. "Links")
+
+A client drives the state of a GEDCOM X application by capturing transitions from application state to application state.
+Each application state provides to the client the set of transitions (i.e. "links") to other application states 
+that are available. For example, a client may be able to follow a link from a person to its source.
+
+### 1.3.5 Operations
 
 The set of available operations is constrained to the set defined by [RFC 2616, Section 9](http://tools.ietf.org/html/rfc2616#section-9).
 
-## 1.4 Media Types
+### 1.3.6 Media Types
 
-todo: explain how media types are used.
+todo: 
+
+### 1.3.7 The Application Entry Point
+
+todo:
+
+## 1.4 Use of HTTP
+
+todo:
+
+### 1.4.1 The Request
+
+todo:
+
+### 1.4.2 The Response
+
+todo:
+
+### 1.4.3 Content Negotiation
+
+todo:
+
+### 1.4.4 The OPTIONS Operation
+
+todo:
+
+### 1.4.5 Example
+
+todo:
 
 # 2. Data Type Extensions
 
@@ -90,6 +139,8 @@ This section defines a set of extensions to the [GEDCOM X Conceptual Model](http
 and provides the representations of those data types in both XML and JSON as extensions to
 [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md) and
 [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md).
+
+<a name="link"/>
 
 ## 2.1 The "Link" Data Type
 
@@ -405,8 +456,66 @@ living | living | boolean
 
 This section defines a set of application states for a genealogical data application.
 
-An "application state" is a snapshot of the state of genealogical data at a specific point in time.
+An "application state" is a snapshot of the state of genealogical data in an application at a specific 
+point in time. The formal definition of an application state is comprised of the following components:
 
+* Applicable media types.
+* Implication of HTTP operations.
+* Expected data elements.
+* Transitions to other application states.
+* Embedded application states.
+
+#### Applicable Media Types
+
+Media types are used to represent the data elements of application states to the client. The client
+interprets the data according to the definition of the media type, and uses a media type to
+communicate changes of the application state to the server. The definition of each application 
+state specifies the media types that servers are required to support. The definition of each application
+state also lists other media types that are optional.
+
+#### Implication of HTTP Operations
+
+The definition of each application state includes how a given HTTP operation is expected to be 
+interpreted by a server. Note that although this specification provides a discrete meaning to each
+HTTP operation for each application state, some HTTP operations are optional. If an application
+chooses to not support an optional operation, the server MUST respond with the HTTP `406` 
+(Method Not Allowed) status code. Note that the `OPTIONS` and the `HEAD` operations are not defined
+explicitly by the definition of each application state. The HTTP specification already provides
+a sufficient definition of the `OPTIONS` and `HEAD` operations and their application is implicit
+in the definition of each application state.
+ 
+#### Expected data elements
+
+Each application state captures a specific set of data that is managed by the server. For example,
+the `Person` application state provides data about a person. The definition
+of each application state declares the data elements that client can expect. Note that the application server
+may choose to provide more data elements than those that are formally declared to be expected.
+
+#### Transitions to other application states.
+
+Each application state captures a limited portion of state. In order to enable the client to do useful
+things, controls are provided by each application state that describe the available choices to the 
+client. For example, at a `Person` state, the client may want to read the children of the person, or
+it may want to read the spouses of a person, or it may want to update the name of the person, etc. The 
+choices that are available to the client take the form of "transitions" to other application states.
+
+The [`Link` data type](#link) provides the controls to the client that declare the available state 
+transitions. For a list of transitions defined by GEDCOM X RS, see [Section 4, State Transitions](#transitions).
+  
+#### Embedded application states.
+
+Some state transitions are designated as transitions to "embedded" application states. Embedded application 
+states are to be considered as components of the state from which the transition starts. The use of
+embedded application states is a common in online applications; an image embedded in an HTML page is 
+an example.
+
+Embedded application states are defined to accommodate designs of genealogical applications that break
+up a genealogical resource into multiple requests. For example, a server may choose to break up the 
+`Person` state into two requests: one to get the conclusions of the person(name, gender, facts) and 
+another one to get the source references of the person. One reason for such a design might be to target
+a specific caching strategy. Another reason might be to optimize requests for a specific database schema.
+
+[Section 5 (Embedding Application States)](#embedding) specifies how embedded application states are used.
 
 ## 3.1 The "Agent" State
 
@@ -414,11 +523,38 @@ The `Agent` application state captures the state of a single agent in the system
 
 ### 3.1.1 Media Types
 
+Applications that implement the `Agent` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
 ### 3.1.2 Operations
+
+The following operations are defined as applicable to the `Agent` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read an agent. | REQUIRED
+`POST` | Update an agent. | OPTIONAL
+`DELETE` | Delete an agent. | OPTIONAL
 
 ### 3.1.3 Data Elements
 
+At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
+MUST be provided by the server in the response of a `GET` operation. If more than one instance of `Agent` is provided, the instance that 
+represents the "main" agent MUST be provided as the first element in the list.
+
+At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Agent` is provided, the instance that 
+represents the "main" agent MUST be provided as the first element in the list.
+
 ### 3.1.4 Transitions
+
+No state transitions are defined by this specification for the `Agent` state.
+
+### 3.1.5 Embedded States
+
+No embedded states are defined by this specification for the `Agent` state.
 
 
 ## 3.2 The "Ancestry Results" State
@@ -459,6 +595,7 @@ The `Agent` application state captures the state of a single agent in the system
 
 ## 3.20 The "Source Description" State
 
+<a name="transitions"/>
 
 # 4. State Transitions
 
@@ -467,3 +604,14 @@ todo: embedded links
 todo: search query
 
 todo: explain that this media type assumes the 'rels' are URIs relative to the 'http://gedcomx.org/' URI. This is to address the definition of a rel per RFC 5988.
+
+todo: 'anchor' element
+
+todo: 'sortKey' attribute
+
+<a name="embedding"/>
+
+# 5. Embedding Application States
+
+# 5. Authentication and Authorization
+
