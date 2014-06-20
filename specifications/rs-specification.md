@@ -319,6 +319,7 @@ descendancyNumber | The context-specific descendancy number for the person in re
 </gx:display>
 ```
 
+<a name="display"/>
 
 ### 2.2.2 The "DisplayProperties" JSON Element
 
@@ -438,18 +439,21 @@ The following properties are defined as extensions to the
 name  | description | data type | constraints
 ------|-------------|-----------|------------
 living | Whether the person is considered living by the application. | boolean | OPTIONAL.
+display | The display properties for the person. | [`DisplayProperties`](#display) | OPTIONAL.
 
 ### 3.3.1 "Person" XML Type Extensions
 
 name | XML property | XML type
 -----|-------------|--------------
 living | living (attribute) | xsd:boolean
+display | gx:display | [`DisplayProperties`](#display)
 
 ### 3.3.2 "Person" JSON Type Extensions
 
 name | JSON member | JSON object type
 -----|-------------|-------------
 living | living | boolean
+display | display | [`DisplayProperties`](#display)
 
 
 # 3. Application States
@@ -519,7 +523,7 @@ a specific caching strategy. Another reason might be to optimize requests for a 
 
 ## 3.1 The "Agent" State
 
-The `Agent` application state captures the state of a single agent in the system.
+The `Agent` application state consists of a single agent in the system.
 
 ### 3.1.1 Media Types
 
@@ -541,7 +545,7 @@ operation|description|constraints
 ### 3.1.3 Data Elements
 
 At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
-MUST be provided by the server in the response of a `GET` operation. If more than one instance of `Agent` is provided, the instance that 
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Agent` is provided, the instance that 
 represents the "main" agent MUST be provided as the first element in the list.
 
 At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
@@ -550,14 +554,56 @@ represents the "main" agent MUST be provided as the first element in the list.
 
 ### 3.1.4 Transitions
 
-No state transitions are defined by this specification for the `Agent` state.
+No state transitions are specified for the `Agent` state.
 
 ### 3.1.5 Embedded States
 
-No embedded states are defined by this specification for the `Agent` state.
+No embedded states are specified for the `Agent` state.
 
 
 ## 3.2 The "Ancestry Results" State
+
+The `Ancestry Results` state consists of the results of a query for multiple generations of the ancestry
+of a person.
+
+### 3.2.1 Media Types
+
+Applications that implement the `Ancestry Results` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.2.2 Operations
+
+The following operations are defined as applicable to the `Ancestry Results` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read the ancestry for a person. | REQUIRED
+
+### 3.2.3 Data Elements
+
+The results of a successful query for the ancestry of a person MUST contain a list of instances of the
+[`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person). Each
+`Person` in the list MUST provide a value for the `ascendancyNumber` of the person using [`DisplayProperties`](#display).
+
+### 3.2.4 Transitions
+
+The following state transitions are specified for the `Ancestry Results` state:
+
+id|target state|scope|description
+--|------------|-----|-----------
+`person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the ancestry results to the persons in the results.
+
+[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Ancestry Results` state. Even though other transitions 
+are not formally included in the definition of the `Ancestry Results` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 3.2.5 Embedded States
+
+No embedded states are specified for the `Ancestry Results` state.
+
 
 ## 3.3 The "Collections" State
 
@@ -566,6 +612,8 @@ No embedded states are defined by this specification for the `Agent` state.
 ## 3.5 The "Descendancy Results" State
 
 ## 3.6 The "Persons" State
+
+<a name="person"/>
 
 ## 3.7 The "Person" State
 
