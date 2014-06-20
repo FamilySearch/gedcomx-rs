@@ -24,7 +24,7 @@ http://creativecommons.org/licenses/by-sa/3.0/
 
 GEDCOM X RS is a specification that defines a standard interface for a genealogical data application on the World Wide Web.
 A set of data types are defined as extensions to the [core GEDCOM X specification set](https://github.com/FamilySearch/gedcomx/blob/master/specifications/)
-and the [GEDCOM X Records Specification](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md)
+and the [GEDCOM X Record Extension](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md)
 to accommodate the requirements of a web-based application. The states of the application are identified and the transitions
 between the application states are defined.
 
@@ -521,9 +521,14 @@ a specific caching strategy. Another reason might be to optimize requests for a 
 
 [Section 5 (Embedding Application States)](#embedding) specifies how embedded application states are used.
 
+
+
+
+<a name="agent"/>
+
 ## 3.1 The "Agent" State
 
-The `Agent` application state consists of a single agent in the system.
+The `Agent` application state consists of a single agent.
 
 ### 3.1.1 Media Types
 
@@ -541,6 +546,14 @@ operation|description|constraints
 `GET` | Read an agent. | REQUIRED
 `POST` | Update an agent. | OPTIONAL
 `DELETE` | Delete an agent. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code.
+
+A successful `POST` request SHOULD result in a `204` response code.
+
+A successful `DELETE` request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
 ### 3.1.3 Data Elements
 
@@ -561,6 +574,11 @@ No state transitions are specified for the `Agent` state.
 No embedded states are specified for the `Agent` state.
 
 
+
+
+
+<a name="ancestry"/>
+
 ## 3.2 The "Ancestry Results" State
 
 The `Ancestry Results` state consists of the results of a query for multiple generations of the ancestry
@@ -580,6 +598,10 @@ The following operations are defined as applicable to the `Ancestry Results` sta
 operation|description|constraints
 ---------|-----------|-----------
 `GET` | Read the ancestry for a person. | REQUIRED
+
+A successful `GET` request SHOULD result in a `200` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
 ### 3.2.3 Data Elements
 
@@ -605,23 +627,162 @@ other transitions is RECOMMENDED where applicable.
 No embedded states are specified for the `Ancestry Results` state.
 
 
+
+
+
+<a name="collections"/>
+
 ## 3.3 The "Collections" State
 
+The `Collections` state consists of a list of collections. Examples of usages of the `Collections` state 
+to provide a list of subcollections of a collection, or to list all the collections in a system, or to provide a 
+means for a client to create a collection in a system.
+
+### 3.3.1 Media Types
+
+Applications that implement the `Collections` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.3.2 Operations
+
+The following operations are defined as applicable to the `Collections` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a list of collections. | OPTIONAL
+`POST` | Create a collection or set of collections. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more collections. If the list is empty, 
+a successful `GET` SHOULD result in a `204` response code.
+
+If one (and only one) collection was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
+code and a `Location` header specifying the id of the created collection. If multiple collections were created as a result of a successful 
+`POST` request, the request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 3.3.3 Data Elements
+
+A list of instances of the
+[`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection).
+MUST be provided by the server in the successful response of a `GET` operation. If the list of collections is large, the server MAY
+break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+
+A list of instances of the
+[`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection).
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Collection` provided by 
+the client as a candidate to be created and added to the list of collections. 
+
+
+### 3.3.4 Transitions
+
+The following state transitions are specified for the `Collections` state:
+
+id|target state|scope|description
+--|------------|-----|-----------
+`collection` | [`Collection` State](#collection) | Each instance of [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Transition from the list of collections to a single collection.
+
+[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Collections` state. Even though other transitions 
+are not formally included in the definition of the `Collections` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 3.3.5 Embedded States
+
+No embedded states are specified for the `Collections` state.
+
+
+
+
+
+<a name="collection"/>
+
 ## 3.4 The "Collection" State
+
+The `Collection` application state consists of a single collection.
+
+### 3.4.1 Media Types
+
+Applications that implement the `Collection` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.4.2 Operations
+
+The following operations are defined as applicable to the `Collection` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a collection. | REQUIRED
+`POST` | Update a collection. | OPTIONAL
+`DELETE` | Delete a collection. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code.
+
+A successful `POST` request SHOULD result in a `204` response code.
+
+A successful `DELETE` request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 3.4.3 Data Elements
+
+At least one instance of the [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection)
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Collection` is provided, the instance that 
+represents the "main" collection MUST be provided as the first element in the list.
+
+At least one instance of the [`Collection` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Collection` is provided, the instance that 
+represents the "main" collection MUST be provided as the first element in the list.
+
+### 3.4.4 Transitions
+
+id|target state|scope|description
+--|------------|-----|-----------
+`collection` | [`Collection` State](#collection) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Self-link to the `Collection` state.
+`subcollections` | [`Collections` State](#collections) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of subcollections for this collection.
+`persons` | [`Persons` State](#persons) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of persons in the collection.
+`relationships` | [`Relationships` State](#relationsihps) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of relationships between persons in this collection.
+`events` | [`Events` State](#events) | [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#collection) | Link to the list of events in this collection.
+`records` | [`Records` State](#records) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of records in the collection.
+`artifacts` | [`Source Descriptions` State](#descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of digital artifacts in the collection.
+`source-descriptions` | [`Source Descriptions` State](#descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of sources described in the collection.
+`person-search` | [`Person Search Results` State](#search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for persons in the system.
+`place-search` | [`Place Search Results` State](#place-search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for places in the system.
+`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the authorization page used by a user to authenticate to the system. See [Section 7, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the endpoint used to obtain an access token. See [Section 7, Authentication and Authorization](#auth).
+
+[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Collection` state. Even though other transitions 
+are not formally included in the definition of the `Collection` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 3.4.5 Embedded States
+
+No embedded states are specified for the `Collection` state.
+
+
+
+
+
+<a name="descendancy"/>
 
 ## 3.5 The "Descendancy Results" State
 
 The `Descendancy Results` state consists of the results of a query for multiple generations of the descendancy
 of a person.
 
-### 3.2.1 Media Types
+### 3.5.1 Media Types
 
 Applications that implement the `Descendancy Results` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.2.2 Operations
+### 3.5.2 Operations
 
 The following operations are defined as applicable to the `Descendancy Results` state:
 
@@ -629,13 +790,17 @@ operation|description|constraints
 ---------|-----------|-----------
 `GET` | Read the descendancy for a person. | REQUIRED
 
-### 3.2.3 Data Elements
+A successful `GET` request SHOULD result in a `200` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 3.5.3 Data Elements
 
 The results of a successful query for the ancestry of a person MUST contain a list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person). Each
 `Person` in the list MUST provide a value for the `descendancyNumber` of the person using [`DisplayProperties`](#display).
 
-### 3.2.4 Transitions
+### 3.5.4 Transitions
 
 The following state transitions are specified for the `Descendancy Results` state:
 
@@ -648,41 +813,253 @@ provided by the server for the `Descendancy Results` state. Even though other tr
 are not formally included in the definition of the `Descendancy Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.2.5 Embedded States
+### 3.5.5 Embedded States
 
 No embedded states are specified for the `Descendancy Results` state.
 
+
+
+
+<a name="events"/>
+
+## 3.6 The "Events" State
+
+The `Events` state consists of a list of events. Examples of usages of the `Events` state include
+to list all the events in a system or to provide a means for a client to create a event in a system.
+
+### 3.6.1 Media Types
+
+Applications that implement the `Events` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.6.2 Operations
+
+The following operations are defined as applicable to the `Events` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a list of events. | OPTIONAL
+`POST` | Create an event or set of events. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more events. If the list is empty, 
+a successful `GET` SHOULD result in a `204` response code.
+
+If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
+code and a `Location` header specifying the id of the created event. If multiple events were created as a result of a successful 
+`POST` request, the request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 3.6.3 Data Elements
+
+A list of instances of the
+[`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event).
+MUST be provided by the server in the successful response of a `GET` operation. If the list of events is large, the server MAY
+break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+
+A list of instances of the
+[`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event).
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Event` provided by 
+the client as a candidate to be created and added to the list of events. 
+
+
+### 3.6.4 Transitions
+
+The following state transitions are specified for the `Events` state:
+
+id|target state|scope|description
+--|------------|-----|-----------
+`event` | [`Event` State](#event) | Each instance of [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Transition from the list of events to a single event.
+
+[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Events` state. Even though other transitions 
+are not formally included in the definition of the `Events` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 3.6.5 Embedded States
+
+No embedded states are specified for the `Events` state.
+
+
+
+
+
+<a name="event"/>
+
+## 3.7 The "Event" State
+
+The `Event` application state consists of a single event.
+
+### 3.7.1 Media Types
+
+Applications that implement the `Event` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.7.2 Operations
+
+The following operations are defined as applicable to the `Event` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read an event. | REQUIRED
+`POST` | Update an event. | OPTIONAL
+`DELETE` | Delete an event. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code.
+
+A successful `POST` request SHOULD result in a `204` response code.
+
+A successful `DELETE` request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 3.7.3 Data Elements
+
+At least one instance of the [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Event` is provided, the instance that 
+represents the "main" event MUST be provided as the first element in the list.
+
+At least one instance of the [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Event` is provided, the instance that 
+represents the "main" event MUST be provided as the first element in the list.
+
+### 3.7.4 Transitions
+
+id|target state|scope|description
+--|------------|-----|-----------
+`event` | [`Event` State](#event) | [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Self-link to the `Event` state.
+
+
+### 3.7.5 Embedded States
+
+No embedded states are specified for the `Event` state.
+
+
+
+
+<a name="persons"/>
+
 ## 3.6 The "Persons" State
+
+
+
+
 
 <a name="person"/>
 
 ## 3.7 The "Person" State
 
+
+
+
+<a name="search"/>
+
 ## 3.8 The "Person Search Results" State
+
+
+
+
+
+<a name="children"/>
 
 ## 3.9 The "Person Children" State
 
+
+
+
+
+<a name="spouses"/>
+
 ## 3.10 The "Person Spouses" State
+
+
+
+
+
+<a name="parents"/>
 
 ## 3.11 The "Person Parents" State
 
+
+
+
+
+<a name="place-descriptions"/>
+
 ## 3.12 The "Place Descriptions" State
+
+
+
+
+
+<a name="place-description"/>
 
 ## 3.13 The "Place Description" State
 
+
+
+
+
+<a name="place-search"/>
+
 ## 3.14 The "Place Search Results" State
+
+
+
+
+
+<a name="records"/>
 
 ## 3.15 The "Records" State
 
+
+
+
+
+<a name="record"/>
+
 ## 3.16 The "Record" State
+
+
+
+
+
+<a name="relationships"/>
 
 ## 3.17 The "Relationships" State
 
+
+
+
+
+<a name="relationship"/>
+
 ## 3.18 The "Relationship" State
+
+
+
+
+
+<a name="descriptions"/>
 
 ## 3.19 The "Source Descriptions" State
 
+
+
+
+
+<a name="description"/>
+
 ## 3.20 The "Source Description" State
+
+
+
+
+
 
 <a name="transitions"/>
 
@@ -694,13 +1071,23 @@ todo: search query
 
 todo: explain that this media type assumes the 'rels' are URIs relative to the 'http://gedcomx.org/' URI. This is to address the definition of a rel per RFC 5988.
 
-todo: 'anchor' element
-
 todo: 'sortKey' attribute
+
+
 
 <a name="embedding"/>
 
 # 5. Embedding Application States
 
-# 5. Authentication and Authorization
+
+
+<a name="paging"/>
+
+# 6. Paged Application States
+
+
+
+<a name="auth"/>
+
+# 7. Authentication and Authorization
 
