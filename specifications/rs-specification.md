@@ -611,6 +611,47 @@ No embedded states are specified for the `Ancestry Results` state.
 
 ## 3.5 The "Descendancy Results" State
 
+The `Descendancy Results` state consists of the results of a query for multiple generations of the descendancy
+of a person.
+
+### 3.2.1 Media Types
+
+Applications that implement the `Descendancy Results` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.2.2 Operations
+
+The following operations are defined as applicable to the `Descendancy Results` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read the descendancy for a person. | REQUIRED
+
+### 3.2.3 Data Elements
+
+The results of a successful query for the ancestry of a person MUST contain a list of instances of the
+[`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person). Each
+`Person` in the list MUST provide a value for the `descendancyNumber` of the person using [`DisplayProperties`](#display).
+
+### 3.2.4 Transitions
+
+The following state transitions are specified for the `Descendancy Results` state:
+
+id|target state|scope|description
+--|------------|-----|-----------
+`person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the ancestry results to the persons in the results.
+
+[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Descendancy Results` state. Even though other transitions 
+are not formally included in the definition of the `Descendancy Results` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 3.2.5 Embedded States
+
+No embedded states are specified for the `Descendancy Results` state.
+
 ## 3.6 The "Persons" State
 
 <a name="person"/>
