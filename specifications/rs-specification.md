@@ -79,11 +79,11 @@ SHOULD level requirements is said to be "conditionally compliant".
 
 ### 1.3.1 Client
 
-todo:
+The "client" is software that reads, updates, or otherwise consumes the genealogical data application.
 
 ### 1.3.2 Server
 
-todo:
+The "server" is the software that provides the genealogical data application via HTTP.
 
 ### 1.3.3 Application States
 
@@ -103,35 +103,59 @@ The set of available operations is constrained to the set defined by [RFC 2616, 
 
 ### 1.3.6 Media Types
 
-todo: 
+The data that is exchanged between a client and a server is encoded according to a specific "media type". Clients use
+content negotiation to determine which media type is used to represent data that is exchanged. For more information about
+media types, see [Architecture of the World Wide Web, Volume One](http://www.w3.org/TR/webarch/), Sections 3 and 4.
 
-### 1.3.7 The Application Entry Point
+### 1.3.7 Application Entry Points
 
-todo:
+Each genealogical application has an "entry point" that takes the form of a URI that resolves to an application state. An
+application entry point is a well-known URI that is used to initiate interactions between a client and the server.
+
+Each application determines its own entry points. Use of the [Collections](#collections), [Collection](#collection), and
+[Person](#person) application states is RECOMMENDED as entry points.
 
 ## 1.4 Use of HTTP
 
-todo:
+Servers provide a GEDCOM X RS interface using [RFC 2616, Hypertext Transfer Protocol](http://www.ietf.org/rfc/rfc2616.txt).
+HTTP is used to exchange data and drive application state.
 
 ### 1.4.1 The Request
 
-todo:
+An HTTP request is issued by the client to initiate the exchange of application state. For more information about HTTP requests,
+see [RFC 2616](http://www.ietf.org/rfc/rfc2616.txt), Section 5.
 
 ### 1.4.2 The Response
 
-todo:
+An HTTP response is provided by the server in response to an HTTP request.  For more information about HTTP responses,
+see [RFC 2616](http://www.ietf.org/rfc/rfc2616.txt), Section 6.
 
 ### 1.4.3 Content Negotiation
 
-todo:
+Content negotiation is the process by which a media type is selected to represent application state. For more information about
+content negotition, see [RFC 2616](http://www.ietf.org/rfc/rfc2616.txt), Section 12.
 
 ### 1.4.4 The OPTIONS Operation
 
-todo:
+The HTTP OPTIONS operation is a useful mechanisms for clients to determine the capabilities of the server for a given application
+state. A client can use the OPTIONS operation to determine (among other things) which HTTP methods are available.
 
-#### Example
+#### example
 
-todo:
+##### request
+
+```
+OPTIONS /path/to/application/state
+```
+
+##### response
+
+```
+HTTP/1.1 204 No Content
+Allow: OPTIONS,POST,GET,DELETE,HEAD
+```
+
+<a name="datatypes"/>
 
 # 2. Data Type Extensions
 
