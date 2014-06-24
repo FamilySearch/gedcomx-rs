@@ -57,6 +57,14 @@ by [`http://gedcomx.org/records/v1`](https://github.com/FamilySearch/gedcomx-rec
 
 This specification references the HTTP 1/1 specification, [RFC 2616](http://tools.ietf.org/html/rfc2616).
 
+This specification uses [RFC 5988, Web Linking](http://tools.ietf.org/html/rfc5988) to specify the means to
+declare state transitions.
+
+This specification uses [RFC 6570, URI Templates](http://tools.ietf.org/html/rfc6570) to specify the means to
+declare a range of URIs.
+
+This specification references [RFC 6749, OAuth 2](http://tools.ietf.org/html/rfc6749).
+
 ## 1.2 Notational Conventions
 
 ### 1.2.1 Keywords
@@ -483,6 +491,9 @@ display | display | [`DisplayProperties`](#display)
 
 todo:
 
+
+
+
 # 4. Application States
 
 This section defines a set of application states for a genealogical data application.
@@ -616,6 +627,10 @@ No embedded states are specified for the `Agent` state.
 
 No removable components are specified for the `Agent` state.
 
+### 4.1.7 Example Requests
+
+todo:
+
 
 
 
@@ -672,6 +687,9 @@ No embedded states are specified for the `Ancestry Results` state.
 
 No removable components are specified for the `Ancestry Results` state.
 
+### 4.2.7 Example Requests
+
+todo:
 
 
 
@@ -744,6 +762,9 @@ No embedded states are specified for the `Collections` state.
 
 No removable components are specified for the `Collections` state.
 
+### 4.3.7 Example Requests
+
+todo:
 
 
 
@@ -796,6 +817,8 @@ represents the "main" collection MUST be provided as the first element in the li
 rel|target state|scope|description
 --|------------|-----|-----------
 `collection` | [`Collection` State](#collection) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Self-link to the `Collection` state.
+`current-user-person` | [`Person` State](#person) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the person in the collection representing the current user.
+`current-user-resources` | [`Source Descriptions` State](#source-descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to a list of resources in the collection that are owned by or otherwise associated with the current user, described as sources.
 `subcollections` | [`Collections` State](#collections) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of subcollections for this collection.
 `persons` | [`Persons` State](#persons) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of persons in the collection.
 `relationships` | [`Relationships` State](#relationsihps) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of relationships between persons in this collection.
@@ -821,6 +844,9 @@ No embedded states are specified for the `Collection` state.
 
 No removable components are specified for the `Collection` state.
 
+### 4.4.7 Example Requests
+
+todo:
 
 
 
@@ -876,6 +902,11 @@ No embedded states are specified for the `Descendancy Results` state.
 ### 4.5.6 Removable Components
 
 No removable components are specified for the `Descendancy Results` state.
+
+### 4.5.7 Example Requests
+
+todo:
+
 
 
 
@@ -945,6 +976,9 @@ No embedded states are specified for the `Events` state.
 
 No removable components are specified for the `Events` state.
 
+### 4.6.7 Example Requests
+
+todo:
 
 
 
@@ -1010,6 +1044,12 @@ rel|scope|description
 `role` | Each instance of [`Event Role` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#conclusion-event-role) | The link used to remove the component.
 
 A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
+
+### 4.7.7 Example Requests
+
+todo:
+
+
 
 
 <a name="persons"/>
@@ -1079,6 +1119,9 @@ No embedded states are specified for the `Persons` state.
 
 No removable components are specified for the `Persons` state.
 
+### 4.8.7 Example Requests
+
+todo:
 
 
 
@@ -1152,6 +1195,7 @@ rel|scope|description
 `child-relationships` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of relationships to children on the person. If no link to `child-relationships` is provided, the list of child relationships MUST be included in the original request for the `Person` state.
 `parent-relationships` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of relationships to parents on the person. If no link to `parent-relationships` is provided, the list of parent relationships MUST be included in the original request for the `Person` state.
 `spouse-relationships` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of relationships to spouses on the person. If no link to `spouse-relationships` is provided, the list of spouse relationships MUST be included in the original request for the `Person` state.
+`conclusions` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of conclusions (names, gender, facts) for the person. If no link to `conclusions` is provided, the list of conclusions MUST be included in the original request for the `Person` state. If a link to `conclusions` is provided, this link SHOULD be used to create new conclusionss or update existing conclusions with a `POST` request.
 `evidence-references` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of evidence (persona) references for the person. If no link to `evidence-references` is provided, the list of evidence references MUST be included in the original request for the `Person` state. If a link to `evidence-references` is provided, this link SHOULD be used to create new evidence references or update existing evidence references with a `POST` request.
 `media-references` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of media references for the person. If no link to `media-references` is provided, the list of media references MUST be included in the original request for the `Person` state. If a link to `media-references` is provided, this link SHOULD be used to create new media references or update existing media references with a `POST` request.
 `notes` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of notes for the person. If no link to `notes` is provided, the list of notes MUST be included in the original request for the `Person` state. If a link to `notes` is provided, this link SHOULD be used to create new notes or update existing notes with a `POST` request.
@@ -1170,6 +1214,11 @@ rel|scope|description
 `source-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the source reference.
 
 A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
+
+### 4.9.7 Example Requests
+
+todo:
+
 
 
 
@@ -1226,6 +1275,10 @@ No embedded states are specified for the `Person Search Results` state.
 ### 4.8.6 Removable Components
 
 No removable components are specified for the `Person Search Results` state.
+
+### 4.8.7 Example Requests
+
+todo:
 
 
 
@@ -1285,6 +1338,12 @@ No embedded states are specified for the `Person Children` state.
 
 No removable components are specified for the `Person Children` state.
 
+### 4.9.7 Example Requests
+
+todo:
+
+
+
 
 
 <a name="spouses"/>
@@ -1342,6 +1401,13 @@ No embedded states are specified for the `Person Spouses` state.
 
 No removable components are specified for the `Person Spouses` state.
 
+### 4.10.7 Example Requests
+
+todo:
+
+
+
+
 
 
 <a name="parents"/>
@@ -1398,6 +1464,13 @@ No embedded states are specified for the `Person Parents` state.
 ### 4.11.6 Removable Components
 
 No removable components are specified for the `Person Parents` state.
+
+### 4.11.7 Example Requests
+
+todo:
+
+
+
 
 
 
@@ -1467,6 +1540,12 @@ No embedded states are specified for the `Place Descriptions` state.
 
 No removable components are specified for the `Place Descriptions` state.
 
+### 4.12.7 Example Requests
+
+todo:
+
+
+
 
 
 
@@ -1527,6 +1606,12 @@ No embedded states are specified for the `Place Description` state.
 
 No removable components are specified for the `Place Description` state.
 
+### 4.13.7 Example Requests
+
+todo:
+
+
+
 
 
 
@@ -1584,6 +1669,12 @@ No embedded states are specified for the `Place Search Results` state.
 
 No removable components are specified for the `Place Search Results` state.
 
+### 4.14.7 Example Requests
+
+todo:
+
+
+
 
 
 
@@ -1640,6 +1731,11 @@ No embedded states are specified for the `Records` state.
 ### 4.15.6 Removable Components
 
 No removable components are specified for the `Records` state.
+
+### 4.15.7 Example Requests
+
+todo:
+
 
 
 
@@ -1717,6 +1813,12 @@ rel|scope|description
 
 A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
 
+### 4.16.7 Example Requests
+
+todo:
+
+
+
 
 
 
@@ -1767,6 +1869,13 @@ No embedded states are specified for the `Relationships` state.
 ### 4.17.6 Removable Components
 
 No removable components are specified for the `Relationships` state.
+
+### 4.17.7 Example Requests
+
+todo:
+
+
+
 
 
 
@@ -1850,6 +1959,9 @@ rel|scope|description
 
 A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
 
+### 4.18.7 Example Requests
+
+todo:
 
 
 
@@ -1920,6 +2032,12 @@ No embedded states are specified for the `Source Descriptions` state.
 
 No removable components are specified for the `Source Descriptions` state.
 
+### 4.19.7 Example Requests
+
+todo:
+
+
+
 
 
 
@@ -1980,6 +2098,9 @@ No embedded states are specified for the `Source Description` state.
 
 No removable components are specified for the `Source Description` state.
 
+### 4.20.7 Example Requests
+
+todo:
 
 
 
@@ -1989,11 +2110,65 @@ No removable components are specified for the `Source Description` state.
 
 # 5. State Transitions
 
-todo: embedded links
+This section provides a formal definition for a set of state transitions available in a genealogical data application.
 
-todo: search query
+## 5.1 Web Linking
 
-todo: explain that this media type assumes the 'rels' are URIs relative to the 'http://gedcomx.org/' URI. This is to address the definition of a rel per RFC 5988.
+Web links defined by [RFC 5988, Web Linking](http://tools.ietf.org/html/rfc5988) are used to
+provide controls for declaring available transitions from application state to other application states.
+When a Web link resolves to a range of URIs, [RFC 6570, URI Templates](http://tools.ietf.org/html/rfc6570)
+is used to provide a URI template to the range of URIs.
+
+## 5.2 Link Relation Types
+
+In addition to the link relation types defined by [RFC 5988](http://tools.ietf.org/html/rfc5988), the following
+link relation types are defined:
+
+rel|target state|description
+--|------------|-----|-----------
+`agent` | [`Agent` State](#agent) | Link to an agent.
+`ancestry` | [`Ancestry Results` State](#ancestry) | Link to the ancestry query for a person.
+`artifacts` | [`Source Descriptions` State](#source-descriptions) | Link to a list of artifacts, described as sources.
+`children` | [`Person Children` State](#children) | Link to a list of children for a person.
+`child-relationships` | [`Person Children` State](#children) | Embedded link to a list of relationships to children for a person.
+`collection` | [`Collection` State](#collection) | Link to a collection.
+`subcollections` | [`Collections` State](#collections) | Link to a list of subcollections of a collection.
+`conclusion` | (undefined) | Link to a conclusion that can be removed.
+`conclusions` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of conclusions (names, gender, facts) of a person or to the facts of a relationship.
+`current-user-person` | [`Person` State](#person) | Link to the person for the current user.
+`current-user-resources` | [`Source Descriptions` State](#source-descriptions) | Link to a list of resources that are owned by or otherwise associated with the current user, described as sources.
+`descendancy` | [`Descendancy Results` State](#descendancy) | Link to the descendancy query for a person.
+`description` | [`Source Description` State](#source-description) | Link to a source description.
+`description` | [`Source Description` State](#source-description) or [`Place Description` State](#place-description) | Link to a source description or to a place description.
+`evidence-reference` | (undefined) | Link to an evidence reference that can be removed.
+`evidence-references` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of evidence references of a person or relationship.
+`http://oauth.net/core/2.0/endpoint/authorize` | user authorization page | Link to an authorization page as defined by [RFC 6749, OAuth 2](http://tools.ietf.org/html/rfc6749).
+`http://oauth.net/core/2.0/endpoint/token` | access token | Link to an access token endpoint as defined by [RFC 6749, OAuth 2](http://tools.ietf.org/html/rfc6749).
+`media-reference` | (undefined) | Link to an media reference that can be removed.
+`media-references` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of media references of a person or relationship.
+`note` | (undefined) | Link to an note that can be removed.
+`notes` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of notes of a person or relationship.
+`parent-relationships` | [`Person` State](#person) | Embedded link to a list of relationships to parents for a person.
+`parents` | [`Person Parents` State](#parents) | Link to a list of parents for a person.
+`person` | [`Person` State](#person) | Link to a person.
+`persons` | [`Persons` State](#persons) | Link to a set of persons.
+`person-search` | [`Person Search` State](#person-search) | Templated link to a range of URIs available to use to search for a person.
+`place-search` | [`Place Search` State](#place-search) | Templated link to a range of URIs available to use to search for a place.
+`record` | [`Record` State](#record) | Link to a record.
+`records` | [`Records` State](#records) | Link to a set of records.
+`relationship` | [`Relationship` State](#relationship) | Link to a relationship.
+`relationships` | [`Relationships` State](#relationships) | Link to a set of relationships.
+`source-descriptions` | [`Source Descriptions` State](#source-descriptions) | Link to a set of source descriptions.
+`source-reference` | (undefined) | Link to an source reference that can be removed.
+`source-references` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of source references of a person or relationship.
+`spouse-relationships` | [`Person` State](#person) | Embedded link to a list of relationships to spouses for a person.
+`spouses` | [`Person Spouses` State](#spouses) | Link to a list of spouses for a person.
+
+Note that [RFC 5988](http://tools.ietf.org/html/rfc5988) declares link relation types
+to be Uniform Resource Identifiers. In conformance to that specification, all link relation types
+are declared to be relative to the `http://gedcomx.org/links/` base URI. As such, the use
+of these link relations in an application state that defined outside the scope of this specification
+SHOULD use the absolute URI, e.g. "http://gedcomx.org/links/person".
 
 
 
@@ -2003,14 +2178,19 @@ todo: explain that this media type assumes the 'rels' are URIs relative to the '
 
 
 
+
 <a name="paging"/>
 
 # 7. Paged Application States
 
 
+
+
 <a name="updating"/>
 
 # 8. Updating Application States
+
+
 
 
 
