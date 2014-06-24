@@ -120,8 +120,8 @@ media types, see [Architecture of the World Wide Web, Volume One](http://www.w3.
 Each genealogical application has an "entry point" that takes the form of a URI that resolves to an application state. An
 application entry point is a well-known URI that is used to initiate interactions between a client and the server.
 
-Each application determines its own entry points. Use of the [Collections](#collections), [Collection](#collection), and
-[Person](#person) application states is RECOMMENDED as entry points.
+Each application determines its own entry points. Use of the [Collections](#collections), [Collection](#collection),
+[Person](#person), and [Source Description](#source-description) application states is RECOMMENDED as entry points.
 
 ## 1.4 Use of HTTP
 
@@ -826,7 +826,7 @@ rel|target state|scope|description
 `records` | [`Records` State](#records) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of records in the collection.
 `artifacts` | [`Source Descriptions` State](#source-descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of digital artifacts in the collection.
 `source-descriptions` | [`Source Descriptions` State](#source-descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of sources described in the collection.
-`person-search` | [`Person Search Results` State](#search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for persons in the system.
+`person-search` | [`Person Search Results` State](#person-search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for persons in the system.
 `place-search` | [`Place Search Results` State](#place-search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for places in the system.
 `http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
 `http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the endpoint used to obtain an access token. See [Section , Authentication and Authorization](#auth).
@@ -1222,7 +1222,7 @@ todo:
 
 
 
-<a name="search"/>
+<a name="person-search"/>
 
 ## 4.8 The "Person Search Results" State
 
@@ -2125,7 +2125,7 @@ In addition to the link relation types defined by [RFC 5988](http://tools.ietf.o
 link relation types are defined:
 
 rel|target state|description
---|------------|-----|-----------
+---|------------|-----------
 `agent` | [`Agent` State](#agent) | Link to an agent.
 `ancestry` | [`Ancestry Results` State](#ancestry) | Link to the ancestry query for a person.
 `artifacts` | [`Source Descriptions` State](#source-descriptions) | Link to a list of artifacts, described as sources.
@@ -2170,7 +2170,143 @@ are declared to be relative to the `http://gedcomx.org/links/` base URI. As such
 of these link relations in an application state that defined outside the scope of this specification
 SHOULD use the absolute URI, e.g. "http://gedcomx.org/links/person".
 
+## 5.3 URI Template Variables
 
+Some links designate transitions to a range of application states according to [RFC 6570, URI Templates](http://tools.ietf.org/html/rfc6570).
+
+GEDCOM X RS specifies the following template variables.
+
+### "access_token"
+
+The "access_token" template variable is used to hold a value for an access token as defined by 
+[RFC 6749 (OAuth 2)](http://tools.ietf.org/html/rfc6749).
+
+### "count"
+
+The "count" template variable is used to hold a count of elements in a page. For more information about paging,
+see [Section 7](#paging).
+
+### "generations"
+
+The "generations" template variable is used to hold a number of generations for the [`Ancestry Results` State](#ancestry)
+and the [`Descendancy Results` State](#descendancy).
+
+### "start"
+
+The "start" template variable is used to hold the index of the first element of a page of results. 
+For more information about paging, see [Section 7](#paging).
+
+### "q"
+
+The "q" template variable is used to hold a GEDCOM X search query string.
+
+A search query string is composed of name-value pairs. A name and value is separated by a colon ':' and each 
+name-value pair is separated by a white space '&nbsp;'.
+
+For example:
+ 
+```
+givenName:John surname:Smith gender:male birthDate:"30 June 1900"
+```
+
+Notice the white space in the birthDate value. If white space is needed in the value then the value must be wrapped in double quotes. 
+By default, values are exact. For non-exact matches append a tilde '~' at the end of the value such as:
+
+```
+givenName:Bob~
+```
+
+The following search parameters are specified:
+
+<table>
+  <tr>
+    <th>name</td>
+    <th>description</td>
+  </tr>
+  <tr>
+    <td>name:</td>
+    <td>The full name of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>givenName:</td>
+    <td>The given name of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>surname:</td>
+    <td>The family name of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>gender:</td>
+    <td>The gender of the person being searched. Valid values are "<tt>male</tt>" and "<tt>female</tt>".</td>
+  </tr>
+  <tr>
+    <td>birthDate:</td>
+    <td>The birth date of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>birthPlace:</td>
+    <td>The birth place of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>deathDate:</td>
+    <td>The death date of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>deathPlace:</td>
+    <td>The death place of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>marriageDate:</td>
+    <td>The marriage date of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>marriagePlace:</td>
+    <td>The marriage place of the person being searched.</td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <h4>Relation Search Parameters</h4>
+      <p>The following set of standard parameters is defined as the substitution of <tt>{relation}</tt> with all of the
+      values "<tt>father</tt>", "<tt>mother</tt>", "<tt>spouse</tt>", and "<tt>parent</tt>".</p>
+    </td>
+  </tr>
+  <tr>
+    <td>{relation}Name:</td>
+    <td>The full name of the {relation} of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>{relation}GivenName:</td>
+    <td>The given name of the {relation} of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>{relation}Surname:</td>
+    <td>The family name of the {relation} of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>{relation}BirthDate:</td>
+    <td>The birth date of the {relation} of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>{relation}BirthPlace:</td>
+    <td>The birth place of the {relation} of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>{relation}DeathDate:</td>
+    <td>The death date of the {relation} of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>{relation}DeathPlace:</td>
+    <td>The death place of the {relation} of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>{relation}MarriageDate:</td>
+    <td>The marriage date of the {relation} of the person being searched.</td>
+  </tr>
+  <tr>
+    <td>{relation}MarriagePlace:</td>
+    <td>The marriage place of the {relation} of the person being searched.</td>
+  </tr>
+</table>
 
 <a name="embedding"/>
 
