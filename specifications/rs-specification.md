@@ -129,7 +129,7 @@ todo:
 
 todo:
 
-### 1.4.5 Example
+#### Example
 
 todo:
 
@@ -665,6 +665,8 @@ as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/m
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
+Applications that implement the `Collections` state MUST support the [GEDCOM X Record Extensions](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md).
+
 ### 4.3.2 Operations
 
 The following operations are defined as applicable to the `Collections` state:
@@ -732,6 +734,8 @@ Applications that implement the `Collection` state MUST support the `application
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
+
+Applications that implement the `Collection` state MUST support the [GEDCOM X Record Extensions](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md).
 
 ### 4.4.2 Operations
 
@@ -1558,6 +1562,55 @@ No removable components are specified for the `Place Search Results` state.
 
 ## 4.15 The "Records" State
 
+The `Records` state consists of a list of records.
+
+### 4.15.1 Media Types
+
+Applications that implement the `Records` state MUST support the `application/x-gedcomx-atom+json` media type
+as defined by the [GEDCOM X Atom Extensions](https://github.com/FamilySearch/gedcomx-rs/blob/master/specifications/atom-model-specification.md)
+specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt) 
+is RECOMMENDED.
+
+Applications that implement the `Records` state MUST support the [GEDCOM X Record Extensions](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md).
+
+### 4.15.2 Operations
+
+The following operations are defined as applicable to the `Records` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a list of records. | REQUIRED
+
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more records. If the list is empty, 
+a successful `GET` SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 4.15.3 Data Elements
+
+The results of a successful query for the ancestry of a person MUST contain a list of entries that each describe a person.
+The content of each entry is a GEDCOM X document that contains the data of the record.
+
+### 4.15.4 Transitions
+
+The following state transitions are specified for the `Records` state:
+
+rel|target state|scope|description
+--|------------|-----|-----------
+`record` | [`Record` State](#record) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the list of records to the a specific record.
+
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Records` state. Even though other transitions 
+are not formally included in the definition of the `Records` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 4.15.5 Embedded States
+
+No embedded states are specified for the `Records` state.
+
+### 4.15.6 Removable Components
+
+No removable components are specified for the `Records` state.
 
 
 
@@ -1566,6 +1619,73 @@ No removable components are specified for the `Place Search Results` state.
 
 ## 4.16 The "Record" State
 
+The `Record` application state consists of a single record.
+
+### 4.16.1 Media Types
+
+Applications that implement the `Record` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 4.16.2 Operations
+
+The following operations are defined as applicable to the `Record` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a record. | REQUIRED
+`POST` | Update a record. | OPTIONAL
+`DELETE` | Delete a record. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code.
+
+A successful `POST` request SHOULD result in a `204` response code.
+
+A successful `DELETE` request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 4.16.3 Data Elements
+
+The GEDCOM X document that is provided by the `Record` state contains the data that is extracted from the record. Expected elements include
+persons, relationships, events, and source descriptions.
+
+### 4.16.4 Transitions
+
+rel|target state|scope|description
+--|------------|-----|-----------
+`record` | [`Record` State](#record) | GEDCOM X Document | Self-link to the `Record` state.
+`person` | [`Person` State](#person) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to a specific person.
+`relationship` | [`Relationship` State](#relationship) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Link to a specific relationship.
+`event` | [`Event` State](#event) | [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Link to a specific event.
+`description` | [`Source Description` State](#source-description) | [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Link to a specific source description.
+`description` | [`Place Description` State](#place-description) | [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Link to a specific place description.
+`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the authorization page used by a user to authenticate to the system. See [Section 8, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the endpoint used to obtain an access token. See [Section 8, Authentication and Authorization](#auth).
+
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Record` state. Even though other transitions 
+are not formally included in the definition of the `Record` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 4.16.5 Embedded States
+
+No embedded states are specified for the `Record` state.
+
+### 4.16.6 Removable Components
+
+The following components of the `Record` state MAY be designated by the server as removable:
+
+rel|scope|description
+--|-----|-----------
+`conclusion` | Each instance of [`Fact` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#fact-conclusion), [`Gender` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#gender), and [`Name` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#name-conclusion) | The link used to remove the fact, gender, or name.
+`evidence-reference` | Each instance of [`EvidenceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#evidence-reference) | The link used to remove the persona (evidence) reference.
+`media-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the media reference.
+`note` | Each instance of [`Note` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#note) | The link used to remove the note.
+`source-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the source reference.
+
+A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
 
 
 
