@@ -455,8 +455,11 @@ name | JSON member | JSON object type
 living | living | boolean
 display | display | [`DisplayProperties`](#display)
 
+### 3.4 The "sortKey" Property
 
-# 3. Application States
+todo:
+
+# 4. Application States
 
 This section defines a set of application states for a genealogical data application.
 
@@ -505,7 +508,7 @@ it may want to read the spouses of a person, or it may want to update the name o
 choices that are available to the client take the form of "transitions" to other application states.
 
 The [`Link` data type](#link) provides the controls to the client that declare the available state 
-transitions. For a list of transitions defined by GEDCOM X RS, see [Section 4, State Transitions](#transitions).
+transitions. For a list of transitions defined by GEDCOM X RS, see [Section 5, State Transitions](#transitions).
   
 #### Embedded application states.
 
@@ -520,7 +523,7 @@ up a genealogical resource into multiple requests. For example, a server may cho
 another one to get the source references of the person. One reason for such a design might be to target
 a specific caching strategy. Another reason might be to optimize requests for a specific database schema.
 
-[Section 5 (Embedding Application States)](#embedding) specifies how embedded application states are used.
+[Section 6 (Embedding Application States)](#embedding) specifies how embedded application states are used.
 
 #### Removable components
 
@@ -537,18 +540,18 @@ application state.
 
 <a name="agent"/>
 
-## 3.1 The "Agent" State
+## 4.1 The "Agent" State
 
 The `Agent` application state consists of a single agent.
 
-### 3.1.1 Media Types
+### 4.1.1 Media Types
 
 Applications that implement the `Agent` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.1.2 Operations
+### 4.1.2 Operations
 
 The following operations are defined as applicable to the `Agent` state:
 
@@ -566,7 +569,7 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.1.3 Data Elements
+### 4.1.3 Data Elements
 
 At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
 MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Agent` is provided, the instance that 
@@ -576,15 +579,15 @@ At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Agent` is provided, the instance that 
 represents the "main" agent MUST be provided as the first element in the list.
 
-### 3.1.4 Transitions
+### 4.1.4 Transitions
 
 No state transitions are specified for the `Agent` state.
 
-### 3.1.5 Embedded States
+### 4.1.5 Embedded States
 
 No embedded states are specified for the `Agent` state.
 
-### 3.1.6 Removable Components
+### 4.1.6 Removable Components
 
 No removable components are specified for the `Agent` state.
 
@@ -593,19 +596,19 @@ No removable components are specified for the `Agent` state.
 
 <a name="ancestry"/>
 
-## 3.2 The "Ancestry Results" State
+## 4.2 The "Ancestry Results" State
 
 The `Ancestry Results` state consists of the results of a query for multiple generations of the ancestry
 of a person.
 
-### 3.2.1 Media Types
+### 4.2.1 Media Types
 
 Applications that implement the `Ancestry Results` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.2.2 Operations
+### 4.2.2 Operations
 
 The following operations are defined as applicable to the `Ancestry Results` state:
 
@@ -617,13 +620,13 @@ A successful `GET` request SHOULD result in a `200` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.2.3 Data Elements
+### 4.2.3 Data Elements
 
 The results of a successful query for the ancestry of a person MUST contain a list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person). Each
 `Person` in the list MUST provide a value for the `ascendancyNumber` of the person using [`DisplayProperties`](#display).
 
-### 3.2.4 Transitions
+### 4.2.4 Transitions
 
 The following state transitions are specified for the `Ancestry Results` state:
 
@@ -631,16 +634,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the ancestry results to the persons in the results.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Ancestry Results` state. Even though other transitions 
 are not formally included in the definition of the `Ancestry Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.2.5 Embedded States
+### 4.2.5 Embedded States
 
 No embedded states are specified for the `Ancestry Results` state.
 
-### 3.2.6 Removable Components
+### 4.2.6 Removable Components
 
 No removable components are specified for the `Ancestry Results` state.
 
@@ -649,20 +652,20 @@ No removable components are specified for the `Ancestry Results` state.
 
 <a name="collections"/>
 
-## 3.3 The "Collections" State
+## 4.3 The "Collections" State
 
 The `Collections` state consists of a list of collections. Examples of usages of the `Collections` state include 
 to provide a list of subcollections of a collection, or to list all the collections in a system, or to provide a 
 means for a client to create a collection in a system.
 
-### 3.3.1 Media Types
+### 4.3.1 Media Types
 
 Applications that implement the `Collections` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.3.2 Operations
+### 4.3.2 Operations
 
 The following operations are defined as applicable to the `Collections` state:
 
@@ -680,12 +683,12 @@ code and a `Location` header specifying the URI of the created collection. If mu
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.3.3 Data Elements
+### 4.3.3 Data Elements
 
 A list of instances of the
 [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection).
 MUST be provided by the server in the successful response of a `GET` operation. If the list of collections is large, the server MAY
-break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+break up the list into multiple pages according to [Section 7, Paged Application States](#paging).
 
 A list of instances of the
 [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection).
@@ -693,7 +696,7 @@ MUST be provided by the client in a request using the `POST` operation. The serv
 the client as a candidate to be created and added to the list of collections. 
 
 
-### 3.3.4 Transitions
+### 4.3.4 Transitions
 
 The following state transitions are specified for the `Collections` state:
 
@@ -701,16 +704,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `collection` | [`Collection` State](#collection) | Each instance of [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Transition from the list of collections to a single collection.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Collections` state. Even though other transitions 
 are not formally included in the definition of the `Collections` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.3.5 Embedded States
+### 4.3.5 Embedded States
 
 No embedded states are specified for the `Collections` state.
 
-### 3.3.6 Removable Components
+### 4.3.6 Removable Components
 
 No removable components are specified for the `Collections` state.
 
@@ -719,18 +722,18 @@ No removable components are specified for the `Collections` state.
 
 <a name="collection"/>
 
-## 3.4 The "Collection" State
+## 4.4 The "Collection" State
 
 The `Collection` application state consists of a single collection.
 
-### 3.4.1 Media Types
+### 4.4.1 Media Types
 
 Applications that implement the `Collection` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.4.2 Operations
+### 4.4.2 Operations
 
 The following operations are defined as applicable to the `Collection` state:
 
@@ -748,7 +751,7 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.4.3 Data Elements
+### 4.4.3 Data Elements
 
 At least one instance of the [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection)
 MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Collection` is provided, the instance that 
@@ -758,7 +761,7 @@ At least one instance of the [`Collection` Data Type](https://github.com/FamilyS
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Collection` is provided, the instance that 
 represents the "main" collection MUST be provided as the first element in the list.
 
-### 3.4.4 Transitions
+### 4.4.4 Transitions
 
 rel|target state|scope|description
 --|------------|-----|-----------
@@ -772,19 +775,19 @@ rel|target state|scope|description
 `source-descriptions` | [`Source Descriptions` State](#descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of sources described in the collection.
 `person-search` | [`Person Search Results` State](#search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for persons in the system.
 `place-search` | [`Place Search Results` State](#place-search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for places in the system.
-`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the authorization page used by a user to authenticate to the system. See [Section 7, Authentication and Authorization](#auth).
-`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the endpoint used to obtain an access token. See [Section 7, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the authorization page used by a user to authenticate to the system. See [Section 8, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the endpoint used to obtain an access token. See [Section 8, Authentication and Authorization](#auth).
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Collection` state. Even though other transitions 
 are not formally included in the definition of the `Collection` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.4.5 Embedded States
+### 4.4.5 Embedded States
 
 No embedded states are specified for the `Collection` state.
 
-### 3.4.6 Removable Components
+### 4.4.6 Removable Components
 
 No removable components are specified for the `Collection` state.
 
@@ -793,19 +796,19 @@ No removable components are specified for the `Collection` state.
 
 <a name="descendancy"/>
 
-## 3.5 The "Descendancy Results" State
+## 4.5 The "Descendancy Results" State
 
 The `Descendancy Results` state consists of the results of a query for multiple generations of the descendancy
 of a person.
 
-### 3.5.1 Media Types
+### 4.5.1 Media Types
 
 Applications that implement the `Descendancy Results` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.5.2 Operations
+### 4.5.2 Operations
 
 The following operations are defined as applicable to the `Descendancy Results` state:
 
@@ -817,13 +820,13 @@ A successful `GET` request SHOULD result in a `200` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.5.3 Data Elements
+### 4.5.3 Data Elements
 
 The results of a successful query for the ancestry of a person MUST contain a list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person). Each
 `Person` in the list MUST provide a value for the `descendancyNumber` of the person using [`DisplayProperties`](#display).
 
-### 3.5.4 Transitions
+### 4.5.4 Transitions
 
 The following state transitions are specified for the `Descendancy Results` state:
 
@@ -831,16 +834,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the descendancy results to the persons in the results.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Descendancy Results` state. Even though other transitions 
 are not formally included in the definition of the `Descendancy Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.5.5 Embedded States
+### 4.5.5 Embedded States
 
 No embedded states are specified for the `Descendancy Results` state.
 
-### 3.5.6 Removable Components
+### 4.5.6 Removable Components
 
 No removable components are specified for the `Descendancy Results` state.
 
@@ -848,19 +851,19 @@ No removable components are specified for the `Descendancy Results` state.
 
 <a name="events"/>
 
-## 3.6 The "Events" State
+## 4.6 The "Events" State
 
 The `Events` state consists of a list of events. Examples of usages of the `Events` state include
 to list all the events in a system or to provide a means for a client to create a event in a system.
 
-### 3.6.1 Media Types
+### 4.6.1 Media Types
 
 Applications that implement the `Events` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.6.2 Operations
+### 4.6.2 Operations
 
 The following operations are defined as applicable to the `Events` state:
 
@@ -878,12 +881,12 @@ code and a `Location` header specifying the URI of the created event. If multipl
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.6.3 Data Elements
+### 4.6.3 Data Elements
 
 A list of instances of the
 [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event).
 MUST be provided by the server in the successful response of a `GET` operation. If the list of events is large, the server MAY
-break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+break up the list into multiple pages according to [Section 7, Paged Application States](#paging).
 
 A list of instances of the
 [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event).
@@ -891,7 +894,7 @@ MUST be provided by the client in a request using the `POST` operation. The serv
 the client as a candidate to be created and added to the list of events. 
 
 
-### 3.6.4 Transitions
+### 4.6.4 Transitions
 
 The following state transitions are specified for the `Events` state:
 
@@ -899,16 +902,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `event` | [`Event` State](#event) | Each instance of [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Transition from the list of events to a single event.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Events` state. Even though other transitions 
 are not formally included in the definition of the `Events` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.6.5 Embedded States
+### 4.6.5 Embedded States
 
 No embedded states are specified for the `Events` state.
 
-### 3.6.6 Removable Components
+### 4.6.6 Removable Components
 
 No removable components are specified for the `Events` state.
 
@@ -917,18 +920,18 @@ No removable components are specified for the `Events` state.
 
 <a name="event"/>
 
-## 3.7 The "Event" State
+## 4.7 The "Event" State
 
 The `Event` application state consists of a single event.
 
-### 3.7.1 Media Types
+### 4.7.1 Media Types
 
 Applications that implement the `Event` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.7.2 Operations
+### 4.7.2 Operations
 
 The following operations are defined as applicable to the `Event` state:
 
@@ -946,7 +949,7 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.7.3 Data Elements
+### 4.7.3 Data Elements
 
 At least one instance of the [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
 MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Event` is provided, the instance that 
@@ -956,18 +959,18 @@ At least one instance of the [`Event` Data Type](https://github.com/FamilySearch
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Event` is provided, the instance that 
 represents the "main" event MUST be provided as the first element in the list.
 
-### 3.7.4 Transitions
+### 4.7.4 Transitions
 
 rel|target state|scope|description
 --|------------|-----|-----------
 `event` | [`Event` State](#event) | [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Self-link to the `Event` state.
 
 
-### 3.7.5 Embedded States
+### 4.7.5 Embedded States
 
 No embedded states are specified for the `Event` state.
 
-### 3.7.6 Removable Components
+### 4.7.6 Removable Components
 
 The following components of the `Event` state MAY be designated by the server as removable:
 
@@ -980,20 +983,20 @@ A successful `DELETE` request to the removable component SHOULD result in a `204
 
 <a name="persons"/>
 
-## 3.8 The "Persons" State
+## 4.8 The "Persons" State
 
 The `Persons` state consists of a list of persons. Examples of usages of the `Persons` state include
 to provide a list of all the persons in a collection, or to provide a means for a client to create a 
 person in a collection.
 
-### 3.8.1 Media Types
+### 4.8.1 Media Types
 
 Applications that implement the `Persons` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.8.2 Operations
+### 4.8.2 Operations
 
 The following operations are defined as applicable to the `Persons` state:
 
@@ -1011,12 +1014,12 @@ code and a `Location` header specifying the URI of the created person. If multip
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.8.3 Data Elements
+### 4.8.3 Data Elements
 
 A list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
 MUST be provided by the server in the successful response of a `GET` operation. If the list of persons is large, the server MAY
-break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+break up the list into multiple pages according to [Section 7, Paged Application States](#paging).
 
 A list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
@@ -1024,7 +1027,7 @@ MUST be provided by the client in a request using the `POST` operation. The serv
 the client as a candidate to be created and added to the list of persons.
 
 
-### 3.8.4 Transitions
+### 4.8.4 Transitions
 
 The following state transitions are specified for the `Persons` state:
 
@@ -1032,16 +1035,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Persons` state. Even though other transitions 
 are not formally included in the definition of the `Persons` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.8.5 Embedded States
+### 4.8.5 Embedded States
 
 No embedded states are specified for the `Persons` state.
 
-### 3.8.6 Removable Components
+### 4.8.6 Removable Components
 
 No removable components are specified for the `Persons` state.
 
@@ -1050,18 +1053,18 @@ No removable components are specified for the `Persons` state.
 
 <a name="person"/>
 
-## 3.9 The "Person" State
+## 4.9 The "Person" State
 
 The `Person` application state consists of a single person.
 
-### 3.9.1 Media Types
+### 4.9.1 Media Types
 
 Applications that implement the `Person` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.9.2 Operations
+### 4.9.2 Operations
 
 The following operations are defined as applicable to the `Person` state:
 
@@ -1079,7 +1082,7 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.9.3 Data Elements
+### 4.9.3 Data Elements
 
 At least one instance of the [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
 MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Person` is provided, the instance that 
@@ -1089,7 +1092,7 @@ At least one instance of the [`Person` Data Type](https://github.com/FamilySearc
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Person` is provided, the instance that 
 represents the "main" person MUST be provided as the first element in the list.
 
-### 3.9.4 Transitions
+### 4.9.4 Transitions
 
 rel|target state|scope|description
 --|------------|-----|-----------
@@ -1100,15 +1103,15 @@ rel|target state|scope|description
 `spouses` | [`Person Spouses` State](#spouses) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the list of spouses for this person.
 `ancestry` | [`Ancestry` State](#ancestry) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the ancestry query for this person.
 `descendancy` | [`Descendancy` State](#descendancy) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the descendancy query for this person. 
-`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the authorization page used by a user to authenticate to the system. See [Section 7, Authentication and Authorization](#auth).
-`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the endpoint used to obtain an access token. See [Section 7, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the authorization page used by a user to authenticate to the system. See [Section 8, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the endpoint used to obtain an access token. See [Section 8, Authentication and Authorization](#auth).
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Person` state. Even though other transitions 
 are not formally included in the definition of the `Person` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.9.5 Embedded States
+### 4.9.5 Embedded States
 
 The following embedded states are specified for the `Person` state.
 
@@ -1122,7 +1125,7 @@ rel|scope|description
 `notes` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of notes for the person. If no link to `notes` is provided, the list of notes MUST be included in the original request for the `Person` state. If a link to `notes` is provided, this link SHOULD be used to create new notes or update existing notes with a `POST` request.
 `source-references` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of source references for the person. If no link to `source-references` is provided, the list of source references MUST be included in the original request for the `Person` state. If a link to `source-references` is provided, this link SHOULD be used to create new source references or update existing source references with a `POST` request.
 
-### 3.9.6 Removable Components
+### 4.9.6 Removable Components
 
 The following components of the `Person` state MAY be designated by the server as removable:
 
@@ -1140,18 +1143,18 @@ A successful `DELETE` request to the removable component SHOULD result in a `204
 
 <a name="search"/>
 
-## 3.8 The "Person Search Results" State
+## 4.8 The "Person Search Results" State
 
 The `Person Search Results` state consists of the results of a search query for persons in the system.
 
-### 3.8.1 Media Types
+### 4.8.1 Media Types
 
 Applications that implement the `Person Search Results` state MUST support the `application/x-gedcomx-atom+json` media type
 as defined by the [GEDCOM X Atom Extensions](https://github.com/FamilySearch/gedcomx-rs/blob/master/specifications/atom-model-specification.md)
 specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt) 
 is RECOMMENDED.
 
-### 3.8.2 Operations
+### 4.8.2 Operations
 
 The following operations are defined as applicable to the `Person Search Results` state:
 
@@ -1161,9 +1164,9 @@ operation|description|constraints
 
 A successful `GET` request SHOULD result in a `200` response code, if the search results contain one or more persons. If the search results are
 empty, a successful `GET` SHOULD result in a `204` response code.  If the list of results is large, the server MAY
-break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+break up the list into multiple pages according to [Section 7, Paged Application States](#paging).
 
-### 3.8.3 Data Elements
+### 4.8.3 Data Elements
 
 The results of a successful query for the ancestry of a person MUST contain a list of entries that each describe a person.
 The content of each entry is a GEDCOM X document that MUST contain at least one instance of the 
@@ -1171,7 +1174,7 @@ The content of each entry is a GEDCOM X document that MUST contain at least one 
 If more than one instance of `Person` is provided, the instance that represents the "main" person for the result MUST be provided 
 as the first element in the list. Other elements might include relatives of the person and/or their relationships.
 
-### 3.8.4 Transitions
+### 4.8.4 Transitions
 
 The following state transitions are specified for the `Person Search Results` state:
 
@@ -1179,16 +1182,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the search results to the persons in the results.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Person Search Results` state. Even though other transitions 
 are not formally included in the definition of the `Person Search Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.8.5 Embedded States
+### 4.8.5 Embedded States
 
 No embedded states are specified for the `Person Search Results` state.
 
-### 3.8.6 Removable Components
+### 4.8.6 Removable Components
 
 No removable components are specified for the `Person Search Results` state.
 
@@ -1197,18 +1200,18 @@ No removable components are specified for the `Person Search Results` state.
 
 <a name="children"/>
 
-## 3.9 The "Person Children" State
+## 4.9 The "Person Children" State
 
 The `Person Children` state consists of a list of children for a specific person.
 
-### 3.9.1 Media Types
+### 4.9.1 Media Types
 
 Applications that implement the `Person Children` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.9.2 Operations
+### 4.9.2 Operations
 
 The following operations are defined as applicable to the `Person Children` state:
 
@@ -1221,7 +1224,7 @@ a successful `GET` SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.9.3 Data Elements
+### 4.9.3 Data Elements
 
 A list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
@@ -1229,7 +1232,7 @@ MUST be provided by the server in the successful response of a `GET` operation. 
 [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
 describing the relationships to each child SHOULD be provided by the server in the successful response of a `GET` operation. 
 
-### 3.9.4 Transitions
+### 4.9.4 Transitions
 
 The following state transitions are specified for the `Person Children` state:
 
@@ -1237,16 +1240,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Person Children` state. Even though other transitions 
 are not formally included in the definition of the `Person Children` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.9.5 Embedded States
+### 4.9.5 Embedded States
 
 No embedded states are specified for the `Person Children` state.
 
-### 3.9.6 Removable Components
+### 4.9.6 Removable Components
 
 No removable components are specified for the `Person Children` state.
 
@@ -1254,18 +1257,18 @@ No removable components are specified for the `Person Children` state.
 
 <a name="spouses"/>
 
-## 3.10 The "Person Spouses" State
+## 4.10 The "Person Spouses" State
 
 The `Person Spouses` state consists of a list of spouses for a specific person.
 
-### 3.10.1 Media Types
+### 4.10.1 Media Types
 
 Applications that implement the `Person Spouses` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.10.2 Operations
+### 4.10.2 Operations
 
 The following operations are defined as applicable to the `Person Spouses` state:
 
@@ -1278,7 +1281,7 @@ a successful `GET` SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.10.3 Data Elements
+### 4.10.3 Data Elements
 
 A list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
@@ -1286,7 +1289,7 @@ MUST be provided by the server in the successful response of a `GET` operation. 
 [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
 describing the relationships to each spouse SHOULD be provided by the server in the successful response of a `GET` operation. 
 
-### 3.10.4 Transitions
+### 4.10.4 Transitions
 
 The following state transitions are specified for the `Person Spouses` state:
 
@@ -1294,16 +1297,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Person Spouses` state. Even though other transitions 
 are not formally included in the definition of the `Person Spouses` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.10.5 Embedded States
+### 4.10.5 Embedded States
 
 No embedded states are specified for the `Person Spouses` state.
 
-### 3.10.6 Removable Components
+### 4.10.6 Removable Components
 
 No removable components are specified for the `Person Spouses` state.
 
@@ -1311,18 +1314,18 @@ No removable components are specified for the `Person Spouses` state.
 
 <a name="parents"/>
 
-## 3.11 The "Person Parents" State
+## 4.11 The "Person Parents" State
 
 The `Person Parents` state consists of a list of parents for a specific person.
 
-### 3.11.1 Media Types
+### 4.11.1 Media Types
 
 Applications that implement the `Person Parents` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.11.2 Operations
+### 4.11.2 Operations
 
 The following operations are defined as applicable to the `Person Parents` state:
 
@@ -1335,7 +1338,7 @@ a successful `GET` SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.11.3 Data Elements
+### 4.11.3 Data Elements
 
 A list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
@@ -1343,7 +1346,7 @@ MUST be provided by the server in the successful response of a `GET` operation. 
 [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
 describing the relationships to each parent SHOULD be provided by the server in the successful response of a `GET` operation. 
 
-### 3.11.4 Transitions
+### 4.11.4 Transitions
 
 The following state transitions are specified for the `Person Parents` state:
 
@@ -1351,16 +1354,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Person Parents` state. Even though other transitions 
 are not formally included in the definition of the `Person Parents` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.11.5 Embedded States
+### 4.11.5 Embedded States
 
 No embedded states are specified for the `Person Parents` state.
 
-### 3.11.6 Removable Components
+### 4.11.6 Removable Components
 
 No removable components are specified for the `Person Parents` state.
 
@@ -1368,19 +1371,19 @@ No removable components are specified for the `Person Parents` state.
 
 <a name="place-descriptions"/>
 
-## 3.12 The "Place Descriptions" State
+## 4.12 The "Place Descriptions" State
 
 The `Place Descriptions` state consists of a list of place descriptions. Examples of usages of the `Place Descriptions` state include
 to list all the descriptions of places in a system or to provide a means for a client to create place description in a system.
 
-### 3.12.1 Media Types
+### 4.12.1 Media Types
 
 Applications that implement the `Place Descriptions` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.12.2 Operations
+### 4.12.2 Operations
 
 The following operations are defined as applicable to the `Place Descriptions` state:
 
@@ -1398,12 +1401,12 @@ code and a `Location` header specifying the URI of the created place description
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.12.3 Data Elements
+### 4.12.3 Data Elements
 
 A list of instances of the
 [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description).
 MUST be provided by the server in the successful response of a `GET` operation. If the list of place descriptions is large, the server MAY
-break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+break up the list into multiple pages according to [Section 7, Paged Application States](#paging).
 
 A list of instances of the
 [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description).
@@ -1411,7 +1414,7 @@ MUST be provided by the client in a request using the `POST` operation. The serv
 the client as a candidate to be created and added to the list of place descriptions. 
 
 
-### 3.12.4 Transitions
+### 4.12.4 Transitions
 
 The following state transitions are specified for the `Place Descriptions` state:
 
@@ -1419,16 +1422,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of [`Place Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Transition from the list of places descriptions to a single place description.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Place Descriptions` state. Even though other transitions 
 are not formally included in the definition of the `Place Descriptions` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.12.5 Embedded States
+### 4.12.5 Embedded States
 
 No embedded states are specified for the `Place Descriptions` state.
 
-### 3.12.6 Removable Components
+### 4.12.6 Removable Components
 
 No removable components are specified for the `Place Descriptions` state.
 
@@ -1437,18 +1440,18 @@ No removable components are specified for the `Place Descriptions` state.
 
 <a name="place-description"/>
 
-## 3.13 The "Place Description" State
+## 4.13 The "Place Description" State
 
 The `Place Description` application state consists of a single description of a place.
 
-### 3.13.1 Media Types
+### 4.13.1 Media Types
 
 Applications that implement the `Place Description` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-### 3.13.2 Operations
+### 4.13.2 Operations
 
 The following operations are defined as applicable to the `Place Description` state:
 
@@ -1466,7 +1469,7 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-### 3.13.3 Data Elements
+### 4.13.3 Data Elements
 
 At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
 MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `PlaceDescription` is provided, the instance that 
@@ -1476,18 +1479,18 @@ At least one instance of the [`PlaceDescription` Data Type](https://github.com/F
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `PlaceDescription` is provided, the instance that 
 represents the "main" place description MUST be provided as the first element in the list.
 
-### 3.13.4 Transitions
+### 4.13.4 Transitions
 
 rel|target state|scope|description
 --|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of [`Place Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Self-link to the place description.
 
 
-### 3.13.5 Embedded States
+### 4.13.5 Embedded States
 
 No embedded states are specified for the `Place Description` state.
 
-### 3.13.6 Removable Components
+### 4.13.6 Removable Components
 
 No removable components are specified for the `Place Description` state.
 
@@ -1496,18 +1499,18 @@ No removable components are specified for the `Place Description` state.
 
 <a name="place-search"/>
 
-## 3.14 The "Place Search Results" State
+## 4.14 The "Place Search Results" State
 
 The `Place Search Results` state consists of the results of a search query for places in the system.
 
-### 3.14.1 Media Types
+### 4.14.1 Media Types
 
 Applications that implement the `Place Search Results` state MUST support the `application/x-gedcomx-atom+json` media type
 as defined by the [GEDCOM X Atom Extensions](https://github.com/FamilySearch/gedcomx-rs/blob/master/specifications/atom-model-specification.md)
 specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt) 
 is RECOMMENDED.
 
-### 3.14.2 Operations
+### 4.14.2 Operations
 
 The following operations are defined as applicable to the `Place Search Results` state:
 
@@ -1517,9 +1520,9 @@ operation|description|constraints
 
 A successful `GET` request SHOULD result in a `200` response code, if the search results contain one or more places. If the search results are
 empty, a successful `GET` SHOULD result in a `204` response code.  If the list of results is large, the server MAY
-break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+break up the list into multiple pages according to [Section 7, Paged Application States](#paging).
 
-### 3.14.3 Data Elements
+### 4.14.3 Data Elements
 
 The results of a successful query for the ancestry of a place MUST contain a list of entries that each describe a place.
 The content of each entry is a GEDCOM X document that MUST contain at least one instance of the 
@@ -1527,7 +1530,7 @@ The content of each entry is a GEDCOM X document that MUST contain at least one 
 If more than one instance of `PlaceDescription` is provided, the instance that represents the "main" place for the result MUST be provided 
 as the first element in the list.
 
-### 3.14.4 Transitions
+### 4.14.4 Transitions
 
 The following state transitions are specified for the `Place Search Results` state:
 
@@ -1535,16 +1538,16 @@ rel|target state|scope|description
 --|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the search results to the descriptions of the places in the results.
 
-[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Place Search Results` state. Even though other transitions 
 are not formally included in the definition of the `Place Search Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-### 3.14.5 Embedded States
+### 4.14.5 Embedded States
 
 No embedded states are specified for the `Place Search Results` state.
 
-### 3.14.6 Removable Components
+### 4.14.6 Removable Components
 
 No removable components are specified for the `Place Search Results` state.
 
@@ -1553,7 +1556,7 @@ No removable components are specified for the `Place Search Results` state.
 
 <a name="records"/>
 
-## 3.15 The "Records" State
+## 4.15 The "Records" State
 
 
 
@@ -1561,7 +1564,7 @@ No removable components are specified for the `Place Search Results` state.
 
 <a name="record"/>
 
-## 3.16 The "Record" State
+## 4.16 The "Record" State
 
 
 
@@ -1569,7 +1572,7 @@ No removable components are specified for the `Place Search Results` state.
 
 <a name="relationships"/>
 
-## 3.17 The "Relationships" State
+## 4.17 The "Relationships" State
 
 
 
@@ -1577,7 +1580,7 @@ No removable components are specified for the `Place Search Results` state.
 
 <a name="relationship"/>
 
-## 3.18 The "Relationship" State
+## 4.18 The "Relationship" State
 
 
 
@@ -1585,7 +1588,7 @@ No removable components are specified for the `Place Search Results` state.
 
 <a name="descriptions"/>
 
-## 3.19 The "Source Descriptions" State
+## 4.19 The "Source Descriptions" State
 
 
 
@@ -1593,7 +1596,7 @@ No removable components are specified for the `Place Search Results` state.
 
 <a name="description"/>
 
-## 3.20 The "Source Description" State
+## 4.20 The "Source Description" State
 
 
 
@@ -1602,7 +1605,7 @@ No removable components are specified for the `Place Search Results` state.
 
 <a name="transitions"/>
 
-# 4. State Transitions
+# 5. State Transitions
 
 todo: embedded links
 
@@ -1610,23 +1613,21 @@ todo: search query
 
 todo: explain that this media type assumes the 'rels' are URIs relative to the 'http://gedcomx.org/' URI. This is to address the definition of a rel per RFC 5988.
 
-todo: 'sortKey' attribute
-
 
 
 <a name="embedding"/>
 
-# 5. Embedding Application States
+# 6. Embedding Application States
 
 
 
 <a name="paging"/>
 
-# 6. Paged Application States
+# 7. Paged Application States
 
 
 
 <a name="auth"/>
 
-# 7. Authentication and Authorization
+# 8. Authentication and Authorization
 
