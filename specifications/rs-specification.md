@@ -2176,6 +2176,24 @@ SHOULD use the absolute URI, e.g. "http://gedcomx.org/links/person".
 
 # 6. Embedding Application States
 
+When a client captures an application state that declares an embedded state, the client application designates
+the current application state as only partially captured. In order to obtain the full application state, the
+client must issue requests for each embedded application state, and embed the resulting data elements into the
+data elements of the current application state.
+
+## 6.1 Embedding GEDCOM X Data Elements
+
+Data elements that are represented using either 
+[GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md) or
+[GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md) may embed
+other GEDCOM X data elements as follows:
+
+* For each data element in the embedded request:
+  * If the element has no value for the `id` property, add the element to its associated list in the source data set.
+  * Otherwise find the element by the same `id` in the source data set.
+    * If the element by the same `id` exists and is of the same data type, embed each property of the embedded data element into the source data element.
+    * Otherwise, add the element to its associated list in the source data set.
+
 
 
 
@@ -2183,14 +2201,27 @@ SHOULD use the absolute URI, e.g. "http://gedcomx.org/links/person".
 
 # 7. Paged Application States
 
+When an application state provides a large list of elements, the server MAY choose to break up the data set into smaller "pages"
+of data. This is done using the following state transitions, which are defined by [RFC 5988](http://tools.ietf.org/html/rfc5988):
 
+rel|description
+---|-----------
+`first` | Link to the first page in the list.
+`next` | Link to the next page in the list.
+`prev` | Link to the previous page in the list.
+`last` | Link to the last page in the list.
 
 
 <a name="updating"/>
 
 # 8. Updating Application States
 
-
+If a server chooses to allow a client to update an application state, a client issues a `POST` request that contains the data
+elements to be updated. Each data element that does not provide a value for the `id` property is considered by the server as 
+a candidate to be created. Each data element that supplies a value for the `id` property is considered by the server as a
+candidate to be updated. If the client provides an invalid value or otherwise violates a business rule of the server, a `400` 
+response code is RECOMMENDED. A server MAY choose to provide an HTTP `Warning` header with text that explains the nature of 
+the error. 
 
 
 
@@ -2198,3 +2229,6 @@ SHOULD use the absolute URI, e.g. "http://gedcomx.org/links/person".
 
 # 9. Authentication and Authorization
 
+A server MAY require authorization to access certain application states. Authentication and authorization are outside the scope 
+of this specification. OAuth 2 as specified by [RFC 6749](http://tools.ietf.org/html/rfc6749) is RECOMMENDED as an authentication
+mechanism.
