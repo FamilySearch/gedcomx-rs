@@ -468,9 +468,9 @@ point in time. The formal definition of an application state is comprised of the
 * Expected data elements.
 * Transitions to other application states.
 * Embedded application states.
-* Component states.
+* Removable components.
 
-#### Applicable Media Types
+#### Applicable media types
 
 Media types are used to represent the data elements of application states to the client. The client
 interprets the data according to the definition of the media type, and uses a media type to
@@ -478,7 +478,7 @@ communicate changes of the application state to the server. The definition of ea
 state specifies the media types that servers are required to support. The definition of each application
 state also lists other media types that are optional.
 
-#### Implication of HTTP Operations
+#### Implication of HTTP operations
 
 The definition of each application state includes how a given HTTP operation is expected to be 
 interpreted by a server. Note that although this specification provides a discrete meaning to each
@@ -522,9 +522,16 @@ a specific caching strategy. Another reason might be to optimize requests for a 
 
 [Section 5 (Embedding Application States)](#embedding) specifies how embedded application states are used.
 
-#### Component states
+#### Removable components
 
-An application state may... todo:
+An application state may designate specific components that can be deleted. Examples of a removable component
+include the name of a person, a source reference, a role in an event, or a marriage fact of a couple 
+relationship.
+
+Removable components are designated in the same way as state transitions and embedded states, with a `rel` id
+and a target URI. An HTTP `DELETE` operation MAY be applied to the URI to remove the component from the
+application state.
+
 
 
 
@@ -577,6 +584,9 @@ No state transitions are specified for the `Agent` state.
 
 No embedded states are specified for the `Agent` state.
 
+### 3.1.6 Removable Components
+
+No removable components are specified for the `Agent` state.
 
 
 
@@ -617,7 +627,7 @@ The results of a successful query for the ancestry of a person MUST contain a li
 
 The following state transitions are specified for the `Ancestry Results` state:
 
-id|target state|scope|description
+rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the ancestry results to the persons in the results.
 
@@ -630,6 +640,9 @@ other transitions is RECOMMENDED where applicable.
 
 No embedded states are specified for the `Ancestry Results` state.
 
+### 3.2.6 Removable Components
+
+No removable components are specified for the `Ancestry Results` state.
 
 
 
@@ -684,7 +697,7 @@ the client as a candidate to be created and added to the list of collections.
 
 The following state transitions are specified for the `Collections` state:
 
-id|target state|scope|description
+rel|target state|scope|description
 --|------------|-----|-----------
 `collection` | [`Collection` State](#collection) | Each instance of [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Transition from the list of collections to a single collection.
 
@@ -697,6 +710,9 @@ other transitions is RECOMMENDED where applicable.
 
 No embedded states are specified for the `Collections` state.
 
+### 3.3.6 Removable Components
+
+No removable components are specified for the `Collections` state.
 
 
 
@@ -744,7 +760,7 @@ represents the "main" collection MUST be provided as the first element in the li
 
 ### 3.4.4 Transitions
 
-id|target state|scope|description
+rel|target state|scope|description
 --|------------|-----|-----------
 `collection` | [`Collection` State](#collection) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Self-link to the `Collection` state.
 `subcollections` | [`Collections` State](#collections) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of subcollections for this collection.
@@ -768,6 +784,9 @@ other transitions is RECOMMENDED where applicable.
 
 No embedded states are specified for the `Collection` state.
 
+### 3.4.6 Removable Components
+
+No removable components are specified for the `Collection` state.
 
 
 
@@ -808,7 +827,7 @@ The results of a successful query for the ancestry of a person MUST contain a li
 
 The following state transitions are specified for the `Descendancy Results` state:
 
-id|target state|scope|description
+rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the ancestry results to the persons in the results.
 
@@ -821,6 +840,9 @@ other transitions is RECOMMENDED where applicable.
 
 No embedded states are specified for the `Descendancy Results` state.
 
+### 3.5.6 Removable Components
+
+No removable components are specified for the `Descendancy Results` state.
 
 
 
@@ -873,7 +895,7 @@ the client as a candidate to be created and added to the list of events.
 
 The following state transitions are specified for the `Events` state:
 
-id|target state|scope|description
+rel|target state|scope|description
 --|------------|-----|-----------
 `event` | [`Event` State](#event) | Each instance of [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Transition from the list of events to a single event.
 
@@ -886,6 +908,9 @@ other transitions is RECOMMENDED where applicable.
 
 No embedded states are specified for the `Events` state.
 
+### 3.6.6 Removable Components
+
+No removable components are specified for the `Events` state.
 
 
 
@@ -933,7 +958,7 @@ represents the "main" event MUST be provided as the first element in the list.
 
 ### 3.7.4 Transitions
 
-id|target state|scope|description
+rel|target state|scope|description
 --|------------|-----|-----------
 `event` | [`Event` State](#event) | [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Self-link to the `Event` state.
 
@@ -942,7 +967,15 @@ id|target state|scope|description
 
 No embedded states are specified for the `Event` state.
 
+### 3.7.6 Removable Components
 
+The following components of the `Event` state MAY be designated by the server as removable:
+
+rel|scope|description
+--|-----|-----------
+`role` | Each instance of [`Event Role` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#conclusion-event-role) | The link used to remove the component.
+
+A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
 
 
 <a name="persons"/>
@@ -995,7 +1028,7 @@ the client as a candidate to be created and added to the list of persons.
 
 The following state transitions are specified for the `Persons` state:
 
-id|target state|scope|description
+rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
@@ -1008,6 +1041,9 @@ other transitions is RECOMMENDED where applicable.
 
 No embedded states are specified for the `Persons` state.
 
+### 3.8.6 Removable Components
+
+No removable components are specified for the `Persons` state.
 
 
 
@@ -1055,7 +1091,7 @@ represents the "main" person MUST be provided as the first element in the list.
 
 ### 3.9.4 Transitions
 
-id|target state|scope|description
+rel|target state|scope|description
 --|------------|-----|-----------
 `person` | [`Person` State](#person) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Self-link to the `Person` state.
 `collection` | [`Collection` State](#collection) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the collection that contains this person.
@@ -1074,8 +1110,31 @@ other transitions is RECOMMENDED where applicable.
 
 ### 3.9.5 Embedded States
 
-No embedded states are specified for the `Person` state.
+The following embedded states are specified for the `Person` state.
 
+rel|scope|description
+--|-----|-----------
+`child-relationships` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of relationships to children on the person. If no link to `child-relationships` is provided, the list of child relationships MUST be included in the original request for the `Person` state.
+`parent-relationships` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of relationships to parents on the person. If no link to `parent-relationships` is provided, the list of parent relationships MUST be included in the original request for the `Person` state.
+`spouse-relationships` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of relationships to spouses on the person. If no link to `spouse-relationships` is provided, the list of spouse relationships MUST be included in the original request for the `Person` state.
+`evidence-references` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of evidence (persona) references for the person. If no link to `evidence-references` is provided, the list of evidence references MUST be included in the original request for the `Person` state. If a link to `evidence-references` is provided, this link SHOULD be used to create new evidence references or update existing evidence references with a `POST` request.
+`media-references` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of media references for the person. If no link to `media-references` is provided, the list of media references MUST be included in the original request for the `Person` state. If a link to `media-references` is provided, this link SHOULD be used to create new media references or update existing media references with a `POST` request.
+`notes` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of notes for the person. If no link to `notes` is provided, the list of notes MUST be included in the original request for the `Person` state. If a link to `notes` is provided, this link SHOULD be used to create new notes or update existing notes with a `POST` request.
+`source-references` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of source references for the person. If no link to `source-references` is provided, the list of source references MUST be included in the original request for the `Person` state. If a link to `source-references` is provided, this link SHOULD be used to create new source references or update existing source references with a `POST` request.
+
+### 3.9.6 Removable Components
+
+The following components of the `Person` state MAY be designated by the server as removable:
+
+rel|scope|description
+--|-----|-----------
+`conclusion` | Each instance of [`Fact` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#fact-conclusion), [`Gender` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#gender), and [`Name` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#name-conclusion) | The link used to remove the fact, gender, or name.
+`evidence-reference` | Each instance of [`EvidenceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#evidence-reference) | The link used to remove the persona (evidence) reference.
+`media-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the media reference.
+`note` | Each instance of [`Note` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#note) | The link used to remove the note.
+`source-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the source reference.
+
+A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
 
 
 
