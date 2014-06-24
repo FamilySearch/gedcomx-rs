@@ -1186,11 +1186,11 @@ other transitions is RECOMMENDED where applicable.
 
 ### 3.8.5 Embedded States
 
-No embedded states are specified for the `Descendancy Results` state.
+No embedded states are specified for the `Person Search Results` state.
 
 ### 3.8.6 Removable Components
 
-No removable components are specified for the `Descendancy Results` state.
+No removable components are specified for the `Person Search Results` state.
 
 
 
@@ -1370,6 +1370,67 @@ No removable components are specified for the `Person Parents` state.
 
 ## 3.12 The "Place Descriptions" State
 
+The `Place Descriptions` state consists of a list of place descriptions. Examples of usages of the `Place Descriptions` state include
+to list all the descriptions of places in a system or to provide a means for a client to create place description in a system.
+
+### 3.12.1 Media Types
+
+Applications that implement the `Place Descriptions` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.12.2 Operations
+
+The following operations are defined as applicable to the `Place Descriptions` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a list of place descriptions. | OPTIONAL
+`POST` | Create an event or set of place descriptions. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more place descriptions. If the list is empty, 
+a successful `GET` SHOULD result in a `204` response code.
+
+If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
+code and a `Location` header specifying the URI of the created place description. If multiple place descriptions were created as a result of a successful 
+`POST` request, the request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 3.12.3 Data Elements
+
+A list of instances of the
+[`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description).
+MUST be provided by the server in the successful response of a `GET` operation. If the list of place descriptions is large, the server MAY
+break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+
+A list of instances of the
+[`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description).
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `PlaceDescription` provided by 
+the client as a candidate to be created and added to the list of place descriptions. 
+
+
+### 3.12.4 Transitions
+
+The following state transitions are specified for the `Place Descriptions` state:
+
+rel|target state|scope|description
+--|------------|-----|-----------
+`description` | [`Place Description` State](#place-description) | Each instance of [`Place Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Transition from the list of places descriptions to a single place description.
+
+[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Place Descriptions` state. Even though other transitions 
+are not formally included in the definition of the `Place Descriptions` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 3.12.5 Embedded States
+
+No embedded states are specified for the `Place Descriptions` state.
+
+### 3.12.6 Removable Components
+
+No removable components are specified for the `Place Descriptions` state.
 
 
 
@@ -1378,6 +1439,57 @@ No removable components are specified for the `Person Parents` state.
 
 ## 3.13 The "Place Description" State
 
+The `Place Description` application state consists of a single description of a place.
+
+### 3.13.1 Media Types
+
+Applications that implement the `Place Description` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.13.2 Operations
+
+The following operations are defined as applicable to the `Place Description` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a place description. | REQUIRED
+`POST` | Update a place description. | OPTIONAL
+`DELETE` | Delete a place description. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code.
+
+A successful `POST` request SHOULD result in a `204` response code.
+
+A successful `DELETE` request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 3.13.3 Data Elements
+
+At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `PlaceDescription` is provided, the instance that 
+represents the "main" place description MUST be provided as the first element in the list.
+
+At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `PlaceDescription` is provided, the instance that 
+represents the "main" place description MUST be provided as the first element in the list.
+
+### 3.13.4 Transitions
+
+rel|target state|scope|description
+--|------------|-----|-----------
+`description` | [`Place Description` State](#place-description) | Each instance of [`Place Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Self-link to the place description.
+
+
+### 3.13.5 Embedded States
+
+No embedded states are specified for the `Place Description` state.
+
+### 3.13.6 Removable Components
+
+No removable components are specified for the `Place Description` state.
 
 
 
@@ -1386,6 +1498,55 @@ No removable components are specified for the `Person Parents` state.
 
 ## 3.14 The "Place Search Results" State
 
+The `Place Search Results` state consists of the results of a search query for places in the system.
+
+### 3.14.1 Media Types
+
+Applications that implement the `Place Search Results` state MUST support the `application/x-gedcomx-atom+json` media type
+as defined by the [GEDCOM X Atom Extensions](https://github.com/FamilySearch/gedcomx-rs/blob/master/specifications/atom-model-specification.md)
+specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt) 
+is RECOMMENDED.
+
+### 3.14.2 Operations
+
+The following operations are defined as applicable to the `Place Search Results` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Search for places. | REQUIRED
+
+A successful `GET` request SHOULD result in a `200` response code, if the search results contain one or more places. If the search results are
+empty, a successful `GET` SHOULD result in a `204` response code.  If the list of results is large, the server MAY
+break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+
+### 3.14.3 Data Elements
+
+The results of a successful query for the ancestry of a place MUST contain a list of entries that each describe a place.
+The content of each entry is a GEDCOM X document that MUST contain at least one instance of the 
+[`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
+If more than one instance of `PlaceDescription` is provided, the instance that represents the "main" place for the result MUST be provided 
+as the first element in the list.
+
+### 3.14.4 Transitions
+
+The following state transitions are specified for the `Place Search Results` state:
+
+rel|target state|scope|description
+--|------------|-----|-----------
+`description` | [`Place Description` State](#place-description) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the search results to the descriptions of the places in the results.
+
+[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Place Search Results` state. Even though other transitions 
+are not formally included in the definition of the `Place Search Results` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 3.14.5 Embedded States
+
+No embedded states are specified for the `Place Search Results` state.
+
+### 3.14.6 Removable Components
+
+No removable components are specified for the `Place Search Results` state.
 
 
 
