@@ -777,8 +777,8 @@ rel|target state|scope|description
 `relationships` | [`Relationships` State](#relationsihps) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of relationships between persons in this collection.
 `events` | [`Events` State](#events) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#collection) | Link to the list of events in this collection.
 `records` | [`Records` State](#records) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of records in the collection.
-`artifacts` | [`Source Descriptions` State](#descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of digital artifacts in the collection.
-`source-descriptions` | [`Source Descriptions` State](#descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of sources described in the collection.
+`artifacts` | [`Source Descriptions` State](#source-descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of digital artifacts in the collection.
+`source-descriptions` | [`Source Descriptions` State](#source-descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of sources described in the collection.
 `person-search` | [`Person Search Results` State](#search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for persons in the system.
 `place-search` | [`Place Search Results` State](#place-search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for places in the system.
 `http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
@@ -1830,17 +1830,131 @@ A successful `DELETE` request to the removable component SHOULD result in a `204
 
 
 
-<a name="descriptions"/>
+<a name="source-descriptions"/>
 
 ## 4.19 The "Source Descriptions" State
 
+The `Source Descriptions` state consists of a list of source descriptions. Examples of usages of the `Source Descriptions` state include
+to list all the descriptions of sources in a system or to provide a means for a client to create source description in a system.
+
+### 4.19.1 Media Types
+
+Applications that implement the `Source Descriptions` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 4.19.2 Operations
+
+The following operations are defined as applicable to the `Source Descriptions` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a list of source descriptions. | OPTIONAL
+`POST` | Create an event or set of source descriptions. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more source descriptions. If the list is empty, 
+a successful `GET` SHOULD result in a `204` response code.
+
+If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
+code and a `Location` header specifying the URI of the created source description. If multiple source descriptions were created as a result of a successful 
+`POST` request, the request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 4.19.3 Data Elements
+
+A list of instances of the
+[`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description).
+MUST be provided by the server in the successful response of a `GET` operation. If the list of source descriptions is large, the server MAY
+break up the list into multiple pages according to [Section 7, Paged Application States](#paging).
+
+A list of instances of the
+[`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description).
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `SourceDescription` provided by 
+the client as a candidate to be created and added to the list of source descriptions. 
+
+
+### 4.19.4 Transitions
+
+The following state transitions are specified for the `Source Descriptions` state:
+
+rel|target state|scope|description
+--|------------|-----|-----------
+`description` | [`Source Description` State](#source-description) | Each instance of [`Source Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Transition from the list of sources descriptions to a single source description.
+
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Source Descriptions` state. Even though other transitions 
+are not formally included in the definition of the `Source Descriptions` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 4.19.5 Embedded States
+
+No embedded states are specified for the `Source Descriptions` state.
+
+### 4.19.6 Removable Components
+
+No removable components are specified for the `Source Descriptions` state.
 
 
 
 
-<a name="description"/>
+<a name="source-description"/>
 
 ## 4.20 The "Source Description" State
+
+The `Source Description` application state consists of a single description of a source.
+
+### 4.20.1 Media Types
+
+Applications that implement the `Source Description` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 4.20.2 Operations
+
+The following operations are defined as applicable to the `Source Description` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a source description. | REQUIRED
+`POST` | Update a source description. | OPTIONAL
+`DELETE` | Delete a source description. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code.
+
+A successful `POST` request SHOULD result in a `204` response code. See [Section 8 (Updating Application States)](#updating) for
+more information about updating application states.
+
+A successful `DELETE` request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 4.20.3 Data Elements
+
+At least one instance of the [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description)
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `SourceDescription` is provided, the instance that 
+represents the "main" source description MUST be provided as the first element in the list.
+
+At least one instance of the [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `SourceDescription` is provided, the instance that 
+represents the "main" source description MUST be provided as the first element in the list.
+
+### 4.20.4 Transitions
+
+rel|target state|scope|description
+--|------------|-----|-----------
+`description` | [`Source Description` State](#source-description) | Each instance of [`Source Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Self-link to the source description.
+
+
+### 4.20.5 Embedded States
+
+No embedded states are specified for the `Source Description` state.
+
+### 4.20.6 Removable Components
+
+No removable components are specified for the `Source Description` state.
 
 
 
