@@ -1700,6 +1700,49 @@ A successful `DELETE` request to the removable component SHOULD result in a `204
 
 ## 4.17 The "Relationships" State
 
+The `Relationships` state consists of a list of relationships. The `Relationships` state is used to provide a 
+means for a client to create a relationship or set of relationships.
+
+### 4.17.1 Media Types
+
+Applications that implement the `Relationships` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 4.17.2 Operations
+
+The following operations are defined as applicable to the `Relationships` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`POST` | Create a relationship or set of relationships. | REQUIRED
+
+If one (and only one) relationship was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
+code and a `Location` header specifying the URI of the created relationship. If multiple relationships were created as a result of a successful 
+`POST` request, the request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 4.17.3 Data Elements
+
+A list of instances of the
+[`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship).
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Relationship` provided by 
+the client as a candidate to be created and added to the list of relationships.
+
+
+### 4.17.4 Transitions
+
+No embedded states are specified for the `Relationships` state.
+
+### 4.17.5 Embedded States
+
+No embedded states are specified for the `Relationships` state.
+
+### 4.17.6 Removable Components
+
+No removable components are specified for the `Relationships` state.
 
 
 
@@ -1707,6 +1750,81 @@ A successful `DELETE` request to the removable component SHOULD result in a `204
 <a name="relationship"/>
 
 ## 4.18 The "Relationship" State
+
+The `Relationship` application state consists of a single relationship.
+
+### 4.18.1 Media Types
+
+Applications that implement the `Relationship` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 4.18.2 Operations
+
+The following operations are defined as applicable to the `Relationship` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a relationship. | REQUIRED
+`POST` | Update a relationship. | OPTIONAL
+`DELETE` | Delete a relationship. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code.
+
+A successful `POST` request SHOULD result in a `204` response code. See [Section 8 (Updating Application States)](#updating) for
+more information about updating application states.
+
+A successful `DELETE` request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 4.18.3 Data Elements
+
+At least one instance of the [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Relationship` is provided, the instance that 
+represents the "main" relationship MUST be provided as the first element in the list.
+
+At least one instance of the [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Relationship` is provided, the instance that 
+represents the "main" relationship MUST be provided as the first element in the list.
+
+### 4.18.4 Transitions
+
+rel|target state|scope|description
+--|------------|-----|-----------
+`relationship` | [`Relationship` State](#relationship) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Self-link to the `Relationship` state.
+`collection` | [`Collection` State](#collection) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Link to the collection that contains this relationship.
+
+[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Relationship` state. Even though other transitions 
+are not formally included in the definition of the `Relationship` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 4.18.5 Embedded States
+
+The following embedded states are specified for the `Relationship` state.
+
+rel|scope|description
+--|-----|-----------
+`evidence-references` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of evidence references for the relationship. If no link to `evidence-references` is provided, the list of evidence references MUST be included in the original request for the `Relationship` state. If a link to `evidence-references` is provided, this link SHOULD be used to create new evidence references or update existing evidence references with a `POST` request.
+`media-references` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of media references for the relationship. If no link to `media-references` is provided, the list of media references MUST be included in the original request for the `Relationship` state. If a link to `media-references` is provided, this link SHOULD be used to create new media references or update existing media references with a `POST` request.
+`notes` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of notes for the relationship. If no link to `notes` is provided, the list of notes MUST be included in the original request for the `Relationship` state. If a link to `notes` is provided, this link SHOULD be used to create new notes or update existing notes with a `POST` request.
+`source-references` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of source references for the relationship. If no link to `source-references` is provided, the list of source references MUST be included in the original request for the `Relationship` state. If a link to `source-references` is provided, this link SHOULD be used to create new source references or update existing source references with a `POST` request.
+
+### 4.18.6 Removable Components
+
+The following components of the `Relationship` state MAY be designated by the server as removable:
+
+rel|scope|description
+--|-----|-----------
+`conclusion` | Each instance of [`Fact` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#fact-conclusion), [`Gender` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#gender), and [`Name` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#name-conclusion) | The link used to remove the fact, gender, or name.
+`evidence-reference` | Each instance of [`EvidenceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#evidence-reference) | The link used to remove the relationshipa (evidence) reference.
+`media-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the media reference.
+`note` | Each instance of [`Note` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#note) | The link used to remove the note.
+`source-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the source reference.
+
+A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
 
 
 
