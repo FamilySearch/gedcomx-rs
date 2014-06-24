@@ -563,7 +563,8 @@ operation|description|constraints
 
 A successful `GET` request SHOULD result in a `200` response code.
 
-A successful `POST` request SHOULD result in a `204` response code.
+A successful `POST` request SHOULD result in a `204` response code. See [Section 8 (Updating Application States)](#updating) for
+more information about updating application states.
 
 A successful `DELETE` request SHOULD result in a `204` response code.
 
@@ -749,7 +750,8 @@ operation|description|constraints
 
 A successful `GET` request SHOULD result in a `200` response code.
 
-A successful `POST` request SHOULD result in a `204` response code.
+A successful `POST` request SHOULD result in a `204` response code. See [Section 8 (Updating Application States)](#updating) for
+more information about updating application states.
 
 A successful `DELETE` request SHOULD result in a `204` response code.
 
@@ -779,8 +781,8 @@ rel|target state|scope|description
 `source-descriptions` | [`Source Descriptions` State](#descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of sources described in the collection.
 `person-search` | [`Person Search Results` State](#search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for persons in the system.
 `place-search` | [`Place Search Results` State](#place-search) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | _Templated_ Link to the query used to search for places in the system.
-`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the authorization page used by a user to authenticate to the system. See [Section 8, Authentication and Authorization](#auth).
-`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the endpoint used to obtain an access token. See [Section 8, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the endpoint used to obtain an access token. See [Section , Authentication and Authorization](#auth).
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Collection` state. Even though other transitions 
@@ -947,7 +949,8 @@ operation|description|constraints
 
 A successful `GET` request SHOULD result in a `200` response code.
 
-A successful `POST` request SHOULD result in a `204` response code.
+A successful `POST` request SHOULD result in a `204` response code. See [Section 8 (Updating Application States)](#updating) for
+more information about updating application states.
 
 A successful `DELETE` request SHOULD result in a `204` response code.
 
@@ -1080,7 +1083,8 @@ operation|description|constraints
 
 A successful `GET` request SHOULD result in a `200` response code.
 
-A successful `POST` request SHOULD result in a `204` response code.
+A successful `POST` request SHOULD result in a `204` response code. See [Section 8 (Updating Application States)](#updating) for
+more information about updating application states.
 
 A successful `DELETE` request SHOULD result in a `204` response code.
 
@@ -1107,8 +1111,8 @@ rel|target state|scope|description
 `spouses` | [`Person Spouses` State](#spouses) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the list of spouses for this person.
 `ancestry` | [`Ancestry` State](#ancestry) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the ancestry query for this person.
 `descendancy` | [`Descendancy` State](#descendancy) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the descendancy query for this person. 
-`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the authorization page used by a user to authenticate to the system. See [Section 8, Authentication and Authorization](#auth).
-`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the endpoint used to obtain an access token. See [Section 8, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the endpoint used to obtain an access token. See [Section 9, Authentication and Authorization](#auth).
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Person` state. Even though other transitions 
@@ -1467,7 +1471,8 @@ operation|description|constraints
 
 A successful `GET` request SHOULD result in a `200` response code.
 
-A successful `POST` request SHOULD result in a `204` response code.
+A successful `POST` request SHOULD result in a `204` response code. See [Section 8 (Updating Application States)](#updating) for
+more information about updating application states.
 
 A successful `DELETE` request SHOULD result in a `204` response code.
 
@@ -1640,7 +1645,8 @@ operation|description|constraints
 
 A successful `GET` request SHOULD result in a `200` response code.
 
-A successful `POST` request SHOULD result in a `204` response code.
+A successful `POST` request SHOULD result in a `204` response code. See [Section 8 (Updating Application States)](#updating) for
+more information about updating application states.
 
 A successful `DELETE` request SHOULD result in a `204` response code.
 
@@ -1661,8 +1667,8 @@ rel|target state|scope|description
 `event` | [`Event` State](#event) | [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Link to a specific event.
 `description` | [`Source Description` State](#source-description) | [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Link to a specific source description.
 `description` | [`Place Description` State](#place-description) | [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Link to a specific place description.
-`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the authorization page used by a user to authenticate to the system. See [Section 8, Authentication and Authorization](#auth).
-`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the endpoint used to obtain an access token. See [Section 8, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the endpoint used to obtain an access token. See [Section 9, Authentication and Authorization](#auth).
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
 provided by the server for the `Record` state. Even though other transitions 
@@ -1746,8 +1752,13 @@ todo: explain that this media type assumes the 'rels' are URIs relative to the '
 # 7. Paged Application States
 
 
+<a name="updating"/>
+
+# 8. Updating Application States
+
+
 
 <a name="auth"/>
 
-# 8. Authentication and Authorization
+# 9. Authentication and Authorization
 
