@@ -671,7 +671,7 @@ The results of a successful query for the ancestry of a person MUST contain a li
 The following state transitions are specified for the `Ancestry Results` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the ancestry results to the persons in the results.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -746,7 +746,7 @@ the client as a candidate to be created and added to the list of collections.
 The following state transitions are specified for the `Collections` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `collection` | [`Collection` State](#collection) | Each instance of [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Transition from the list of collections to a single collection.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -887,7 +887,7 @@ The results of a successful query for the ancestry of a person MUST contain a li
 The following state transitions are specified for the `Descendancy Results` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the descendancy results to the persons in the results.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -960,7 +960,7 @@ the client as a candidate to be created and added to the list of events.
 The following state transitions are specified for the `Events` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `event` | [`Event` State](#event) | Each instance of [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Transition from the list of events to a single event.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -1027,7 +1027,7 @@ represents the "main" event MUST be provided as the first element in the list.
 ### 4.7.4 Transitions
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `event` | [`Event` State](#event) | [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Self-link to the `Event` state.
 
 
@@ -1040,7 +1040,7 @@ No embedded states are specified for the `Event` state.
 The following components of the `Event` state MAY be designated by the server as removable:
 
 rel|scope|description
---|-----|-----------
+---|-----|-----------
 `role` | Each instance of [`Event Role` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#conclusion-event-role) | The link used to remove the component.
 
 A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
@@ -1103,7 +1103,7 @@ the client as a candidate to be created and added to the list of persons.
 The following state transitions are specified for the `Persons` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -1170,7 +1170,7 @@ represents the "main" person MUST be provided as the first element in the list.
 ### 4.9.4 Transitions
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `person` | [`Person` State](#person) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Self-link to the `Person` state.
 `collection` | [`Collection` State](#collection) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the collection that contains this person.
 `parents` | [`Person Parents` State](#parents) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the list of parents for this person.
@@ -1191,7 +1191,7 @@ other transitions is RECOMMENDED where applicable.
 The following embedded states are specified for the `Person` state.
 
 rel|scope|description
---|-----|-----------
+---|-----|-----------
 `child-relationships` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of relationships to children on the person. If no link to `child-relationships` is provided, the list of child relationships MUST be included in the original request for the `Person` state.
 `parent-relationships` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of relationships to parents on the person. If no link to `parent-relationships` is provided, the list of parent relationships MUST be included in the original request for the `Person` state.
 `spouse-relationships` | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | List of relationships to spouses on the person. If no link to `spouse-relationships` is provided, the list of spouse relationships MUST be included in the original request for the `Person` state.
@@ -1206,7 +1206,7 @@ rel|scope|description
 The following components of the `Person` state MAY be designated by the server as removable:
 
 rel|scope|description
---|-----|-----------
+---|-----|-----------
 `conclusion` | Each instance of [`Fact` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#fact-conclusion), [`Gender` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#gender), and [`Name` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#name-conclusion) | The link used to remove the fact, gender, or name.
 `evidence-reference` | Each instance of [`EvidenceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#evidence-reference) | The link used to remove the persona (evidence) reference.
 `media-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the media reference.
@@ -1260,7 +1260,7 @@ as the first element in the list. Other elements might include relatives of the 
 The following state transitions are specified for the `Person Search Results` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the search results to the persons in the results.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -1322,7 +1322,7 @@ describing the relationships to each child SHOULD be provided by the server in t
 The following state transitions are specified for the `Person Children` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -1385,7 +1385,7 @@ describing the relationships to each spouse SHOULD be provided by the server in 
 The following state transitions are specified for the `Person Spouses` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -1449,7 +1449,7 @@ describing the relationships to each parent SHOULD be provided by the server in 
 The following state transitions are specified for the `Person Parents` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -1524,7 +1524,7 @@ the client as a candidate to be created and added to the list of place descripti
 The following state transitions are specified for the `Place Descriptions` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of [`Place Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Transition from the list of places descriptions to a single place description.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -1594,7 +1594,7 @@ represents the "main" place description MUST be provided as the first element in
 ### 4.13.4 Transitions
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of [`Place Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Self-link to the place description.
 
 
@@ -1653,7 +1653,7 @@ as the first element in the list.
 The following state transitions are specified for the `Place Search Results` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the search results to the descriptions of the places in the results.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -1716,7 +1716,7 @@ The content of each entry is a GEDCOM X document that contains the data of the r
 The following state transitions are specified for the `Records` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `record` | [`Record` State](#record) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the list of records to the a specific record.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -1780,7 +1780,7 @@ persons, relationships, events, and source descriptions.
 ### 4.16.4 Transitions
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `record` | [`Record` State](#record) | GEDCOM X Document | Self-link to the `Record` state.
 `person` | [`Person` State](#person) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to a specific person.
 `relationship` | [`Relationship` State](#relationship) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Link to a specific relationship.
@@ -1804,7 +1804,7 @@ No embedded states are specified for the `Record` state.
 The following components of the `Record` state MAY be designated by the server as removable:
 
 rel|scope|description
---|-----|-----------
+---|-----|-----------
 `conclusion` | Each instance of [`Fact` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#fact-conclusion), [`Gender` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#gender), and [`Name` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#name-conclusion) | The link used to remove the fact, gender, or name.
 `evidence-reference` | Each instance of [`EvidenceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#evidence-reference) | The link used to remove the persona (evidence) reference.
 `media-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the media reference.
@@ -1925,7 +1925,7 @@ represents the "main" relationship MUST be provided as the first element in the 
 ### 4.18.4 Transitions
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `relationship` | [`Relationship` State](#relationship) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Self-link to the `Relationship` state.
 `collection` | [`Collection` State](#collection) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Link to the collection that contains this relationship.
 
@@ -1939,7 +1939,7 @@ other transitions is RECOMMENDED where applicable.
 The following embedded states are specified for the `Relationship` state.
 
 rel|scope|description
---|-----|-----------
+---|-----|-----------
 `evidence-references` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of evidence references for the relationship. If no link to `evidence-references` is provided, the list of evidence references MUST be included in the original request for the `Relationship` state. If a link to `evidence-references` is provided, this link SHOULD be used to create new evidence references or update existing evidence references with a `POST` request.
 `media-references` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of media references for the relationship. If no link to `media-references` is provided, the list of media references MUST be included in the original request for the `Relationship` state. If a link to `media-references` is provided, this link SHOULD be used to create new media references or update existing media references with a `POST` request.
 `notes` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of notes for the relationship. If no link to `notes` is provided, the list of notes MUST be included in the original request for the `Relationship` state. If a link to `notes` is provided, this link SHOULD be used to create new notes or update existing notes with a `POST` request.
@@ -1950,7 +1950,7 @@ rel|scope|description
 The following components of the `Relationship` state MAY be designated by the server as removable:
 
 rel|scope|description
---|-----|-----------
+---|-----|-----------
 `conclusion` | Each instance of [`Fact` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#fact-conclusion), [`Gender` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#gender), and [`Name` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#name-conclusion) | The link used to remove the fact, gender, or name.
 `evidence-reference` | Each instance of [`EvidenceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#evidence-reference) | The link used to remove the relationshipa (evidence) reference.
 `media-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the media reference.
@@ -2016,7 +2016,7 @@ the client as a candidate to be created and added to the list of source descript
 The following state transitions are specified for the `Source Descriptions` state:
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `description` | [`Source Description` State](#source-description) | Each instance of [`Source Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Transition from the list of sources descriptions to a single source description.
 
 [Section 5, State Transitions](#transitions) defines other transitions that MAY be 
@@ -2086,7 +2086,7 @@ represents the "main" source description MUST be provided as the first element i
 ### 4.20.4 Transitions
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `description` | [`Source Description` State](#source-description) | Each instance of [`Source Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Self-link to the source description.
 
 
