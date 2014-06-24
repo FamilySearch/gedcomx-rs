@@ -468,6 +468,7 @@ point in time. The formal definition of an application state is comprised of the
 * Expected data elements.
 * Transitions to other application states.
 * Embedded application states.
+* Component states.
 
 #### Applicable Media Types
 
@@ -521,6 +522,9 @@ a specific caching strategy. Another reason might be to optimize requests for a 
 
 [Section 5 (Embedding Application States)](#embedding) specifies how embedded application states are used.
 
+#### Component states
+
+An application state may... todo:
 
 
 
@@ -634,7 +638,7 @@ No embedded states are specified for the `Ancestry Results` state.
 
 ## 3.3 The "Collections" State
 
-The `Collections` state consists of a list of collections. Examples of usages of the `Collections` state 
+The `Collections` state consists of a list of collections. Examples of usages of the `Collections` state include 
 to provide a list of subcollections of a collection, or to list all the collections in a system, or to provide a 
 means for a client to create a collection in a system.
 
@@ -658,7 +662,7 @@ A successful `GET` request SHOULD result in a `200` response code, if the list c
 a successful `GET` SHOULD result in a `204` response code.
 
 If one (and only one) collection was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
-code and a `Location` header specifying the id of the created collection. If multiple collections were created as a result of a successful 
+code and a `Location` header specifying the URI of the created collection. If multiple collections were created as a result of a successful 
 `POST` request, the request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -734,7 +738,7 @@ At least one instance of the [`Collection` Data Type](https://github.com/FamilyS
 MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Collection` is provided, the instance that 
 represents the "main" collection MUST be provided as the first element in the list.
 
-At least one instance of the [`Collection` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
+At least one instance of the [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection)
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Collection` is provided, the instance that 
 represents the "main" collection MUST be provided as the first element in the list.
 
@@ -746,7 +750,7 @@ id|target state|scope|description
 `subcollections` | [`Collections` State](#collections) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of subcollections for this collection.
 `persons` | [`Persons` State](#persons) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of persons in the collection.
 `relationships` | [`Relationships` State](#relationsihps) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of relationships between persons in this collection.
-`events` | [`Events` State](#events) | [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#collection) | Link to the list of events in this collection.
+`events` | [`Events` State](#events) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#collection) | Link to the list of events in this collection.
 `records` | [`Records` State](#records) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of records in the collection.
 `artifacts` | [`Source Descriptions` State](#descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of digital artifacts in the collection.
 `source-descriptions` | [`Source Descriptions` State](#descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of sources described in the collection.
@@ -847,7 +851,7 @@ A successful `GET` request SHOULD result in a `200` response code, if the list c
 a successful `GET` SHOULD result in a `204` response code.
 
 If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
-code and a `Location` header specifying the id of the created event. If multiple events were created as a result of a successful 
+code and a `Location` header specifying the URI of the created event. If multiple events were created as a result of a successful 
 `POST` request, the request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -923,7 +927,7 @@ At least one instance of the [`Event` Data Type](https://github.com/FamilySearch
 MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Event` is provided, the instance that 
 represents the "main" event MUST be provided as the first element in the list.
 
-At least one instance of the [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
+At least one instance of the [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Event` is provided, the instance that 
 represents the "main" event MUST be provided as the first element in the list.
 
@@ -943,7 +947,66 @@ No embedded states are specified for the `Event` state.
 
 <a name="persons"/>
 
-## 3.6 The "Persons" State
+## 3.8 The "Persons" State
+
+The `Persons` state consists of a list of persons. Examples of usages of the `Persons` state include
+to provide a list of all the persons in a collection, or to provide a means for a client to create a 
+person in a collection.
+
+### 3.8.1 Media Types
+
+Applications that implement the `Persons` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.8.2 Operations
+
+The following operations are defined as applicable to the `Persons` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a list of persons. | OPTIONAL
+`POST` | Create a person or set of persons. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more persons. If the list is empty, 
+a successful `GET` SHOULD result in a `204` response code.
+
+If one (and only one) person was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
+code and a `Location` header specifying the URI of the created person. If multiple persons were created as a result of a successful 
+`POST` request, the request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 3.8.3 Data Elements
+
+A list of instances of the
+[`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
+MUST be provided by the server in the successful response of a `GET` operation. If the list of persons is large, the server MAY
+break up the list into multiple pages according to [Section 6, Paged Application States](#paging).
+
+A list of instances of the
+[`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Person` provided by 
+the client as a candidate to be created and added to the list of persons.
+
+
+### 3.8.4 Transitions
+
+The following state transitions are specified for the `Persons` state:
+
+id|target state|scope|description
+--|------------|-----|-----------
+`person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
+
+[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Persons` state. Even though other transitions 
+are not formally included in the definition of the `Persons` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 3.8.5 Embedded States
+
+No embedded states are specified for the `Persons` state.
 
 
 
@@ -951,7 +1014,67 @@ No embedded states are specified for the `Event` state.
 
 <a name="person"/>
 
-## 3.7 The "Person" State
+## 3.9 The "Person" State
+
+The `Person` application state consists of a single person.
+
+### 3.9.1 Media Types
+
+Applications that implement the `Person` state MUST support the `application/x-gedcomx-v1+json` media type
+as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
+specification. Support for the [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
+is RECOMMENDED.
+
+### 3.9.2 Operations
+
+The following operations are defined as applicable to the `Person` state:
+
+operation|description|constraints
+---------|-----------|-----------
+`GET` | Read a person. | REQUIRED
+`POST` | Update a person. | OPTIONAL
+`DELETE` | Delete a person. | OPTIONAL
+
+A successful `GET` request SHOULD result in a `200` response code.
+
+A successful `POST` request SHOULD result in a `204` response code.
+
+A successful `DELETE` request SHOULD result in a `204` response code.
+
+A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+### 3.9.3 Data Elements
+
+At least one instance of the [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Person` is provided, the instance that 
+represents the "main" person MUST be provided as the first element in the list.
+
+At least one instance of the [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Person` is provided, the instance that 
+represents the "main" person MUST be provided as the first element in the list.
+
+### 3.9.4 Transitions
+
+id|target state|scope|description
+--|------------|-----|-----------
+`person` | [`Person` State](#person) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Self-link to the `Person` state.
+`collection` | [`Collection` State](#collection) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the collection that contains this person.
+`parents` | [`Person Parents` State](#parents) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the list of parents for this person.
+`children` | [`Person Children` State](#children) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the list of children for this person.
+`spouses` | [`Person Spouses` State](#spouses) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the list of spouses for this person.
+`ancestry` | [`Ancestry` State](#ancestry) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the ancestry query for this person.
+`descendancy` | [`Descendancy` State](#descendancy) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the descendancy query for this person. 
+`http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the authorization page used by a user to authenticate to the system. See [Section 7, Authentication and Authorization](#auth).
+`http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the endpoint used to obtain an access token. See [Section 7, Authentication and Authorization](#auth).
+
+[Section 4, State Transitions](#transitions) defines other transitions that MAY be 
+provided by the server for the `Person` state. Even though other transitions 
+are not formally included in the definition of the `Person` state, use of 
+other transitions is RECOMMENDED where applicable. 
+
+### 3.9.5 Embedded States
+
+No embedded states are specified for the `Person` state.
 
 
 
