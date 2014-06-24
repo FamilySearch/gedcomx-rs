@@ -815,7 +815,7 @@ represents the "main" collection MUST be provided as the first element in the li
 ### 4.4.4 Transitions
 
 rel|target state|scope|description
---|------------|-----|-----------
+---|------------|-----|-----------
 `collection` | [`Collection` State](#collection) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Self-link to the `Collection` state.
 `current-user-person` | [`Person` State](#person) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the person in the collection representing the current user.
 `current-user-resources` | [`Source Descriptions` State](#source-descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to a list of resources in the collection that are owned by or otherwise associated with the current user, described as sources.
