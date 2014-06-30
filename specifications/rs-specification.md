@@ -2254,6 +2254,8 @@ are declared to be relative to the `http://gedcomx.org/links/` base URI. As such
 of these link relations in an application state that defined outside the scope of this specification
 SHOULD use the absolute URI, e.g. "http://gedcomx.org/links/person".
 
+<a name="uri-template-vars"/>
+
 ## 5.3 URI Template Variables
 
 Some links designate transitions to a range of application states according to [RFC 6570, URI Templates](http://tools.ietf.org/html/rfc6570).
