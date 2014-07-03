@@ -38,7 +38,7 @@ a JSON representation of the Atom Syndication Format.
     * [1.2.3 Namespace Prefixes](#namespace-prefixes)
 * [2. Atom Element Extensions](#atom-element-extensions)
   * [2.1 "atom:feed" Extensions](#atom-feed-extensions)
-    * [2.1.1 The "gx:index" Element](#gx:index-element)
+    * [2.1.1 The "gx:index" Element](#gx_index-element)
     * [2.1.2 The "gx:results" Element](#gx_results-element)
   * [2.2 "atom:entry" Extensions](#atom:entry-extensions)
     * [2.2.1 The "gx:score" Element](#gx:score-element)
@@ -49,7 +49,7 @@ a JSON representation of the Atom Syndication Format.
     * [2.4.1 The "template" Attribute](#template-attribute)
     * [2.4.2 The "accept" Attribute](#accept-attribute)
     * [2.4.3 The "allow" Attribute](#allow-attribute)
-  * [2.5
+  * hi
  
 
 <a name="id-and-version"/>
