@@ -212,10 +212,6 @@ The "allow" attribute is metadata about the allowable methods that can be used t
 The value of the "allow" attribute is as defined by the HTTP specification, [RFC 2616](http://www.ietf.org/rfc/rfc2616.txt),
 Section 14.7.
 
-<a name="atom-contentextensions"/>
-
-## 2.3 "atom:content" Extensions
-
 <a name="atom-json-media-type/>
 
 # 3. The "application/x-gedcomx-atom+json" Media Type
