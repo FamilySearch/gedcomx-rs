@@ -40,17 +40,19 @@ a JSON representation of the Atom Syndication Format.
   * [2.1 "atom:feed" Extensions](#atom-feed-extensions)
     * [2.1.1 The "gx:index" Element](#gx_index-element)
     * [2.1.2 The "gx:results" Element](#gx_results-element)
-  * [2.2 "atom:entry" Extensions](#atom:entry-extensions)
-    * [2.2.1 The "gx:score" Element](#gx:score-element)
-    * [2.2.2 The "gx:confidence" Element](#gx:confidence-element)
-  * [2.3 "atom:content" Extensions](#atom:content-extensions)
+  * [2.2 "atom:entry" Extensions](#atom_entry-extensions)
+    * [2.2.1 The "gx:score" Element](#gx_score-element)
+    * [2.2.2 The "gx:confidence" Element](#gx_confidence-element)
+  * [2.3 "atom:content" Extensions](#atom_content-extensions)
     * [2.3.1 Processing Model](#processing-model)
   * [2.4 "atom:link" Extensions](#atom:link-extensions)
     * [2.4.1 The "template" Attribute](#template-attribute)
     * [2.4.2 The "accept" Attribute](#accept-attribute)
     * [2.4.3 The "allow" Attribute](#allow-attribute)
-  * hi
- 
+  * [2.3 "atom:content" Extensions](#atom-content-extensions)
+* [3. The "application/x-gedcomx-atom+json" Media Type](#atom-json-media-type)
+  * [3.1 JSON Member Names](#json-member-names)
+  * [3.2 The Content Processing Model](#content-processing-model)
 
 <a name="id-and-version"/>
 
