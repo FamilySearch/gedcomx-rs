@@ -121,14 +121,14 @@ atom | `http://www.w3.org/2005/Atom`
 This section defines how the Atom Container Elements are extended for the purposes of this
 specification.
 
-<a name=""atom:feed" Extensions"/>
+<a name="atom-feed-extensions"/>
 
 ## 2.1 "atom:feed" Extensions
 
 The following metadata elements are specified as available child elements on the "atom:feed" element,
 defined by [RFC 4287, Section 4.1.1](http://tools.ietf.org/html/rfc4287#section-4.1.1).
 
-<a name="The "gx:index" Element"/>
+<a name="gx-index-element"/>
 
 ### 2.1.1 The "gx:index" Element
 
@@ -136,7 +136,7 @@ The "gx:index" element provides the index of the first entry in a page of data. 
 feed is providing a paged set of data, such as when providing the results of a query. The value
 of the "gx:index" element MUST be provided as an unsigned integer.
 
-<a name="The "gx:results" Element"/>
+<a name="gx-results-element"/>
 
 ### 2.1.2 The "gx:results" Element
 
@@ -144,14 +144,14 @@ The "gx:results" element provides the total number of available results. It is u
 feed is providing a paged set of data, such as when providing the results of a query. The value
 of the "gx:results" element MUST be provided as an unsigned integer.
 
-<a name="The "atom:entry" Extensions"/>
+<a name="atom-entry-extensions"/>
 
 ## 2.2 "atom:entry" Extensions
 
 The following metadata elements are specified as available child elements on the "atom:entry" element,
 defined by [RFC 4287, Section 4.1.2](http://tools.ietf.org/html/rfc4287#section-4.1.2).
 
-<a name="The "gx:score" Element"/>
+<a name="gx-score-element"/>
 
 ### 2.2.1 The "gx:score" Element
 
@@ -160,7 +160,7 @@ The "gx:score" element provides the score of the relevance of an entry. It is us
 interpreted as a floating-point number, and the relevance is application-specific, but MUST be consistent
 between entries so that all scores can be ranked relative to one another.
 
-<a name="The "gx:confidence" Element"/>
+<a name="gx-confidence-element"/>
 
 ### 2.2.2 The "gx:confidence" Element
 
@@ -169,11 +169,11 @@ The "gx:confidence" element provides a standard level of confidence of an entry.
 interpreted as an unsigned integer between 1 and 5, inclusive. A higher number implies a higher degree of
 confidence.
 
-<a name=""atom:content" Extensions"/>
+<a name="atom-content-extensions"/>
 
 ## 2.3 "atom:content" Extensions
 
-<a name="Processing Model"/>
+<a name="processing-model"/>
 
 ### 2.3.1 Processing Model
 
@@ -182,21 +182,21 @@ the media type `application/x-gedcom-v1+xml` MAY be used as the value of the "ty
 element. In this case, the content MAY contain a single "gx:gedcomx" child element to provide the genealogical data associated
 with the entry.
 
-<a name=""atom:link" Extensions"/>
+<a name="atom-link-extensions"/>
 
 ## 2.4 "atom:link" Extensions
 
 The following metadata attributes are specified as available on the "atom:link" element,
 defined by [RFC 4287, Section 4.2.7](http://tools.ietf.org/html/rfc4287#section-4.2.71).
 
-<a name=""template" Attribute"/>
+<a name="template-attribute"/>
 
 ### 2.4.1 The "template" Attribute
 
 The "template" attribute is used to provide a URI template per [RFC 6570](http://tools.ietf.org/html/rfc6570),
 used to link to a range of URIs, such as for the purpose of linking to a query.
 
-<a name=""accept" Attribute"/>
+<a name="accept-attribute"/>
 
 ### 2.4.2 The "accept" Attribute
 
@@ -204,7 +204,7 @@ The "accept" attribute is metadata about the acceptable media type(s) that can b
 of) the resource being linked to. The value of the "accept" attribute is as defined by the HTTP specification,
 [RFC 2616](http://www.ietf.org/rfc/rfc2616.txt), Section 3.7.
 
-<a name=""allow" Attribute"/>
+<a name="allow-attribute"/>
 
 ### 2.4.3 The "allow" Attribute
 
@@ -212,11 +212,11 @@ The "allow" attribute is metadata about the allowable methods that can be used t
 The value of the "allow" attribute is as defined by the HTTP specification, [RFC 2616](http://www.ietf.org/rfc/rfc2616.txt),
 Section 14.7.
 
-<a name=""atom:content" Extensions"/>
+<a name="atom-contentextensions"/>
 
 ## 2.3 "atom:content" Extensions
 
-<a name=""application/x-gedcomx-atom+json" Media Type/>
+<a name="atom-json-media-type/>
 
 # 3. The "application/x-gedcomx-atom+json" Media Type
 
