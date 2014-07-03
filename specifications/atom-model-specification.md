@@ -92,7 +92,7 @@ targets.
 
 <a name="compliance"/>
 
-## 1.2.2 Compliance
+### 1.2.2 Compliance
 
 An implementation of the GEDCOM X Atom Extensions is "non-compliant" if it fails to satisfy
 one or more of the MUST or REQUIRED level requirements. An implementation that satisfies all of
