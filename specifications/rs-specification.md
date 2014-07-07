@@ -664,7 +664,7 @@ application state.
 
 The `Agent` application state consists of a single agent.
 
-<a name="media-types"/>
+<a name="4.1.1-media-types"/>
 
 ### 4.1.1 Media Types
 
