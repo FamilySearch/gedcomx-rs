@@ -20,6 +20,8 @@ For details, see:
 
 http://creativecommons.org/licenses/by-sa/3.0/
 
+<a name="intro"/>
+
 # 1. Introduction
 
 GEDCOM X RS is a specification that defines a standard interface for a genealogical data application on the World Wide Web.
@@ -31,6 +33,18 @@ between the application states are defined.
 A genealogical application that conforms to this specification uses the Hypertext Transfer Protocol (HTTP) to accept requests from
 and provide responses to client applications. This specification leverages the concepts and principles defined by HTTP to describe
 how a client can expect to interact with a conforming genealogical application.
+
+## Table Of Contents
+
+* [1. Introduction](#intro)
+  * [1.1 Identifier, Version and Dependencies](#id-and-version)
+  * [1.2 Notational Conventions](#notational-conventions)
+    * [1.2.1 Keywords](#keywords)    
+    * [1.2.2 Compliance](#compliance)
+    * [1.2.3 Namespace Prefixes](#namespace-prefixes)
+    * [blah](#4.1.1-media-types)
+
+<a name="id-and-version"/>
 
 ## 1.1 Identifier, Version, and Dependencies
 
@@ -67,7 +81,11 @@ This specification references [RFC 6749, OAuth 2](http://tools.ietf.org/html/rfc
 
 This specification uses [RFC 2388](http://www.ietf.org/rfc/rfc2388.txt) to specify how to upload digital artifacts to a collection.
 
+<a name="notational-conventions"/>
+
 ## 1.2 Notational Conventions
+
+<a name="keywords"/>
 
 ### 1.2.1 Keywords
 
@@ -77,6 +95,8 @@ document are to be interpreted as described in BCP 14,
 [RFC2119](http://tools.ietf.org/html/rfc2119), as scoped to those conformance
 targets.
 
+<a name="compliance"/>
+
 ### 1.2.2 Compliance
 
 An implementation of GEDCOM X RS is "non-compliant" if it fails to satisfy
@@ -85,15 +105,23 @@ the  MUST or REQUIRED and all of the SHOULD level requirements is said to be "un
 compliant"; and implementation that satisfies all of the MUST level requirements but not all of the
 SHOULD level requirements is said to be "conditionally compliant".
 
+<a name="concepts-definitions"/>
+
 ## 1.3 Concepts and Definitions
+
+<a name="client"/>
 
 ### 1.3.1 Client
 
 The "client" is software that reads, updates, or otherwise consumes the genealogical data application.
 
+<a name="server"/>
+
 ### 1.3.2 Server
 
 The "server" is the software that provides the genealogical data application via HTTP.
+
+<a name="application-states"/>
 
 ### 1.3.3 Application States
 
@@ -101,21 +129,29 @@ GEDCOM X RS is defined by a set of application states. An "application state" is
 the state of genealogical data in an application at a specific point in time. Examples of an application 
 state include resources such as persons, relationships, or sources. 
 
+<a name="state-transitions"/>
+
 ### 1.3.4 State Transitions (i.e. "Links")
 
 A client drives the state of a GEDCOM X application by capturing transitions from application state to application state.
 Each application state provides to the client the set of transitions (i.e. "links") to other application states 
 that are available. For example, a client may be able to follow a link from a person to its source.
 
+<a name="operations"/>
+
 ### 1.3.5 Operations
 
 The set of available operations is constrained to the set defined by [RFC 2616, Section 9](http://tools.ietf.org/html/rfc2616#section-9).
+
+<a name="media-types"/>
 
 ### 1.3.6 Media Types
 
 The data that is exchanged between a client and a server is encoded according to a specific "media type". Clients use
 content negotiation to determine which media type is used to represent data that is exchanged. For more information about
 media types, see [Architecture of the World Wide Web, Volume One](http://www.w3.org/TR/webarch/), Sections 3 and 4.
+
+<a name="application-entry-points"/>
 
 ### 1.3.7 Application Entry Points
 
@@ -125,25 +161,35 @@ application entry point is a well-known URI that is used to initiate interaction
 Each application determines its own entry points. Use of the [Collections](#collections), [Collection](#collection),
 [Person](#person), and [Source Description](#source-description) application states is RECOMMENDED as entry points.
 
+<a name="use-of-http"/>
+
 ## 1.4 Use of HTTP
 
 Servers provide a GEDCOM X RS interface using [RFC 2616, Hypertext Transfer Protocol](http://www.ietf.org/rfc/rfc2616.txt).
 HTTP is used to exchange data and drive application state.
+
+<a name="request"/>
 
 ### 1.4.1 The Request
 
 An HTTP request is issued by the client to initiate the exchange of application state. For more information about HTTP requests,
 see [RFC 2616](http://www.ietf.org/rfc/rfc2616.txt), Section 5.
 
+<a name="response"/>
+
 ### 1.4.2 The Response
 
 An HTTP response is provided by the server in response to an HTTP request.  For more information about HTTP responses,
 see [RFC 2616](http://www.ietf.org/rfc/rfc2616.txt), Section 6.
 
+<a name="content-negotiation"/>
+
 ### 1.4.3 Content Negotiation
 
 Content negotiation is the process by which a media type is selected to represent application state. For more information about
 content negotition, see [RFC 2616](http://www.ietf.org/rfc/rfc2616.txt), Section 12.
+
+<a name="options-operation"/>
 
 ### 1.4.4 The OPTIONS Operation
 
@@ -202,6 +248,8 @@ allow | Metadata about the allowable methods that can be used to transition to t
 hreflang | The language of the resource being linked to. | string | OPTIONAL.
 title | Human-readable information about the link. | string | OPTIONAL.
 
+<a name="xml-type-element"/>
+
 ### 2.1.1 The "Link" XML Type and Element
 
 The `gx:Link` XML type is used to (de)serialize the `http://gedcomx.org/v1/Link` data type.
@@ -227,6 +275,8 @@ title | Human-readable information about the link. | title (attribute) | xsd:str
   <!-- possibility of extension elements -->
 </gx:link>
 ```
+
+<a name="link-json-type"/>
 
 ### 2.1.2 The "Link" JSON Type
 
@@ -261,6 +311,8 @@ title | Human-readable information about the link. | title | xsd:string
 }
 ```
 
+<a name="json-type-member"/>
+
 ### 2.1.3 The "Links" JSON Type and Member
 
 For convenience in working with JSON, a list of instances of the `http://gedcomx.org/v1/Link` data type
@@ -283,6 +335,7 @@ The following example shows how a list of links is serialized in JSON.
 }
 ```
 
+<a name="display-properties-data-type"/>
 
 ## 2.2 The "DisplayProperties" Data Type
 
@@ -312,6 +365,8 @@ marriageDate | The displayable label for the marriage date of the person. | stri
 marriagePlace | The displayable label for the marriage date of the person. | string | OPTIONAL.
 ascendancyNumber | The context-specific ascendancy number for the person in relation to the other persons in the request. The ancestry number is defined using the Ahnentafel numbering system. | string | OPTIONAL.
 descendancyNumber | The context-specific descendancy number for the person in relation to the other persons in the request. The descendancy number is defined using the d'Aboville numbering system. | string | OPTIONAL.
+
+<a name="display-properties-xml-element"/>
 
 ### 2.2.1 The "DisplayProperties" XML Element
 
@@ -394,6 +449,8 @@ descendancyNumber | The context-specific descendancy number for the person in re
 }
 ```
 
+<a name="property-extensions"/>
+
 # 3. Property Extensions
 
 This section defines a set of extensions to data types already defined by the
@@ -401,6 +458,8 @@ This section defines a set of extensions to data types already defined by the
 and and describes how the properties are included as extensions to
 [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md) and
 [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md).
+
+<a name="date-data-type"/>
 
 ## 3.1 Extensions to the "Date" Data Type
 
@@ -411,17 +470,23 @@ name  | description | data type | constraints
 ------|-------------|-----------|------------
 normalized | A list of normalized values for a date for display purposes. | List of [`http://gedcomx.org/TextValue`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#text-value). Order is preserved. | OPTIONAL. If more than one normalized value is provided, normalized values are assumed to be given in order of preference, with the most preferred normalized value in the first position in the list.
 
+<a name="date-xml-type-extensions"/>
+
 ### 3.1.1 "Date" XML Type Extensions
 
 name | XML property | XML type
 -----|-------------|--------------
 normalized | gx:normalized | [`gx:TextValue`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md#text-value)
 
+<a name="date-json-type-extensions"/>
+
 ### 3.1.2 "Date" JSON Type Extensions
 
 name | JSON member | JSON object type
 -----|-------------|-------------
 normalized | normalized | array of [`TextValue`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md#text-value)
+
+<a name="extensions-place-reference-data-type"/>
 
 ## 3.2 Extensions to the "PlaceReference" Data Type
 
@@ -432,17 +497,23 @@ name  | description | data type | constraints
 ------|-------------|-----------|------------
 normalized | A list of normalized values for a place for display purposes. | List of [`http://gedcomx.org/TextValue`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#text-value). Order is preserved. | OPTIONAL. If more than one normalized value is provided, normalized values are assumed to be given in order of preference, with the most preferred normalized value in the first position in the list.
 
+<a name="place-reference-xml-type-extensions"/>
+
 ### 3.2.1 "PlaceReference" XML Type Extensions
 
 name | XML property | XML type
 -----|-------------|--------------
 normalized | gx:normalized | [`gx:TextValue`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md#text-value)
 
+<a name="place-reference-json-type-extensions"/>
+
 ### 3.2.2 "PlaceReference" JSON Type Extensions
 
 name | JSON member | JSON object type
 -----|-------------|-------------
 normalized | normalized | array of [`TextValue`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md#text-value)
+
+<a name="extensions-name-data-type"/>
 
 ## 3.3 Extensions to the "Name" Data Type
 
@@ -453,17 +524,23 @@ name  | description | data type | constraints
 ------|-------------|-----------|------------
 preferred | Whether the name is considered the "preferred" name for display purposes. | boolean | OPTIONAL.
 
+<a name="name-xml-type-extensions"/>
+
 ### 3.3.1 "Name" XML Type Extensions
 
 name | XML property | XML type
 -----|-------------|--------------
 preferred | preferred (attribute) | xsd:boolean
 
+<a name="name-json-type-extensions"/>
+
 ### 3.3.2 "Name" JSON Type Extensions
 
 name | JSON member | JSON object type
 -----|-------------|-------------
 preferred | preferred | boolean
+
+<a name="extensions-person-data-type"/>
 
 ## 3.3 Extensions to the "Person" Data Type
 
@@ -475,12 +552,16 @@ name  | description | data type | constraints
 living | Whether the person is considered living by the application. | boolean | OPTIONAL.
 display | The display properties for the person. | [`DisplayProperties`](#display) | OPTIONAL.
 
+<a name="person-xml-type-extensions"/>
+
 ### 3.3.1 "Person" XML Type Extensions
 
 name | XML property | XML type
 -----|-------------|--------------
 living | living (attribute) | xsd:boolean
 display | gx:display | [`DisplayProperties`](#display)
+
+<a name="person-json-type-extensions"/>
 
 ### 3.3.2 "Person" JSON Type Extensions
 
@@ -489,12 +570,14 @@ name | JSON member | JSON object type
 living | living | boolean
 display | display | [`DisplayProperties`](#display)
 
+<a name="sort-key-property"/>
+
 ### 3.4 The "sortKey" Property
 
 todo:
 
 
-
+<a name="application-states"/>
 
 # 4. Application States
 
@@ -581,12 +664,16 @@ application state.
 
 The `Agent` application state consists of a single agent.
 
+<a name="media-types"/>
+
 ### 4.1.1 Media Types
 
 Applications that implement the `Agent` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
+
+<a name="operations"/>
 
 ### 4.1.2 Operations
 
@@ -607,6 +694,8 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
+<a name="data-elements"/>
+
 ### 4.1.3 Data Elements
 
 At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
@@ -617,17 +706,25 @@ At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Agent` is provided, the instance that 
 represents the "main" agent MUST be provided as the first element in the list.
 
+<a name="transitions"/>
+
 ### 4.1.4 Transitions
 
 No state transitions are specified for the `Agent` state.
+
+<a name="embedded-states"/>
 
 ### 4.1.5 Embedded States
 
 No embedded states are specified for the `Agent` state.
 
+<a name="removable-components"/>
+
 ### 4.1.6 Removable Components
 
 No removable components are specified for the `Agent` state.
+
+<a name="example-requests"/>
 
 ### 4.1.7 Example Requests
 
@@ -643,12 +740,16 @@ todo:
 The `Ancestry Results` state consists of the results of a query for multiple generations of the ancestry
 of a person.
 
+<a name="media-types"/>
+
 ### 4.2.1 Media Types
 
 Applications that implement the `Ancestry Results` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
+
+<a name="operations"/>
 
 ### 4.2.2 Operations
 
@@ -662,11 +763,15 @@ A successful `GET` request SHOULD result in a `200` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
+<a name="data-elements"/>
+
 ### 4.2.3 Data Elements
 
 The results of a successful query for the ancestry of a person MUST contain a list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person). Each
 `Person` in the list MUST provide a value for the `ascendancyNumber` of the person using [`DisplayProperties`](#display).
+
+<a name="transitions"/>
 
 ### 4.2.4 Transitions
 
@@ -681,13 +786,19 @@ provided by the server for the `Ancestry Results` state. Even though other trans
 are not formally included in the definition of the `Ancestry Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
+<a name="embedded-states"/>
+
 ### 4.2.5 Embedded States
 
 No embedded states are specified for the `Ancestry Results` state.
 
+<a name="removable-components"/>
+
 ### 4.2.6 Removable Components
 
 No removable components are specified for the `Ancestry Results` state.
+
+<a name="example-requ"/>
 
 ### 4.2.7 Example Requests
 
@@ -702,6 +813,8 @@ todo:
 The `Artifacts` state consists of a list of digital artifacts, such as images. Examples of usages of the `Artifacts` state include
 to list all the artifacts in a system or to provide a means for a client to upload artifacts in a system.
 
+<a name="media-types"/>
+
 ### 4.3.1 Media Types
 
 Applications that implement the `GET` operation on the `Artifacts` state MUST support the `application/x-gedcomx-v1+json` media type
@@ -711,6 +824,8 @@ is RECOMMENDED.
 
 Applications that implement the `POST` operation on the `Artifacts` state MUST support the `multipart/form-data` media type
 as defined by [RFC 2388](http://www.ietf.org/rfc/rfc2388.txt).
+
+<a name="operations"/>
 
 ### 4.3.2 Operations
 
@@ -728,6 +843,8 @@ A successful `POST` request, the request SHOULD result in a `201` response code 
 description of the created artifact.  
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
+
+<a name="data-elements"/>
 
 ### 4.3.3 Data Elements
 
@@ -747,6 +864,8 @@ parameter name|description
 `citation`|A citation for the artifact.
 
 
+<a name="transitions"/>
+
 ### 4.3.4 Transitions
 
 The following state transitions are specified for the `Artifacts` state:
@@ -760,13 +879,19 @@ provided by the server for the `Source Descriptions` state. Even though other tr
 are not formally included in the definition of the `Source Descriptions` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
+<a name="embedded-states"/>
+
 ### 4.3.5 Embedded States
 
 No embedded states are specified for the `Artifacts` state.
 
+<a name="removable-components"/>
+
 ### 4.3.6 Removable Components
 
 No removable components are specified for the `Artifacts` state.
+
+<a name="example-requests"/>
 
 ### 4.3.7 Example Requests
 
@@ -785,6 +910,8 @@ The `Collections` state consists of a list of collections. Examples of usages of
 to provide a list of subcollections of a collection, or to list all the collections in a system, or to provide a 
 means for a client to create a collection in a system.
 
+<a name="4.4.1-media-types"/>
+
 ### 4.4.1 Media Types
 
 Applications that implement the `Collections` state MUST support the `application/x-gedcomx-v1+json` media type
@@ -793,6 +920,8 @@ specification. Support for the `application/x-gedcomx-v1+xml` media type as defi
 is RECOMMENDED.
 
 Applications that implement the `Collections` state MUST support the [GEDCOM X Record Extensions](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md).
+
+<a name="4.4.2-operations"/>
 
 ### 4.4.2 Operations
 
