@@ -102,7 +102,9 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.3.6 Removable Components](#4.3.6-removable-components)
     * [4.3.7 Example Requests](#4.3.7-example-requests)
   * [4.4 The "Collections" State](#collections)
-  * 
+    * [4.4.1 Media Types](#4.4.1-media-types)
+    * [4.4.2 Operations](#4.4.2-operations)
+    * 
 
 <a name="id-and-version"/>
 
