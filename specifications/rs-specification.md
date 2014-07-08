@@ -1959,6 +1959,8 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
+<a name="4.16.3-data-elements"/>
+
 ### 4.16.3 Data Elements
 
 At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
@@ -1968,6 +1970,8 @@ represents the "main" place description MUST be provided as the first element in
 At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `PlaceDescription` is provided, the instance that 
 represents the "main" place description MUST be provided as the first element in the list.
+
+<a name="4.16.4-transitions"/>
 
 ### 4.16.4 Transitions
 
