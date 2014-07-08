@@ -73,7 +73,25 @@ how a client can expect to interact with a conforming genealogical application.
     * [3.3.1 "Name" XML Type Extensions](#name-xml-type-extensions)
     * [3.3.2 "Name" JSON Type Extensions](#name-json-type-extensions)
   * [3.4 Extensions to the "Person" Data Type](#extensions-person-data-type)
-  * 
+    * [3.4.1 "Person" XML Type Extensions](#person-xml-type-extensions)
+    * [3.4.2 "Person" JSON Type Extensions](#person-json-type-extensions)
+  * [3.5 The "sortKey" Property](#sort-key-property)
+* [4. Application States](#application-states)
+  * [4.1 The "Agent" State](#agent)
+    * [4.1.1 Media Types](#media-types)
+    * [4.1.2 Operations](#4.1.2-operations)
+    * [4.1.3 Data Elements](#4.1.3-data-elements)
+    * [4.1.4 Transitions](#transitions)
+    * [4.1.5 Embedded States](#embedded-states)
+    * [4.1.6 Removable Components](#removable-components)
+    * [4.1.7 Example Requests](#example-requests)
+  * [4.2 The "Ancestry Results" State](#ancestry)
+    * [4.2.1 Media Types](#4.2.1-media-types)
+    * [4.2.2 Operations](#4.2.2-operations)
+    * [4.2.3 Data Elements](#4.2.3-data-elements)
+    * [4.2.4 Transitions](#4.2.4-transitions)
+    * 
+    
 <a name="id-and-version"/>
 
 ## 1.1 Identifier, Version, and Dependencies
