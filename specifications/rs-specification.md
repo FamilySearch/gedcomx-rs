@@ -834,19 +834,19 @@ provided by the server for the `Ancestry Results` state. Even though other trans
 are not formally included in the definition of the `Ancestry Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-<a name="embedded-states"/>
+<a name="4.2.5-embedded-states"/>
 
 ### 4.2.5 Embedded States
 
 No embedded states are specified for the `Ancestry Results` state.
 
-<a name="removable-components"/>
+<a name="4.2.6-removable-components"/>
 
 ### 4.2.6 Removable Components
 
 No removable components are specified for the `Ancestry Results` state.
 
-<a name="example-requests"/>
+<a name="4.2.7-example-requests"/>
 
 ### 4.2.7 Example Requests
 
