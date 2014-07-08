@@ -572,7 +572,7 @@ preferred | preferred | boolean
 
 <a name="extensions-person-data-type"/>
 
-## 3.3 Extensions to the "Person" Data Type
+## 3.4 Extensions to the "Person" Data Type
 
 The following properties are defined as extensions to the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person):
@@ -584,7 +584,7 @@ display | The display properties for the person. | [`DisplayProperties`](#displa
 
 <a name="person-xml-type-extensions"/>
 
-### 3.3.1 "Person" XML Type Extensions
+### 3.4.1 "Person" XML Type Extensions
 
 name | XML property | XML type
 -----|-------------|--------------
@@ -593,7 +593,7 @@ display | gx:display | [`DisplayProperties`](#display)
 
 <a name="person-json-type-extensions"/>
 
-### 3.3.2 "Person" JSON Type Extensions
+### 3.4.2 "Person" JSON Type Extensions
 
 name | JSON member | JSON object type
 -----|-------------|-------------
@@ -602,7 +602,7 @@ display | display | [`DisplayProperties`](#display)
 
 <a name="sort-key-property"/>
 
-### 3.4 The "sortKey" Property
+### 3.5 The "sortKey" Property
 
 todo:
 
