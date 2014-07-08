@@ -1077,7 +1077,7 @@ is RECOMMENDED.
 
 Applications that implement the `Collection` state MUST support the [GEDCOM X Record Extensions](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md).
 
-<a name="operations"/>
+<a name="4.5.2-operations"/>
 
 ### 4.5.2 Operations
 
@@ -1098,7 +1098,7 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-<a name="data-elements"/>
+<a name="4.5.3-data-elements"/>
 
 ### 4.5.3 Data Elements
 
@@ -1110,7 +1110,7 @@ At least one instance of the [`Collection` Data Type](https://github.com/FamilyS
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Collection` is provided, the instance that 
 represents the "main" collection MUST be provided as the first element in the list.
 
-<a name="transitions"/>
+<a name="4.5.4-transitions"/>
 
 ### 4.5.4 Transitions
 
@@ -1136,13 +1136,13 @@ provided by the server for the `Collection` state. Even though other transitions
 are not formally included in the definition of the `Collection` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-<a name="embedded-s"/>
+<a name="4.5.5-embedded-s"/>
 
 ### 4.5.5 Embedded States
 
 No embedded states are specified for the `Collection` state.
 
-<a name="removable-components"/>
+<a name="4.5.6-removable-components"/>
 
 ### 4.5.6 Removable Components
 
@@ -1163,7 +1163,7 @@ todo:
 The `Descendancy Results` state consists of the results of a query for multiple generations of the descendancy
 of a person.
 
-<a name="media-types"/>
+<a name="4.6.1-media-types"/>
 
 ### 4.6.1 Media Types
 
@@ -1172,7 +1172,7 @@ as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/m
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-<a name="operations"/>
+<a name="4.6.2-operations"/>
 
 ### 4.6.2 Operations
 
@@ -1215,13 +1215,13 @@ other transitions is RECOMMENDED where applicable.
 
 No embedded states are specified for the `Descendancy Results` state.
 
-<a name="removable-components"/>
+<a name="4.6.6-removable-components"/>
 
 ### 4.6.6 Removable Components
 
 No removable components are specified for the `Descendancy Results` state.
 
-<a name="example-requests"/>
+<a name="4.6.7-example-requests"/>
 
 ### 4.6.7 Example Requests
 
