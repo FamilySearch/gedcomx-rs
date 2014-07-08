@@ -126,7 +126,14 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.6.6 Removable Components](#4.6.6-removable-components)
     * [4.6.7 Example Requests](#4.6.7-example-requests)
   * [4.7 The "Events" State](#events)
-  * 
+    * [4.7.1 Media Types](#4.7.1-media-types)
+    * [4.7.2 Operations](#4.7.2-operations)
+    * [4.7.3 Data Elements](#4.7.3-data-elements)
+    * [4.7.4 Transitions](#4-7-4-transitions)
+    * [4.7.5 Embedded States](#4.7.5-embedded-states)
+    * [4.7.6 Removable Components](#4.7.6-removable-components)
+    * [4.7.7 Example Requests](#4.7.7-example-requests)
+    * 
 
 <a name="id-and-version"/>
 
