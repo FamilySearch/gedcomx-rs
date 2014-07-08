@@ -154,6 +154,12 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.10.2 Operations](#4.10.2-operations)
     * [4.10.3 Data Elements](#4.10.3-data-elements)
     * [4.10.4 Transitions](#4.10.4-transitions)
+    * [4.10.5 Embedded States](#4.10.5-embedded-states)
+    * [4.10.6 Removable Components](#4.10.6-removable-components)
+    * [4.10.7 Example Requests](#4.10.7-example-requests)
+  * [4.11 The "Person Search Results" State](#person-search)
+    * [4.11.1 Media Types](#4.11.1-media-types)
+    * [4.11.2 Operations](#4.11.2-operations)
     * 
 
 <a name="id-and-version"/>
