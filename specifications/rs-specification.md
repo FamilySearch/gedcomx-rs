@@ -1979,14 +1979,19 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of [`Place Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Self-link to the place description.
 
+<a name="4.16.5-embedded-states"/>
 
 ### 4.16.5 Embedded States
 
 No embedded states are specified for the `Place Description` state.
 
+<a name="4.16.6-removable-components"/>
+
 ### 4.16.6 Removable Components
 
 No removable components are specified for the `Place Description` state.
+
+<a name="4.16.7-example-requests"/>
 
 ### 4.16.7 Example Requests
 
@@ -2003,12 +2008,16 @@ todo:
 
 The `Place Search Results` state consists of the results of a search query for places in the system.
 
+<a name="4.17.1-media-types"/>
+
 ### 4.17.1 Media Types
 
 Applications that implement the `Place Search Results` state MUST support the `application/x-gedcomx-atom+json` media type
 as defined by the [GEDCOM X Atom Extensions](https://github.com/FamilySearch/gedcomx-rs/blob/master/specifications/atom-model-specification.md)
 specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt) 
 is RECOMMENDED.
+
+<a name="4.17.2-operations"/>
 
 ### 4.17.2 Operations
 
@@ -2022,6 +2031,8 @@ A successful `GET` request SHOULD result in a `200` response code, if the search
 empty, a successful `GET` SHOULD result in a `204` response code.  If the list of results is large, the server MAY
 break up the list into multiple pages according to [Section 7, Paged Application States](#paging).
 
+<a name="4.17.3-data-elements"/>
+
 ### 4.17.3 Data Elements
 
 The results of a successful query for the ancestry of a place MUST contain a list of entries that each describe a place.
@@ -2029,6 +2040,8 @@ The content of each entry is a GEDCOM X document that MUST contain at least one 
 [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
 If more than one instance of `PlaceDescription` is provided, the instance that represents the "main" place for the result MUST be provided 
 as the first element in the list.
+
+<a name="4.17.4-transitions"/>
 
 ### 4.17.4 Transitions
 
@@ -2043,13 +2056,19 @@ provided by the server for the `Place Search Results` state. Even though other t
 are not formally included in the definition of the `Place Search Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
+<a name="4.17.5-embedded-states"/>
+
 ### 4.17.5 Embedded States
 
 No embedded states are specified for the `Place Search Results` state.
 
+<a name="4.17.6-removable-componentss"/>
+
 ### 4.17.6 Removable Components
 
 No removable components are specified for the `Place Search Results` state.
+
+<a name="4.17.7-example-requests"/>
 
 ### 4.17.7 Example Requests
 
@@ -2066,6 +2085,8 @@ todo:
 
 The `Records` state consists of a list of records.
 
+<a name="4.18.1-media-types"/>
+
 ### 4.18.1 Media Types
 
 Applications that implement the `Records` state MUST support the `application/x-gedcomx-atom+json` media type
@@ -2074,6 +2095,8 @@ specification. Support for the `application/atom+xml` media type as defined by [
 is RECOMMENDED.
 
 Applications that implement the `Records` state MUST support the [GEDCOM X Record Extensions](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md).
+
+<a name="4.18.2-operations"/>
 
 ### 4.18.2 Operations
 
@@ -2088,10 +2111,14 @@ a successful `GET` SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
+<a name="4.18.3-data-elements"/>
+
 ### 4.18.3 Data Elements
 
 The results of a successful query for the ancestry of a person MUST contain a list of entries that each describe a person.
 The content of each entry is a GEDCOM X document that contains the data of the record.
+
+<a name="4.18.4-transitions"/>
 
 ### 4.18.4 Transitions
 
@@ -2106,13 +2133,19 @@ provided by the server for the `Records` state. Even though other transitions
 are not formally included in the definition of the `Records` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
+<a name="4.18.5-embedded-states"/>
+
 ### 4.18.5 Embedded States
 
 No embedded states are specified for the `Records` state.
 
+<a name="4.18.6-removable-components"/>
+
 ### 4.18.6 Removable Components
 
 No removable components are specified for the `Records` state.
+
+<a name="4.18.7-example-requests"/>
 
 ### 4.18.7 Example Requests
 
@@ -2128,12 +2161,16 @@ todo:
 
 The `Record` application state consists of a single record.
 
+<a name="4.19.1-media-types"/>
+
 ### 4.19.1 Media Types
 
 Applications that implement the `Record` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
+
+<a name="4.19.2-operations"/>
 
 ### 4.19.2 Operations
 
@@ -2154,10 +2191,14 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
+<a name="4.19.3-data-elements"/>
+
 ### 4.19.3 Data Elements
 
 The GEDCOM X document that is provided by the `Record` state contains the data that is extracted from the record. Expected elements include
 persons, relationships, events, and source descriptions.
+
+<a name="4.19.4-transitions"/>
 
 ### 4.19.4 Transitions
 
@@ -2177,9 +2218,13 @@ provided by the server for the `Record` state. Even though other transitions
 are not formally included in the definition of the `Record` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
+<a name="4.19.5-embedded-states"/>
+
 ### 4.19.5 Embedded States
 
 No embedded states are specified for the `Record` state.
+
+<a name="4.19.6-removable-components"/>
 
 ### 4.19.6 Removable Components
 
@@ -2194,6 +2239,8 @@ rel|scope|description
 `source-reference` | Each instance of [`SourceReference` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-reference) | The link used to remove the source reference.
 
 A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
+
+<a name="4.19.7-example-requests"/>
 
 ### 4.19.7 Example Requests
 
@@ -2211,12 +2258,16 @@ todo:
 The `Relationships` state consists of a list of relationships. The `Relationships` state is used to provide a 
 means for a client to create a relationship or set of relationships.
 
+<a name="4.20.1-media-types"/>
+
 ### 4.20.1 Media Types
 
 Applications that implement the `Relationships` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
+
+<a name="4.20-2-operations"/>
 
 ### 4.20.2 Operations
 
@@ -2232,6 +2283,8 @@ code and a `Location` header specifying the URI of the created relationship. If 
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
+<a name="4.20-3-data-elements"/>
+
 ### 4.20.3 Data Elements
 
 A list of instances of the
@@ -2239,18 +2292,25 @@ A list of instances of the
 MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Relationship` provided by 
 the client as a candidate to be created and added to the list of relationships.
 
+<a name="4.20-4-transitions"/>
 
 ### 4.20.4 Transitions
 
 No embedded states are specified for the `Relationships` state.
 
+<a name="4.20-5-embedded-states"/>
+
 ### 4.20.5 Embedded States
 
 No embedded states are specified for the `Relationships` state.
 
+<a name="4.20-6-removable-components"/>
+
 ### 4.20.6 Removable Components
 
 No removable components are specified for the `Relationships` state.
+
+<a name="4.20-7-example-requests"/>
 
 ### 4.20.7 Example Requests
 
@@ -2268,12 +2328,16 @@ todo:
 
 The `Relationship` application state consists of a single relationship.
 
+<a name="4.22-1-media-types"/>
+
 ### 4.21.1 Media Types
 
 Applications that implement the `Relationship` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
+
+<a name="4.21-2-operations"/>
 
 ### 4.21.2 Operations
 
@@ -2294,6 +2358,8 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
+<a name="4.21-3-data-elements"/>
+
 ### 4.21.3 Data Elements
 
 At least one instance of the [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
@@ -2303,6 +2369,8 @@ represents the "main" relationship MUST be provided as the first element in the 
 At least one instance of the [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Relationship` is provided, the instance that 
 represents the "main" relationship MUST be provided as the first element in the list.
+
+<a name="4.21-4-transitions"/>
 
 ### 4.21.4 Transitions
 
@@ -2316,6 +2384,8 @@ provided by the server for the `Relationship` state. Even though other transitio
 are not formally included in the definition of the `Relationship` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
+<a name="4.21-5-embedded-states"/>
+
 ### 4.21.5 Embedded States
 
 The following embedded states are specified for the `Relationship` state.
@@ -2326,6 +2396,8 @@ rel|scope|description
 `media-references` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of media references for the relationship. If no link to `media-references` is provided, the list of media references MUST be included in the original request for the `Relationship` state. If a link to `media-references` is provided, this link SHOULD be used to create new media references or update existing media references with a `POST` request.
 `notes` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of notes for the relationship. If no link to `notes` is provided, the list of notes MUST be included in the original request for the `Relationship` state. If a link to `notes` is provided, this link SHOULD be used to create new notes or update existing notes with a `POST` request.
 `source-references` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of source references for the relationship. If no link to `source-references` is provided, the list of source references MUST be included in the original request for the `Relationship` state. If a link to `source-references` is provided, this link SHOULD be used to create new source references or update existing source references with a `POST` request.
+
+<a name="4.21-6-removable-components"/>
 
 ### 4.21.6 Removable Components
 
@@ -2341,6 +2413,8 @@ rel|scope|description
 
 A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
 
+<a name="4.21.7-example-requests"/>
+
 ### 4.21.7 Example Requests
 
 todo:
@@ -2350,10 +2424,14 @@ todo:
 
 <a name="source-descriptions"/>
 
+<a name="4.22-source-descriptions-state"/>
+
 ## 4.22 The "Source Descriptions" State
 
 The `Source Descriptions` state consists of a list of source descriptions. Examples of usages of the `Source Descriptions` state include
 to list all the descriptions of sources in a system or to provide a means for a client to create source description in a system.
+
+<a name="4.22-1-media-types"/>
 
 ### 4.22.1 Media Types
 
@@ -2361,6 +2439,8 @@ Applications that implement the `Source Descriptions` state MUST support the `ap
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
+
+<a name="4.22.2-operations"/>
 
 ### 4.22.2 Operations
 
@@ -2380,6 +2460,8 @@ code and a `Location` header specifying the URI of the created source descriptio
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
+<a name="4.22.3-data-elements"/>
+
 ### 4.22.3 Data Elements
 
 A list of instances of the
@@ -2392,6 +2474,8 @@ A list of instances of the
 MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `SourceDescription` provided by 
 the client as a candidate to be created and added to the list of source descriptions. 
 
+
+<a name="4.22.4-transitions"/>
 
 ### 4.22.4 Transitions
 
@@ -2406,13 +2490,19 @@ provided by the server for the `Source Descriptions` state. Even though other tr
 are not formally included in the definition of the `Source Descriptions` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
+<a name="4.22.5-embedded-states"/>
+
 ### 4.22.5 Embedded States
 
 No embedded states are specified for the `Source Descriptions` state.
 
+<a name="4.22.6-removable-components"/>
+
 ### 4.22.6 Removable Components
 
 No removable components are specified for the `Source Descriptions` state.
+
+<a name="4.22.7-example-requests"/>
 
 ### 4.22.7 Example Requests
 
@@ -2429,12 +2519,16 @@ todo:
 
 The `Source Description` application state consists of a single description of a source.
 
+<a name="4.23.1-media-types"/>
+
 ### 4.23.1 Media Types
 
 Applications that implement the `Source Description` state MUST support the `application/x-gedcomx-v1+json` media type
 as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md)
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
+
+<a name="4.23.2-operations"/>
 
 ### 4.23.2 Operations
 
@@ -2455,6 +2549,8 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
+<a name="4.23.3-data-elements"/>
+
 ### 4.23.3 Data Elements
 
 At least one instance of the [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description)
@@ -2465,20 +2561,27 @@ At least one instance of the [`SourceDescription` Data Type](https://github.com/
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `SourceDescription` is provided, the instance that 
 represents the "main" source description MUST be provided as the first element in the list.
 
+<a name="4.23.4-transitions"/>
+
 ### 4.23.4 Transitions
 
 rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Source Description` State](#source-description) | Each instance of [`Source Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Self-link to the source description.
 
+<a name="4.23.5-embedded-states"/>
 
 ### 4.23.5 Embedded States
 
 No embedded states are specified for the `Source Description` state.
 
+<a name="4.23.6-removable-components"/>
+
 ### 4.23.6 Removable Components
 
 No removable components are specified for the `Source Description` state.
+
+<a name="4.23.7-example-requests"/>
 
 ### 4.23.7 Example Requests
 
@@ -2494,12 +2597,16 @@ todo:
 
 This section provides a formal definition for a set of state transitions available in a genealogical data application.
 
+<a name="5.1-web-linking"/>
+
 ## 5.1 Web Linking
 
 Web links defined by [RFC 5988, Web Linking](http://tools.ietf.org/html/rfc5988) are used to
 provide controls for declaring available transitions from application state to other application states.
 When a Web link resolves to a range of URIs, [RFC 6570, URI Templates](http://tools.ietf.org/html/rfc6570)
 is used to provide a URI template to the range of URIs.
+
+<a name="5.2-link-relation-types"/>
 
 ## 5.2 Link Relation Types
 
@@ -2700,6 +2807,8 @@ When a client captures an application state that declares an embedded state, the
 the current application state as only partially captured. In order to obtain the full application state, the
 client must issue requests for each embedded application state, and embed the resulting data elements into the
 data elements of the current application state.
+
+<a name="6.1-embedding-gedcomx-data-elements"/>
 
 ## 6.1 Embedding GEDCOM X Data Elements
 
