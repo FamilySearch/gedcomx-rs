@@ -133,7 +133,8 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.7.5 Embedded States](#4.7.5-embedded-states)
     * [4.7.6 Removable Components](#4.7.6-removable-components)
     * [4.7.7 Example Requests](#4.7.7-example-requests)
-    * 
+  * [4.8 The "Event" State](#event)
+    * [4.8.1 
 
 <a name="id-and-version"/>
 
