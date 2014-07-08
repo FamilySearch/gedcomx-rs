@@ -90,7 +90,17 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.2.2 Operations](#4.2.2-operations)
     * [4.2.3 Data Elements](#4.2.3-data-elements)
     * [4.2.4 Transitions](#4.2.4-transitions)
-    * [4.2.5 Embedded States](#
+    * [4.2.5 Embedded States](#4.2.5-embedded-states)
+    * [4.2.6 Removable Components](#4.2.6-removable-components)
+    * [4.2.7 Example Requests](#4.2.7-example-requests)
+  * [4.3 The "Artifacts" State](#artifacts)
+    * [4.3.1 Media Types](#4.3.1-media-types)
+    * [4.3.2 Operations](#4.3.2-operations)
+    * [4.3.3 Data Elements](#4.3.3-data-elements)
+    * [4.3.4 Transitions](#4.3.4-transitions)
+    * [4.3.5 Embedded States](#4.3.5-embedded-states)
+    * [4.3.6 Removable Components](#4.3.6-removable-components)
+    * [4.3.7 Example Requests](#4.3.7-example-requests)
     
 <a name="id-and-version"/>
 
@@ -927,19 +937,19 @@ provided by the server for the `Source Descriptions` state. Even though other tr
 are not formally included in the definition of the `Source Descriptions` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-<a name="embedded-states"/>
+<a name="4.3.5-embedded-states"/>
 
 ### 4.3.5 Embedded States
 
 No embedded states are specified for the `Artifacts` state.
 
-<a name="removable-components"/>
+<a name="4.3.6-removable-components"/>
 
 ### 4.3.6 Removable Components
 
 No removable components are specified for the `Artifacts` state.
 
-<a name="example-requests"/>
+<a name="4.3.7-example-requests"/>
 
 ### 4.3.7 Example Requests
 
