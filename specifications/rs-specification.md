@@ -90,7 +90,7 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.2.2 Operations](#4.2.2-operations)
     * [4.2.3 Data Elements](#4.2.3-data-elements)
     * [4.2.4 Transitions](#4.2.4-transitions)
-    * 
+    * [4.2.5 Embedded States](#
     
 <a name="id-and-version"/>
 
