@@ -104,6 +104,8 @@ how a client can expect to interact with a conforming genealogical application.
   * [4.4 The "Collections" State](#collections)
     * [4.4.1 Media Types](#4.4.1-media-types)
     * [4.4.2 Operations](#4.4.2-operations)
+    * [4.4.3 Data Elements](#4.4.3-data-elements)
+    * [4.4.4 Transitions](#4.4.4-transitions)
     * 
 
 <a name="id-and-version"/>
