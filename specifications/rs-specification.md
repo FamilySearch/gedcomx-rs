@@ -1999,7 +1999,7 @@ as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/m
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-<a name="4.14-2-operations"/>
+<a name="4.14.2-operations"/>
 
 ### 4.14.2 Operations
 
