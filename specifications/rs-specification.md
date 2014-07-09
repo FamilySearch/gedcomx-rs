@@ -45,7 +45,7 @@ how a client can expect to interact with a conforming genealogical application.
     * [1.3.1 Client](#client)
     * [1.3.2 Server](#server)
     * [1.3.3 Application States](#application-states)
-    * [1.3.4 State Transitions (i.e. "Links"](#state-transitions)
+    * [1.3.4 State Transitions (i.e. "Links")](#state-transitions)
     * [1.3.5 Operations](#operations)
     * [1.3.6 Media Types](#media-types)
     * [1.3.7 Application Entry Points](#application-entry-points)
