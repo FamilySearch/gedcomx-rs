@@ -1814,7 +1814,7 @@ other transitions is RECOMMENDED where applicable.
 
 No embedded states are specified for the `Person Search Results` state.
 
-<a name="removable-components"/>
+<a name="4.11.6-removable-components"/>
 
 ### 4.11.6 Removable Components
 
