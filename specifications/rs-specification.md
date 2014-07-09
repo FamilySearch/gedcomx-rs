@@ -188,7 +188,7 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.14.4 Transitions](#4.14.4-transitions)
     * [4.14.5 Embedded States](#4.14.5-embedded-states)
     * [4.14.6 Removable Components](#4.14.6-removable-components)
-    * [4.14.7 Example Requests](#4.14.7-example-requests)
+    * [4.14.7 Example Requests](#4.14.7.example-requests)
   * [4.15 The "Place Descriptions" State](#place-descriptions)
     * [4.15.1 Media Types](#4.15.1-media-types)
     * [4.15.2 Operations](#4.15.2-operations)
