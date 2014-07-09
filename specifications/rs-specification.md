@@ -76,7 +76,7 @@ how a client can expect to interact with a conforming genealogical application.
     * [3.4.1 "Person" XML Type Extensions](#person-xml-type-extensions)
     * [3.4.2 "Person" JSON Type Extensions](#person-json-type-extensions)
   * [3.5 The "sortKey" Property](#sort-key-property)
-* [4. Application States](#application-states)
+* [4. Application States](#4.application-states)
   * [4.1 The "Agent" State](#agent)
     * [4.1.1 Media Types](#media-types)
     * [4.1.2 Operations](#4.1.2-operations)
@@ -804,7 +804,7 @@ display | display | [`DisplayProperties`](#display)
 todo:
 
 
-<a name="application-states"/>
+<a name="4.application-states"/>
 
 # 4. Application States
 
