@@ -2555,7 +2555,7 @@ todo:
 
 The `Relationship` application state consists of a single relationship.
 
-<a name="4.22.1-media-types"/>
+<a name="4.21.1-media-types"/>
 
 ### 4.21.1 Media Types
 
