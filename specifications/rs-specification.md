@@ -78,7 +78,7 @@ how a client can expect to interact with a conforming genealogical application.
   * [3.5 The "sortKey" Property](#sort-key-property)
 * [4. Application States](#4.application-states)
   * [4.1 The "Agent" State](#agent)
-    * [4.1.1 Media Types](#media-types)
+    * [4.1.1 Media Types](#4.1.1-media-types)
     * [4.1.2 Operations](#4.1.2-operations)
     * [4.1.3 Data Elements](#4.1.3-data-elements)
     * [4.1.4 Transitions](#transitions)
