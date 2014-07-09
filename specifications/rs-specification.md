@@ -83,7 +83,7 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.1.3 Data Elements](#4.1.3-data-elements)
     * [4.1.4 Transitions](#transitions)
     * [4.1.5 Embedded States](#embedded-states)
-    * [4.1.6 Removable Components](#removable-components)
+    * [4.1.6 Removable Components](#4.1.6-removable-components)
     * [4.1.7 Example Requests](#example-requests)
   * [4.2 The "Ancestry Results" State](#ancestry)
     * [4.2.1 Media Types](#4.2.1-media-types)
