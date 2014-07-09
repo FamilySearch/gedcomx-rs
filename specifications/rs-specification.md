@@ -253,7 +253,7 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.22.5 Embedded States](#4.22.5-embedded-states)
     * [4.22.6 Removable Components](#4.22.6-removable-components)
     * [4.22.7 Example Requests](#4.22.7-example-requests)
-  * [4.23 The "Source Description" State](#source-descriptions)
+  * [4.23 The "Source Description" State](#source-description)
     * [4.23.1 Media Types](#4.23.1-media-types)
     * [4.23.2 Operations](#4.23.2-operations)
     * [4.23.3 Data Elements](#4.23.3-data-elements)
