@@ -107,7 +107,7 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.4.3 Data Elements](#4.4.3-data-elements)
     * [4.4.4 Transitions](#4.4.4-transitions)
     * [4.4.5 Embedded States](#4.4.5-embedded-states)
-    * [4.4.6 Removable Components](#4.4.6 removable-components)
+    * [4.4.6 Removable Components](#4.4.6-removable-components)
     * [4.4.7 Example Requests](#4.4.7-example-requests)
   * [4.5 The "Collection" State](#collection)
     * [4.5.1 Media Types](#4.5.1-media-types)
