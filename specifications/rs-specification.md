@@ -945,7 +945,7 @@ No state transitions are specified for the `Agent` state.
 
 No embedded states are specified for the `Agent` state.
 
-<a name="removable-components"/>
+<a name="4.1.6-removable-components"/>
 
 ### 4.1.6 Removable Components
 
