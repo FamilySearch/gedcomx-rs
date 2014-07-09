@@ -261,7 +261,7 @@ how a client can expect to interact with a conforming genealogical application.
     * [4.23.5 Embedded States](#4.23.5-embedded-states)
     * [4.23.6 Removable Components](#4.23.6-removable-components)
     * [4.23.7 Example Requests](#4.23.7-example-requests)
-* [5. State Transitions](#5-transitions)
+* [5. State Transitions](#state-transitions)
   * [5.1 Web Linking](#5.1-web-linking)
   * [5.2 Link Relation Types](#5.2-link-relation-types)
   * [5.3 URI Template Variables](#uri-template-vars)
@@ -2818,7 +2818,7 @@ todo:
 
 
 
-<a name="transitions"/>
+<a name="state-transitions"/>
 
 # 5. State Transitions
 
