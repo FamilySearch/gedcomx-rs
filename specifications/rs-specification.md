@@ -1548,7 +1548,7 @@ rel|scope|description
 
 A successful `DELETE` request to the removable component SHOULD result in a `204` response code.
 
-<a name="example-requests"/>
+<a name="4.8.7-example-requests"/>
 
 ### 4.8.7 Example Requests
 
