@@ -2289,7 +2289,7 @@ other transitions is RECOMMENDED where applicable.
 
 No embedded states are specified for the `Place Search Results` state.
 
-<a name="4.17.6-removable-componentss"/>
+<a name="4.17.6-removable-components"/>
 
 ### 4.17.6 Removable Components
 
