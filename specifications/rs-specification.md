@@ -2494,7 +2494,7 @@ as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/m
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-<a name="4.20-2-operations"/>
+<a name="4.20.2-operations"/>
 
 ### 4.20.2 Operations
 
@@ -2510,7 +2510,7 @@ code and a `Location` header specifying the URI of the created relationship. If 
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-<a name="4.20-3-data-elements"/>
+<a name="4.20.3-data-elements"/>
 
 ### 4.20.3 Data Elements
 
@@ -2519,25 +2519,25 @@ A list of instances of the
 MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Relationship` provided by 
 the client as a candidate to be created and added to the list of relationships.
 
-<a name="4.20-4-transitions"/>
+<a name="4.20.4-transitions"/>
 
 ### 4.20.4 Transitions
 
 No embedded states are specified for the `Relationships` state.
 
-<a name="4.20-5-embedded-states"/>
+<a name="4.20.5-embedded-states"/>
 
 ### 4.20.5 Embedded States
 
 No embedded states are specified for the `Relationships` state.
 
-<a name="4.20-6-removable-components"/>
+<a name="4.20.6-removable-components"/>
 
 ### 4.20.6 Removable Components
 
 No removable components are specified for the `Relationships` state.
 
-<a name="4.20-7-example-requests"/>
+<a name="4.20.7-example-requests"/>
 
 ### 4.20.7 Example Requests
 
@@ -2555,7 +2555,7 @@ todo:
 
 The `Relationship` application state consists of a single relationship.
 
-<a name="4.22-1-media-types"/>
+<a name="4.22.1-media-types"/>
 
 ### 4.21.1 Media Types
 
@@ -2564,7 +2564,7 @@ as defined by the [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/m
 specification. Support for the `application/x-gedcomx-v1+xml` media type as defined by [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md)
 is RECOMMENDED.
 
-<a name="4.21-2-operations"/>
+<a name="4.21.2-operations"/>
 
 ### 4.21.2 Operations
 
@@ -2585,7 +2585,7 @@ A successful `DELETE` request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
 
-<a name="4.21-3-data-elements"/>
+<a name="4.21.3-data-elements"/>
 
 ### 4.21.3 Data Elements
 
@@ -2597,7 +2597,7 @@ At least one instance of the [`Relationship` Data Type](https://github.com/Famil
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Relationship` is provided, the instance that 
 represents the "main" relationship MUST be provided as the first element in the list.
 
-<a name="4.21-4-transitions"/>
+<a name="4.21.4-transitions"/>
 
 ### 4.21.4 Transitions
 
@@ -2611,7 +2611,7 @@ provided by the server for the `Relationship` state. Even though other transitio
 are not formally included in the definition of the `Relationship` state, use of 
 other transitions is RECOMMENDED where applicable. 
 
-<a name="4.21-5-embedded-states"/>
+<a name="4.21.5-embedded-states"/>
 
 ### 4.21.5 Embedded States
 
@@ -2624,7 +2624,7 @@ rel|scope|description
 `notes` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of notes for the relationship. If no link to `notes` is provided, the list of notes MUST be included in the original request for the `Relationship` state. If a link to `notes` is provided, this link SHOULD be used to create new notes or update existing notes with a `POST` request.
 `source-references` | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | List of source references for the relationship. If no link to `source-references` is provided, the list of source references MUST be included in the original request for the `Relationship` state. If a link to `source-references` is provided, this link SHOULD be used to create new source references or update existing source references with a `POST` request.
 
-<a name="4.21-6-removable-components"/>
+<a name="4.21.6-removable-components"/>
 
 ### 4.21.6 Removable Components
 
@@ -2658,7 +2658,7 @@ todo:
 The `Source Descriptions` state consists of a list of source descriptions. Examples of usages of the `Source Descriptions` state include
 to list all the descriptions of sources in a system or to provide a means for a client to create source description in a system.
 
-<a name="4.22-1-media-types"/>
+<a name="4.22.1-media-types"/>
 
 ### 4.22.1 Media Types
 
