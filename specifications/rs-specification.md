@@ -224,7 +224,7 @@ how a client can expect to interact with a conforming genealogical application.
   * [4.19 The "Record" State](#record)
     * [4.19.1 Media Types](#4.19.1-media-types)
     * [4.19.2 Operations](#4.19.2-operations)
-    * [4.19.3 Data Elements](#4.19-3-data-elements)
+    * [4.19.3 Data Elements](#4.19.3-data-elements)
     * [4.19.4 Transitions](#4.19.4-transitions)
     * [4.19.5 Embedded States](#4.19.5-embedded-states)
     * [4.19.6 Removable Components](#4.19.6-removable-components)
