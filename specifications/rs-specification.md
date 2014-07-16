@@ -2880,8 +2880,8 @@ rel|target state|description
 Note that [RFC 5988](http://tools.ietf.org/html/rfc5988) declares link relation types
 to be Uniform Resource Identifiers. In conformance to that specification, all link relation types
 are declared to be relative to the `http://gedcomx.org/links/` base URI. As such, the use
-of these link relations in an application state that defined outside the scope of this specification
-SHOULD use the absolute URI, e.g. "http://gedcomx.org/links/person".
+of these link relations in an application state that is defined outside the scope of this specification
+SHOULD use the absolute URI, e.g. `http://gedcomx.org/links/person`.
 
 <a name="uri-template-vars"/>
 
