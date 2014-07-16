@@ -569,7 +569,7 @@ The following example shows how a list of links is serialized in JSON.
 The `DisplayProperties` data type defines a set of properties for convenience in displaying a summary of a person to a 
 user. All display property values are provided as appropriate for the locale requested by the consuming application, 
 or the default locale if no locale was specified. Instances of `DisplayProperties` can be expected as extension elements 
-to the [`Person` Data Type](http://gedcomx.org/conceptual-model/v1`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
+to the [`Person` Data Type][http://gedcomx.org/conceptual-model/v1`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
 
 ### identifier
 
