@@ -581,17 +581,17 @@ The identifier for the `DisplayProperties` data type is:
 
 name  | description | data type | constraints
 ------|-------------|-----------|------------
-name | The name of the person. | string | OPTIONAL.
-gender | The displayable label for the gender of the person. | string | OPTIONAL.
-lifespan | The displayable label for the lifespan of the person. | string | OPTIONAL.
-birthDate | The displayable label for the birth date of the person. | string | OPTIONAL.
-birthPlace | The displayable label for the birth date of the person. | string | OPTIONAL.
-deathDate | The displayable label for the death date of the person. | string | OPTIONAL.
-deathPlace | The displayable label for the death date of the person. | string | OPTIONAL.
-marriageDate | The displayable label for the marriage date of the person. | string | OPTIONAL.
-marriagePlace | The displayable label for the marriage date of the person. | string | OPTIONAL.
-ascendancyNumber | The context-specific ascendancy number for the person in relation to the other persons in the request. The ancestry number is defined using the Ahnentafel numbering system. | string | OPTIONAL.
-descendancyNumber | The context-specific descendancy number for the person in relation to the other persons in the request. The descendancy number is defined using the d'Aboville numbering system. | string | OPTIONAL.
+name | The name of the person. | string | OPTIONAL
+gender | The displayable label for the gender of the person. | string | OPTIONAL
+lifespan | The displayable label for the lifespan of the person. | string | OPTIONAL
+birthDate | The displayable label for the birth date of the person. | string | OPTIONAL
+birthPlace | The displayable label for the birth date of the person. | string | OPTIONAL
+deathDate | The displayable label for the death date of the person. | string | OPTIONAL
+deathPlace | The displayable label for the death date of the person. | string | OPTIONAL
+marriageDate | The displayable label for the marriage date of the person. | string | OPTIONAL
+marriagePlace | The displayable label for the marriage date of the person. | string | OPTIONAL
+ascendancyNumber | The context-specific ascendancy number for the person in relation to the other persons in the request. The ancestry number is defined using the Ahnentafel numbering system. | string | OPTIONAL
+descendancyNumber | The context-specific descendancy number for the person in relation to the other persons in the request. The descendancy number is defined using the d'Aboville numbering system. | string | OPTIONAL
 
 <a name="display-properties-xml-element"/>
 
@@ -749,7 +749,7 @@ The following properties are defined as extensions to the
 
 name  | description | data type | constraints
 ------|-------------|-----------|------------
-preferred | Whether the name is considered the "preferred" name for display purposes. | boolean | OPTIONAL.
+preferred | Whether the name is considered the "preferred" name for display purposes. | boolean | OPTIONAL
 
 <a name="name-xml-type-extensions"/>
 
@@ -776,8 +776,8 @@ The following properties are defined as extensions to the
 
 name  | description | data type | constraints
 ------|-------------|-----------|------------
-living | Whether the person is considered living by the application. | boolean | OPTIONAL.
-display | The display properties for the person. | [`DisplayProperties`](#display) | OPTIONAL.
+living | Whether the person is considered living by the application. | boolean | OPTIONAL
+display | The display properties for the person. | [`DisplayProperties`](#display) | OPTIONAL
 
 <a name="person-xml-type-extensions"/>
 
