@@ -1192,7 +1192,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `collection` | [`Collection` State](#collection) | Each instance of [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Transition from the list of collections to a single collection.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Collections` state. Even though other transitions 
 are not formally included in the definition of the `Collections` state, use of 
 other transitions is RECOMMENDED where applicable. 
