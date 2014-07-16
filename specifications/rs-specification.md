@@ -882,9 +882,6 @@ Removable components are designated in the same way as state transitions and emb
 and a target URI. An HTTP `DELETE` operation MAY be applied to the URI to remove the component from the
 application state.
 
-
-
-
 <a name="agent"/>
 
 ## 4.1 The "Agent" State
@@ -1008,7 +1005,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the ancestry results to the persons in the results.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Ancestry Results` state. Even though other transitions 
 are not formally included in the definition of the `Ancestry Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -1101,7 +1098,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Source Description` State](#source-description) | Each instance of [`Source Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Transition from the list of sources descriptions to a single source description.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Source Descriptions` state. Even though other transitions 
 are not formally included in the definition of the `Source Descriptions` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -1288,7 +1285,7 @@ rel|target state|scope|description
 `http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
 `http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the endpoint used to obtain an access token. See [Section 9, Authentication and Authorization](#auth).
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Collection` state. Even though other transitions 
 are not formally included in the definition of the `Collection` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -1361,7 +1358,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the descendancy results to the persons in the results.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Descendancy Results` state. Even though other transitions 
 are not formally included in the definition of the `Descendancy Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -1448,7 +1445,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `event` | [`Event` State](#event) | Each instance of [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Transition from the list of events to a single event.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Events` state. Even though other transitions 
 are not formally included in the definition of the `Events` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -1618,7 +1615,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Persons` state. Even though other transitions 
 are not formally included in the definition of the `Persons` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -1707,7 +1704,7 @@ rel|target state|scope|description
 `http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
 `http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the endpoint used to obtain an access token. See [Section 9, Authentication and Authorization](#auth).
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Person` state. Even though other transitions 
 are not formally included in the definition of the `Person` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -1803,7 +1800,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the search results to the persons in the results.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Person Search Results` state. Even though other transitions 
 are not formally included in the definition of the `Person Search Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -1879,7 +1876,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Person Children` state. Even though other transitions 
 are not formally included in the definition of the `Person Children` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -1956,7 +1953,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Person Spouses` state. Even though other transitions 
 are not formally included in the definition of the `Person Spouses` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -2034,7 +2031,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Person Parents` state. Even though other transitions 
 are not formally included in the definition of the `Person Parents` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -2122,7 +2119,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of [`Place Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Transition from the list of places descriptions to a single place description.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Place Descriptions` state. Even though other transitions 
 are not formally included in the definition of the `Place Descriptions` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -2278,7 +2275,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the search results to the descriptions of the places in the results.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Place Search Results` state. Even though other transitions 
 are not formally included in the definition of the `Place Search Results` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -2355,7 +2352,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `record` | [`Record` State](#record) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the list of records to the a specific record.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Records` state. Even though other transitions 
 are not formally included in the definition of the `Records` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -2440,7 +2437,7 @@ rel|target state|scope|description
 `http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
 `http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the endpoint used to obtain an access token. See [Section 9, Authentication and Authorization](#auth).
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Record` state. Even though other transitions 
 are not formally included in the definition of the `Record` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -2606,7 +2603,7 @@ rel|target state|scope|description
 `relationship` | [`Relationship` State](#relationship) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Self-link to the `Relationship` state.
 `collection` | [`Collection` State](#collection) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Link to the collection that contains this relationship.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Relationship` state. Even though other transitions 
 are not formally included in the definition of the `Relationship` state, use of 
 other transitions is RECOMMENDED where applicable. 
@@ -2712,7 +2709,7 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Source Description` State](#source-description) | Each instance of [`Source Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Transition from the list of sources descriptions to a single source description.
 
-[Section 5, State Transitions](#transitions) defines other transitions that MAY be 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
 provided by the server for the `Source Descriptions` state. Even though other transitions 
 are not formally included in the definition of the `Source Descriptions` state, use of 
 other transitions is RECOMMENDED where applicable. 
