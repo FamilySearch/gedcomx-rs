@@ -855,7 +855,7 @@ it may want to read the spouses of a person, or it may want to update the name o
 choices that are available to the client take the form of "transitions" to other application states.
 
 The [`Link` data type](#link) provides the controls to the client that declare the available state 
-transitions. For a list of transitions defined by GEDCOM X RS, see [Section 5, State Transitions](#transitions).
+transitions. For a list of transitions defined by GEDCOM X RS, see [Section 5, State Transitions](#5-state-transitions).
   
 #### Embedded application states.
 
