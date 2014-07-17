@@ -2859,7 +2859,7 @@ rel|target state|description
 `http://oauth.net/core/2.0/endpoint/token` | access token | Link to an access token endpoint as defined by [RFC 6749, OAuth 2](http://tools.ietf.org/html/rfc6749).
 `media-reference` | (undefined) | Link to a media reference that can be removed.
 `media-references` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of media references of a person or relationship.
-`note` | (undefined) | Link to an note that can be removed.
+`note` | (undefined) | Link to a note that can be removed.
 `notes` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of notes of a person or relationship.
 `parent-relationships` | [`Person` State](#person) | Embedded link to a list of relationships to parents for a person.
 `parents` | [`Person Parents` State](#parents) | Link to a list of parents for a person.
