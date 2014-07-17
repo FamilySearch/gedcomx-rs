@@ -2064,7 +2064,7 @@ todo:
 ## 4.15 The "Place Descriptions" State
 
 The `Place Descriptions` state consists of a list of place descriptions. Examples of usages of the `Place Descriptions` state include
-to list all the descriptions of places in a system or to provide a means for a client to create place description in a system.
+listing all the descriptions of places in a system or providing a means for a client to create place description in a system.
 
 <a name="4.15.1-media-types"/>
 
@@ -2191,7 +2191,7 @@ At least one instance of the [`PlaceDescription` Data Type](https://github.com/F
 MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `PlaceDescription` is provided, the instance that 
 represents the "main" place description MUST be provided as the first element in the list.
 
-At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
+At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `PlaceDescription` is provided, the instance that 
 represents the "main" place description MUST be provided as the first element in the list.
 
