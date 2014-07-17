@@ -2857,7 +2857,7 @@ rel|target state|description
 `evidence-references` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of evidence references of a person or relationship.
 `http://oauth.net/core/2.0/endpoint/authorize` | user authorization page | Link to an authorization page as defined by [RFC 6749, OAuth 2](http://tools.ietf.org/html/rfc6749).
 `http://oauth.net/core/2.0/endpoint/token` | access token | Link to an access token endpoint as defined by [RFC 6749, OAuth 2](http://tools.ietf.org/html/rfc6749).
-`media-reference` | (undefined) | Link to an media reference that can be removed.
+`media-reference` | (undefined) | Link to a media reference that can be removed.
 `media-references` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of media references of a person or relationship.
 `note` | (undefined) | Link to an note that can be removed.
 `notes` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of notes of a person or relationship.
@@ -2872,7 +2872,7 @@ rel|target state|description
 `relationship` | [`Relationship` State](#relationship) | Link to a relationship.
 `relationships` | [`Relationships` State](#relationships) | Link to a set of relationships.
 `source-descriptions` | [`Source Descriptions` State](#source-descriptions) | Link to a set of source descriptions.
-`source-reference` | (undefined) | Link to an source reference that can be removed.
+`source-reference` | (undefined) | Link to a source reference that can be removed.
 `source-references` | [`Person` State](#person) or [`Relationship` State](#relationship) | Embedded link to a list of source references of a person or relationship.
 `spouse-relationships` | [`Person` State](#person) | Embedded link to a list of relationships to spouses for a person.
 `spouses` | [`Person Spouses` State](#spouses) | Link to a list of spouses for a person.
