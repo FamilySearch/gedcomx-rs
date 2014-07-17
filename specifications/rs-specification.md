@@ -2192,8 +2192,7 @@ MUST be provided by the server in the successful response of a `GET` operation. 
 represents the "main" place description MUST be provided as the first element in the list.
 
 At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
-MUST be provided by the client in a request using the `POST` operation. If more than one instance of `PlaceDescription` is provided, the instance that 
-represents the "main" place description MUST be provided as the first element in the list.
+MUST be provided by the client in a request using the `POST` operation. 
 
 <a name="4.16.4-transitions"/>
 
