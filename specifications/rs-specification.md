@@ -1786,7 +1786,7 @@ break up the list into multiple pages according to [Section 7, Paged Application
 
 The results of a successful query for the ancestry of a person MUST contain a list of entries that each describe a person.
 The content of each entry is a GEDCOM X document that MUST contain at least one instance of the 
-[`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
+[`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
 If more than one instance of `Person` is provided, the instance that represents the "main" person for the result MUST be provided 
 as the first element in the list. Other elements might include relatives of the person and/or their relationships.
 
