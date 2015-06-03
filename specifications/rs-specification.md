@@ -39,7 +39,7 @@ how a client can expect to interact with a conforming genealogical application.
 * [1. Introduction](#intro)
   * [1.1 Identifier, Version and Dependencies](#id-and-version)
   * [1.2 Notational Conventions](#notational-conventions)
-    * [1.2.1 Keywords](#keywords)    
+    * [1.2.1 Keywords](#keywords)
     * [1.2.2 Compliance](#compliance)
   * [1.3 Concepts and Definitions](#concepts-definitions)
     * [1.3.1 Client](#client)
@@ -352,16 +352,16 @@ The "server" is the software that provides the genealogical data application via
 
 ### 1.3.3 Application States
 
-GEDCOM X RS is defined by a set of application states. An "application state" is a snapshot of 
-the state of genealogical data in an application at a specific point in time. Examples of an application 
-state include resources such as persons, relationships, or sources. 
+GEDCOM X RS is defined by a set of application states. An "application state" is a snapshot of
+the state of genealogical data in an application at a specific point in time. Examples of an application
+state include resources such as persons, relationships, or sources.
 
 <a name="state-transitions"/>
 
 ### 1.3.4 State Transitions (i.e. "Links")
 
 A client drives the state of a GEDCOM X application by capturing transitions from application state to application state.
-Each application state provides to the client the set of transitions (i.e. "links") to other application states 
+Each application state provides to the client the set of transitions (i.e. "links") to other application states
 that are available. For example, a client may be able to follow a link from a person to its source.
 
 <a name="operations"/>
@@ -566,10 +566,10 @@ The following example shows how a list of links is serialized in JSON.
 
 ## 2.2 The "DisplayProperties" Data Type
 
-The `DisplayProperties` data type defines a set of properties for convenience in displaying a summary of a person to a 
-user. All display property values are provided as appropriate for the locale requested by the consuming application, 
-or the default locale if no locale was specified. Instances of `DisplayProperties` can be expected as extension elements 
-to the [`Person` Data Type][http://gedcomx.org/conceptual-model/v1`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
+The `DisplayProperties` data type defines a set of properties for convenience in displaying a summary of a person to a
+user. All display property values are provided as appropriate for the locale requested by the consuming application,
+or the default locale if no locale was specified. Instances of `DisplayProperties` can be expected as extension elements
+to the [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
 
 ### identifier
 
@@ -810,7 +810,7 @@ todo:
 
 This section defines a set of application states for a genealogical data application.
 
-An "application state" is a snapshot of the state of genealogical data in an application at a specific 
+An "application state" is a snapshot of the state of genealogical data in an application at a specific
 point in time. The formal definition of an application state is comprised of the following components:
 
 * Applicable media types.
@@ -824,21 +824,21 @@ point in time. The formal definition of an application state is comprised of the
 
 Media types are used to represent the data elements of application states to the client. The client
 interprets the data according to the definition of the media type, and uses a media type to
-communicate changes of the application state to the server. The definition of each application 
+communicate changes of the application state to the server. The definition of each application
 state specifies the media types that servers are required to support. The definition of each application
 state also lists other media types that are optional.
 
 #### Implication of HTTP operations
 
-The definition of each application state includes how a given HTTP operation is expected to be 
+The definition of each application state includes how a given HTTP operation is expected to be
 interpreted by a server. Note that although this specification provides a discrete meaning to each
 HTTP operation for each application state, some HTTP operations are optional. If an application
-chooses to not support an optional operation, the server MUST respond with the HTTP `406` 
+chooses to not support an optional operation, the server MUST respond with the HTTP `406`
 (Method Not Allowed) status code. Note that the `OPTIONS` and the `HEAD` operations are not defined
 explicitly by the definition of each application state. The HTTP specification already provides
 a sufficient definition of the `OPTIONS` and `HEAD` operations and their application is implicit
 in the definition of each application state.
- 
+
 #### Expected data elements
 
 Each application state captures a specific set of data that is managed by the server. For example,
@@ -849,24 +849,24 @@ may choose to provide more data elements than those that are formally declared t
 #### Transitions to other application states.
 
 Each application state captures a limited portion of state. In order to enable the client to do useful
-things, controls are provided by each application state that describe the available choices to the 
+things, controls are provided by each application state that describe the available choices to the
 client. For example, at a `Person` state, the client may want to read the children of the person, or
-it may want to read the spouses of a person, or it may want to update the name of the person, etc. The 
+it may want to read the spouses of a person, or it may want to update the name of the person, etc. The
 choices that are available to the client take the form of "transitions" to other application states.
 
-The [`Link` data type](#link) provides the controls to the client that declare the available state 
+The [`Link` data type](#link) provides the controls to the client that declare the available state
 transitions. For a list of transitions defined by GEDCOM X RS, see [Section 5, State Transitions](#5-state-transitions).
-  
+
 #### Embedded application states.
 
-Some state transitions are designated as transitions to "embedded" application states. Embedded application 
+Some state transitions are designated as transitions to "embedded" application states. Embedded application
 states are to be considered as components of the state from which the transition starts. The use of
-embedded application states is a common in online applications; an image embedded in an HTML page is 
+embedded application states is a common in online applications; an image embedded in an HTML page is
 an example.
 
 Embedded application states are defined to accommodate designs of genealogical applications that break
-up a genealogical resource into multiple requests. For example, a server may choose to break up the 
-`Person` state into two requests: one to get the conclusions of the person(name, gender, facts) and 
+up a genealogical resource into multiple requests. For example, a server may choose to break up the
+`Person` state into two requests: one to get the conclusions of the person(name, gender, facts) and
 another one to get the source references of the person. One reason for such a design might be to target
 a specific caching strategy. Another reason might be to optimize requests for a specific database schema.
 
@@ -875,7 +875,7 @@ a specific caching strategy. Another reason might be to optimize requests for a 
 #### Removable components
 
 An application state may designate specific components that can be deleted. Examples of a removable component
-include the name of a person, a source reference, a role in an event, or a marriage fact of a couple 
+include the name of a person, a source reference, a role in an event, or a marriage fact of a couple
 relationship.
 
 Removable components are designated in the same way as state transitions and embedded states, with a `rel` id
@@ -923,11 +923,11 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 ### 4.1.3 Data Elements
 
 At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
-MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Agent` is provided, the instance that 
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Agent` is provided, the instance that
 represents the "main" agent MUST be provided as the first element in the list.
 
 At least one instance of the [`Agent` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#agent)
-MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Agent` is provided, the instance that 
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Agent` is provided, the instance that
 represents the "main" agent MUST be provided as the first element in the list.
 
 <a name="transitions"/>
@@ -1005,10 +1005,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the ancestry results to the persons in the results.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Ancestry Results` state. Even though other transitions 
-are not formally included in the definition of the `Ancestry Results` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Ancestry Results` state. Even though other transitions
+are not formally included in the definition of the `Ancestry Results` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.2.5-embedded-states"/>
 
@@ -1060,10 +1060,10 @@ operation|description|constraints
 `GET` | Read a list of artifacts as source descriptions. | OPTIONAL
 `POST` | Upload an artifact. | OPTIONAL
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more artifacts. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more artifacts. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
-A successful `POST` request, the request SHOULD result in a `201` response code and a `Location` header specifying the URI of the 
+A successful `POST` request, the request SHOULD result in a `201` response code and a `Location` header specifying the URI of the
 description of the created artifact.  
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -1098,10 +1098,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Source Description` State](#source-description) | Each instance of [`Source Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Transition from the list of sources descriptions to a single source description.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Source Descriptions` state. Even though other transitions 
-are not formally included in the definition of the `Source Descriptions` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Source Descriptions` state. Even though other transitions
+are not formally included in the definition of the `Source Descriptions` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.3.5-embedded-states"/>
 
@@ -1130,8 +1130,8 @@ todo:
 
 ## 4.4 The "Collections" State
 
-The `Collections` state consists of a list of collections. Examples of usages of the `Collections` state include 
-to provide a list of subcollections of a collection, or to list all the collections in a system, or to provide a 
+The `Collections` state consists of a list of collections. Examples of usages of the `Collections` state include
+to provide a list of subcollections of a collection, or to list all the collections in a system, or to provide a
 means for a client to create a collection in a system.
 
 <a name="4.4.1-media-types"/>
@@ -1156,11 +1156,11 @@ operation|description|constraints
 `GET` | Read a list of collections. | OPTIONAL
 `POST` | Create a collection or set of collections. | OPTIONAL
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more collections. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more collections. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
-If one (and only one) collection was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
-code and a `Location` header specifying the URI of the created collection. If multiple collections were created as a result of a successful 
+If one (and only one) collection was created as a result of a successful `POST` request, the request SHOULD result in a `201` response
+code and a `Location` header specifying the URI of the created collection. If multiple collections were created as a result of a successful
 `POST` request, the request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -1176,8 +1176,8 @@ break up the list into multiple pages according to [Section 7, Paged Application
 
 A list of instances of the
 [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection).
-MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Collection` provided by 
-the client as a candidate to be created and added to the list of collections. 
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Collection` provided by
+the client as a candidate to be created and added to the list of collections.
 
 <a name="4.4.4-transitions"/>
 
@@ -1189,10 +1189,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `collection` | [`Collection` State](#collection) | Each instance of [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Transition from the list of collections to a single collection.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Collections` state. Even though other transitions 
-are not formally included in the definition of the `Collections` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Collections` state. Even though other transitions
+are not formally included in the definition of the `Collections` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.4.5-embedded-states"/>
 
@@ -1257,11 +1257,11 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 ### 4.5.3 Data Elements
 
 At least one instance of the [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection)
-MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Collection` is provided, the instance that 
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Collection` is provided, the instance that
 represents the "main" collection MUST be provided as the first element in the list.
 
 At least one instance of the [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection)
-MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Collection` is provided, the instance that 
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Collection` is provided, the instance that
 represents the "main" collection MUST be provided as the first element in the list.
 
 <a name="4.5.4-transitions"/>
@@ -1285,10 +1285,10 @@ rel|target state|scope|description
 `http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
 `http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the endpoint used to obtain an access token. See [Section 9, Authentication and Authorization](#auth).
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Collection` state. Even though other transitions 
-are not formally included in the definition of the `Collection` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Collection` state. Even though other transitions
+are not formally included in the definition of the `Collection` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.5.5-embedded-s"/>
 
@@ -1358,10 +1358,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the descendancy results to the persons in the results.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Descendancy Results` state. Even though other transitions 
-are not formally included in the definition of the `Descendancy Results` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Descendancy Results` state. Even though other transitions
+are not formally included in the definition of the `Descendancy Results` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.6.5-embedded-states"/>
 
@@ -1411,11 +1411,11 @@ operation|description|constraints
 `GET` | Read a list of events. | OPTIONAL
 `POST` | Create an event or set of events. | OPTIONAL
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more events. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more events. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
-If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
-code and a `Location` header specifying the URI of the created event. If multiple events were created as a result of a successful 
+If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response
+code and a `Location` header specifying the URI of the created event. If multiple events were created as a result of a successful
 `POST` request, the request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -1431,8 +1431,8 @@ break up the list into multiple pages according to [Section 7, Paged Application
 
 A list of instances of the
 [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event).
-MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Event` provided by 
-the client as a candidate to be created and added to the list of events. 
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Event` provided by
+the client as a candidate to be created and added to the list of events.
 
 
 <a name="4-7-4-transitions"/>
@@ -1445,10 +1445,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `event` | [`Event` State](#event) | Each instance of [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event) | Transition from the list of events to a single event.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Events` state. Even though other transitions 
-are not formally included in the definition of the `Events` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Events` state. Even though other transitions
+are not formally included in the definition of the `Events` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.7.5-embedded-states"/>
 
@@ -1511,11 +1511,11 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 ### 4.8.3 Data Elements
 
 At least one instance of the [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
-MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Event` is provided, the instance that 
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Event` is provided, the instance that
 represents the "main" event MUST be provided as the first element in the list.
 
 At least one instance of the [`Event` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
-MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Event` is provided, the instance that 
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Event` is provided, the instance that
 represents the "main" event MUST be provided as the first element in the list.
 
 <a name="4.8.4-transitions"/>
@@ -1559,7 +1559,7 @@ todo:
 ## 4.9 The "Persons" State
 
 The `Persons` state consists of a list of persons. Examples of usages of the `Persons` state include
-to provide a list of all the persons in a collection, or to provide a means for a client to create a 
+to provide a list of all the persons in a collection, or to provide a means for a client to create a
 person in a collection.
 
 <a name="4.9.1-media-types"/>
@@ -1582,11 +1582,11 @@ operation|description|constraints
 `GET` | Read a list of persons. | OPTIONAL
 `POST` | Create a person or set of persons. | OPTIONAL
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more persons. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more persons. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
-If one (and only one) person was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
-code and a `Location` header specifying the URI of the created person. If multiple persons were created as a result of a successful 
+If one (and only one) person was created as a result of a successful `POST` request, the request SHOULD result in a `201` response
+code and a `Location` header specifying the URI of the created person. If multiple persons were created as a result of a successful
 `POST` request, the request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -1602,7 +1602,7 @@ break up the list into multiple pages according to [Section 7, Paged Application
 
 A list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
-MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Person` provided by 
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Person` provided by
 the client as a candidate to be created and added to the list of persons.
 
 <a name="4.9.4-transitions"/>
@@ -1615,10 +1615,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Persons` state. Even though other transitions 
-are not formally included in the definition of the `Persons` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Persons` state. Even though other transitions
+are not formally included in the definition of the `Persons` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.9.5-embedded-states"/>
 
@@ -1681,11 +1681,11 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 ### 4.10.3 Data Elements
 
 At least one instance of the [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
-MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Person` is provided, the instance that 
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Person` is provided, the instance that
 represents the "main" person MUST be provided as the first element in the list.
 
 At least one instance of the [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
-MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Person` is provided, the instance that 
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Person` is provided, the instance that
 represents the "main" person MUST be provided as the first element in the list.
 
 <a name="4.10.4-transitions"/>
@@ -1700,14 +1700,14 @@ rel|target state|scope|description
 `children` | [`Person Children` State](#children) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the list of children for this person.
 `spouses` | [`Person Spouses` State](#spouses) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the list of spouses for this person.
 `ancestry` | [`Ancestry` State](#ancestry) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the ancestry query for this person.
-`descendancy` | [`Descendancy` State](#descendancy) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the descendancy query for this person. 
+`descendancy` | [`Descendancy` State](#descendancy) | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the descendancy query for this person.
 `http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
 `http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Link to the endpoint used to obtain an access token. See [Section 9, Authentication and Authorization](#auth).
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Person` state. Even though other transitions 
-are not formally included in the definition of the `Person` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Person` state. Even though other transitions
+are not formally included in the definition of the `Person` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.10.5-embedded-states"/>
 
@@ -1763,7 +1763,7 @@ The `Person Search Results` state consists of the results of a search query for 
 
 Applications that implement the `Person Search Results` state MUST support the `application/x-gedcomx-atom+json` media type
 as defined by the [GEDCOM X Atom Extensions](https://github.com/FamilySearch/gedcomx-rs/blob/master/specifications/atom-model-specification.md)
-specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt) 
+specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt)
 is RECOMMENDED.
 
 <a name="4.11.2-operations"/>
@@ -1785,9 +1785,9 @@ break up the list into multiple pages according to [Section 7, Paged Application
 ### 4.11.3 Data Elements
 
 The results of a successful query for the ancestry of a person MUST contain a list of entries that each describe a person.
-The content of each entry is a GEDCOM X document that MUST contain at least one instance of the 
+The content of each entry is a GEDCOM X document that MUST contain at least one instance of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
-If more than one instance of `Person` is provided, the instance that represents the "main" person for the result MUST be provided 
+If more than one instance of `Person` is provided, the instance that represents the "main" person for the result MUST be provided
 as the first element in the list. Other elements might include relatives of the person and/or their relationships.
 
 <a name="4.11.4-transitions"/>
@@ -1800,10 +1800,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the search results to the persons in the results.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Person Search Results` state. Even though other transitions 
-are not formally included in the definition of the `Person Search Results` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Person Search Results` state. Even though other transitions
+are not formally included in the definition of the `Person Search Results` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.11.5-embedded-states"/>
 
@@ -1851,7 +1851,7 @@ operation|description|constraints
 ---------|-----------|-----------
 `GET` | Read the list of children of a person. | REQUIRED
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more persons. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more persons. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -1864,7 +1864,7 @@ A list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
 MUST be provided by the server in the successful response of a `GET` operation. A list of instances of the
 [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
-describing the relationships to each child SHOULD be provided by the server in the successful response of a `GET` operation. 
+describing the relationships to each child SHOULD be provided by the server in the successful response of a `GET` operation.
 
 <a name="4.12.4-transitions"/>
 
@@ -1876,10 +1876,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Person Children` state. Even though other transitions 
-are not formally included in the definition of the `Person Children` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Person Children` state. Even though other transitions
+are not formally included in the definition of the `Person Children` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.12.5-embedded-states"/>
 
@@ -1928,7 +1928,7 @@ operation|description|constraints
 ---------|-----------|-----------
 `GET` | Read the list of spouses of a person. | REQUIRED
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more persons. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more persons. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -1941,7 +1941,7 @@ A list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
 MUST be provided by the server in the successful response of a `GET` operation. A list of instances of the
 [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
-describing the relationships to each spouse SHOULD be provided by the server in the successful response of a `GET` operation. 
+describing the relationships to each spouse SHOULD be provided by the server in the successful response of a `GET` operation.
 
 <a name="4.13.4-transitions"/>
 
@@ -1953,10 +1953,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Person Spouses` state. Even though other transitions 
-are not formally included in the definition of the `Person Spouses` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Person Spouses` state. Even though other transitions
+are not formally included in the definition of the `Person Spouses` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.13.5-embedded-states"/>
 
@@ -2006,7 +2006,7 @@ operation|description|constraints
 ---------|-----------|-----------
 `GET` | Read the list of parents of a person. | REQUIRED
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more persons. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more persons. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -2019,7 +2019,7 @@ A list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
 MUST be provided by the server in the successful response of a `GET` operation. A list of instances of the
 [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
-describing the relationships to each parent SHOULD be provided by the server in the successful response of a `GET` operation. 
+describing the relationships to each parent SHOULD be provided by the server in the successful response of a `GET` operation.
 
 <a name="4.14.4-transitions"/>
 
@@ -2031,10 +2031,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `person` | [`Person` State](#person) | Each instance of [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person) | Transition from the list of persons to a single person.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Person Parents` state. Even though other transitions 
-are not formally included in the definition of the `Person Parents` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Person Parents` state. Even though other transitions
+are not formally included in the definition of the `Person Parents` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.14.5-embedded-states"/>
 
@@ -2086,11 +2086,11 @@ operation|description|constraints
 `GET` | Read a list of place descriptions. | OPTIONAL
 `POST` | Create an event or set of place descriptions. | OPTIONAL
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more place descriptions. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more place descriptions. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
-If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
-code and a `Location` header specifying the URI of the created place description. If multiple place descriptions were created as a result of a successful 
+If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response
+code and a `Location` header specifying the URI of the created place description. If multiple place descriptions were created as a result of a successful
 `POST` request, the request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -2106,8 +2106,8 @@ break up the list into multiple pages according to [Section 7, Paged Application
 
 A list of instances of the
 [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description).
-MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `PlaceDescription` provided by 
-the client as a candidate to be created and added to the list of place descriptions. 
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `PlaceDescription` provided by
+the client as a candidate to be created and added to the list of place descriptions.
 
 <a name="4.15.4-transitions"/>
 
@@ -2119,10 +2119,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of [`Place Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description) | Transition from the list of places descriptions to a single place description.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Place Descriptions` state. Even though other transitions 
-are not formally included in the definition of the `Place Descriptions` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Place Descriptions` state. Even though other transitions
+are not formally included in the definition of the `Place Descriptions` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.15.5-embedded-states"/>
 
@@ -2188,11 +2188,11 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 ### 4.16.3 Data Elements
 
 At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
-MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `PlaceDescription` is provided, the instance that 
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `PlaceDescription` is provided, the instance that
 represents the "main" place description MUST be provided as the first element in the list.
 
 At least one instance of the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
-MUST be provided by the client in a request using the `POST` operation. 
+MUST be provided by the client in a request using the `POST` operation.
 
 <a name="4.16.4-transitions"/>
 
@@ -2237,7 +2237,7 @@ The `Place Search Results` state consists of the results of a search query for p
 
 Applications that implement the `Place Search Results` state MUST support the `application/x-gedcomx-atom+json` media type
 as defined by the [GEDCOM X Atom Extensions](https://github.com/FamilySearch/gedcomx-rs/blob/master/specifications/atom-model-specification.md)
-specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt) 
+specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt)
 is RECOMMENDED.
 
 <a name="4.17.2-operations"/>
@@ -2259,9 +2259,9 @@ break up the list into multiple pages according to [Section 7, Paged Application
 ### 4.17.3 Data Elements
 
 The results of a successful query for the ancestry of a place MUST contain a list of entries that each describe a place.
-The content of each entry is a GEDCOM X document that MUST contain at least one instance of the 
+The content of each entry is a GEDCOM X document that MUST contain at least one instance of the
 [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description)
-If more than one instance of `PlaceDescription` is provided, the instance that represents the "main" place for the result MUST be provided 
+If more than one instance of `PlaceDescription` is provided, the instance that represents the "main" place for the result MUST be provided
 as the first element in the list.
 
 <a name="4.17.4-transitions"/>
@@ -2274,10 +2274,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Place Description` State](#place-description) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the search results to the descriptions of the places in the results.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Place Search Results` state. Even though other transitions 
-are not formally included in the definition of the `Place Search Results` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Place Search Results` state. Even though other transitions
+are not formally included in the definition of the `Place Search Results` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.17.5-embedded-states"/>
 
@@ -2314,7 +2314,7 @@ The `Records` state consists of a list of records.
 
 Applications that implement the `Records` state MUST support the `application/x-gedcomx-atom+json` media type
 as defined by the [GEDCOM X Atom Extensions](https://github.com/FamilySearch/gedcomx-rs/blob/master/specifications/atom-model-specification.md)
-specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt) 
+specification. Support for the `application/atom+xml` media type as defined by [RFC 4287 (The Atom Syndication Format)](http://www.ietf.org/rfc/rfc4287.txt)
 is RECOMMENDED.
 
 Applications that implement the `Records` state MUST support the [GEDCOM X Record Extensions](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md).
@@ -2329,7 +2329,7 @@ operation|description|constraints
 ---------|-----------|-----------
 `GET` | Read a list of records. | REQUIRED
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more records. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more records. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -2351,10 +2351,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `record` | [`Record` State](#record) | Each instance of `Entry` Data Type as specified by [RFC 4287](http://www.ietf.org/rfc/rfc4287.txt) | Transition from the list of records to the a specific record.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Records` state. Even though other transitions 
-are not formally included in the definition of the `Records` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Records` state. Even though other transitions
+are not formally included in the definition of the `Records` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.18.5-embedded-states"/>
 
@@ -2436,10 +2436,10 @@ rel|target state|scope|description
 `http://oauth.net/core/2.0/endpoint/authorize` | OAuth 2 Authorization Page | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the authorization page used by a user to authenticate to the system. See [Section 9, Authentication and Authorization](#auth).
 `http://oauth.net/core/2.0/endpoint/token` | OAuth 2 Token | [`Record` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#record) | Link to the endpoint used to obtain an access token. See [Section 9, Authentication and Authorization](#auth).
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Record` state. Even though other transitions 
-are not formally included in the definition of the `Record` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Record` state. Even though other transitions
+are not formally included in the definition of the `Record` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.19.5-embedded-states"/>
 
@@ -2478,7 +2478,7 @@ todo:
 
 ## 4.20 The "Relationships" State
 
-The `Relationships` state consists of a list of relationships. The `Relationships` state is used to provide a 
+The `Relationships` state consists of a list of relationships. The `Relationships` state is used to provide a
 means for a client to create a relationship or set of relationships.
 
 <a name="4.20.1-media-types"/>
@@ -2500,8 +2500,8 @@ operation|description|constraints
 ---------|-----------|-----------
 `POST` | Create a relationship or set of relationships. | REQUIRED
 
-If one (and only one) relationship was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
-code and a `Location` header specifying the URI of the created relationship. If multiple relationships were created as a result of a successful 
+If one (and only one) relationship was created as a result of a successful `POST` request, the request SHOULD result in a `201` response
+code and a `Location` header specifying the URI of the created relationship. If multiple relationships were created as a result of a successful
 `POST` request, the request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -2512,7 +2512,7 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 
 A list of instances of the
 [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship).
-MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Relationship` provided by 
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `Relationship` provided by
 the client as a candidate to be created and added to the list of relationships.
 
 <a name="4.20.4-transitions"/>
@@ -2586,11 +2586,11 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 ### 4.21.3 Data Elements
 
 At least one instance of the [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
-MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Relationship` is provided, the instance that 
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `Relationship` is provided, the instance that
 represents the "main" relationship MUST be provided as the first element in the list.
 
 At least one instance of the [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship)
-MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Relationship` is provided, the instance that 
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `Relationship` is provided, the instance that
 represents the "main" relationship MUST be provided as the first element in the list.
 
 <a name="4.21.4-transitions"/>
@@ -2602,10 +2602,10 @@ rel|target state|scope|description
 `relationship` | [`Relationship` State](#relationship) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Self-link to the `Relationship` state.
 `collection` | [`Collection` State](#collection) | [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Link to the collection that contains this relationship.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Relationship` state. Even though other transitions 
-are not formally included in the definition of the `Relationship` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Relationship` state. Even though other transitions
+are not formally included in the definition of the `Relationship` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.21.5-embedded-states"/>
 
@@ -2674,11 +2674,11 @@ operation|description|constraints
 `GET` | Read a list of source descriptions. | OPTIONAL
 `POST` | Create an event or set of source descriptions. | OPTIONAL
 
-A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more source descriptions. If the list is empty, 
+A successful `GET` request SHOULD result in a `200` response code, if the list contains one or more source descriptions. If the list is empty,
 a successful `GET` SHOULD result in a `204` response code.
 
-If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response 
-code and a `Location` header specifying the URI of the created source description. If multiple source descriptions were created as a result of a successful 
+If one (and only one) event was created as a result of a successful `POST` request, the request SHOULD result in a `201` response
+code and a `Location` header specifying the URI of the created source description. If multiple source descriptions were created as a result of a successful
 `POST` request, the request SHOULD result in a `204` response code.
 
 A server MAY provide other HTTP response codes as applicable under conditions established by the HTTP specification.
@@ -2694,8 +2694,8 @@ break up the list into multiple pages according to [Section 7, Paged Application
 
 A list of instances of the
 [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description).
-MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `SourceDescription` provided by 
-the client as a candidate to be created and added to the list of source descriptions. 
+MUST be provided by the client in a request using the `POST` operation. The server considers each instance of `SourceDescription` provided by
+the client as a candidate to be created and added to the list of source descriptions.
 
 
 <a name="4.22.4-transitions"/>
@@ -2708,10 +2708,10 @@ rel|target state|scope|description
 ---|------------|-----|-----------
 `description` | [`Source Description` State](#source-description) | Each instance of [`Source Description` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description) | Transition from the list of sources descriptions to a single source description.
 
-[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be 
-provided by the server for the `Source Descriptions` state. Even though other transitions 
-are not formally included in the definition of the `Source Descriptions` state, use of 
-other transitions is RECOMMENDED where applicable. 
+[Section 5, State Transitions](#5-state-transitions) defines other transitions that MAY be
+provided by the server for the `Source Descriptions` state. Even though other transitions
+are not formally included in the definition of the `Source Descriptions` state, use of
+other transitions is RECOMMENDED where applicable.
 
 <a name="4.22.5-embedded-states"/>
 
@@ -2777,11 +2777,11 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 ### 4.23.3 Data Elements
 
 At least one instance of the [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description)
-MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `SourceDescription` is provided, the instance that 
+MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `SourceDescription` is provided, the instance that
 represents the "main" source description MUST be provided as the first element in the list.
 
 At least one instance of the [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
-MUST be provided by the client in a request using the `POST` operation. If more than one instance of `SourceDescription` is provided, the instance that 
+MUST be provided by the client in a request using the `POST` operation. If more than one instance of `SourceDescription` is provided, the instance that
 represents the "main" source description MUST be provided as the first element in the list.
 
 <a name="4.23.4-transitions"/>
@@ -2892,7 +2892,7 @@ GEDCOM X RS specifies the following template variables.
 
 ### "access_token"
 
-The "access_token" template variable is used to hold a value for an access token as defined by 
+The "access_token" template variable is used to hold a value for an access token as defined by
 [RFC 6749 (OAuth 2)](http://tools.ietf.org/html/rfc6749).
 
 ### "count"
@@ -2907,23 +2907,23 @@ and the [`Descendancy Results` State](#descendancy).
 
 ### "start"
 
-The "start" template variable is used to hold the index of the first element of a page of results. 
+The "start" template variable is used to hold the index of the first element of a page of results.
 For more information about paging, see [Section 7](#paging).
 
 ### "q"
 
 The "q" template variable is used to hold a GEDCOM X search query string.
 
-A search query string is composed of name-value pairs. A name and value is separated by a colon ':' and each 
+A search query string is composed of name-value pairs. A name and value is separated by a colon ':' and each
 name-value pair is separated by a white space '&nbsp;'.
 
 For example:
- 
+
 ```
 givenName:John surname:Smith gender:male birthDate:"30 June 1900"
 ```
 
-Notice the white space in the birthDate value. If white space is needed in the value then the value must be wrapped in double quotes. 
+Notice the white space in the birthDate value. If white space is needed in the value then the value must be wrapped in double quotes.
 By default, values are exact. For non-exact matches append a tilde '~' at the end of the value such as:
 
 ```
@@ -3035,7 +3035,7 @@ data elements of the current application state.
 
 ## 6.1 Embedding GEDCOM X Data Elements
 
-Data elements that are represented using either 
+Data elements that are represented using either
 [GEDCOM X JSON](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md) or
 [GEDCOM X XML](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md) may embed
 other GEDCOM X data elements as follows:
@@ -3069,11 +3069,11 @@ rel|description
 # 8. Updating Application States
 
 If a server chooses to allow a client to update an application state, a client issues a `POST` request that contains the data
-elements to be updated. Each data element that does not provide a value for the `id` property is considered by the server as 
+elements to be updated. Each data element that does not provide a value for the `id` property is considered by the server as
 a candidate to be created. Each data element that supplies a value for the `id` property is considered by the server as a
-candidate to be updated. If the client provides an invalid value or otherwise violates a business rule of the server, a `400` 
-response code is RECOMMENDED. A server MAY choose to provide an HTTP `Warning` header with text that explains the nature of 
-the error. 
+candidate to be updated. If the client provides an invalid value or otherwise violates a business rule of the server, a `400`
+response code is RECOMMENDED. A server MAY choose to provide an HTTP `Warning` header with text that explains the nature of
+the error.
 
 
 
@@ -3081,6 +3081,6 @@ the error.
 
 # 9. Authentication and Authorization
 
-A server MAY require authorization to access certain application states. Authentication and authorization are outside the scope 
+A server MAY require authorization to access certain application states. Authentication and authorization are outside the scope
 of this specification. OAuth 2 as specified by [RFC 6749](http://tools.ietf.org/html/rfc6749) is RECOMMENDED as an authentication
 mechanism.
