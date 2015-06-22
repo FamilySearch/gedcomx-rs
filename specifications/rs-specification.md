@@ -224,8 +224,8 @@ media types, see [Architecture of the World Wide Web, Volume One](http://www.w3.
 Each genealogical application has an "entry point" that takes the form of a URI that resolves to an application state. An
 application entry point is a well-known URI that is used to initiate interactions between a client and the server.
 
-Each application determines its own entry points. Use of the [Collections](#collections), [Collection](#collection),
-[Person](#person), and [Source Description](#source-description) application states is RECOMMENDED as entry points.
+Each application determines its own entry points. It is RECOMMENDED that entry points include [Collections](#collections), [Collection](#collection),
+and [Person](#person).
 
 <a name="use-of-http"/>
 
