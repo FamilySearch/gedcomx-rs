@@ -62,6 +62,9 @@ how a client can expect to interact with a conforming genealogical application.
   * [2.2 The "DisplayProperties" Data Type](#display-properties-data-type)
     * [2.2.1 The "DisplayProperties" XML Element](#display-properties-xml-element)
     * [2.2.2 The "DisplayProperties" JSON Element](#display)
+  * [2.3 The "FamilyView" Data Type](#family-view)
+    * [2.3.1 The "FamilyView" XML Element](#family-view-xml-element)
+    * [2.3.2 The "FamilyView" JSON Element](#family-view-json-element)
 * [3. Property Extensions](#property-extensions)
   * [3.1 Extensions to the "Date" Data Type](#date-data-type)
     * [3.1.1 "Date" XML Type Extensions](#date-xml-type-extensions)
@@ -363,7 +366,7 @@ title | Human-readable information about the link. | title | xsd:string
 
 ### examples
 
-```json
+```javascript
 {
   "rel" : "...",
   "href" : "...",
@@ -389,7 +392,7 @@ link. The `links` member is reserved to be used as an instance of this "Links" J
 
 The following example shows how a list of links is serialized in JSON.
 
-```json
+```javascript
 "links" {
   "rel1" : {
     "href" : "...",
@@ -431,6 +434,8 @@ marriageDate | The displayable label for the marriage date of the person. | stri
 marriagePlace | The displayable label for the marriage date of the person. | string | OPTIONAL
 ascendancyNumber | The context-specific ascendancy number for the person in relation to the other persons in the request. The ancestry number is defined using the Ahnentafel numbering system. | string | OPTIONAL
 descendancyNumber | The context-specific descendancy number for the person in relation to the other persons in the request. The descendancy number is defined using the d'Aboville numbering system. | string | OPTIONAL
+familiesAsParent | The views of the families of this person as a parent | List of [`FamilyView`](#family-view). Order is preserved. | OPTIONAL
+familiesAsChild | The views of the families of this person as a child | List of [`FamilyView`](#family-view). Order is preserved. | OPTIONAL
 
 <a name="display-properties-xml-element"/>
 
@@ -454,6 +459,8 @@ marriageDate | The displayable label for the marriage date of the person. | gx:m
 marriagePlace | The displayable label for the marriage date of the person. | gx:marriagePlace | xsd:string
 ascendancyNumber | The context-specific ascendancy number for the person in relation to the other persons in the request. The ancestry number is defined using the Ahnentafel numbering system. | gx:ascendancyNumber | xsd:string
 descendancyNumber | The context-specific descendancy number for the person in relation to the other persons in the request. The descendancy number is defined using the d'Aboville numbering system. | gx:descendancyNumber | xsd:string
+familiesAsParent | The views of the families of this person as a parent | gx:familyAsParent | [gx:FamilyView](#family-view-xml-element)
+familiesAsChild | The views of the families of this person as a child | gx:familyAsChild | [gx:FamilyView](#family-view-xml-element)
 
 ### examples
 
@@ -470,6 +477,10 @@ descendancyNumber | The context-specific descendancy number for the person in re
   <gx:marriagePlace>...</gx:marriagePlace>
   <gx:ascendancyNumber>...</gx:ascendancyNumber>
   <gx:descendancyNumber>...</gx:descendancyNumber>
+  <gx:familyAsParent>...</gx:familyAsParent>
+  <gx:familyAsParent>...</gx:familyAsParent>
+  <gx:familyAsChild>...</gx:familyAsChild>
+  <gx:familyAsChild>...</gx:familyAsChild>
   <!-- possibility of extension elements -->
 </gx:display>
 ```
@@ -496,10 +507,12 @@ marriageDate | The displayable label for the marriage date of the person. | marr
 marriagePlace | The displayable label for the marriage date of the person. | marriagePlace | string
 ascendancyNumber | The context-specific ascendancy number for the person in relation to the other persons in the request. The ancestry number is defined using the Ahnentafel numbering system. | ascendancyNumber | string
 descendancyNumber | The context-specific descendancy number for the person in relation to the other persons in the request. The descendancy number is defined using the d'Aboville numbering system. | descendancyNumber | string
+familiesAsParent | The views of the families of this person as a parent | familiesAsParent | array of [FamilyView](#family-view-json-element)
+familiesAsChild | The views of the families of this person as a child | familiesAsChild | array of [FamilyView](#family-view-json-element)
 
 ### examples
 
-```json
+```javascript
 "display" : {
   "name" : "...",
   "gender" : "...",
@@ -512,7 +525,86 @@ descendancyNumber | The context-specific descendancy number for the person in re
   "marriagePlace" : "...",
   "ascendancyNumber" : "...",
   "descendancyNumber" : "...",
+  "familiesAsParent" : [{ /*...*/ }, { /*...*/ }],
+  "familiesAsChild" : [{ /*...*/ }, { /*...*/ }],
 }
+```
+
+<a name="family-view"/>
+
+## 2.3 The "FamilyView" Data Type
+
+The `FamilyView` data type defines a view of a family that consists of up to two parents and a list of children who have that set of parents in common. While the `Relationship` data type carries the canonical information about the nature of the relationship between the each pair of persons, the `FamilyView` is designed as a convenience for display purposes.
+
+### identifier
+
+The identifier for the `FamilyView` data type is:
+
+`http://gedcomx.org/v1/FamilyView`
+
+### properties
+
+name  | description | data type | constraints
+------|-------------|-----------|------------
+parent1 | Reference to a parent in the family. | [URI](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#uri) | OPTIONAL. If provided, MUST resolve to an instance of [`http://gedcomx.org/v1/Person`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
+parent2 | Reference to a parent in the family. | [URI](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#uri) |  OPTIONAL. If provided, MUST resolve to an instance of [`http://gedcomx.org/v1/Person`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person)
+children | List of references to the children in the family | List of [URI](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#uri) | OPTIONAL. If provided, each element MUST resolve to an instance of [`http://gedcomx.org/v1/Person`](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person).
+
+<a name="family-view-xml-element"/>
+
+### 2.3.1 The "FamilyView" XML Element
+
+The `gx:FamilyView` XML type is used to (de)serialize the `http://gedcomx.org/v1/FamilyView` data type.
+The `gx:family` XML element is used to provide instances of the `gx:FamilyView` XML type as extension elements.
+
+### properties
+
+name | description | XML property | XML type
+-----|-------------|--------------|---------
+parent1 | Reference to a parent in the family. | gx:parent1 | [gx:ResourceReference](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md#resource-reference)
+parent2 | Reference to a parent in the family. | gx:parent2 | [gx:ResourceReference](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md#resource-reference)
+children | List of references to the children in the family. | gx:child | [gx:ResourceReference](https://github.com/FamilySearch/gedcomx/blob/master/specifications/xml-format-specification.md#resource-reference)
+
+### examples
+
+```xml
+<gx:family>
+  <gx:parent1 resource="(uri reference to parent 1)"/>
+  <gx:parent2 resource="(uri reference to parent 2)"/>
+  <gx:child resource="(uri reference to child)"/>
+  <gx:child resource="(uri reference to child)"/>
+  <gx:child resource="(uri reference to child)"/>
+  <!-- possibility of extension elements -->
+</gx:family>
+```
+
+<a name="family-view-json-element"/>
+
+### 2.2.2 The "FamilyView" JSON Element
+
+The `FamilyView` JSON type is used to (de)serialize the `http://gedcomx.org/v1/FamilyView` data type.
+The `families` JSON member is used to provide instances of the `FamilyView` JSON type as an extension element.
+
+### properties
+
+name | description | JSON member | JSON object type
+-----|-------------|--------------|---------
+parent1 | Reference to a parent in the family. | parent1 | [ResourceReference](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md#resource-reference)
+parent2 | Reference to a parent in the family. | parent2 | [ResourceReference](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md#resource-reference)
+children | List of references to the children in the family. | children | array of ResourceReference](https://github.com/FamilySearch/gedcomx/blob/master/specifications/json-format-specification.md#resource-reference)
+
+### examples
+
+```javascript
+"families" : [ {
+  "parent1" :  {
+    "resource" : "(uri reference to parent 1)"
+  },
+  "parent2" :  {
+    "resource" : "(uri reference to parent 2)"
+  },
+  "children" : [ { "resource" : "(uri reference to child)" }, { "resource" : "(uri reference to child)" } ]
+} ]
 ```
 
 <a name="property-extensions"/>
