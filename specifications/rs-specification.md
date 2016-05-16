@@ -65,6 +65,7 @@ how a client can expect to interact with a conforming genealogical application.
   * [2.3 The "FamilyView" Data Type](#family-view)
     * [2.3.1 The "FamilyView" XML Element](#family-view-xml-element)
     * [2.3.2 The "FamilyView" JSON Element](#family-view-json-element)
+  * [2.4 Identifier Types](#identifier-types)
 * [3. Property Extensions](#property-extensions)
   * [3.1 Extensions to the "Date" Data Type](#date-data-type)
     * [3.1.1 "Date" XML Type Extensions](#date-xml-type-extensions)
@@ -580,7 +581,7 @@ children | List of references to the children in the family. | gx:child | [gx:Re
 
 <a name="family-view-json-element"/>
 
-### 2.2.2 The "FamilyView" JSON Element
+### 2.3.2 The "FamilyView" JSON Element
 
 The `FamilyView` JSON type is used to (de)serialize the `http://gedcomx.org/v1/FamilyView` data type.
 The `families` JSON member is used to provide instances of the `FamilyView` JSON type as an extension element.
@@ -606,6 +607,17 @@ children | List of references to the children in the family. | children | array 
   "children" : [ { "resource" : "(uri reference to child)" }, { "resource" : "(uri reference to child)" } ]
 } ]
 ```
+
+<a name="identifier-types"/>
+
+## 2.4 Identifier Types
+
+The following additional identifier types are defined by GEDCOM X RS:
+
+URI | description
+----|------------
+`http://gedcomx.org/Persistent` | A persistent identifier for the resource. The value of the identifier MUST resolve to the instance of `Subject` to which the identifier applies. A persistent identifier is issued by a resource provider to support long-term access to the resource. A persistent identifier MAY conform to a specification, such as [ARK](https://wiki.ucop.edu/display/Curation/ARK).
+
 
 <a name="property-extensions"/>
 
