@@ -80,6 +80,8 @@ how a client can expect to interact with a conforming genealogical application.
     * [3.4.1 "Person" XML Type Extensions](#person-xml-type-extensions)
     * [3.4.2 "Person" JSON Type Extensions](#person-json-type-extensions)
   * [3.5 The "sortKey" Property](#sort-key-property)
+  * [3.6 The "resourceId" Property](#resource-id-property)
+  * [3.7 The "version" Property](#version-property)
 * [4. Application States](#4.application-states)
   * [4.1 The "Agent" State](#agent)
   * [4.2 The "Ancestry Results" State](#ancestry)
@@ -762,8 +764,6 @@ The `sortKey` is defined as an XML attribute of type `xs:string` on the applicab
 
 The `sortKey` is defined as a JSON member of type `string` on the applicable JSON objects.
 
-<a name="4.application-states"/>
-
 <a name="resource-id-property"/>
 
 ## 3.6 The "resourceId" Property
@@ -781,6 +781,22 @@ to the `gx:ResourceReference` XML type.
 
 The `resourceId` is defined as a JSON member of type `string`. It is only applicable
 to the `ResourceReference` JSON type.
+
+<a name="resource-id-property"/>
+
+## 3.7 The "version" Property
+
+A GEDCOM X application MAY choose to provide a version for a resource. The "version" property
+only applies to the `http://gedcomx.org/v1/SourceDescription` data type. The implementation
+of the version is application-specific.
+
+### 3.7.1 The "version" XML Attribute
+
+The `version` is defined as an XML attribute of type `xs:string`.
+
+### 3.7.2 "resourceId" JSON Property
+
+The `version` is defined as a JSON member of type `string`.
 
 <a name="4.application-states"/>
 
