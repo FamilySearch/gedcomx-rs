@@ -743,10 +743,24 @@ display | display | [`DisplayProperties`](#display)
 
 <a name="sort-key-property"/>
 
-### 3.5 The "sortKey" Property
+## 3.5 The "sortKey" Property
 
-todo:
+A GEDCOM X application MAY define a relative sort order for types of resources in its data set.
+The "sortKey" property is used to provide this sort order by providing an alphanumeric value by
+which elements may be sorted relative to each other. The implementation details of the
+sort key are application-specific, and the sort key is only comparable to sort keys of elements
+of the same data type.
 
+The "sortKey" property is defined as an extension to any data types that extend
+`http://gedcomx.org/v1/Conclusion` and to `http://gedcomx.org/v1/SourceDescription`.
+
+### 3.5.1 "sortKey" XML Attribute
+
+The `sortKey` is defined as an XML attribute of type `xs:string` on the applicable XML elements.
+
+### 3.5.2 "sortKey" JSON Property
+
+The `sortKey` is defined as a JSON member of type `string` on the applicable JSON objects.
 
 <a name="4.application-states"/>
 
