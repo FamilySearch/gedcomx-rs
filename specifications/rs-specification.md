@@ -297,7 +297,8 @@ and provides the representations of those data types in both XML and JSON as ext
 The `Link` data type defines a representation of an available transition from one application state to another. The base definition
 of a link is provided by [RFC 5988](http://tools.ietf.org/html/rfc5988).
 
-Instances of `Link` can be reasonably expected as extension elements to any GEDCOM X data type.
+Instances of `Link` can be reasonably expected as extension elements to any GEDCOM X data type, except data types that are defined
+by the GEDCOM X Conceptual Model to explicitly restrict extension properties.
 
 ### identifier
 
