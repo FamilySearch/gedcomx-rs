@@ -764,6 +764,26 @@ The `sortKey` is defined as a JSON member of type `string` on the applicable JSO
 
 <a name="4.application-states"/>
 
+<a name="resource-id-property"/>
+
+## 3.6 The "resourceId" Property
+
+A GEDCOM X application MAY choose to extend references to resources by providing an id of
+the resource being referenced using the "resourceId" property. The value and scope of the resource id
+is application-specific.
+
+### 3.6.1 The "resourceId" XML Attribute
+
+The `resourceId` is defined as an XML attribute of type `xs:string`. It is only applicable
+to the `gx:ResourceReference` XML type.
+
+### 3.6.2 "resourceId" JSON Property
+
+The `resourceId` is defined as a JSON member of type `string`. It is only applicable
+to the `ResourceReference` JSON type.
+
+<a name="4.application-states"/>
+
 # 4. Application States
 
 This section defines a set of application states for a genealogical data application.
