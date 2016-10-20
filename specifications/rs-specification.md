@@ -61,11 +61,14 @@ how a client can expect to interact with a conforming genealogical application.
     * [2.1.3 The "Links" JSON Type and Member](#json-type-member)
   * [2.2 The "DisplayProperties" Data Type](#display-properties-data-type)
     * [2.2.1 The "DisplayProperties" XML Element](#display-properties-xml-element)
-    * [2.2.2 The "DisplayProperties" JSON Element](#display)
+    * [2.2.2 The "DisplayProperties" JSON Element](#display-properties-json-element)
   * [2.3 The "FamilyView" Data Type](#family-view)
     * [2.3.1 The "FamilyView" XML Element](#family-view-xml-element)
     * [2.3.2 The "FamilyView" JSON Element](#family-view-json-element)
   * [2.4 Identifier Types](#identifier-types)
+  * [2.5 The "PlaceDisplayProperties" Data Type](#place-display-properties-data-type)
+    * [2.5.1 The "PlaceDisplayProperties" XML Element](#place-display-properties-xml-element)
+    * [2.5.2 The "PlaceDisplayProperties" JSON Element](#place-display-properties-json-element)
 * [3. Property Extensions](#property-extensions)
   * [3.1 Extensions to the "Date" Data Type](#date-data-type)
     * [3.1.1 "Date" XML Type Extensions](#date-xml-type-extensions)
@@ -82,6 +85,9 @@ how a client can expect to interact with a conforming genealogical application.
   * [3.5 The "sortKey" Property](#sort-key-property)
   * [3.6 The "resourceId" Property](#resource-id-property)
   * [3.7 The "version" Property](#version-property)
+  * [3.8 Extensions to the "PlaceDescription" Data Type](#extensions-place-data-type)
+    * [3.8.1 "PlaceDescription" XML Type Extensions](#place-xml-type-extensions)
+    * [3.8.2 "PlaceDescription" JSON Type Extensions](#place-json-type-extensions)
 * [4. Application States](#4.application-states)
   * [4.1 The "Agent" State](#agent)
   * [4.2 The "Ancestry Results" State](#ancestry)
@@ -489,7 +495,7 @@ familiesAsChild | The views of the families of this person as a child | gx:famil
 </gx:display>
 ```
 
-<a name="display"/>
+<a name="display-properties-json-element"/>
 
 ### 2.2.2 The "DisplayProperties" JSON Element
 
@@ -621,6 +627,79 @@ URI | description
 ----|------------
 `http://gedcomx.org/Persistent` | A persistent identifier for the resource. The value of the identifier MUST resolve to the instance of `Subject` to which the identifier applies. A persistent identifier is issued by a resource provider to support long-term access to the resource. A persistent identifier MAY conform to a specification, such as [ARK](https://wiki.ucop.edu/display/Curation/ARK).
 
+<a name="place-display-properties-data-type"/>
+
+## 2.5 The "PlaceDisplayProperties" Data Type
+
+The `PlaceDisplayProperties` data type defines a set of properties for convenience in displaying a summary of a place to a
+user. All display property values are provided as appropriate for the locale requested by the consuming application,
+or the default locale if no locale was specified. Instances of `PlaceDisplayProperties` can be expected as extension elements
+to the [`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description).
+
+### identifier
+
+The identifier for the `PlaceDisplayProperties` data type is:
+
+`http://gedcomx.org/v1/PlaceDisplayProperties`
+
+### properties
+
+name  | description | data type | constraints
+------|-------------|-----------|------------
+name | A displayable name of the place. | string | OPTIONAL
+fullName | The displayable label for the full name of the place. | string | OPTIONAL
+type | The displayable label for the type of the place (city, country, etc.). | string | OPTIONAL
+
+<a name="place-display-properties-xml-element"/>
+
+### 2.5.1 The "PlaceDisplayProperties" XML Element
+
+The `gx:PlaceDisplayProperties` XML type is used to (de)serialize the `http://gedcomx.org/v1/PlaceDisplayProperties` data type.
+The `gx:display` XML element is used to provide instances of the `gx:PlaceDisplayProperties` XML type as extension elements.
+
+### properties
+
+name | description | XML property | XML type
+-----|-------------|--------------|---------
+name | A displayable name of the place. | gx:name | xsd:string
+fullName | The displayable label for the full name of the place. | gx:fullName | xsd:string
+type | The displayable label for the type of the place (city, country, etc.). | gx:type | xsd:string
+
+### examples
+
+```xml
+<gx:display>
+  <gx:name>...</gx:name>
+  <gx:fullName>...</gx:fullName>
+  <gx:type>...</gx:type>
+  <!-- possibility of extension elements -->
+</gx:display>
+```
+
+<a name="place-display-properties-json-element"/>
+
+### 2.2.2 The "PlaceDisplayProperties" JSON Element
+
+The `PlaceDisplayProperties` JSON type is used to (de)serialize the `http://gedcomx.org/v1/PlaceDisplayProperties` data type.
+The `display` JSON member is used to provide instances of the `PlaceDisplayProperties` JSON type as an extension element.
+
+### properties
+
+name | description | JSON member | JSON object type
+-----|-------------|--------------|---------
+name | A displayable name of the place. | name | string
+fullName | The displayable label for the full name of the place. | fullName | string
+type | The displayable label for the type of the place (city, country, etc.). | type | string
+
+### examples
+
+```javascript
+"display" : {
+  "name" : "...",
+  "fullName" : "...",
+  "type" : "...",
+}
+```
 
 <a name="property-extensions"/>
 
@@ -723,7 +802,7 @@ The following properties are defined as extensions to the
 name  | description | data type | constraints
 ------|-------------|-----------|------------
 living | Whether the person is considered living by the application. | boolean | OPTIONAL
-display | The display properties for the person. | [`DisplayProperties`](#display) | OPTIONAL
+display | The display properties for the person. | [`DisplayProperties`](#display-properties-data-type) | OPTIONAL
 
 <a name="person-xml-type-extensions"/>
 
@@ -732,7 +811,7 @@ display | The display properties for the person. | [`DisplayProperties`](#displa
 name | XML property | XML type
 -----|-------------|--------------
 living | living (attribute) | xsd:boolean
-display | gx:display | [`DisplayProperties`](#display)
+display | gx:display | [`DisplayProperties`](#display-properties-xml-element)
 
 <a name="person-json-type-extensions"/>
 
@@ -741,7 +820,7 @@ display | gx:display | [`DisplayProperties`](#display)
 name | JSON member | JSON object type
 -----|-------------|-------------
 living | living | boolean
-display | display | [`DisplayProperties`](#display)
+display | display | [`DisplayProperties`](#display-properties-json-element)
 
 <a name="sort-key-property"/>
 
@@ -797,6 +876,33 @@ The `version` is defined as an XML attribute of type `xs:string`.
 ### 3.7.2 "resourceId" JSON Property
 
 The `version` is defined as a JSON member of type `string`.
+
+<a name="extensions-place-data-type"/>
+
+## 3.8 Extensions to the "PlaceDescription" Data Type
+
+The following properties are defined as extensions to the
+[`PlaceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#place-description):
+
+name  | description | data type | constraints
+------|-------------|-----------|------------
+display | The display properties for the place. | [`PlaceDisplayProperties`](#place-display-properties-data-type) | OPTIONAL
+
+<a name="place-xml-type-extensions"/>
+
+### 3.4.1 "PlaceDescription" XML Type Extensions
+
+name | XML property | XML type
+-----|-------------|--------------
+display | gx:display | [`PlaceDisplayProperties`](#place-display-properties-xml-element)
+
+<a name="place-json-type-extensions"/>
+
+### 3.4.2 "PlaceDescription" JSON Type Extensions
+
+name | JSON member | JSON object type
+-----|-------------|-------------
+display | display | [`PlaceDisplayProperties`](#place-display-properties-json-element)
 
 <a name="4.application-states"/>
 
