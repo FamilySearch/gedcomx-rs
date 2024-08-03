@@ -437,11 +437,11 @@ name | The name of the person. | string | OPTIONAL
 gender | The displayable label for the gender of the person. | string | OPTIONAL
 lifespan | The displayable label for the lifespan of the person. | string | OPTIONAL
 birthDate | The displayable label for the birth date of the person. | string | OPTIONAL
-birthPlace | The displayable label for the birth date of the person. | string | OPTIONAL
+birthPlace | The displayable label for the birth place of the person. | string | OPTIONAL
 deathDate | The displayable label for the death date of the person. | string | OPTIONAL
-deathPlace | The displayable label for the death date of the person. | string | OPTIONAL
+deathPlace | The displayable label for the death place of the person. | string | OPTIONAL
 marriageDate | The displayable label for the marriage date of the person. | string | OPTIONAL
-marriagePlace | The displayable label for the marriage date of the person. | string | OPTIONAL
+marriagePlace | The displayable label for the marriage place of the person. | string | OPTIONAL
 ascendancyNumber | The context-specific ascendancy number for the person in relation to the other persons in the request. The ancestry number is defined using the Ahnentafel numbering system. | string | OPTIONAL
 descendancyNumber | The context-specific descendancy number for the person in relation to the other persons in the request. The descendancy number is defined using the d'Aboville numbering system. | string | OPTIONAL
 familiesAsParent | The views of the families of this person as a parent | List of [`FamilyView`](#family-view). Order is preserved. | OPTIONAL
@@ -462,11 +462,11 @@ name | The name of the person. | gx:name | xsd:string
 gender | The displayable label for the gender of the person. | gx:gender | xsd:string
 lifespan | The displayable label for the lifespan of the person. | gx:lifespan | xsd:string
 birthDate | The displayable label for the birth date of the person. | gx:birthDate | xsd:string
-birthPlace | The displayable label for the birth date of the person. | gx:birthPlace | xsd:string
+birthPlace | The displayable label for the birth place of the person. | gx:birthPlace | xsd:string
 deathDate | The displayable label for the death date of the person. | gx:deathDate | xsd:string
-deathPlace | The displayable label for the death date of the person. | gx:deathPlace | xsd:string
+deathPlace | The displayable label for the death place of the person. | gx:deathPlace | xsd:string
 marriageDate | The displayable label for the marriage date of the person. | gx:marriageDate | xsd:string
-marriagePlace | The displayable label for the marriage date of the person. | gx:marriagePlace | xsd:string
+marriagePlace | The displayable label for the marriage place of the person. | gx:marriagePlace | xsd:string
 ascendancyNumber | The context-specific ascendancy number for the person in relation to the other persons in the request. The ancestry number is defined using the Ahnentafel numbering system. | gx:ascendancyNumber | xsd:string
 descendancyNumber | The context-specific descendancy number for the person in relation to the other persons in the request. The descendancy number is defined using the d'Aboville numbering system. | gx:descendancyNumber | xsd:string
 familiesAsParent | The views of the families of this person as a parent | gx:familyAsParent | [gx:FamilyView](#family-view-xml-element)
@@ -510,11 +510,11 @@ name | The name of the person. | name | string
 gender | The displayable label for the gender of the person. | gender | string
 lifespan | The displayable label for the lifespan of the person. | lifespan | string
 birthDate | The displayable label for the birth date of the person. | birthDate | string
-birthPlace | The displayable label for the birth date of the person. | birthPlace | string
+birthPlace | The displayable label for the birth place of the person. | birthPlace | string
 deathDate | The displayable label for the death date of the person. | deathDate | string
-deathPlace | The displayable label for the death date of the person. | deathPlace | string
+deathPlace | The displayable label for the death place of the person. | deathPlace | string
 marriageDate | The displayable label for the marriage date of the person. | marriageDate | string
-marriagePlace | The displayable label for the marriage date of the person. | marriagePlace | string
+marriagePlace | The displayable label for the marriage place of the person. | marriagePlace | string
 ascendancyNumber | The context-specific ascendancy number for the person in relation to the other persons in the request. The ancestry number is defined using the Ahnentafel numbering system. | ascendancyNumber | string
 descendancyNumber | The context-specific descendancy number for the person in relation to the other persons in the request. The descendancy number is defined using the d'Aboville numbering system. | descendancyNumber | string
 familiesAsParent | The views of the families of this person as a parent | familiesAsParent | array of [FamilyView](#family-view-json-element)
