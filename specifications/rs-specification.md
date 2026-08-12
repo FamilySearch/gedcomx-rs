@@ -1446,7 +1446,7 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 
 The results of a successful query for the ancestry of a person MUST contain a list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person). Each
-`Person` in the list MUST provide a value for the `descendancyNumber` of the person using [`DisplayProperties`](#display).
+`Person` in the list MUST provide a value for the `descendancyNumber` of the person using [`DisplayProperties`](#display-properties-data-type).
 
 <a name="4.6.4-transitions"/>
 
