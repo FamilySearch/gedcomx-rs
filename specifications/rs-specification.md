@@ -770,7 +770,7 @@ normalized | normalized | array of [`TextValue`](https://github.com/FamilySearch
 ## 3.3 Extensions to the "Name" Data Type
 
 The following properties are defined as extensions to the
-[`Name` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#name):
+[`Name` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#name-conclusion):
 
 name  | description | data type | constraints
 ------|-------------|-----------|------------
@@ -861,7 +861,7 @@ to the `gx:ResourceReference` XML type.
 The `resourceId` is defined as a JSON member of type `string`. It is only applicable
 to the `ResourceReference` JSON type.
 
-<a name="resource-id-property"/>
+<a name="version-property"/>
 
 ## 3.7 The "version" Property
 
@@ -873,7 +873,7 @@ of the version is application-specific.
 
 The `version` is defined as an XML attribute of type `xs:string`.
 
-### 3.7.2 "resourceId" JSON Property
+### 3.7.2 "version" JSON Property
 
 The `version` is defined as a JSON member of type `string`.
 
@@ -1093,7 +1093,7 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 
 The results of a successful query for the ancestry of a person MUST contain a list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person). Each
-`Person` in the list MUST provide a value for the `ascendancyNumber` of the person using [`DisplayProperties`](#display).
+`Person` in the list MUST provide a value for the `ascendancyNumber` of the person using [`DisplayProperties`](#display-properties-data-type).
 
 <a name="4.2.4-transitions"/>
 
@@ -1375,7 +1375,7 @@ rel|target state|scope|description
 `current-user-resources` | [`Source Descriptions` State](#source-descriptions) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to a list of resources in the collection that are owned by or otherwise associated with the current user, described as sources.
 `subcollections` | [`Collections` State](#collections) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of subcollections for this collection.
 `persons` | [`Persons` State](#persons) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of persons in the collection.
-`relationships` | [`Relationships` State](#relationsihps) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of relationships between persons in this collection.
+`relationships` | [`Relationships` State](#relationships) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of relationships between persons in this collection.
 `events` | [`Events` State](#events) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#collection) | Link to the list of events in this collection.
 `records` | [`Records` State](#records) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of records in the collection.
 `artifacts` | [`Artifacts` State](#artifacts) | [`Collection` Data Type](https://github.com/FamilySearch/gedcomx-record/blob/master/specifications/record-specification.md#collection) | Link to the list of digital artifacts in the collection.
@@ -1446,7 +1446,7 @@ A server MAY provide other HTTP response codes as applicable under conditions es
 
 The results of a successful query for the ancestry of a person MUST contain a list of instances of the
 [`Person` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#person). Each
-`Person` in the list MUST provide a value for the `descendancyNumber` of the person using [`DisplayProperties`](#display).
+`Person` in the list MUST provide a value for the `descendancyNumber` of the person using [`DisplayProperties`](#display-properties-data-type).
 
 <a name="4.6.4-transitions"/>
 
@@ -2619,7 +2619,9 @@ the client as a candidate to be created and added to the list of relationships.
 
 ### 4.20.4 Transitions
 
-No embedded states are specified for the `Relationships` state.
+rel|target state|scope|description
+---|------------|-----|-----------
+`relationship` | [`Relationship` State](#relationship) | Each instance of [`Relationship` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#relationship) | Transition from the list of relationships to the specific relationship.
 
 <a name="4.20.5-embedded-states"/>
 
@@ -2880,7 +2882,7 @@ At least one instance of the [`SourceDescription` Data Type](https://github.com/
 MUST be provided by the server in the successful response of a `GET` operation. If more than one instance of `SourceDescription` is provided, the instance that
 represents the "main" source description MUST be provided as the first element in the list.
 
-At least one instance of the [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#event)
+At least one instance of the [`SourceDescription` Data Type](https://github.com/FamilySearch/gedcomx/blob/master/specifications/conceptual-model-specification.md#source-description)
 MUST be provided by the client in a request using the `POST` operation. If more than one instance of `SourceDescription` is provided, the instance that
 represents the "main" source description MUST be provided as the first element in the list.
 
